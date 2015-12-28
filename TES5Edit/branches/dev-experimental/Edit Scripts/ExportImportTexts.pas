@@ -79,7 +79,7 @@ begin
     rb2.Caption := 'Import';
     rb2.Width := 75;
     
-		if wbGameMode <> gmTES5 then begin
+		if wbGameMode < gmTES5 then begin
 			rg2 := TRadioGroup.Create(frm);
 			rg2.Parent := pnl;
 			rg2.Left := 16;
@@ -89,8 +89,9 @@ begin
 			rg2.Caption := 'Selection ?';
 			rg2.ClientHeight := 45;
 			rg2.ClientWidth := rg2.Width;
-			
-			rb4 := TRadioButton.Create(rg);
+		end;
+		rb4 := TRadioButton.Create(rg);
+		if wbGameMode < gmTES5 then begin
 			rb4.Parent := rg2;
 			rb4.Left := rb1.left;
 			rb4.Top := rb1.Top;
@@ -103,9 +104,9 @@ begin
 			rb5.Top := rb4.Top;
 			rb5.Caption := 'Only scripts';
 			rb5.Width := rb4.Width;
-    end;
-    rb4.Checked := True;
-		
+		end;
+		rb4.Checked := True;
+
     btnOk := TButton.Create(frm);
     btnOk.Parent := pnl;
     btnOk.Caption := 'OK';

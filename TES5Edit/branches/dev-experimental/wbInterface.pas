@@ -862,7 +862,7 @@ type
       write SetIsTemporary;
     property IsNotPlugin: Boolean   // Save or other file to display.
       read GetIsNotPlugin;
-    property IsHasNoFormID: Boolean   // Like Morrowind for example. Also true for save/coSave.
+    property HasNoFormID: Boolean   // Like Morrowind for example. Also true for save/coSave.
       read GetHasNoFormID
       write SetHasNoFormID;
   end;
