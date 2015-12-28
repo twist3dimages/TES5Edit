@@ -450,8 +450,12 @@ type
     procedure SetMemoryOrder(aSortOrder: Integer);
     procedure BuildRef;
     function CompareExchangeFormID(aOldFormID: Cardinal; aNewFormID: Cardinal): Boolean;
+    function GetEditValueInternal(IsPersistent: Boolean): string;
+    procedure SetEditValueInternal(const aValue: string; IsPersistent: Boolean);
     function GetEditValue: string;
+    function GetPersistentEditValue: string;
     procedure SetEditValue(const aValue: string);
+    procedure SetPersistentEditValue(const aValue: string);
     function GetNativeValue: Variant;
     procedure SetNativeValue(const aValue: Variant);
     function GetIsEditable: Boolean;
@@ -1330,8 +1334,12 @@ type
     procedure BuildRef(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement);
     function GetIsVariableSize: Boolean;
     function GetCanBeZeroSize: Boolean;
+    function ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean = False): string;
     function ToEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): string;
+    function ToPersistentEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): string;
+    procedure FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean = False);
     procedure FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string);
+    procedure FromPersistentEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string);
     function ToNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Variant;
     procedure FromNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: Variant);
     function GetIsEditable(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Boolean;
@@ -1359,6 +1367,9 @@ type
     property EditValue[aBasePtr, aEndPtr: Pointer; const aElement: IwbElement]: string
       read ToEditValue
       write FromEditValue;
+    property PersistentEditValue[aBasePtr, aEndPtr: Pointer; const aElement: IwbElement]: string
+      read ToPersistentEditValue
+      write FromPersistentEditValue;
     property NativeValue[aBasePtr, aEndPtr: Pointer; const aElement: IwbElement]: Variant
       read ToNativeValue
       write FromNativeValue;
@@ -1538,8 +1549,12 @@ type
     function GetEditType(aInt: Int64; const aElement: IwbElement): TwbEditType;
     function GetEditInfo(aInt: Int64; const aElement: IwbElement): string;
 
+    function ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean): string;
     function ToEditValue(aInt: Int64; const aElement: IwbElement): string;
+    function ToPersistentEditValue(aInt: Int64; const aElement: IwbElement): string;
+    function FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64;
     function FromEditValue(const aValue: string; const aElement: IwbElement): Int64;
+    function FromPersistentEditValue(const aValue: string; const aElement: IwbElement): Int64;
     function GetIsEditable(aInt: Int64; const aElement: IwbElement): Boolean;
     function GetLinksTo(aInt: Int64; const aElement: IwbElement): IwbElement;
 
@@ -4013,8 +4028,12 @@ type
     function GetIsVariableSize: Boolean;
     function GetIsVariableSizeInternal: Boolean; virtual;
     function GetCanBeZeroSize: Boolean; virtual;
+    function ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean = False): string; virtual;
     function ToEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): string; virtual;
+    function ToPersistentEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): string; virtual;
+    procedure FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean = False); virtual;
     procedure FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string); virtual;
+    procedure FromPersistentEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string); virtual;
     function ToNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Variant; virtual;
     procedure FromNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: Variant); virtual;
     function GetIsEditable(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Boolean; virtual;
@@ -4061,8 +4080,8 @@ type
     function GetLinksTo(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): IwbElement; override;
     procedure BuildRef(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement); override;
     function GetIsVariableSizeInternal: Boolean; override;
-    function ToEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): string; override;
-    procedure FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string); override;
+    function ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    procedure FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean = False); override;
     function ToNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Variant; override;
     procedure FromNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: Variant); override;
     function GetIsEditable(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Boolean; override;
@@ -4121,8 +4140,8 @@ type
     function GetSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Integer; override;
     function GetDefaultSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Integer; override;
     function GetIsVariableSizeInternal: Boolean; override;
-    function ToEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): string; override;
-    procedure FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string); override;
+    function ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    procedure FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean); override;
     function ToNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Variant; override;
     procedure FromNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: Variant); override;
     function GetIsEditable(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Boolean; override;
@@ -4205,8 +4224,8 @@ type
     function GetSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Integer; override;
     function GetDefaultSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Integer; override;
     function GetIsVariableSizeInternal: Boolean; override;
-    function ToEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): string; override;
-    procedure FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string); override;
+    function ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    procedure FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean = False); override;
     function ToNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Variant; override;
     procedure FromNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: Variant); override;
     function GetIsEditable(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Boolean; override;
@@ -4268,8 +4287,8 @@ type
     function GetSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Integer; override;
     function GetDefaultSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Integer; override;
     function GetIsVariableSizeInternal: Boolean; override;
-    function ToEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): string; override;
-    procedure FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string); override;
+    function ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    procedure FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean = False); override;
     function ToNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Variant; override;
     procedure FromNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: Variant); override;
     function GetIsEditable(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Boolean; override;
@@ -4300,7 +4319,7 @@ type
     function GetSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Integer; override;
     function GetDefaultSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Integer; override;
     function GetCanBeZeroSize: Boolean; override;
-    procedure FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string); override;
+    procedure FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean = False); override;
     function GetIsEditable(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Boolean; override;
 
     {--- IwbEmptyDef ---}
@@ -4342,8 +4361,8 @@ type
     function GetDefaultSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Integer; override;
     function GetLinksTo(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): IwbElement; override;
     procedure BuildRef(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement); override;
-    function ToEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): string; override;
-    procedure FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string); override;
+    function ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    procedure FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean = False); override;
     function ToNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Variant; override;
     procedure FromNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: Variant); override;
     function GetIsEditable(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Boolean; override;
@@ -4388,8 +4407,8 @@ type
     function ToSortKey(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; aExtended: Boolean): string; override;
     function GetSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Integer; override;
     function GetDefaultSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Integer; override;
-    function ToEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): string; override;
-    procedure FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string); override;
+    function ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    procedure FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean = False); override;
     function ToNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Variant; override;
     procedure FromNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: Variant); override;
     function GetIsEditable(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Boolean; override;
@@ -4578,8 +4597,12 @@ type
     function GetEditType(aInt: Int64; const aElement: IwbElement): TwbEditType; virtual;
     function GetEditInfo(aInt: Int64; const aElement: IwbElement): string; virtual;
 
+    function ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean): string; virtual;
     function ToEditValue(aInt: Int64; const aElement: IwbElement): string; virtual;
+    function ToPersistentEditValue(aInt: Int64; const aElement: IwbElement): string; virtual;
+    function FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64; virtual;
     function FromEditValue(const aValue: string; const aElement: IwbElement): Int64; virtual;
+    function FromPersistentEditValue(const aValue: string; const aElement: IwbElement): Int64; virtual;
     function GetIsEditable(aInt: Int64; const aElement: IwbElement): Boolean; virtual;
     function GetLinksTo(aInt: Int64; const aElement: IwbElement): IwbElement; virtual;
 
@@ -4620,8 +4643,8 @@ type
     function GetEditType(aInt: Int64; const aElement: IwbElement): TwbEditType; override;
     function GetEditInfo(aInt: Int64; const aElement: IwbElement): string; override;
 
-    function ToEditValue(aInt: Int64; const aElement: IwbElement): string; override;
-    function FromEditValue(const aValue: string; const aElement: IwbElement): Int64; override;
+    function ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    function FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64; override;
     function GetIsEditable(aInt: Int64; const aElement: IwbElement): Boolean; override;
     function GetLinksTo(aInt: Int64; const aElement: IwbElement): IwbElement; override;
 
@@ -4675,8 +4698,8 @@ type
     function GetEditType(aInt: Int64; const aElement: IwbElement): TwbEditType; override;
     function GetEditInfo(aInt: Int64; const aElement: IwbElement): string; override;
 
-    function ToEditValue(aInt: Int64; const aElement: IwbElement): string; override;
-    function FromEditValue(const aValue: string; const aElement: IwbElement): Int64; override;
+    function ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean): string; override;
+    function FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64; override;
     function GetIsEditable(aInt: Int64; const aElement: IwbElement): Boolean; override;
     function GetLinksTo(aInt: Int64; const aElement: IwbElement): IwbElement; override;
 
@@ -4726,7 +4749,7 @@ type
 
     {---IwbIntegerDefFormater---}
     function Check(aInt: Int64; const aElement: IwbElement): string; override;
-    function FromEditValue(const aValue: string; const aElement: IwbElement): Int64; override;
+    function FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64; override;
     function CanAssign(const aElement: IwbElement; aIndex: Integer; const aDef: IwbDef): Boolean; override;
 
     {---IwbFormIDChecked---}
@@ -4745,8 +4768,8 @@ type
     function CanAssign(const aElement: IwbElement; aIndex: Integer; const aDef: IwbDef): Boolean; override;
     function GetLinksTo(aInt: Int64; const aElement: IwbElement): IwbElement; override;
 
-    function ToEditValue(aInt: Int64; const aElement: IwbElement): string; override;
-    function FromEditValue(const aValue: string; const aElement: IwbElement): Int64; override;
+    function ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    function FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64; override;
     function GetIsEditable(aInt: Int64; const aElement: IwbElement): Boolean; override;
     function CanContainFormIDs: Boolean; override;
   end;
@@ -4760,8 +4783,8 @@ type
     function ToSortKey(aInt: Int64; const aElement: IwbElement): string; override;
     function CanAssign(const aElement: IwbElement; aIndex: Integer; const aDef: IwbDef): Boolean; override;
 
-    function ToEditValue(aInt: Int64; const aElement: IwbElement): string; override;
-    function FromEditValue(const aValue: string; const aElement: IwbElement): Int64; override;
+    function ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    function FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64; override;
     function GetIsEditable(aInt: Int64; const aElement: IwbElement): Boolean; override;
     function CanContainFormIDs: Boolean; override;
   end;
@@ -4805,8 +4828,8 @@ type
     function GetEditType(aInt: Int64; const aElement: IwbElement): TwbEditType; override;
     function GetEditInfo(aInt: Int64; const aElement: IwbElement): string; override;
 
-    function ToEditValue(aInt: Int64; const aElement: IwbElement): string; override;
-    function FromEditValue(const aValue: string; const aElement: IwbElement): Int64; override;
+    function ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean): string; override;
+    function FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64; override;
     function GetIsEditable(aInt: Int64; const aElement: IwbElement): Boolean; override;
 
     function GetRequiresKey: Boolean; override;
@@ -4894,8 +4917,8 @@ type
     function GetEditType(aInt: Int64; const aElement: IwbElement): TwbEditType; override;
     function GetEditInfo(aInt: Int64; const aElement: IwbElement): string; override;
 
-    function ToEditValue(aInt: Int64; const aElement: IwbElement): string; override;
-    function FromEditValue(const aValue: string; const aElement: IwbElement): Int64; override;
+    function ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    function FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64; override;
     function GetIsEditable(aInt: Int64; const aElement: IwbElement): Boolean; override;
 
     {---IwbEnumDef---}
@@ -4931,8 +4954,8 @@ type
     function ToSortKey(aInt: Int64; const aElement: IwbElement): string; override;
     function CanAssign(const aElement: IwbElement; aIndex: Integer; const aDef: IwbDef): Boolean; override;
 
-    function ToEditValue(aInt: Int64; const aElement: IwbElement): string; override;
-    function FromEditValue(const aValue: string; const aElement: IwbElement): Int64; override;
+    function ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    function FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64; override;
     function GetIsEditable(aInt: Int64; const aElement: IwbElement): Boolean; override;
   end;
 
@@ -4950,8 +4973,8 @@ type
     function ToSortKey(aInt: Int64; const aElement: IwbElement): string; override;
     function CanAssign(const aElement: IwbElement; aIndex: Integer; const aDef: IwbDef): Boolean; override;
 
-    function ToEditValue(aInt: Int64; const aElement: IwbElement): string; override;
-    function FromEditValue(const aValue: string; const aElement: IwbElement): Int64; override;
+    function ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    function FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64; override;
     function GetIsEditable(aInt: Int64; const aElement: IwbElement): Boolean; override;
   end;
 
@@ -4975,8 +4998,8 @@ type
     function GetEditType(aInt: Int64; const aElement: IwbElement): TwbEditType; override;
     function GetEditInfo(aInt: Int64; const aElement: IwbElement): string; override;
 
-    function ToEditValue(aInt: Int64; const aElement: IwbElement): string; override;
-    function FromEditValue(const aValue: string; const aElement: IwbElement): Int64; override;
+    function ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean = False): string; override;
+    function FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64; override;
     function GetIsEditable(aInt: Int64; const aElement: IwbElement): Boolean; override;
 
     {---IwbCallbackDef---}
@@ -8298,14 +8321,14 @@ begin
     inherited FindUsedMasters(aBasePtr, aEndPtr, aElement, aMasters);
 end;
 
-procedure TwbIntegerDef.FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string);
+procedure TwbIntegerDef.FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean);
 var
   i : Int64;
 begin
   if aValue = '' then
     i := 0
   else if Assigned(inFormater) then
-    i := inFormater.FromEditValue(aValue, aElement)
+    i := inFormater.FromEditValueInternal(aValue, aElement, IsPersistent)
   else
     i := StrToInt64(aValue);
   FromInt(i, aBasePtr, aEndPtr, aElement);
@@ -8571,8 +8594,7 @@ begin
 end;
 
 
-function TwbIntegerDef.ToEditValue(aBasePtr, aEndPtr: Pointer;
-  const aElement: IwbElement): string;
+function TwbIntegerDef.ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean): string;
 var
   Len   : Cardinal;
   Value : Int64;
@@ -8600,7 +8622,7 @@ begin
 
     Result := '';
     if Assigned(inFormater) then
-      Result := inFormater.ToEditValue(Value, aElement);
+      Result := inFormater.ToEditValueInternal(Value, aElement, IsPersistent);
 
     if Result = '' then
       Result := IntToStr(Value);
@@ -9549,7 +9571,7 @@ begin
   inherited Create(cpNormal, False, nil);
 end;
 
-function TwbFlagsDef.FromEditValue(const aValue: string; const aElement: IwbElement): Int64;
+function TwbFlagsDef.FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64;
 var
   i: Integer;
 begin
@@ -9715,7 +9737,7 @@ begin
   Result := True;
 end;
 
-function TwbFlagsDef.ToEditValue(aInt: Int64; const aElement: IwbElement): string;
+function TwbFlagsDef.ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean): string;
 var
   i: Integer;
 begin
@@ -10002,7 +10024,7 @@ begin
   Index := L;
 end;
 
-function TwbEnumDef.FromEditValue(const aValue: string; const aElement: IwbElement): Int64;
+function TwbEnumDef.FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64;
 var
   i, j: Integer;
   Value: string;
@@ -10092,7 +10114,7 @@ begin
   defReported := True;
 end;
 
-function TwbEnumDef.ToEditValue(aInt: Int64; const aElement: IwbElement): string;
+function TwbEnumDef.ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean): string;
 var
   i: Integer;
 begin
@@ -10200,7 +10222,7 @@ begin
   inherited Create(aPriority, aRequired, aName, aAfterLoad, aAfterSet, aDontShow, aGetCP, aTerminator);
 end;
 
-procedure TwbStringDef.FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string);
+procedure TwbStringDef.FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean);
 begin
   FromStringTransform(aBasePtr, aEndPtr, aElement, aValue, ttFromEditValue);
 end;
@@ -10302,8 +10324,7 @@ begin
     Result := 1 + Ord(noTerminator);
 end;
 
-function TwbStringDef.ToEditValue(aBasePtr, aEndPtr: Pointer;
-  const aElement: IwbElement): string;
+function TwbStringDef.ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean): string;
 begin
   Result := ToStringTransform(aBasePtr, aEndPtr, aElement, ttToEditValue);
 end;
@@ -10414,7 +10435,7 @@ begin
   inherited Create(aPriority, aRequired, aName, aAfterLoad, aAfterSet, aDontShow, aGetCP, aTerminator);
 end;
 
-procedure TwbFloatDef.FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string);
+procedure TwbFloatDef.FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean);
 var
   Value: Extended;
 begin
@@ -10608,7 +10629,7 @@ begin
   end;
 end;
 
-function TwbFloatDef.ToEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): string;
+function TwbFloatDef.ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean): string;
 var
   Value : Extended;
 begin
@@ -10725,7 +10746,7 @@ begin
     Self.Create(defPriority, defRequired, defGetCP).defSource := aSource;
 end;
 
-function TwbChar4.FromEditValue(const aValue: string; const aElement: IwbElement): Int64;
+function TwbChar4.FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64;
 const
   Empty : TwbSignature = '    ';
 var
@@ -10759,7 +10780,7 @@ begin
     Result := _File.RecordByEditorID[PwbSignature(@U32)^];
 end;
 
-function TwbChar4.ToEditValue(aInt: Int64; const aElement: IwbElement): string;
+function TwbChar4.ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean = False): string;
 begin
   Result := ToSortKey(aInt, aElement);
 end;
@@ -10814,7 +10835,7 @@ begin
     Self.Create(defPriority, defRequired, defGetCP).defSource := aSource;
 end;
 
-function TwbStr4.FromEditValue(const aValue: string; const aElement: IwbElement): Int64;
+function TwbStr4.FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64;
 const
   Empty : TwbSignature = '    ';
 var
@@ -10840,7 +10861,7 @@ begin
   Result := True;
 end;
 
-function TwbStr4.ToEditValue(aInt: Int64; const aElement: IwbElement): string;
+function TwbStr4.ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean): string;
 begin
   Result := ToSortKey(aInt, aElement);
 end;
@@ -11045,7 +11066,7 @@ begin
   end;
 end;
 
-function TwbFormID.FromEditValue(const aValue: string; const aElement: IwbElement): Int64;
+function TwbFormID.FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64;
 var
   _File     : IwbFile;
 
@@ -11096,8 +11117,21 @@ var
     end;
   end;
 
+  function SplitFormIDPersistentEditValue(const aValue: String; const aElement: IwbElement): String;
+  var
+    eFile : IwbFile;
+  begin
+    Result := '';
+    eFile := aElement.GetFile;
+    if Assigned(eFile) then
+      Result := IntToHex(eFile.GetMasterPersistentLoadOrderFormID(aValue), 8);
+  end;
+
 begin
-  Result := SplitFormIDEditValue(aValue);
+  if IsPersistent then
+    Result := SplitFormIDEditValue(SplitFormIDPersistentEditValue(aValue, aElement))
+  else
+    Result := SplitFormIDEditValue(aValue);
 
   if not wbDisplayLoadOrderFormID then
     Exit;
@@ -11447,8 +11481,26 @@ begin
   defReported := True;
 end;
 
-function TwbFormID.ToEditValue(aInt: Int64; const aElement: IwbElement): string;
+function TwbFormID.ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean): string;
+var
+  MainRecord : IwbMainRecord;
 begin
+  if IsPersistent then begin
+    if aInt < $800 then begin
+      Result := '['+wbGameName+'.esm-'+IntToHex64(aInt, 8)+']';
+      Exit;
+    end;
+
+    MainRecord := GetMainRecord(aInt, aElement);
+    if Assigned(MainRecord) then try
+      Result := '[' + MainRecord.GetMasterPersistentName(aInt) + '-' + IntToHex64(aInt and $00FFFFFF, 8) + ']';
+      Exit;
+    except
+      Result := '[Invalid-' + IntToHex64(aInt, 8) + ']';
+      Exit;
+    end;
+  end;
+
   if wbDisplayLoadOrderFormID then begin
     Result := ToString(aInt, aElement);
     if (Length(Result) > 0) and (Result[1] = '<') then
@@ -11682,7 +11734,7 @@ begin
   inherited Create(aPriority, aRequired, aName, nil, nil, aDontShow, aGetCP, aTerminator);
 end;
 
-procedure TwbByteArrayDef.FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string);
+procedure TwbByteArrayDef.FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean);
 var
   Bytes  : array of Byte;
   i, j   : Integer;
@@ -11930,8 +11982,7 @@ begin
     FromEditValue(aBasePtr, aEndPtr, aElement, Default);
 end;
 
-function TwbByteArrayDef.ToEditValue(aBasePtr, aEndPtr: Pointer;
-  const aElement: IwbElement): string;
+function TwbByteArrayDef.ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean): string;
 begin
   Result := ToString(aBasePtr, aEndPtr, aElement);
 end;
@@ -12150,7 +12201,7 @@ begin
   inherited Create(cpNormal, False, nil);
 end;
 
-function TwbDivDef.FromEditValue(const aValue: string; const aElement: IwbElement): Int64;
+function TwbDivDef.FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64;
 begin
   Result := Round(StrToFloat(aValue) * ddValue);
 end;
@@ -12160,7 +12211,7 @@ begin
   Result := True;
 end;
 
-function TwbDivDef.ToEditValue(aInt: Int64; const aElement: IwbElement): string;
+function TwbDivDef.ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean): string;
 begin
   Result := FloatToStrF(aInt / ddValue, ffFixed, 99, wbFloatDigits);
 end;
@@ -12202,7 +12253,7 @@ begin
   inherited Create(cpNormal, False, nil);
 end;
 
-function TwbMulDef.FromEditValue(const aValue: string; const aElement: IwbElement): Int64;
+function TwbMulDef.FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64;
 begin
   Result := StrToInt64(aValue) div mdValue;
 end;
@@ -12212,7 +12263,7 @@ begin
   Result := True;
 end;
 
-function TwbMulDef.ToEditValue(aInt: Int64; const aElement: IwbElement): string;
+function TwbMulDef.ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean): string;
 begin
   Result := IntToStr(aInt * mdValue);
 end;
@@ -12262,7 +12313,7 @@ begin
   inherited Create(cpNormal, False, nil);
 end;
 
-function TwbCallbackDef.FromEditValue(const aValue: string; const aElement: IwbElement): Int64;
+function TwbCallbackDef.FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64;
 begin
   if Assigned(cdToInt) then
     Result := cdToInt(aValue, aElement)
@@ -12297,7 +12348,7 @@ begin
   Result := True;
 end;
 
-function TwbCallbackDef.ToEditValue(aInt: Int64; const aElement: IwbElement): string;
+function TwbCallbackDef.ToEditValueInternal(aInt: Int64; const aElement: IwbElement; IsPersistent: Boolean): string;
 begin
   Result := cdToStr(aInt, aElement, ctToEditValue);
   if Result = '' then
@@ -12341,12 +12392,24 @@ end;
 
 procedure TwbValueDef.FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string);
 begin
+  FromEditValueInternal(aBasePtr, aEndPtr, aElement, aValue, False);
+end;
+
+procedure TwbValueDef.FromEditValueInternal(aBasePtr, aEndPtr: Pointer;
+  const aElement: IwbElement; const aValue: string; IsPersistent: Boolean);
+begin
   raise Exception.Create(GetName + ' is not editable.');
 end;
 
 procedure TwbValueDef.FromNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: Variant);
 begin
   raise Exception.Create(GetName + ' is not editable.');
+end;
+
+procedure TwbValueDef.FromPersistentEditValue(aBasePtr, aEndPtr: Pointer;
+  const aElement: IwbElement; const aValue: string);
+begin
+  FromEditValueInternal(aBasePtr, aEndPtr, aElement, aValue, True);
 end;
 
 function TwbValueDef.GetCanBeZeroSize: Boolean;
@@ -12415,12 +12478,24 @@ end;
 function TwbValueDef.ToEditValue(aBasePtr, aEndPtr: Pointer;
   const aElement: IwbElement): string;
 begin
+  Result := ToEditValueInternal(aBasePtr, aEndPtr, aElement, False);
+end;
+
+function TwbValueDef.ToEditValueInternal(aBasePtr, aEndPtr: Pointer;
+  const aElement: IwbElement; IsPersistent: Boolean): string;
+begin
   Result := '';
 end;
 
 function TwbValueDef.ToNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Variant;
 begin
   VarClear(Result);
+end;
+
+function TwbValueDef.ToPersistentEditValue(aBasePtr, aEndPtr: Pointer;
+  const aElement: IwbElement): string;
+begin
+  Result := ToEditValueInternal(aBasePtr, aEndPtr, aElement, True);
 end;
 
 function TwbValueDef.ToSortKey(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; aExtended: Boolean): string;
@@ -12649,11 +12724,11 @@ begin
   inherited;
 end;
 
-function TwbFormIDChecked.FromEditValue(const aValue: string; const aElement: IwbElement): Int64;
+function TwbFormIDChecked.FromEditValueInternal(const aValue: string; const aElement: IwbElement; IsPersistent: Boolean): Int64;
 var
   Error: string;
 begin
-  Result := inherited FromEditValue(aValue, aElement);
+  Result := inherited FromEditValueInternal(aValue, aElement, IsPersistent);
   Error := Check(Result, aElement);
   if Error <> '' then
     raise Exception.Create(Error);
@@ -12774,7 +12849,19 @@ end;
 function TwbIntegerDefFormater.FromEditValue(const aValue: string;
   const aElement: IwbElement): Int64;
 begin
+  Result := FromEditValueInternal(aValue, aElement, False);
+end;
+
+function TwbIntegerDefFormater.FromEditValueInternal(const aValue: string;
+  const aElement: IwbElement; IsPersistent: Boolean): Int64;
+begin
   raise Exception.Create(Classname + ' does not support editing');
+end;
+
+function TwbIntegerDefFormater.FromPersistentEditValue(const aValue: string;
+  const aElement: IwbElement): Int64;
+begin
+  Result := FromEditValueInternal(aValue, aElement, True);
 end;
 
 function TwbIntegerDefFormater.GetDefType: TwbDefType;
@@ -12825,7 +12912,19 @@ end;
 function TwbIntegerDefFormater.ToEditValue(aInt: Int64;
   const aElement: IwbElement): string;
 begin
+  ToEditValueInternal(aInt, aElement, False);
+end;
+
+function TwbIntegerDefFormater.ToEditValueInternal(aInt: Int64;
+  const aElement: IwbElement; IsPersistent: Boolean): string;
+begin
   Result := '';
+end;
+
+function TwbIntegerDefFormater.ToPersistentEditValue(aInt: Int64;
+  const aElement: IwbElement): string;
+begin
+  ToEditValueInternal(aInt, aElement, True);
 end;
 
 { TwbUnionDef }
@@ -12912,11 +13011,11 @@ begin
   Used(nil, '');
 end;
 
-procedure TwbUnionDef.FromEditValue(aBasePtr, aEndPtr: Pointer;
-  const aElement: IwbElement; const aValue: string);
+procedure TwbUnionDef.FromEditValueInternal(aBasePtr, aEndPtr: Pointer;
+  const aElement: IwbElement; const aValue: string; IsPersistent: Boolean);
 begin
   Decide(aBasePtr, aEndPtr, aElement).
-    EditValue[aBasePtr, aEndPtr, aElement] := aValue;
+    FromEditValueInternal(aBasePtr, aEndPtr, aElement, aValue, IsPersistent);
 end;
 
 procedure TwbUnionDef.FromNativeValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: Variant);
@@ -13109,14 +13208,13 @@ begin
     Result := False;
 end;
 
-function TwbUnionDef.ToEditValue(aBasePtr, aEndPtr: Pointer;
-  const aElement: IwbElement): string;
+function TwbUnionDef.ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean): string;
 var
   ValueDef: IwbValueDef;
 begin
   ValueDef := Decide(aBasePtr, aEndPtr, aElement);
   if Assigned(ValueDef) then
-    Result := ValueDef.EditValue[aBasePtr, aEndPtr, aElement]
+    Result := ValueDef.ToEditValueInternal(aBasePtr, aEndPtr, aElement, IsPersistent)
   else
     Result := '';
 end;
@@ -13180,7 +13278,7 @@ begin
   inherited Create(aPriority, aRequired, aName, aAfterLoad, aAfterSet, aDontShow, aGetCP, False);
 end;
 
-procedure TwbEmptyDef.FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string);
+procedure TwbEmptyDef.FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean = False);
 begin
 end;
 
@@ -13415,7 +13513,7 @@ begin
   inherited Create(aPriority, aRequired, aName, aAfterLoad, aAfterSet, aDontShow, aGetCP, aTerminator);
 end;
 
-procedure TwbLenStringDef.FromEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string);
+procedure TwbLenStringDef.FromEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; IsPersistent: Boolean);
 var
   Len     : Cardinal;
   NewSize : Cardinal;
@@ -13536,7 +13634,7 @@ begin
     FromEditValue(aBasePtr, aEndPtr, aElement, '');
 end;
 
-function TwbLenStringDef.ToEditValue(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): string;
+function TwbLenStringDef.ToEditValueInternal(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; IsPersistent: Boolean): string;
 begin
   Result := ToString(aBasePtr, aEndPtr, aElement);
 end;
@@ -14273,15 +14371,16 @@ begin
     IntegerDef.FindUsedMasters(aInt, aMasters, aElement);
 end;
 
-function TwbIntegerDefFormaterUnion.FromEditValue(const aValue   : string;
-                                                  const aElement : IwbElement)
-                                                                 : Int64;
+function TwbIntegerDefFormaterUnion.FromEditValueInternal(const aValue      : string;
+                                                          const aElement    : IwbElement;
+                                                                IsPersistent : Boolean)
+                                                                            : Int64;
 var
   IntegerDef: IwbIntegerDefFormater;
 begin
   IntegerDef := Decide(aElement);
   if Assigned(IntegerDef) then
-    Result := IntegerDef..FromEditValue(aValue, aElement);
+    Result := IntegerDef.FromEditValueInternal(aValue, aElement, IsPersistent)
   else
     Result := 0;
 end;
@@ -14400,15 +14499,16 @@ begin
 
 end;
 
-function TwbIntegerDefFormaterUnion.ToEditValue(aInt     : Int64;
-                                          const aElement : IwbElement)
-                                                         : string;
+function TwbIntegerDefFormaterUnion.ToEditValueInternal(aInt        : Int64;
+                                                  const aElement    : IwbElement;
+                                                        IsPersistent : Boolean)
+                                                                    : string;
 var
   IntegerDef: IwbIntegerDefFormater;
 begin
   IntegerDef := Decide(aElement);
   if Assigned(IntegerDef) then
-    Result := IntegerDef.ToEditValue(aInt, aElement);
+    Result := IntegerDef.ToEditValueInternal(aInt, aElement, IsPersistent)
   else
     Result := '';
 end;

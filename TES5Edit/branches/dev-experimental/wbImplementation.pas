@@ -318,8 +318,12 @@ type
     function CompareExchangeFormID(aOldFormID: Cardinal; aNewFormID: Cardinal): Boolean; virtual;
     function GetIsEditable: Boolean; virtual;
     function GetIsRemoveable: Boolean; virtual;
+    function GetEditValueInternal(IsPersistent: Boolean): string; virtual;
+    procedure SetEditValueInternal(const aValue: string; IsPersistent: Boolean); virtual;
     function GetEditValue: string; virtual;
+    function GetPersistentEditValue: string; virtual;
     procedure SetEditValue(const aValue: string); virtual;
+    procedure SetPersistentEditValue(const aValue: string); virtual;
     function GetNativeValue: Variant; virtual;
     procedure SetNativeValue(const aValue: Variant); virtual;
     procedure RequestStorageChange(var aBasePtr, aEndPtr: Pointer; aNewSize: Cardinal); virtual;
@@ -931,8 +935,8 @@ type
     function GetSortPriority: Integer; override;
     function GetAdditionalElementCount: Integer; override;
     function GetIsEditable: Boolean; override;
-    function GetEditValue: string; override;
-    procedure SetEditValue(const aValue: string); override;
+    function GetEditValueInternal(IsPersistent: Boolean): string; override;
+    procedure SetEditValueInternal(const aValue: string; IsPersistent: Boolean); override;
     function GetNativeValue: Variant; override;
     procedure SetNativeValue(const aValue: Variant); override;
     function IsElementRemoveable(const aElement: IwbElement): Boolean; override;
@@ -1131,8 +1135,8 @@ type
     function GetSortKeyInternal(aExtended: Boolean): string; override;
     function GetIsEditable: Boolean; override;
     function GetValueDef: IwbValueDef; override;
-    function GetEditValue: string; override;
-    procedure SetEditValue(const aValue: string); override;
+    function GetEditValueInternal(IsPersistent: Boolean): string; override;
+    procedure SetEditValueInternal(const aValue: string; IsPersistent: Boolean); override;
     function GetNativeValue: Variant; override;
     procedure SetNativeValue(const aValue: Variant); override;
     procedure BuildRef; override;
@@ -1198,8 +1202,8 @@ type
     function GetIsEditable: Boolean; override;
     function CanElementReset: Boolean; override;
 
-    function GetEditValue: string; override;
-    procedure SetEditValue(const aValue: string); override;
+    function GetEditValueInternal(IsPersistent: Boolean): string; override;
+    procedure SetEditValueInternal(const aValue: string; IsPersistent: Boolean); override;
 
     function GetNativeValue: Variant; override;
     procedure SetNativeValue(const aValue: Variant); override;
@@ -1333,7 +1337,7 @@ type
     procedure Reset; override;
 
     function GetElementType: TwbElementType; override;
-    procedure SetEditValue(const aValue: string); override;
+    procedure SetEditValueInternal(const aValue: string; IsPersistent: Boolean); override;
     procedure SetNativeValue(const aValue: Variant); override;
 
     {--- IwbSortableContainer ---}
@@ -1368,7 +1372,7 @@ type
     function GetElementType: TwbElementType; override;
     function GetConflictPriority: TwbConflictPriority; override;
     function GetSortKeyInternal(aExtended: Boolean): string; override;
-    procedure SetEditValue(const aValue: string); override;
+    procedure SetEditValueInternal(const aValue: string; IsPersistent: Boolean); override;
     procedure SetNativeValue(const aValue: Variant); override;
     function GetDataSize: Integer; override;
     procedure WriteToStreamInternal(aStream: TStream; aResetModified: Boolean); override;
@@ -1423,8 +1427,8 @@ type
 
     procedure Remove; override;
 
-    function GetEditValue: string; override;
-    procedure SetEditValue(const aValue: string); override;
+    function GetEditValueInternal(IsPersistent: Boolean): string; override;
+    procedure SetEditValueInternal(const aValue: string; IsPersistent: Boolean); override;
 
     function GetNativeValue: Variant; override;
     procedure SetNativeValue(const aValue: Variant); override;
@@ -6640,12 +6644,18 @@ begin
   Result := mrEditorID;
 end;
 
-function TwbMainRecord.GetEditValue: string;
+function TwbMainRecord.GetEditValueInternal(IsPersistent: Boolean): string;
 begin
   if wbDisplayLoadOrderFormID then
-    Result := IntToHex64(GetLoadOrderFormID, 8)
+    if not IsPersistent then
+      Result := IntToHex64(GetLoadOrderFormID, 8)
+    else
+      Result := ''
   else
-    Result := IntToHex64(GetFormID, 8);
+    if not IsPersistent then
+      Result := IntToHex64(GetFormID, 8)
+    else
+      Result := '';
 end;
 
 function TwbMainRecord.GetElementType: TwbElementType;
@@ -8272,7 +8282,7 @@ begin
   Assert(mrEditorID = aValue);
 end;
 
-procedure TwbMainRecord.SetEditValue(const aValue: string);
+procedure TwbMainRecord.SetEditValueInternal(const aValue: string; IsPersistent: Boolean);
 begin
   if not wbEditAllowed then
     raise Exception.Create(GetName + ' can not be edited.');
@@ -9688,7 +9698,7 @@ begin
   Result := Result + ' - ' + srDef.GetName;
 end;
 
-function TwbSubRecord.GetEditValueInternal(IsPermanent: Boolean): string;
+function TwbSubRecord.GetEditValueInternal(IsPersistent: Boolean): string;
 var
   SelfRef : IwbContainerElementRef;
 begin
@@ -9701,7 +9711,10 @@ begin
   DoInit;
 
   if Assigned(srValueDef) then
-    Result := srValueDef.EditValue[GetDataBasePtr, dcDataEndPtr, Self]
+    if IsPersistent then
+      Result := srValueDef.PersistentEditValue[GetDataBasePtr, dcDataEndPtr, Self]
+    else
+      Result := srValueDef.EditValue[GetDataBasePtr, dcDataEndPtr, Self]
   else
     Result := '';
 end;
@@ -10062,10 +10075,12 @@ begin
   DoReset(True);
 end;
 
-procedure TwbSubRecord.SetEditValue(const aValue: string);
+procedure TwbSubRecord.SetEditValueInternal(const aValue: string; IsPersistent: Boolean);
 var
-  SelfRef : IwbContainerElementRef;
-  OldValue, NewValue: Variant;
+  SelfRef   : IwbContainerElementRef;
+  CurrValue : String;
+  OldValue  : Variant;
+  NewValue  : Variant;
 begin
   if not wbEditAllowed then
     raise Exception.Create(GetName + ' can not be edited.');
@@ -10079,10 +10094,17 @@ begin
 
   DoInit;
 
-  if GetEditValue <> aValue then begin
+  if IsPersistent then
+    CurrValue := GetPersistentEditValue
+  else
+    CurrValue := GetEditValue;
+  if CurrValue <> aValue then begin
     if Assigned(srValueDef) then begin
       OldValue := GetNativeValue;
-      srValueDef.EditValue[GetDataBasePtr, dcDataEndPtr, Self] := aValue;
+      if IsPersistent then
+        srValueDef.PersistentEditValue[GetDataBasePtr, dcDataEndPtr, Self] := aValue
+      else
+        srValueDef.EditValue[GetDataBasePtr, dcDataEndPtr, Self] := aValue;
       NewValue := GetNativeValue;
       DoAfterSet(OldValue, NewValue);
     end else
@@ -12154,6 +12176,11 @@ end;
 
 function TwbElement.GetEditValue: string;
 begin
+  Result := GetEditValueInternal(False);
+end;
+
+function TwbElement.GetEditValueInternal(IsPersistent: Boolean): string;
+begin
   Result := '';
 end;
 
@@ -12201,6 +12228,11 @@ begin
     Result := '';
   Result := Result + ' \ ';
   Result := Result + GetPersistentName;
+end;
+
+function TwbElement.GetPersistentEditValue: string;
+begin
+  Result := GetEditValueInternal(True);
 end;
 
 function TwbElement.GetPersistentName: string;
@@ -12743,6 +12775,11 @@ end;
 
 procedure TwbElement.SetEditValue(const aValue: string);
 begin
+  SetEditValueInternal(aValue, False);
+end;
+
+procedure TwbElement.SetEditValueInternal(const aValue: string; IsPersistent: Boolean);
+begin
   raise Exception.Create(GetName + ' can not be edited.');
 end;
 
@@ -12801,6 +12838,11 @@ end;
 procedure TwbElement.SetNativeValue(const aValue: Variant);
 begin
   raise Exception.Create(GetName + ' can not be edited.');
+end;
+
+procedure TwbElement.SetPersistentEditValue(const aValue: string);
+begin
+  SetEditValueInternal(aValue, True);
 end;
 
 procedure TwbElement.SetSortOrder(aIndex: Integer);
@@ -14387,7 +14429,7 @@ begin
 
           Result := True;
 
-      end;
+        end;
 
     ValueDef.AfterLoad(aContainer);
   end;
@@ -14558,16 +14600,25 @@ begin
   inherited;
 end;
 
-procedure TwbValue.SetEditValue(const aValue: string);
+procedure TwbValue.SetEditValueInternal(const aValue: string; IsPersistent: Boolean);
 var
-  OldValue, NewValue: Variant;
+  CurrValue : String;
+  OldValue  : Variant;
+  NewValue  : Variant;
 begin
   if not wbEditAllowed then
     raise Exception.Create(GetName + ' can not be edited.');
 
-  if (not Assigned(dcDataBasePtr) or not Assigned(dcDataEndPtr)) or (aValue <> GetEditValue) then begin
+  if IsPersistent then
+    CurrValue := GetPersistentEditValue
+  else
+    CurrValue := GetEditValue;
+  if (not Assigned(dcDataBasePtr) or not Assigned(dcDataEndPtr)) or (aValue <> CurrValue) then begin
     OldValue := GetNativeValue;
-    vbValueDef.EditValue[GetDataBasePtr, dcDataEndPtr, Self] := aValue;
+    if IsPersistent then
+      vbValueDef.PersistentEditValue[GetDataBasePtr, dcDataEndPtr, Self] := aValue
+    else
+      vbValueDef.EditValue[GetDataBasePtr, dcDataEndPtr, Self] := aValue;
     if vIsFlags and (csInit in cntStates) then begin
       Reset;
       Init;
@@ -14792,7 +14843,7 @@ begin
   Result := GetFlagsDef.FlagDontShow[Self, fIndex];
 end;
 
-function TwbFlag.GetEditValue: string;
+function TwbFlag.GetEditValueInternal(IsPersistent: Boolean): string;
 var
   s: string;
 begin
@@ -14935,7 +14986,7 @@ begin
   SetEditValue('0');
 end;
 
-procedure TwbFlag.SetEditValue(const aValue: string);
+procedure TwbFlag.SetEditValueInternal(const aValue: string; IsPersistent: Boolean);
 var
   s: string;
   c: Char;
@@ -15510,13 +15561,16 @@ begin
     Result := Result + ' ' + vbNameSuffix;
 end;
 
-function TwbValueBase.GetEditValue: string;
+function TwbValueBase.GetEditValueInternal(IsPersistent: Boolean): string;
 var
   SelfRef : IwbContainerElementRef;
 begin
   SelfRef := Self as IwbContainerElementRef;
   DoInit;
-  Result := vbValueDef.EditValue[GetDataBasePtr, dcDataEndPtr, Self]
+  if IsPersistent then
+    Result := vbValueDef.PersistentEditValue[GetDataBasePtr, dcDataEndPtr, Self]
+  else
+    Result := vbValueDef.EditValue[GetDataBasePtr, dcDataEndPtr, Self]
 end;
 
 function TwbValueBase.GetIsEditable: Boolean;
@@ -15639,16 +15693,25 @@ begin
   end;
 end;
 
-procedure TwbValueBase.SetEditValue(const aValue: string);
+procedure TwbValueBase.SetEditValueInternal(const aValue: string; IsPersistent: Boolean);
 var
-  OldValue, NewValue: Variant;
+  CurrValue : String;
+  OldValue  : Variant;
+  NewValue  : Variant;
 begin
   if not wbEditAllowed then
     raise Exception.Create(GetName + ' can not be edited.');
 
+  if IsPersistent then
+    CurrValue := GetPersistentEditValue
+  else
+    CurrValue := GetEditValue;
   if aValue <> GetEditValue then begin
     OldValue := GetNativeValue;
-    vbValueDef.EditValue[GetDataBasePtr, dcDataEndPtr, Self] := aValue;
+    if IsPersistent then
+      vbValueDef.PersistentEditValue[GetDataBasePtr, dcDataEndPtr, Self] := aValue
+    else
+      vbValueDef.EditValue[GetDataBasePtr, dcDataEndPtr, Self] := aValue;
     NewValue := GetNativeValue;
     DoAfterSet(OldValue, NewValue);
     NotifyChanged(eContainer);
@@ -15881,7 +15944,7 @@ begin
   Inc(Cardinal(aBasePtr));
 end;
 
-procedure TwbStringListTerminator.SetEditValue(const aValue: string);
+procedure TwbStringListTerminator.SetEditValueInternal(const aValue: string; IsPersistent: Boolean);
 begin
 end;
 

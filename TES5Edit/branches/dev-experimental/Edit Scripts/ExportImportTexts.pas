@@ -300,7 +300,7 @@ begin
         if sl.Text <> slText.Text then begin
           // if debug then AddMessage(x+' modified');
           if doImport then
-            SetEditValue(e, sl.Text)
+            SetPersistentEditValue(e, sl.Text)
           else
             try slText.SaveToFile(x); except end;
 				end;
