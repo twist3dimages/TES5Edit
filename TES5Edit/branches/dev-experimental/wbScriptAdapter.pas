@@ -28,7 +28,10 @@ uses
   wbImplementation,
   wbHelpers,
   wbBSA,
-  wbNifScanner;
+  wbLocalization,
+  wbSort,
+  wbNifScanner,
+  wbLOD;
 
 implementation
 
@@ -269,6 +272,15 @@ begin
   Value := '';
   if Supports(IInterface(Args.Values[0]), IwbElement, Element) then
     Value := Element.BaseName;
+end;
+
+procedure IwbElement_DisplayName(var Value: Variant; Args: TJvInterpreterArgs);
+var
+  Element: IwbElement;
+begin
+  Value := '';
+  if Supports(IInterface(Args.Values[0]), IwbElement, Element) then
+    Value := Element.DisplayName;
 end;
 
 function IntToEsState(anInt: Integer): TwbElementState;
@@ -799,7 +811,7 @@ var
   Element: IwbElement;
 begin
   if Supports(IInterface(Args.Values[0]), IwbContainerElementRef, Container) then
-    if Supports(IInterface(Args.Values[1]), IwbElement, Element) then
+    if Supports(IInterface(Args.Values[2]), IwbElement, Element) then
       Container.InsertElement(integer(Args.Values[1]), Element);
 end;
 
@@ -1360,7 +1372,7 @@ var
   _File: IwbFile;
 begin
   if Supports(IInterface(Args.Values[0]), IwbFile, _File) then
-    Value := _File.HasMaster(StrToSignature(Args.Values[1]));
+    Value := _File.HasMaster(Args.Values[1]);
 end;
 
 procedure IwbFile_HasGroup(var Value: Variant; Args: TJvInterpreterArgs);
@@ -1443,9 +1455,19 @@ end;
 
 { Nif routines }
 
+procedure NifUtils_NifBlockList(var Value: Variant; Args: TJvInterpreterArgs);
+begin
+  Value := NifBlockList(TBytes(Args.Values[0]), TStrings(V2O(Args.Values[1])));
+end;
+
 procedure NifUtils_NifTextureList(var Value: Variant; Args: TJvInterpreterArgs);
 begin
   Value := NifTextures(TBytes(Args.Values[0]), TStrings(V2O(Args.Values[1])));
+end;
+
+procedure NifUtils_NifTextureListUVRange(var Value: Variant; Args: TJvInterpreterArgs);
+begin
+  Value := NifTexturesUVRange(TBytes(Args.Values[0]), Single(Args.Values[1]), TStrings(V2O(Args.Values[2])));
 end;
 
 
@@ -1459,6 +1481,18 @@ end;
 procedure DDSUtils_wbDDSDataToBitmap(var Value: Variant; Args: TJvInterpreterArgs);
 begin
   Value := wbDDSDataToBitmap(TBytes(Args.Values[0]), TBitmap(V2O(Args.Values[1])));
+end;
+
+procedure DDSUtils_wbDDSResourceToBitmap(var Value: Variant; Args: TJvInterpreterArgs);
+var
+  res: TDynResources;
+begin
+  if not Assigned(wbContainerHandler) then
+    Exit;
+
+  res := wbContainerHandler.OpenResource(string(Args.Values[0]));
+  if Length(res) <> 0 then
+    Value := wbDDSDataToBitmap(res[High(res)].GetData, TBitmap(V2O(Args.Values[1])));
 end;
 
 
@@ -1541,6 +1575,84 @@ begin
   Value := wbMD5File(string(Args.Values[0]));
 end;
 
+// find REFR records in child groups by base record signatures
+// that are not deleted or disabled
+procedure Misc_wbFindREFRsByBase(var Value: Variant; Args: TJvInterpreterArgs);
+var
+  MainRecord          : IwbMainRecord;
+  REFRs               : TDynMainRecords;
+  i, Opt              : Integer;
+  lst                 : TList;
+  BaseSignatures      : string;
+begin
+  if not Supports(IInterface(Args.Values[0]), IwbMainRecord, MainRecord) then
+    Exit;
+  BaseSignatures := string(Args.Values[1]);
+  Opt := Integer(Args.Values[2]);
+  lst := TList(V2O(Args.Values[3]));
+  if not Assigned(lst) then
+    Exit;
+
+  REFRs := wbGetSiblingRecords(MainRecord, wbStringToSignatures('REFR'), True);
+  for i := Low(REFRs) to High(REFRs) do
+    if  not ((Opt and 1 <> 0) and REFRs[i].IsDeleted)
+    and not ((Opt and 2 <> 0) and REFRs[i].IsInitiallyDisabled)
+    and not ((Opt and 4 <> 0) and REFRs[i].ElementExists['XESP'])
+    then
+      if Assigned(REFRs[i].BaseRecord) and (Pos(REFRs[i].BaseRecord.Signature, BaseSignatures) <> 0) then
+        lst.Add(Pointer(REFRs[i]));
+end;
+
+procedure Misc_wbGetSiblingRecords(var Value: Variant; Args: TJvInterpreterArgs);
+var
+  Element             : IwbElement;
+  Records             : TDynMainRecords;
+  Overrides           : Boolean;
+  i                   : Integer;
+  lst                 : TList;
+  sigs                : string;
+begin
+  if not Supports(IInterface(Args.Values[0]), IwbElement, Element) then
+    Exit;
+  sigs := string(Args.Values[1]);
+  Overrides := Boolean(Args.Values[2]);
+  lst := TList(V2O(Args.Values[3]));
+  if not Assigned(lst) then
+    Exit;
+
+  Records := wbGetSiblingRecords(Element, wbStringToSignatures(sigs), Overrides);
+  for i := Low(Records) to High(Records) do
+    lst.Add(Pointer(Records[i]));
+end;
+
+procedure Misc_wbNormalizeResourceName(var Value: Variant; Args: TJvInterpreterArgs);
+begin
+  Value := wbNormalizeResourceName(string(Args.Values[0]), Args.Values[1]);
+end;
+
+procedure Misc_wbStringListInString(var Value: Variant; Args: TJvInterpreterArgs);
+var
+  sl: TStringList;
+  s: string;
+  i: integer;
+begin
+  Value := -1;
+  sl := TStringList(V2O(Args.Values[0]));
+  if not Assigned(sl) then
+    Exit;
+  s := string(Args.Values[1]);
+  for i := 0 to Pred(sl.Count) do
+    if Pos(Lowercase(sl[i]), Lowercase(s)) > 0 then begin
+      Value := i;
+      Exit;
+    end;
+end;
+
+procedure Misc_LocalizationGetStringsFromFile(var Value: Variant; Args: TJvInterpreterArgs);
+begin
+  if Assigned(wbLocalizationHandler) then
+    wbLocalizationHandler.GetStringsFromFile(string(Args.Values[0]), TStrings(V2O(Args.Values[1])));
+end;
 
 
 procedure RegisterJvInterpreterAdapter(JvInterpreterAdapter: TJvInterpreterAdapter);
@@ -1559,6 +1671,7 @@ begin
     AddConst(cUnit, 'gmTES5', ord(gmTES5));
     AddConst(cUnit, 'gmFO3', ord(gmFO3));
     AddConst(cUnit, 'gmFNV', ord(gmFNV));
+    AddConst(cUnit, 'gmFO4', ord(gmFO4));
 
     { TwbElementType }
     AddConst(cUnit, 'etFile', ord(etFile));
@@ -1641,6 +1754,12 @@ begin
     AddConst(cUnit, 'csRefsBuild', ord(csRefsBuild));
     AddConst(cUnit, 'csAsCreatedEmpty', ord(csAsCreatedEmpty));
 
+    {TGameResourceType}
+    AddConst(cUnit, 'resMesh', ord(resMesh));
+    AddConst(cUnit, 'resTexture', ord(resTexture));
+    AddConst(cUnit, 'resSound', ord(resSound));
+    AddConst(cUnit, 'resMusic', ord(resMusic));
+
 
     AddFunction(cUnit, 'Assigned', _Assigned, 1, [varEmpty], varEmpty);
     AddFunction(cUnit, 'ObjectToElement', ObjectToElement, 1, [varEmpty], varEmpty);
@@ -1655,6 +1774,7 @@ begin
     AddFunction(cUnit, 'Name', IwbElement_Name, 1, [varEmpty], varEmpty);
     AddFunction(cUnit, 'ShortName', IwbElement_ShortName, 1, [varEmpty], varEmpty);
     AddFunction(cUnit, 'BaseName', IwbElement_BaseName, 1, [varEmpty], varEmpty);
+    AddFunction(cUnit, 'DisplayName', IwbElement_DisplayName, 1, [varEmpty], varEmpty);
     AddFunction(cUnit, 'Path', IwbElement_Path, 1, [varEmpty], varEmpty);
     AddFunction(cUnit, 'FullPath', IwbElement_FullPath, 1, [varEmpty], varEmpty);
     AddFunction(cUnit, 'PathName', IwbElement_PathName, 1, [varEmpty], varEmpty);
@@ -1793,11 +1913,14 @@ begin
     AddGet(TwbFastStringList, 'Create', TwbFastStringList_Create, 0, [varEmpty], varEmpty);
 
     { Nif routines }
+    AddFunction(cUnit, 'NifBlockList', NifUtils_NifBlockList, 2, [varEmpty, varEmpty], varEmpty);
     AddFunction(cUnit, 'NifTextureList', NifUtils_NifTextureList, 2, [varEmpty, varEmpty], varEmpty);
+    AddFunction(cUnit, 'NifTextureListUVRange', NifUtils_NifTextureListUVRange, 3, [varEmpty, varEmpty, varEmpty], varEmpty);
 
     { DDS routines }
     AddFunction(cUnit, 'wbDDSStreamToBitmap', DDSUtils_wbDDSStreamToBitmap, 2, [varEmpty, varEmpty], varEmpty);
     AddFunction(cUnit, 'wbDDSDataToBitmap', DDSUtils_wbDDSDataToBitmap, 2, [varEmpty, varEmpty], varEmpty);
+    AddFunction(cUnit, 'wbDDSResourceToBitmap', DDSUtils_wbDDSResourceToBitmap, 2, [varEmpty, varEmpty], varEmpty);
 
     { Misc routines }
     AddFunction(cUnit, 'wbFlipBitmap', Misc_wbFlipBitmap, 2, [varEmpty, varEmpty], varEmpty);
@@ -1813,6 +1936,11 @@ begin
     AddFunction(cUnit, 'wbSHA1File', Misc_wbSHA1File, 1, [varEmpty], varEmpty);
     AddFunction(cUnit, 'wbMD5Data', Misc_wbMD5Data, 1, [varEmpty], varEmpty);
     AddFunction(cUnit, 'wbMD5File', Misc_wbMD5File, 1, [varEmpty], varEmpty);
+    AddFunction(cUnit, 'wbFindREFRsByBase', Misc_wbFindRefrsByBase, 4, [varEmpty, varEmpty, varEmpty, varEmpty], varEmpty);
+    AddFunction(cUnit, 'wbGetSiblingRecords', Misc_wbGetSiblingRecords, 4, [varEmpty, varEmpty, varEmpty, varEmpty], varEmpty);
+    AddFunction(cUnit, 'wbNormalizeResourceName', Misc_wbNormalizeResourceName, 2, [varEmpty, varEmpty], varEmpty);
+    AddFunction(cUnit, 'wbStringListInString', Misc_wbStringListInString, 2, [varEmpty, varEmpty], varEmpty);
+    AddFunction(cUnit, 'LocalizationGetStringsFromFile', Misc_LocalizationGetStringsFromFile, 2, [varEmpty, varEmpty], varEmpty);
   end;
 end;
 

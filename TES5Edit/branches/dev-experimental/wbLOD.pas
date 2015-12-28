@@ -20,8 +20,10 @@ uses
   Classes,
   SysUtils,
   wbInterface,
+  wbNifScanner,
   ImagingTypes,
   ImagingFormats,
+  ImagingCanvases,
   Imaging;
 
 type
@@ -64,6 +66,9 @@ type
     property PaddingY: Integer read fPaddingY write fPaddingY;
   end;
 
+  TLODType = (lodTerrain, lodTrees, lodObjects);
+  TLODTypes = set of TLODType;
+
   TAtlasRect = record
     x, y, w, h: Integer;
   end;
@@ -77,6 +82,19 @@ type
     procedure LoadFromData(aData: TBytes);
     property Size: Integer read GetSize;
   end;
+
+  TGameResourceType = (resMesh, resTexture, resSound, resMusic);
+
+  // source texture for atlas builder
+  TSourceAtlasTexture = record
+    Name: string;
+    Name_n: string;
+    Image: TImageData;
+    Image_n: TImageData;
+    AtlasName: string;
+    X, Y, W, H: integer;
+  end;
+  TSourceAtlasTextures = array of TSourceAtlasTexture;
 
 {============================== Skyrim LOD ===================================}
 
@@ -122,6 +140,9 @@ type
     // list of trees when building a new LOD
     fTrees: array of TwbLodTES5Tree;
     fAtlas: TImageData;
+    // list of tree references FormID numbers to avoid duplicates
+    fRefFormIDs: TList;
+    fRefAllowDuplicates: Boolean;
   protected
     function GetListFileName: string;
     function GetAtlasFileName: string;
@@ -136,9 +157,11 @@ type
     procedure SaveToFile(aFileName: string);
     procedure LoadAtlas(aData: TBytes);
     function SaveAtlas(aFileName: string): Boolean;
+    procedure ChangeAtlasBrightness(aBrightness: integer);
     procedure SaveFromAtlas(aIndex: Integer; aFileName: string);
     procedure CopyFromAtlas(aIndex: Integer; var Img: TImageData; ImgX, ImgY: Integer);
     function BuildAtlas(MaxAtlasSize: Integer): Boolean;
+    function BillboardFileName(aFileName, aModelName: string; aFormID: Cardinal): string;
     function AddTree(aFileName, aModelName: string; aFormID: Cardinal; aWidth, aHeight: Single): PwbLodTES5Tree;
     property WorldspaceID: string read fWorldspaceID write fWorldspaceID;
     property ListFileName: string read GetListFileName;
@@ -148,6 +171,8 @@ type
     property AtlasRect[Index: Integer]: TAtlasRect read GetAtlasRect;
     property Atlas: TImageData read fAtlas;
     property TreeByFormID[aFormID: Cardinal]: PwbLodTES5Tree read GetTreeByFormID;
+    property RefAllowDuplicates: Boolean read fRefAllowDuplicates write fRefAllowDuplicates;
+    property RefFormIDs: TList read fRefFormIDs;
   end;
 
   // handling BTT file
@@ -162,12 +187,46 @@ type
     procedure Clear;
     procedure LoadFromData(aData: TBytes);
     procedure SaveToFile(aFileName: string);
-    procedure AddReference(aFormID: Cardinal; aTreeIndex: Integer;
-      Pos: TwbVector; Scale: Single);
+    function AddReference(aFormID: Cardinal; aTreeIndex: Integer;
+      Pos: TwbVector; Scale: Single): Boolean;
     property FileName: string read GetBlockFileName;
   end;
 
 function wbLODSettingsFileName(WorldspaceID: string): string;
+function wbLODTreeBlockFileExt: string;
+function wbNormalizeResourceName(aName: string; aResType: TGameResourceType): string;
+procedure wbPrepareImageAlpha(img: TImageData; fmt: TImageFormat);
+procedure wbBuildAtlas(var Images: TSourceAtlasTextures; aWidth, aHeight: Integer;
+  aName: string; fmtDiffuse, fmtNormal: TImageFormat);
+
+
+const
+  // vanilla lOD meshes having translation/rotation that must be ignored
+  sMeshIgnoreTranslationTES5 =
+    'meshes\lod\solitude\cwtower01_lod.nif' + ',' +
+    'meshes\lod\solitude\sfarmhousesilo_lod.nif' + ',' +
+    'meshes\lod\solitude\slumbermill01_lod.nif' + ',' +
+    'meshes\lod\solitude\spatiowall02_lod.nif' + ',' +
+    'meshes\lod\solitude\spatiowall03_lod.nif' + ',' +
+    'meshes\lod\solitude\spatiowall30_lod.nif' + ',' +
+    'meshes\lod\solitude\spatiowallsteps01_lod.nif' + ',' +
+    'meshes\lod\solitude\spatiowallsteps02_lod.nif' + ',' +
+    'meshes\lod\solitude\sstyrrshouse_lod.nif' + ',' +
+    'meshes\lod\solitude\sthe winking skeever_lod.nif' + ',' +
+    'meshes\lod\windhelm\wharena_lod.nif' + ',' +
+    'meshes\lod\windhelm\whbrunwulfsq_lod.nif' + ',' +
+    'meshes\lod\windhelm\whgrayquarter_lod.nif' + ',' +
+    'meshes\lod\windhelm\whinnerwall01_lod.nif' + ',' +
+    'meshes\lod\windhelm\whinnerwall02_lod.nif' + ',' +
+    'meshes\lod\windhelm\whinnland_lod.nif' + ',' +
+    'meshes\lod\windhelm\whmaingate_lod.nif' + ',' +
+    'meshes\lod\windhelm\whmarket01_lod.nif' + ',' +
+    'meshes\lod\windhelm\whouterwall3_lod.nif' + ',' +
+    'meshes\lod\windhelm\whpalace_lod.nif' + ',' +
+    'meshes\lod\windhelm\whtempletalos_lod.nif' + ',' +
+    'meshes\lod\windhelm\whvalunstrad_lod.nif';
+
+  sMeshIgnoreTranslationFNV = 'nif'; // all LOD meshes
 
 implementation
 
@@ -183,6 +242,17 @@ begin
   else
     Result := 'lodsettings\' + WorldspaceID + '.lod';
 end;
+
+function wbLODTreeBlockFileExt: string;
+begin
+  if wbGameMode = gmTES5 then
+    Result := 'btt'
+  else if wbGameMode in [gmFO3, gmFNV] then
+    Result := 'dtl'
+  else
+    Result := '';
+end;
+
 
 { TwbLodSettings }
 
@@ -209,11 +279,11 @@ const
 begin
   // Fallouts
   if wbGameMode in [gmFO3, gmFNV] then begin
-    if Length(aData) <> 16 then
+    if Length(aData) <> 24 then
       raise Exception.Create(sError);
-    Stride := PInteger(@aData[0])^;
-    LODLevelMin := PInteger(@aData[4])^;
-    LODLevelMax := PInteger(@aData[8])^;
+    LODLevelMin := PInteger(@aData[0])^;
+    LODLevelMax := PInteger(@aData[4])^;
+    Stride := PInteger(@aData[8])^;
     SWCell.x := PSmallInt(@aData[12])^;
     SWCell.y := PSmallInt(@aData[14])^;
   end
@@ -296,6 +366,7 @@ function TwbBinPacker.Fit(var Blocks: TDynBinBlockArray): Boolean;
       changed := False;
       for i := Low(Blocks) to Pred(High(Blocks)) do
         if Max(Blocks[i].w, Blocks[i].h) < Max(Blocks[i+1].w, Blocks[i+1].h) then begin
+        //if Blocks[i].w * Blocks[i].h < Blocks[i+1].w * Blocks[i+1].h then begin
           temp := Blocks[i+1];
           Blocks[i+1] := Blocks[i];
           Blocks[i] := temp;
@@ -345,6 +416,8 @@ begin
   fWorldspaceID := WorldspaceID;
   if fWorldspaceID = '' then
     fWorldspaceID := 'Tamriel';
+  RefAllowDuplicates := False;
+  fRefFormIDs := TList.Create;
 end;
 
 destructor TwbLodTES5TreeList.Destroy;
@@ -356,17 +429,31 @@ begin
   for i := Low(fTrees) to High(fTrees) do
     if fTrees[i].Image.Format <> ifUnknown then
       FreeImage(fTrees[i].Image);
+  fRefFormIDs.Free;
   inherited;
 end;
 
 function TwbLodTES5TreeList.GetListFileName: string;
 begin
-  Result := 'Meshes\Terrain\' + fWorldspaceID + '\Trees\' + fWorldspaceID + '.lst';
+  if wbGameMode = gmTES5 then
+    Result := 'Meshes\Terrain\' + fWorldspaceID + '\Trees\' + fWorldspaceID + '.lst'
+  else if wbGameMode in [gmFO3, gmFNV] then
+    Result := 'Meshes\Landscape\LOD\' + fWorldspaceID + '\Trees\TreeTypes.lst'
+  else
+    Result := '';
 end;
 
 function TwbLodTES5TreeList.GetAtlasFileName: string;
 begin
-  Result := 'Textures\Terrain\' + fWorldspaceID + '\Trees\' + fWorldspaceID + 'TreeLod.dds';
+  if wbGameMode = gmTES5 then
+    Result := 'Textures\Terrain\' + fWorldspaceID + '\Trees\' + fWorldspaceID + 'TreeLod.dds'
+  else if wbGameMode in [gmFO3, gmFNV] then begin
+    if SameText(Copy(fWorldspaceID, 1, 4), 'DLC4') then
+      Result := 'Textures\Landscape\Trees\TreeSwampLod.dds'
+    else
+      Result := 'Textures\Landscape\Trees\TreeDeadLod.dds';
+  end else
+    Result := '';
 end;
 
 function TwbLodTES5TreeList.GetTreesListCount: Integer;
@@ -404,6 +491,15 @@ begin
     end;
 end;
 
+function TwbLodTES5TreeList.BillboardFileName(aFileName, aModelName: string; aFormID: Cardinal): string;
+begin
+  Result := Format('Textures\Terrain\LODGen\%s\%s_%s.dds', [
+    aFileName,
+    ChangeFileExt(ExtractFileName(aModelName), ''),
+    IntToHex(aFormID and $FFFFFF, 8)
+  ]);
+end;
+
 function TwbLodTES5TreeList.AddTree(aFileName, aModelName: string; aFormID: Cardinal; aWidth, aHeight: Single): PwbLodTES5Tree;
 var
   i, idx: integer;
@@ -415,11 +511,7 @@ begin
   Result := @fTrees[Pred(Length(fTrees))];
   Result^.Index := Succ(idx);
   Result^.FormID := aFormID;
-  Result^.BillBoard := Format('Textures\Terrain\LODGen\%s\%s_%s.dds', [
-    aFileName,
-    ChangeFileExt(ExtractFileName(aModelName), ''),
-    IntToHex(aFormID and $FFFFFF, 8)
-  ]);
+  Result^.BillBoard := BillboardFileName(aFileName, aModelName, aFormID);
   Result^.Width := aWidth;
   Result^.Height := aHeight;
   Result^.ShiftX := 0.0;
@@ -484,6 +576,21 @@ begin
       Result := SaveMultiImageToFile(aFileName, MipmapImg);
   finally
     FreeImagesInArray(MipmapImg);
+  end;
+end;
+
+procedure TwbLodTES5TreeList.ChangeAtlasBrightness(aBrightness: integer);
+var
+  Canvas: TImagingCanvas;
+begin
+  if aBrightness = 0 then
+    Exit;
+
+  Canvas := TImagingCanvas.CreateForData(@fAtlas);
+  try
+    Canvas.ModifyContrastBrightness(aBrightness / 10, aBrightness);
+  finally
+    Canvas.Free;
   end;
 end;
 
@@ -610,7 +717,16 @@ end;
 
 function TwbLodTES5TreeBlock.GetBlockFileName: string;
 begin
-  Result := Format('meshes\terrain\%s\trees\%s.%d.%d.%d.btt', [
+  Result := '';
+
+  if wbGameMode = gmTES5 then
+    Result := 'meshes\terrain\%s\trees\%s.%d.%d.%d.' + wbLODTreeBlockFileExt
+  else if wbGameMode in [gmFO3, gmFNV] then
+    Result := 'meshes\landscape\lod\%s\trees\%s.level%d.x%d.y%d.' + wbLODTreeBlockFileExt
+  else
+    Exit;
+
+  Result := Format(Result, [
     TreeList.WorldspaceID,
     TreeList.WorldspaceID,
     LODLevel,
@@ -621,7 +737,7 @@ end;
 
 procedure TwbLodTES5TreeBlock.LoadFromData(aData: TBytes);
 const
-  sError = 'Invalid BTT file';
+  sError = 'Invalid tree LOD block file';
 var
   TypesNum, TreesNum, i, p: integer;
 begin
@@ -685,11 +801,16 @@ begin
   end;
 end;
 
-procedure TwbLodTES5TreeBlock.AddReference(aFormID: Cardinal; aTreeIndex: Integer;
-  Pos: TwbVector; Scale: Single);
+function TwbLodTES5TreeBlock.AddReference(aFormID: Cardinal; aTreeIndex: Integer;
+  Pos: TwbVector; Scale: Single): Boolean;
 var
   i, j: integer;
 begin
+  // check that FormID number is not duplicate
+  if (not TreeList.RefAllowDuplicates) and (TreeList.RefFormIDs.IndexOf(Pointer(aFormID and $00FFFFFF)) <> -1) then begin
+    Result := False;
+    Exit;
+  end;
   j := -1;
   for i := Low(Types) to High(Types) do
     if Types[i].Index = aTreeIndex then begin
@@ -712,6 +833,209 @@ begin
   Refs[j][i].Z := Pos.z;
   Refs[j][i].Scale := Scale;
   Refs[j][i].Rotation := 2*Pi*Random;
+
+  TreeList.RefFormIDs.Add(Pointer(aFormID and $00FFFFFF));
+  Result := True;
+end;
+
+function wbNormalizeResourceName(aName: string; aResType: TGameResourceType): string;
+var
+  i: integer;
+begin
+  Result := Trim(StringReplace(LowerCase(aName), '/', '\', [rfReplaceAll]));
+  if Length(Result) < 2 then
+    Exit;
+
+  // absolute path, cut everything before Data or leave only file name
+  if Result[2] = ':' then begin
+    i := Pos('data\', Result);
+    if i <> 0 then
+      Delete(Result, 1, Pred(i))
+    else
+      Result := ExtractFileName(Result);
+  end;
+  // starts with slash, remove it
+  if Result[1] = '\' then Delete(Result, 1, 1);
+  // starts with Data, remove it
+  if Copy(Result, 1, 5) = 'data\' then Delete(Result, 1, 5);
+  // root folder in Data for different resource types
+  if (aResType = resMesh) and (Copy(Result, 1, 7) <> 'meshes\') then
+    Result := 'meshes\' + Result
+  else if (aResType = resTexture) and (Copy(Result, 1, 9) <> 'textures\') then
+    Result := 'textures\' + Result
+  else if (aResType = resSound) and (Copy(Result, 1, 6) <> 'sound\') then
+    Result := 'sound\' + Result
+  else if (aResType = resMusic) and (Copy(Result, 1, 6) <> 'music\') then
+    Result := 'music\' + Result;
+end;
+
+procedure wbPrepareImageAlpha(img: TImageData; fmt: TImageFormat);
+var
+  x, y: integer;
+  c: TColor32Rec;
+begin
+  // Max alpha for formats saved without alpha, otherwise they will become black
+  if fmt in [ifDXT1, ifR8G8B8] then begin
+    for x := 0 to Pred(img.Width) do
+      for y := 0 to Pred(img.Height) do begin
+        c := GetPixel32(img, x, y);
+        if c.A <> 255 then begin
+          c.A := 255;
+          SetPixel32(img, x, y, c);
+        end;
+      end;
+  end;
+end;
+
+procedure wbBuildAtlas(var Images: TSourceAtlasTextures; aWidth, aHeight: Integer;
+  aName: string; fmtDiffuse, fmtNormal: TImageFormat
+);
+var
+  i, num, maxw, maxh: integer;
+  Blocks, Blocks2: TDynBinBlockArray;
+  atlas, crop: TImageData;
+  mipmap: TDynImageDataArray;
+  fname: string;
+begin
+  if Length(Images) = 0 then
+    Exit;
+
+  SetLength(Blocks, Length(Images));
+  for i := Low(Blocks) to High(Blocks) do begin
+    Blocks[i].Index := i;
+    Blocks[i].w := Images[i].Image.Width;
+    Blocks[i].h := Images[i].Image.Height;
+  end;
+
+  SetOption(ImagingMipMapFilter, Ord(sfLanczos));
+  num := 0;
+  aName := ChangeFileExt(aName, '');
+
+  with TwbBinPacker.Create do try
+    Width := aWidth;
+    Height := aHeight;
+    repeat
+      // try to fit images on atlas
+      while not Fit(Blocks) do begin
+        // if not fit, remove images one by one from the end and try again
+        // at least 2 textures per atlas, useless otherwise
+        if Length(Blocks) > 2 then begin
+          SetLength(Blocks2, Succ(Length(Blocks2)));
+          Blocks2[Pred(Length(Blocks2))] := Blocks[Pred(Length(Blocks))];
+          SetLength(Blocks, Pred(Length(Blocks)));
+        end else
+          Exit;
+      end;
+      // we are here if Blocks fit
+      // if unfitted blocks are left, then numerate atlases
+      if (Length(Blocks2) <> 0) or (num <> 0) then
+        fname := aName + Format('%.2d', [num]) + '.dds'
+      else
+        fname := aName + '.dds';
+
+      // diffuse atlas
+      NewImage(aWidth, aHeight, ifDefault, atlas);
+      try
+        maxw := 0;
+        maxh := 0;
+        for i := Low(Blocks) to High(Blocks) do begin
+          CopyRect(
+            Images[Blocks[i].Index].Image, 0, 0, Blocks[i].w, Blocks[i].h,
+            atlas, Blocks[i].x, Blocks[i].y
+          );
+          Images[Blocks[i].Index].AtlasName := fname;
+          Images[Blocks[i].Index].X := Blocks[i].x;
+          Images[Blocks[i].Index].Y := Blocks[i].y;
+          // find the actual width and height of atlas tiles
+          if maxw < Blocks[i].x + Blocks[i].w then
+            maxw := Blocks[i].x + Blocks[i].w;
+          if maxh < Blocks[i].y + Blocks[i].h then
+            maxh := Blocks[i].y + Blocks[i].h;
+        end;
+
+        // round to the larger power of 2 value
+        i := 1; while i < maxw do i := i * 2; maxw := i;
+        i := 1; while i < maxh do i := i * 2; maxh := i;
+        // crop if less than atlas size
+        if (maxw < aWidth) or (maxh < aHeight) then begin
+          NewImage(maxw, maxh, ifDefault, crop);
+          try
+            CopyRect(atlas, 0, 0, maxw, maxh, crop, 0, 0);
+            CloneImage(crop, atlas);
+          finally
+            FreeImage(crop);
+          end;
+        end;
+        // store atlas size
+        for i := Low(Blocks) to High(Blocks) do begin
+          Images[Blocks[i].Index].W := maxw;
+          Images[Blocks[i].Index].H := maxh;
+        end;
+
+        wbPrepareImageAlpha(atlas, fmtDiffuse);
+        if not ConvertImage(atlas, fmtDiffuse) then
+          raise Exception.Create('Image convertion error');
+
+        try
+          GenerateMipMaps(atlas, 0, mipmap);
+          SaveMultiImageToFile(fname, mipmap);
+        finally
+          FreeImagesInArray(mipmap);
+        end;
+      finally
+        FreeImage(atlas);
+      end;
+
+      // normals atlas
+      if (Length(Blocks2) <> 0) or (num <> 0) then
+        fname := aName + Format('%.2d', [num]) + '_n.dds'
+      else
+        fname := aName + '_n.dds';
+
+      NewImage(aWidth, aHeight, ifDefault, atlas);
+      try
+        for i := Low(Blocks) to High(Blocks) do
+          CopyRect(
+            Images[Blocks[i].Index].Image_n, 0, 0, Blocks[i].w, Blocks[i].h,
+            atlas, Blocks[i].x, Blocks[i].y
+          );
+
+        // crop if less than atlas size
+        if (maxw < aWidth) or (maxh < aHeight) then begin
+          NewImage(maxw, maxh, ifDefault, crop);
+          try
+            CopyRect(atlas, 0, 0, maxw, maxh, crop, 0, 0);
+            CloneImage(crop, atlas);
+          finally
+            FreeImage(crop);
+          end;
+        end;
+
+        wbPrepareImageAlpha(atlas, fmtNormal);
+        if not ConvertImage(atlas, fmtNormal) then
+          raise Exception.Create('Image convertion error');
+
+        try
+          GenerateMipMaps(atlas, 0, mipmap);
+          SaveMultiImageToFile(fname, mipmap);
+        finally
+          FreeImagesInArray(mipmap);
+        end;
+      finally
+        FreeImage(atlas);
+      end;
+
+      // copy remaining blocks back
+      SetLength(Blocks, Length(Blocks2));
+      if Length(Blocks) <> 0 then
+        for i := Low(Blocks) to High(Blocks) do
+          Blocks[i] := Blocks2[i];
+      SetLength(Blocks2, 0);
+      Inc(num);
+    until Length(Blocks) = 0;
+  finally
+    Free;
+  end;
 end;
 
 end.

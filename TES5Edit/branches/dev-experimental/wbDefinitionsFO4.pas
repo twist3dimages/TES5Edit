@@ -12,13 +12,13 @@
 
 *******************************************************************************}
 
-unit wbDefinitionsTES5;
+unit wbDefinitionsFO4;
 
 {$I wbDefines.inc}
 
 interface
 
-procedure DefineTES5;
+procedure DefineFO4;
 
 implementation
 
@@ -114,15 +114,19 @@ const
   ACPR : TwbSignature = 'ACPR'; { New To Skyrim }
   ACSR : TwbSignature = 'ACSR'; { New To Dawnguard }
   ACTI : TwbSignature = 'ACTI';
+  ACTV : TwbSignature = 'ACTV'; { New To Fallout 4 }
   ACUN : TwbSignature = 'ACUN'; { New To Dawnguard }
   ADDN : TwbSignature = 'ADDN';
+  AECH : TwbSignature = 'AECH'; { New To Fallout 4 }
   AHCF : TwbSignature = 'AHCF'; { New To Skyrim }
   AHCM : TwbSignature = 'AHCM'; { New To Skyrim }
   AIDT : TwbSignature = 'AIDT';
   ALCA : TwbSignature = 'ALCA'; { New To Skyrim }
+  ALCC : TwbSignature = 'ALCC'; { New To Fallout 4 }
   ALCH : TwbSignature = 'ALCH';
   ALCL : TwbSignature = 'ALCL'; { New To Skyrim }
   ALCO : TwbSignature = 'ALCO'; { New To Skyrim }
+  ALCS : TwbSignature = 'ALCS'; { New To Fallout 4 }
   ALDN : TwbSignature = 'ALDN'; { New To Skyrim }
   ALEA : TwbSignature = 'ALEA'; { New To Skyrim }
   ALED : TwbSignature = 'ALED'; { New To Skyrim }
@@ -134,8 +138,11 @@ const
   ALFI : TwbSignature = 'ALFI'; { New To Skyrim }
   ALFL : TwbSignature = 'ALFL'; { New To Skyrim }
   ALFR : TwbSignature = 'ALFR'; { New To Skyrim }
+  ALFV : TwbSignature = 'ALFV'; { New To Fallout 4 }
   ALID : TwbSignature = 'ALID'; { New To Skyrim }
+  ALLA : TwbSignature = 'ALLA'; { New To Fallout 4 }
   ALLS : TwbSignature = 'ALLS'; { New To Skyrim }
+  ALMI : TwbSignature = 'ALMI'; { New To Fallout 4 }
   ALNA : TwbSignature = 'ALNA'; { New To Skyrim }
   ALNT : TwbSignature = 'ALNT'; { New To Skyrim }
   ALPC : TwbSignature = 'ALPC'; { New To Skyrim }
@@ -143,10 +150,13 @@ const
   ALSP : TwbSignature = 'ALSP'; { New To Skyrim }
   ALST : TwbSignature = 'ALST'; { New To Skyrim }
   ALUA : TwbSignature = 'ALUA'; { New To Skyrim }
+  AMDL : TwbSignature = 'AMDL'; { New To Fallout 4 }
   AMMO : TwbSignature = 'AMMO';
   ANAM : TwbSignature = 'ANAM';
   ANIO : TwbSignature = 'ANIO';
-  APPA : TwbSignature = 'APPA';
+  AOR2 : TwbSignature = 'AOR2'; { New To Fallout 4 }
+  AORU : TwbSignature = 'AORU'; { New To Fallout 4 }
+  APPR : TwbSignature = 'APPR'; { New To Fallout 4 }
   ARMA : TwbSignature = 'ARMA';
   ARMO : TwbSignature = 'ARMO';
   ARTO : TwbSignature = 'ARTO';
@@ -155,14 +165,22 @@ const
   ATKD : TwbSignature = 'ATKD'; { New to Skyrim }
   ATKE : TwbSignature = 'ATKE'; { New to Skyrim }
   ATKR : TwbSignature = 'ATKR'; { New to Skyrim }
+  ATKT : TwbSignature = 'ATKT'; { New To Fallout 4 }
+  ATKS : TwbSignature = 'ATKS'; { New To Fallout 4 }
+  ATKW : TwbSignature = 'ATKW'; { New To Fallout 4 }
+  ATTN : TwbSignature = 'ATTN'; { New To Fallout 4 }
+  ATTX : TwbSignature = 'ATTX'; { New To Fallout 4 }
   ATXT : TwbSignature = 'ATXT';
+  AVFL : TwbSignature = 'AVFL'; { New To Fallout 4 }
   AVIF : TwbSignature = 'AVIF';
   AVSK : TwbSignature = 'AVSK'; { New to Skyrim }
   BAMT : TwbSignature = 'BAMT'; { New to Skyrim }
   BIDS : TwbSignature = 'BIDS'; { New to Skyrim }
   BIPL : TwbSignature = 'BIPL';
   BMCT : TwbSignature = 'BMCT';
+  BMMP : TwbSignature = 'BMMP'; { New to Fallout 4 }
   BNAM : TwbSignature = 'BNAM';
+  BNDS : TwbSignature = 'BNDS'; { New to Fallout 4 }
   BOD2 : TwbSignature = 'BOD2'; { New to Skyrim 1.6.91 CK}
   BODT : TwbSignature = 'BODT'; { New to Skyrim }
   BOOK : TwbSignature = 'BOOK';
@@ -172,16 +190,22 @@ const
   BPNT : TwbSignature = 'BPNT';
   BPTD : TwbSignature = 'BPTD';
   BPTN : TwbSignature = 'BPTN';
+  BSIZ : TwbSignature = 'BSIZ'; { New to Fallout 4 }
+  BSMB : TwbSignature = 'BSMB'; { New to Fallout 4 }
+  BSMP : TwbSignature = 'BSMP'; { New to Fallout 4 }
+  BSMS : TwbSignature = 'BSMS'; { New to Fallout 4 }
   BTXT : TwbSignature = 'BTXT';
   CAMS : TwbSignature = 'CAMS';
+  CDIX : TwbSignature = 'CDIX'; { New to Fallout 4 }
   CELL : TwbSignature = 'CELL';
   CIS1 : TwbSignature = 'CIS1'; { New to Skyrim }
   CIS2 : TwbSignature = 'CIS2'; { New to Skyrim }
   CITC : TwbSignature = 'CITC'; { New to Skyrim }
   CLAS : TwbSignature = 'CLAS';
-  CLDC : TwbSignature = 'CLDC'; { New to Skyrim, but unused }
   CLFM : TwbSignature = 'CLFM';
   CLMT : TwbSignature = 'CLMT';
+  CLSZ : TwbSignature = 'CLSZ'; { New to Fallout 4 }
+  CMPO : TwbSignature = 'CMPO'; { New to Fallout 4 }
   CNAM : TwbSignature = 'CNAM';
   CNTO : TwbSignature = 'CNTO';
   COBJ : TwbSignature = 'COBJ';
@@ -193,8 +217,15 @@ const
   CRDT : TwbSignature = 'CRDT';
   CRGR : TwbSignature = 'CRGR'; { New to Skyrim }
   CRIF : TwbSignature = 'CRIF'; { New to Skyrim }
+  CRIS : TwbSignature = 'CRIS'; { New to Fallout 4 }
   CRVA : TwbSignature = 'CRVA'; { New to Skyrim }
+  CS2H : TwbSignature = 'CS2H'; { New To Fallout 4 }
+  CS2D : TwbSignature = 'CS2D'; { New To Fallout 4 }
+  CS2E : TwbSignature = 'CS2E'; { New To Fallout 4 }
+  CS2F : TwbSignature = 'CS2F'; { New To Fallout 4 }
+  CS2K : TwbSignature = 'CS2K'; { New To Fallout 4 }
   CSCR : TwbSignature = 'CSCR';
+  CSCV : TwbSignature = 'CSCV'; { New To Fallout 4 }
   CSDC : TwbSignature = 'CSDC';
   CSDI : TwbSignature = 'CSDI';
   CSDT : TwbSignature = 'CSDT';
@@ -203,9 +234,14 @@ const
   CSLR : TwbSignature = 'CSLR'; { New to Skyrim }
   CSMD : TwbSignature = 'CSMD'; { New to Skyrim }
   CSME : TwbSignature = 'CSME'; { New to Skyrim }
+  CSRA : TwbSignature = 'CSRA'; { New To Fallout 4 }
   CSTY : TwbSignature = 'CSTY';
   CTDA : TwbSignature = 'CTDA';
+  CUSD : TwbSignature = 'CUSD'; { New to Fallout 4 }
+  CVPA : TwbSignature = 'CVPA'; { New to Fallout 4 }
   DALC : TwbSignature = 'DALC'; { New to Skyrim }
+  DAMA : TwbSignature = 'DAMA'; { New to Fallout 4 }
+  DAMC : TwbSignature = 'DAMC'; { New to Fallout 4 }
   DATA : TwbSignature = 'DATA';
   DEBR : TwbSignature = 'DEBR';
   DELE : TwbSignature = 'DELE';
@@ -213,6 +249,7 @@ const
   DESC : TwbSignature = 'DESC';
   DEST : TwbSignature = 'DEST';
   DEVA : TwbSignature = 'DEVA'; { New to Skyrim }
+  DFOB : TwbSignature = 'DFOB'; { New to Fallout 4 }
   DFTF : TwbSignature = 'DFTF'; { New To Skyrim }
   DFTM : TwbSignature = 'DFTM'; { New To Skyrim }
   DIAL : TwbSignature = 'DIAL';
@@ -222,6 +259,7 @@ const
   DMDL : TwbSignature = 'DMDL';
   DMDS : TwbSignature = 'DMDS'; { New to Skyrim }
   DMDT : TwbSignature = 'DMDT';
+  DMGT : TwbSignature = 'DMGT'; { New to Fallout 4 }
   DMIN : TwbSignature = 'DMIN'; { New to Skyrim }
   DNAM : TwbSignature = 'DNAM';
   DOBJ : TwbSignature = 'DOBJ';
@@ -229,8 +267,11 @@ const
   DOFT : TwbSignature = 'DOFT'; { New to Skyrim }
   DOOR : TwbSignature = 'DOOR';
   DPLT : TwbSignature = 'DPLT'; { New to Skyrim }
+  DSTA : TwbSignature = 'DSTA'; { New To Fallout 4 }
   DSTD : TwbSignature = 'DSTD';
   DSTF : TwbSignature = 'DSTF';
+  DTGT : TwbSignature = 'DTGT'; { New To Fallout 4 }
+  DTID : TwbSignature = 'DTID'; { New To Fallout 4 }
   DUAL : TwbSignature = 'DUAL';
   EAMT : TwbSignature = 'EAMT';
   ECOR : TwbSignature = 'ECOR'; { New to Skyrim }
@@ -245,6 +286,7 @@ const
   ENIT : TwbSignature = 'ENIT';
   EPF2 : TwbSignature = 'EPF2';
   EPF3 : TwbSignature = 'EPF3';
+  EPFB : TwbSignature = 'EPFB'; { New To Fallout 4 }
   EPFD : TwbSignature = 'EPFD';
   EPFT : TwbSignature = 'EPFT';
   EQUP : TwbSignature = 'EQUP';
@@ -254,11 +296,17 @@ const
   EYES : TwbSignature = 'EYES';
   FACT : TwbSignature = 'FACT';
   FCHT : TwbSignature = 'FCHT'; { New to Skyrim }
+  FFFF : TwbSignature = 'FFFF';
+  FIMD : TwbSignature = 'FIMD'; { New To Fallout 4 }
   FLMV : TwbSignature = 'FLMV'; { New to Skyrim }
   FLOR : TwbSignature = 'FLOR';
   FLST : TwbSignature = 'FLST';
   FLTR : TwbSignature = 'FLTR'; { New to Skyrim }
   FLTV : TwbSignature = 'FLTV';
+  FMIN : TwbSignature = 'FMIN'; { New To Fallout 4 }
+  FMRI : TwbSignature = 'FMRI'; { New To Fallout 4 }
+  FMRN : TwbSignature = 'FMRN'; { New To Fallout 4 }
+  FMRS : TwbSignature = 'FMRS'; { New To Fallout 4 }
   FNAM : TwbSignature = 'FNAM';
   FNMK : TwbSignature = 'FNMK'; { New to Skyrim }
   FNPR : TwbSignature = 'FNPR'; { New to Skyrim }
@@ -268,14 +316,17 @@ const
   FTSF : TwbSignature = 'FTSF'; { New to Skyrim }
   FTSM : TwbSignature = 'FTSM'; { New to Skyrim }
   FTST : TwbSignature = 'FTST'; { New to Skyrim }
+  FTYP : TwbSignature = 'FTYP'; { New To Fallout 4 }
   FULL : TwbSignature = 'FULL';
   FURN : TwbSignature = 'FURN';
+  FVPA : TwbSignature = 'FVPA'; { New To Fallout 4 }
+  GDRY : TwbSignature = 'GDRY'; { New to Fallout 4 }
   GLOB : TwbSignature = 'GLOB';
   GMST : TwbSignature = 'GMST';
   GNAM : TwbSignature = 'GNAM';
   GRAS : TwbSignature = 'GRAS';
+  GREE : TwbSignature = 'GREE'; { New to Fallout 4 }
   GWOR : TwbSignature = 'GWOR'; { New to Skyrim }
-  HAIR : TwbSignature = 'HAIR'; { Unused in Skyrim, but contained in Skyrim.esm }
   HAZD : TwbSignature = 'HAZD';
   HCLF : TwbSignature = 'HCLF'; { New to Skyrim }
   HDPT : TwbSignature = 'HDPT';
@@ -300,9 +351,18 @@ const
   INDX : TwbSignature = 'INDX';
   INFO : TwbSignature = 'INFO';
   INGR : TwbSignature = 'INGR';
+  INNR : TwbSignature = 'INNR'; { New To Fallout 4 }
+  INRD : TwbSignature = 'INRD'; { New To Fallout 4 }
+  INTT : TwbSignature = 'INTT'; { New To Fallout 4 }
   INTV : TwbSignature = 'INTV';
+  IOVR : TwbSignature = 'IOVR'; { New To Fallout 4 }
   IPCT : TwbSignature = 'IPCT';
   IPDS : TwbSignature = 'IPDS';
+  ISIZ : TwbSignature = 'ISIZ'; { New To Fallout 4 }
+  ITID : TwbSignature = 'ITID'; { New To Fallout 4 }
+  ITMC : TwbSignature = 'ITMC'; { New To Fallout 4 }
+  ITME : TwbSignature = 'ITME'; { New To Fallout 4 }
+  ITMS : TwbSignature = 'ITMS'; { New To Fallout 4 }
   ITXT : TwbSignature = 'ITXT';
   JAIL : TwbSignature = 'JAIL'; { New To Skyrim }
   JNAM : TwbSignature = 'JNAM';
@@ -310,9 +370,11 @@ const
   KEYM : TwbSignature = 'KEYM';
   KNAM : TwbSignature = 'KNAM';
   KSIZ : TwbSignature = 'KSIZ';
+  KSSM : TwbSignature = 'KSSM'; { New To Fallout 4 }
   KWDA : TwbSignature = 'KWDA';
   KYWD : TwbSignature = 'KYWD';
   LAND : TwbSignature = 'LAND';
+  LAYR : TwbSignature = 'LAYR'; { New to Fallout 4 }
   LCEC : TwbSignature = 'LCEC'; { New to Skyrim }
   LCEP : TwbSignature = 'LCEP'; { New to Skyrim }
   LCID : TwbSignature = 'LCID'; { New to Skyrim }
@@ -321,21 +383,31 @@ const
   LCSR : TwbSignature = 'LCSR'; { New to Skyrim }
   LCTN : TwbSignature = 'LCTN';
   LCUN : TwbSignature = 'LCUN'; { New to Skyrim }
+  LENS : TwbSignature = 'LENS'; { New to Fallout 4 }
+  LFSD : TwbSignature = 'LFSD'; { New to Fallout 4 }
+  LFSP : TwbSignature = 'LFSP'; { New to Fallout 4 }
   LGTM : TwbSignature = 'LGTM';
   LIGH : TwbSignature = 'LIGH';
   LLCT : TwbSignature = 'LLCT'; {New to Skyrim, part of LVLI 'Count'}
+  LLKC : TwbSignature = 'LLKC'; { New to Fallout 4 }
   LNAM : TwbSignature = 'LNAM';
   LSCR : TwbSignature = 'LSCR';
+  LSPR : TwbSignature = 'LSPR'; { New to Fallout 4 }
   LTEX : TwbSignature = 'LTEX';
   LTMP : TwbSignature = 'LTMP';
+  LTPT : TwbSignature = 'LTPT'; { New to Fallout 4 }
+  LTPC : TwbSignature = 'LTPC'; { New to Fallout 4 }
   LVLC : TwbSignature = 'LVLC';
   LVLD : TwbSignature = 'LVLD';
   LVLF : TwbSignature = 'LVLF';
   LVLG : TwbSignature = 'LVLG';
   LVLI : TwbSignature = 'LVLI';
+  LVLM : TwbSignature = 'LVLM'; { New to Fallout 4 }
   LVLN : TwbSignature = 'LVLN';
   LVLO : TwbSignature = 'LVLO';
+  LVSG : TwbSignature = 'LVSG'; { New to Fallout 4 }
   LVSP : TwbSignature = 'LVSP';
+  MASE : TwbSignature = 'MASE'; { New To Fallout 4 }
   MAST : TwbSignature = 'MAST';
   MATO : TwbSignature = 'MATO';
   MATT : TwbSignature = 'MATT';
@@ -345,34 +417,64 @@ const
   MGEF : TwbSignature = 'MGEF';
   MHDT : TwbSignature = 'MHDT'; { New to Skyrim }
   MIC2 : TwbSignature = 'MIC2';
+  MICN : TwbSignature = 'MICN'; { New to Fallout 4 }
   MICO : TwbSignature = 'MICO';
   MISC : TwbSignature = 'MISC';
+  MLSI : TwbSignature = 'MLSI'; { New to Fallout 4 }
   MNAM : TwbSignature = 'MNAM';
+  MO2C : TwbSignature = 'MO2C'; { New to Fallout 4 }
+  MO2F : TwbSignature = 'MO2F'; { New to Fallout 4 }
   MO2S : TwbSignature = 'MO2S';
   MO2T : TwbSignature = 'MO2T';
+  MO3C : TwbSignature = 'MO3C'; { New to Fallout 4 }
+  MO3F : TwbSignature = 'MO3F'; { New to Fallout 4 }
   MO3S : TwbSignature = 'MO3S';
   MO3T : TwbSignature = 'MO3T';
+  MO4C : TwbSignature = 'MO4C'; { New to Fallout 4 }
+  MO4F : TwbSignature = 'MO4F'; { New to Fallout 4 }
   MO4S : TwbSignature = 'MO4S';
   MO4T : TwbSignature = 'MO4T';
+  MO5C : TwbSignature = 'MO5C'; { New to Fallout 4 }
+  MO5F : TwbSignature = 'MO5F'; { New to Fallout 4 }
   MO5S : TwbSignature = 'MO5S'; { New to Skyrim }
   MO5T : TwbSignature = 'MO5T'; { New to Skyrim }
   MOD2 : TwbSignature = 'MOD2';
   MOD3 : TwbSignature = 'MOD3';
   MOD4 : TwbSignature = 'MOD4';
   MOD5 : TwbSignature = 'MOD5'; { New to Skyrim }
-  MODD : TwbSignature = 'MODD';
+  MODC : TwbSignature = 'MODC'; { New to Fallout 4 }
+  MODF : TwbSignature = 'MODF'; { New to Fallout 4 }
   MODL : TwbSignature = 'MODL';
   MODS : TwbSignature = 'MODS';
   MODT : TwbSignature = 'MODT';
+  MODQ : TwbSignature = 'MODQ'; { New to Fallout 4 }
   MOVT : TwbSignature = 'MOVT';
   MPAI : TwbSignature = 'MPAI'; { New To Skyrim }
   MPAV : TwbSignature = 'MPAV'; { New To Skyrim }
+  MPCD : TwbSignature = 'MPCD'; { New to Fallout 4 }
+  MPGN : TwbSignature = 'MPGN'; { New to Fallout 4 }
+  MPGS : TwbSignature = 'MPGS'; { New to Fallout 4 }
+  MPPC : TwbSignature = 'MPPC'; { New to Fallout 4 }
+  MPPF : TwbSignature = 'MPPF'; { New to Fallout 4 }
+  MPPI : TwbSignature = 'MPPI'; { New to Fallout 4 }
+  MPPK : TwbSignature = 'MPPK'; { New to Fallout 4 }
+  MPPM : TwbSignature = 'MPPM'; { New to Fallout 4 }
+  MPPN : TwbSignature = 'MPPN'; { New to Fallout 4 }
+  MPPT : TwbSignature = 'MPPT'; { New to Fallout 4 }
   MPRT : TwbSignature = 'MPRT'; { New to Skyrim }
+  MRSV : TwbSignature = 'MRSV'; { New to Fallout 4 }
+  MSDK : TwbSignature = 'MSDK'; { New to Fallout 4 }
+  MSDV : TwbSignature = 'MSDV'; { New to Fallout 4 }
+  MSID : TwbSignature = 'MSID'; { New to Fallout 4 }
+  MSM0 : TwbSignature = 'MSM0'; { New to Fallout 4 }
+  MSM1 : TwbSignature = 'MSM1'; { New to Fallout 4 }
   MSTT : TwbSignature = 'MSTT';
+  MSWP : TwbSignature = 'MSWP'; { New to Fallout 4 }
   MTNM : TwbSignature = 'MTNM'; { New to Skyrim }
   MTYP : TwbSignature = 'MTYP'; { New To Skyrim }
   MUSC : TwbSignature = 'MUSC';
   MUST : TwbSignature = 'MUST';
+  MWGT : TwbSignature = 'MWGT'; { New to Fallout 4 }
   NAM0 : TwbSignature = 'NAM0';
   NAM1 : TwbSignature = 'NAM1';
   NAM2 : TwbSignature = 'NAM2';
@@ -387,9 +489,21 @@ const
   NAME : TwbSignature = 'NAME';
   NAVI : TwbSignature = 'NAVI';
   NAVM : TwbSignature = 'NAVM';
+  NETO : TwbSignature = 'NETO'; { New to Fallout 4 }
   NEXT : TwbSignature = 'NEXT';
   NNAM : TwbSignature = 'NNAM';
+  NNGT : TwbSignature = 'NNGT'; { New to Fallout 4 }
+  NNUT : TwbSignature = 'NNUT'; { New to Fallout 4 }
+  NOCM : TwbSignature = 'NOCM'; { New to Fallout 4 }
+  NONE : TwbSignature = 'NONE'; { New to Fallout 4, used in OMOD Form Type }
+  NOTE : TwbSignature = 'NOTE'; { New to Fallout 4 }
   NPC_ : TwbSignature = 'NPC_';
+  NPOS : TwbSignature = 'NPOS'; { New to Fallout 4 }
+  NPOT : TwbSignature = 'NPOT'; { New to Fallout 4 }
+  NQUS : TwbSignature = 'NQUS'; { New to Fallout 4 }
+  NQUT : TwbSignature = 'NQUT'; { New to Fallout 4 }
+  NTOP : TwbSignature = 'NTOP'; { New to Fallout 4 }
+  NTRM : TwbSignature = 'NTRM'; { New to Fallout 4 }
   NULL : TwbSignature = 'NULL';
   NVER : TwbSignature = 'NVER';
   NVMI : TwbSignature = 'NVMI';
@@ -397,14 +511,20 @@ const
   NVPP : TwbSignature = 'NVPP'; { New to Skyrim }
   NVSI : TwbSignature = 'NVSI'; { New to Dawnguard }
   OBND : TwbSignature = 'OBND';
+  OBTE : TwbSignature = 'OBTE'; { New to Fallout 4 }
+  OBTF : TwbSignature = 'OBTF'; { New to Fallout 4 }
+  OBTS : TwbSignature = 'OBTS'; { New to Fallout 4 }
   OCOR : TwbSignature = 'OCOR'; { New to Skyrim }
   OFST : TwbSignature = 'OFST';
+  OMOD : TwbSignature = 'OMOD'; { New to Fallout 4 }
   ONAM : TwbSignature = 'ONAM';
   OTFT : TwbSignature = 'OTFT';
+  OVIS : TwbSignature = 'OVIS'; { New to Fallout 4 }
   PACK : TwbSignature = 'PACK';
   PARW : TwbSignature = 'PARW'; { New to Skyrim }
   PBAR : TwbSignature = 'PBAR'; { New to Skyrim }
   PBEA : TwbSignature = 'PBEA'; { New to Skyrim }
+  PCMB : TwbSignature = 'PCMB'; { New to Fallout 4 }
   PCON : TwbSignature = 'PCON'; { New to Skyrim }
   PDTO : TwbSignature = 'PDTO'; { New to Skyrim }
   PERK : TwbSignature = 'PERK';
@@ -413,6 +533,7 @@ const
   PFO2 : TwbSignature = 'PFO2'; { New to Skyrim }
   PFOR : TwbSignature = 'PFOR'; { New to Skyrim }
   PFPC : TwbSignature = 'PFPC';
+  PFRN : TwbSignature = 'PFRN'; { New to Fallout 4 }
   PGRE : TwbSignature = 'PGRE';
   PHTN : TwbSignature = 'PHTN'; { New to Skyrim }
   PHWT : TwbSignature = 'PHWT'; { New to Skyrim }
@@ -421,6 +542,7 @@ const
   PKCU : TwbSignature = 'PKCU'; { New to Skyrim }
   PKDT : TwbSignature = 'PKDT';
   PKID : TwbSignature = 'PKID';
+  PKIN : TwbSignature = 'PKIN'; { New to Fallout 4 }
   PLCN : TwbSignature = 'PLCN'; { New to Skyrim }
   PLDT : TwbSignature = 'PLDT';
   PLVD : TwbSignature = 'PLVD'; { New to Skyrim }
@@ -437,17 +559,23 @@ const
   PRKR : TwbSignature = 'PRKR'; { New to Skyrim }
   PRKZ : TwbSignature = 'PRKZ'; { New to Skyrim }
   PROJ : TwbSignature = 'PROJ';
+  PRPS : TwbSignature = 'PRPS'; { New to Fallout 4 }
   PSDT : TwbSignature = 'PSDT';
   PTDA : TwbSignature = 'PTDA'; { New to Skyrim }
-  PWAT : TwbSignature = 'PWAT'; { Unused in Skyrim, but contained in Skyrim.esm }
+  PTOP : TwbSignature = 'PTOP'; { New to Fallout 4 }
+  PTRN : TwbSignature = 'PTRN'; { New to Fallout 4 }
   QNAM : TwbSignature = 'QNAM';
   QOBJ : TwbSignature = 'QOBJ';
   QSDT : TwbSignature = 'QSDT';
   QSTA : TwbSignature = 'QSTA';
+  QSTI : TwbSignature = 'QSTI'; { New to Fallout 4 }
   QTGL : TwbSignature = 'QTGL'; { New To Skyrim }
+  QTOP : TwbSignature = 'QTOP'; { New to Fallout 4 }
   QUAL : TwbSignature = 'QUAL'; { New To Skyrim }
   QUST : TwbSignature = 'QUST';
   RACE : TwbSignature = 'RACE';
+  RADR : TwbSignature = 'RADR'; { New To Fallout 4 }
+  RBPC : TwbSignature = 'RBPC'; { New To Fallout 4 }
   RCEC : TwbSignature = 'RCEC'; { New To Skyrim }
   RCLR : TwbSignature = 'RCLR';
   RCPR : TwbSignature = 'RCPR'; { New to Dawnguard }
@@ -464,27 +592,37 @@ const
   REGN : TwbSignature = 'REGN';
   RELA : TwbSignature = 'RELA';
   REPL : TwbSignature = 'REPL';
-  RGDL : TwbSignature = 'RGDL';{ Unused in Skyrim, but contained in Skyrim.esm }
+  REPT : TwbSignature = 'REPT'; { New To Fallout 4 }
   REVB : TwbSignature = 'REVB';
   RFCT : TwbSignature = 'RFCT';
+  RFGP : TwbSignature = 'RFGP'; { New to Fallout 4 }
+  RGDL : TwbSignature = 'RGDL'; { Unused in Skyrim, but contained in Skyrim.esm }
   RNAM : TwbSignature = 'RNAM';
   RNMV : TwbSignature = 'RNMV'; { New to Skyrim }
   RPLD : TwbSignature = 'RPLD';
   RPLI : TwbSignature = 'RPLI';
   RPRF : TwbSignature = 'RPRF'; { New To Skyrim }
   RPRM : TwbSignature = 'RPRM'; { New To Skyrim }
+  RVIS : TwbSignature = 'RVIS'; { New to Fallout 4 }
+  SAKD : TwbSignature = 'SAKD'; { New To Fallout 4 }
+  SAPT : TwbSignature = 'SAPT'; { New To Fallout 4 }
+  SCCO : TwbSignature = 'SCCO'; { New To Fallout 4 }
   SCDA : TwbSignature = 'SCDA';
   SCEN : TwbSignature = 'SCEN';
   SCHR : TwbSignature = 'SCHR';
   SCOL : TwbSignature = 'SCOL'; { Unused in Skyrim, but contained in Skyrim.esm }
   SCPT : TwbSignature = 'SCPT'; { Unused in Skyrim, but contained in Skyrim.esm }
+  SCQS : TwbSignature = 'SCQS'; { New To Fallout 4 }
   SCRL : TwbSignature = 'SCRL';
   SCRN : TwbSignature = 'SCRN';
   SCRO : TwbSignature = 'SCRO';
+  SCSN : TwbSignature = 'SCSN'; { New To Fallout 4 }
   SCTX : TwbSignature = 'SCTX';
   SDSC : TwbSignature = 'SDSC'; { New to Skyrim }
+  SGNM : TwbSignature = 'SGNM'; { New to Fallout 4 }
   SHOU : TwbSignature = 'SHOU';
   SHRT : TwbSignature = 'SHRT'; { New to Skyrim }
+  SKIL : TwbSignature = 'SKIL'; { New to Fallout 4 }
   SLCP : TwbSignature = 'SLCP';
   SLGM : TwbSignature = 'SLGM';
   SMBN : TwbSignature = 'SMBN';
@@ -507,12 +645,23 @@ const
   SPLO : TwbSignature = 'SPLO';
   SPMV : TwbSignature = 'SPMV'; { New To Skyrim }
   SPOR : TwbSignature = 'SPOR'; { New to Skyrim }
+  SRAC : TwbSignature = 'SRAC'; { New to Fallout 4 }
+  SRAF : TwbSignature = 'SRAF'; { New to Fallout 4 }
+  SSPN : TwbSignature = 'SSPN'; { New to Fallout 4 }
+  STAG : TwbSignature = 'STAG'; { New to Fallout 4 }
   STAT : TwbSignature = 'STAT';
+  STCP : TwbSignature = 'STCP'; { New to Fallout 4 }
+  STKD : TwbSignature = 'STKD'; { New to Fallout 4 }
   STOL : TwbSignature = 'STOL'; { New to Skyrim }
+  STOP : TwbSignature = 'STOP'; { New to Fallout 4 }
+  STSC : TwbSignature = 'STSC'; { New to Fallout 4 }
   SWMV : TwbSignature = 'SWMV'; { New to Skyrim }
   TACT : TwbSignature = 'TACT';
   TCLT : TwbSignature = 'TCLT';
+  TERM : TwbSignature = 'TERM'; { New to Fallout 4 }
   TES4 : TwbSignature = 'TES4';
+  TETI : TwbSignature = 'TETI'; { New to Fallout 4 }
+  TEND : TwbSignature = 'TEND'; { New to Fallout 4 }
   TIAS : TwbSignature = 'TIAS'; { New to Skyrim }
   TIFC : TwbSignature = 'TIFC'; { New To Skyrim }
   TINC : TwbSignature = 'TINC'; { New to Skyrim }
@@ -522,12 +671,26 @@ const
   TINP : TwbSignature = 'TINP'; { New to Skyrim }
   TINT : TwbSignature = 'TINT'; { New to Skyrim }
   TINV : TwbSignature = 'TINV'; { New to Skyrim }
+  TIQS : TwbSignature = 'TIQS'; { New to Fallout 4 }
   TIRS : TwbSignature = 'TIRS'; { New to Skyrim }
+  TLOD : TwbSignature = 'TLOD'; { New to Fallout 4 }
   TNAM : TwbSignature = 'TNAM';
+  TOFT : TwbSignature = 'TOFT'; { New to Fallout 4 }
   TPIC : TwbSignature = 'TPIC';
   TPLT : TwbSignature = 'TPLT';
+  TPTA : TwbSignature = 'TPTA'; { New To Fallout 4 }
+  TRDA : TwbSignature = 'TRDA'; { New To Fallout 4 }
   TRDT : TwbSignature = 'TRDT';
   TREE : TwbSignature = 'TREE';
+  TRNS : TwbSignature = 'TRNS'; { New To Fallout 4 }
+  TSCE : TwbSignature = 'TSCE'; { New To Fallout 4 }
+  TTEB : TwbSignature = 'TTEB'; { New To Fallout 4 }
+  TTEC : TwbSignature = 'TTEC'; { New To Fallout 4 }
+  TTED : TwbSignature = 'TTED'; { New To Fallout 4 }
+  TTEF : TwbSignature = 'TTEF'; { New To Fallout 4 }
+  TTET : TwbSignature = 'TTET'; { New To Fallout 4 }
+  TTGE : TwbSignature = 'TTGE'; { New To Fallout 4 }
+  TTGP : TwbSignature = 'TTGP'; { New To Fallout 4 }
   TVDT : TwbSignature = 'TVDT'; { New To Skyrim }
   TWAT : TwbSignature = 'TWAT'; { New To Skyrim }
   TX00 : TwbSignature = 'TX00';
@@ -541,12 +704,14 @@ const
   TXST : TwbSignature = 'TXST';
   UNAM : TwbSignature = 'UNAM';
   UNES : TwbSignature = 'UNES'; { New To Skyrim }
+  UNWP : TwbSignature = 'UNWP'; { New To Fallout 4 }
   VATS : TwbSignature = 'VATS';
   VCLR : TwbSignature = 'VCLR';
   VENC : TwbSignature = 'VENC'; { New To Skyrim }
   VEND : TwbSignature = 'VEND'; { New To Skyrim }
   VENV : TwbSignature = 'VENV'; { New To Skyrim }
   VHGT : TwbSignature = 'VHGT';
+  VISI : TwbSignature = 'VISI'; { New To Fallout 4 }
   VMAD : TwbSignature = 'VMAD';
   VNAM : TwbSignature = 'VNAM';
   VNML : TwbSignature = 'VNML';
@@ -555,21 +720,30 @@ const
   VTXT : TwbSignature = 'VTXT';
   VTYP : TwbSignature = 'VTYP';
   WAIT : TwbSignature = 'WAIT'; { New To Skyrim }
+  WAMD : TwbSignature = 'WAMD'; { New To Fallout 4 }
   WATR : TwbSignature = 'WATR';
   WBDT : TwbSignature = 'WBDT'; { New to Skyrim }
   WCTR : TwbSignature = 'WCTR'; { New To Skyrim }
   WEAP : TwbSignature = 'WEAP';
+  WGDR : TwbSignature = 'WGDR'; { New To Fallout 4 }
   WKMV : TwbSignature = 'WKMV'; { New to Skyrim }
+  WLEV : TwbSignature = 'WLEV'; { New To Fallout 4 }
   WLST : TwbSignature = 'WLST';
+  WMAP : TwbSignature = 'WMAP'; { New To Fallout 4 }
   WNAM : TwbSignature = 'WNAM';
   WOOP : TwbSignature = 'WOOP';
   WRLD : TwbSignature = 'WRLD';
   WTHR : TwbSignature = 'WTHR';
+  WZMD : TwbSignature = 'WZMD'; { New To Fallout 4 }
   XACT : TwbSignature = 'XACT';
   XALP : TwbSignature = 'XALP'; { New To Skyrim }
+  XAMC : TwbSignature = 'XAMC'; { New To Fallout 4 }
   XAPD : TwbSignature = 'XAPD';
   XAPR : TwbSignature = 'XAPR';
+  XASP : TwbSignature = 'XASP'; { New To Fallout 4 }
+  XATP : TwbSignature = 'XATP'; { New To Fallout 4 }
   XATR : TwbSignature = 'XATR'; { New To Dawnguard }
+  XBSD : TwbSignature = 'XBSD'; { New To Fallout 4 }
   XCAS : TwbSignature = 'XCAS';
   XCCM : TwbSignature = 'XCCM';
   XCHG : TwbSignature = 'XCHG';
@@ -581,7 +755,9 @@ const
   XCLW : TwbSignature = 'XCLW';
   XCMO : TwbSignature = 'XCMO';
   XCNT : TwbSignature = 'XCNT';
+  XCRI : TwbSignature = 'XCRI'; { New To Fallout 4 }
   XCVL : TwbSignature = 'XCVL'; { New To Skyrim }
+  XCVR : TwbSignature = 'XCVR'; { New To Fallout 4 }
   XCWT : TwbSignature = 'XCWT';
   XCZA : TwbSignature = 'XCZA'; { New To Skyrim }
   XCZC : TwbSignature = 'XCZC'; { New To Skyrim }
@@ -591,41 +767,52 @@ const
   XESP : TwbSignature = 'XESP';
   XEZN : TwbSignature = 'XEZN';
   XFVC : TwbSignature = 'XFVC'; { New To Skyrim }
+  XGDR : TwbSignature = 'XGDR'; { New To Fallout 4 }
   XGLB : TwbSignature = 'XGLB';
   XHLP : TwbSignature = 'XHLP';
+  XHLT : TwbSignature = 'XHLT'; { New To Fallout 4 }
   XHOR : TwbSignature = 'XHOR'; { New To Skyrim }
   XHTW : TwbSignature = 'XHTW'; { New To Skyrim }
   XIBS : TwbSignature = 'XIBS';
   XILL : TwbSignature = 'XILL'; { New To Skyrim }
+  XILW : TwbSignature = 'XILW'; { New To Fallout 4 }
   XIS2 : TwbSignature = 'XIS2'; { New To Skyrim }
   XLCM : TwbSignature = 'XLCM';
   XLCN : TwbSignature = 'XLCN'; { New To Skyrim }
   XLIB : TwbSignature = 'XLIB'; { New To Skyrim }
   XLIG : TwbSignature = 'XLIG'; { New To Skyrim }
   XLKR : TwbSignature = 'XLKR';
+  XLKT : TwbSignature = 'XLKT'; { New To Fallout 4 }
   XLOC : TwbSignature = 'XLOC';
   XLOD : TwbSignature = 'XLOD';
   XLRL : TwbSignature = 'XLRL'; { New To Skyrim }
   XLRM : TwbSignature = 'XLRM';
   XLRT : TwbSignature = 'XLRT'; { New To Skyrim }
   XLTW : TwbSignature = 'XLTW';
+  XLYR : TwbSignature = 'XLYR'; { New To Fallout 4 }
   XMBO : TwbSignature = 'XMBO';
   XMBP : TwbSignature = 'XMBP';
   XMBR : TwbSignature = 'XMBR';
   XMRC : TwbSignature = 'XMRC';
   XMRK : TwbSignature = 'XMRK';
+  XMSP : TwbSignature = 'XMSP'; { New To Fallout 4 }
   XNAM : TwbSignature = 'XNAM';
   XNDP : TwbSignature = 'XNDP';
   XOCP : TwbSignature = 'XOCP';
   XORD : TwbSignature = 'XORD';
   XOWN : TwbSignature = 'XOWN';
+  XPDD : TwbSignature = 'XPDD'; { New To Fallout 4 }
+  XPLK : TwbSignature = 'XPLK'; { New To Fallout 4 }
   XPOD : TwbSignature = 'XPOD';
   XPPA : TwbSignature = 'XPPA';
   XPRD : TwbSignature = 'XPRD';
+  XPRI : TwbSignature = 'XPRI'; { New To Fallout 4 }
   XPRM : TwbSignature = 'XPRM';
   XPTL : TwbSignature = 'XPTL';
   XPWR : TwbSignature = 'XPWR';
+  XRDO : TwbSignature = 'XRDO'; { New To Fallout 4 }
   XRDS : TwbSignature = 'XRDS';
+  XRFG : TwbSignature = 'XRFG'; { New To Fallout 4 }
   XRGB : TwbSignature = 'XRGB';
   XRGD : TwbSignature = 'XRGD';
   XRMR : TwbSignature = 'XRMR';
@@ -635,13 +822,16 @@ const
   XTEL : TwbSignature = 'XTEL';
   XTNM : TwbSignature = 'XTNM'; { New To Skyrim }
   XTRI : TwbSignature = 'XTRI';
-  XWEM : TwbSignature = 'XWEM'; { New To Skyrim }
   XWCN : TwbSignature = 'XWCN'; { New To Skyrim }
   XWCS : TwbSignature = 'XWCS'; { New To Skyrim }
   XWCU : TwbSignature = 'XWCU'; { New To Skyrim }
+  XWEM : TwbSignature = 'XWEM'; { New To Skyrim }
+  XWPG : TwbSignature = 'XWPG'; { New To Fallout 4 }
+  XWPN : TwbSignature = 'XWPN'; { New To Fallout 4 }
   XXXX : TwbSignature = 'XXXX';
   YNAM : TwbSignature = 'YNAM';
   ZNAM : TwbSignature = 'ZNAM';
+  ZOOM : TwbSignature = 'ZOOM'; { New To Fallout 4 }
 
 var
   wbPKDTSpecificFlagsUnused : Boolean;
@@ -670,6 +860,9 @@ var
   wbSoundLevelEnum: IwbEnumDef;
   wbBodyPartIndexEnum: IwbEnumDef;
   wbAttackAnimationEnum: IwbEnumDef;
+  wbArmorPropertyEnum: IwbEnumDef;
+  wbActorPropertyEnum: IwbEnumDef;
+  wbWeaponPropertyEnum: IwbEnumDef;
   wbSPLO: IwbSubRecordDef;
   wbSPLOs: IwbSubRecordArrayDef;
   wbCNTO: IwbSubRecordStructDef;
@@ -685,12 +878,21 @@ var
   wbXSCL: IwbSubRecordDef;
   wbDATAPosRot: IwbSubRecordDef;
   wbPosRot: IwbStructDef;
-  wbMODD: IwbSubRecordDef;
+  wbMODC: IwbSubRecordDef;
+  wbMODF: IwbSubRecordDef;
   wbMODL: IwbSubRecordStructDef;
   wbMODS: IwbSubRecordDef;
   wbMO2S: IwbSubRecordDef;
   wbMO3S: IwbSubRecordDef;
   wbMO4S: IwbSubRecordDef;
+  wbMO2F: IwbSubRecordDef;
+  wbMO3F: IwbSubRecordDef;
+  wbMO4F: IwbSubRecordDef;
+  wbMO5F: IwbSubRecordDef;
+  wbMO2C: IwbSubRecordDef;
+  wbMO3C: IwbSubRecordDef;
+  wbMO4C: IwbSubRecordDef;
+  wbMO5C: IwbSubRecordDef;
   wbMODLActor: IwbSubRecordStructDef;
   wbMODLReq: IwbSubRecordStructDef;
   wbCTDA: IwbSubRecordStructDef;
@@ -732,12 +934,14 @@ var
   wbBODTBOD2: IwbSubRecordUnionDef;
   wbScriptEntry: IwbStructDef;
   wbPropTypeEnum: IwbEnumDef;
-  wbScriptObject: IwbUnionDef;
+  wbScriptFlags: IwbIntegerDef;
+  wbScriptPropertyObject: IwbUnionDef;
+  wbScriptPropertyStruct: IwbArrayDef;
+  wbScriptProperties: IwbArrayDef;
   wbScriptFragments: IwbStructDef;
   wbScriptFragmentsQuest: IwbStructDef;
   wbScriptFragmentsInfo: IwbStructDef;
   wbScriptFragmentsPack: IwbStructDef;
-  wbScriptFragmentsPerk: IwbStructDef;
   wbScriptFragmentsScen: IwbStructDef;
   wbEntryPointsEnum: IwbEnumDef;
   wbLocationEnum: IwbEnumDef;
@@ -776,13 +980,7 @@ var
   wbArmorTypeEnum: IwbEnumDef;
   wbRACE_DATAFlags01: IwbIntegerDef;
   wbPhonemeTargets: IwbSubRecordDef;
-  wbNoseMorphFlags: IwbIntegerDef;
-  wbBrowMorphFlags: IwbIntegerDef;
-  wbEyesMorphFlags01: IwbIntegerDef;
-  wbEyesMorphFlags02: IwbIntegerDef;
-  wbLipMorphFlags: IwbIntegerDef;
   wbPHWT: IwbSubRecordStructDef;
-  wbMorphs: IwbSubRecordStructDef;
   wbHeadPart: IwbSubRecordStructDef;
   wbTintMaskTypeEnum: IwbEnumDef;
   wbQUSTAliasFlags: IwbSubRecordDef;
@@ -794,14 +992,27 @@ var
   wbNull: IwbValueDef;
   wbTimeInterpolator: IwbStructDef;
   wbColorInterpolator: IwbStructDef;
+  wbCUSD: IwbSubRecordDef;
+  wbPTRN: IwbSubRecordDef;
+  wbNTRM: IwbSubRecordDef;
+  wbPRPS: IwbSubRecordDef;
+  wbFLTR: IwbSubRecordDef;
+  wbAPPR: IwbSubRecordDef;
+  wbOBTESequence: IwbSubRecordStructDef;
+  wbBSMPSequence: IwbSubRecordArrayDef;
+  wbFTYP: IwbSubRecordDef;
+  wbATTX: IwbSubRecordDef;
+  wbOBTS: IwbSubRecordDef;
+  wbTintTemplateGroups: IwbSubrecordArrayDef;
+  wbMorphGroups: IwbSubrecordArrayDef;
+  wbRaceFRMI: IwbSubrecordArrayDef;
+  wbNVNM: IwbSubRecordDef;
+  wbMHDT: IwbSubRecordDef;
+  wbOFST: IwbSubRecordDef;
 
 function Sig2Int(aSignature: TwbSignature): Cardinal; inline;
 begin
   Result := PCardinal(@aSignature)^;
-{  Result := Ord(aSignature[3]) shl 24 +
-            Ord(aSignature[2]) shl 16 +
-            Ord(aSignature[1]) shl  8 +
-            Ord(aSignature[0]);}
 end;
 
 function wbEPFDActorValueToStr(aInt: Int64; const aElement: IwbElement; aType: TwbCallbackType): string;
@@ -1089,6 +1300,8 @@ begin
     if Supports(MainRecord.ElementByName['Aliases'], IwbContainerElementRef, Aliases) then begin
       for i := 0 to Pred(Aliases.ElementCount) do
         if Supports(Aliases.Elements[i], IwbContainerElementRef, Alias) then begin
+          if Assigned(Alias.ElementBySignature['ALCS']) then
+            Continue;
           j := Alias.Elements[0].NativeValue;
           s := Alias.ElementEditValues['ALID'];
           t := IntToStr(j);
@@ -1331,11 +1544,7 @@ begin
   if aType = ctToSortKey then
     Result := IntToHex64(aInt, 4)
   else if aType = ctToStr then
-    try
-      Result := TimeToStr( EncodeTime(aInt div 6, (aInt mod 6) * 10, 0, 0) )
-    except
-      Result := IntToStr(aInt)
-    end
+    Result := TimeToStr( EncodeTime(aInt div 6, (aInt mod 6) * 10, 0, 0) )
   else
     Result := '';
 end;
@@ -2024,7 +2233,7 @@ begin
   if not Assigned(Container) then Exit;
 
   VarClear(ArchType);
-  Element := Container.ElementByName['Archtype'];
+  Element := Container.ElementByName['Archetype'];
   if Assigned(Element) then
     ArchType := Element.NativeValue
   else if Supports(Container, IwbDataContainer, DataContainer) and
@@ -2057,7 +2266,7 @@ begin
   Container := GetContainerFromUnion(aElement);
   if not Assigned(Container) then Exit;
   if (aNewValue <> 0) then begin
-    Element := Container.ElementByName['Archtype'];
+    Element := Container.ElementByName['Archetype'];
     if Assigned(Element) and (Element.NativeValue = 0) then
         Element.NativeValue := $FF; // Signals ArchType that it should not mess with us on the next change!
           // I assume this will alo protect Second AV Weight (The two actor values are after ArchType)
@@ -2073,7 +2282,7 @@ begin
   Container := GetContainerFromUnion(aElement);
   if not Assigned(Container) then Exit;
   if (aNewValue <> 0.0) then begin
-    Element := Container.ElementByName['Archtype'];
+    Element := Container.ElementByName['Archetype'];
     if Assigned(Element) and (Element.NativeValue = 0) then
         Element.NativeValue := $FF; // Signals ArchType that it should not mess with us on the next change!
   end;
@@ -2360,6 +2569,30 @@ begin
     13: Result := 8;
     14: Result := 9;
     15: Result := 10;
+    17: Result := 11;
+  end;
+end;
+
+function wbScriptPropertyStructMemberDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Container     : IwbContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Container := GetContainerFromUnion(aElement);
+  if not Assigned(Container) then Exit;
+
+  case Integer(Container.ElementNativeValues['Type']) of
+     1: Result := 1;
+     2: Result := 2;
+     3: Result := 3;
+     4: Result := 4;
+     5: Result := 5;
+    11: Result := 6;
+    12: Result := 7;
+    13: Result := 8;
+    14: Result := 9;
+    15: Result := 10;
   end;
 end;
 
@@ -2396,7 +2629,9 @@ begin
   else if MainRecord.Signature = QUST then
     Result := 4
   else if MainRecord.Signature = SCEN then
-    Result := 5;
+    Result := 5
+  else if MainRecord.Signature = TERM then
+    Result := 6;
 end;
 
 {>>> For VMAD <<<}
@@ -2428,7 +2663,7 @@ begin
     Container := Container.Container;
   if not Assigned(Container) then Exit;
 
-  Result := Integer(Container.ElementNativeValues['fragmentCount']);
+  Result := Cardinal(Container.ElementNativeValues['fragmentCount']);
 end;
 
 {>>> For VMAD <<<}
@@ -2522,6 +2757,20 @@ begin
   end;
 end;
 
+{>>> For VMAD <<<}
+function wbScriptFragmentsQuestScriptDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Container  : IwbContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Container := GetContainerFromUnion(aElement);
+  if not Assigned(Container) then Exit;
+
+  if Container.ElementEditValues['scriptName'] = '' then
+    Result := 1;
+end;
+
 function wbBOOKTeachesDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
 var
   Container: IwbContainer;
@@ -2536,64 +2785,64 @@ begin
   if i and $00000004 <> 0 then Result := 1;
 end;
 
-
 type
   TCTDAFunctionParamType = (
-    ptNone,
-    ptInteger,
-    ptFloat,
-    ptVariableName,  //Integer
-    ptSex,           //Enum: Male, Female
-    ptActorValue,    //Enum: wbActorValue
-    ptCrimeType,     //?? Enum
-    ptAxis,          //?? Char
-    ptQuestStage,    //?? Integer
-    ptMiscStat,      //?? Enum
-    ptAlignment,     //?? Enum
-    ptEquipType,     //?? Enum
-    ptFormType,      //?? Enum
-    ptCriticalStage, //?? Enum
-    ptObjectReference,    //REFR, ACHR
-    ptInventoryObject,    //ARMO, BOOK, MISC, WEAP, AMMO, KEYM, ALCH, ARMA, LIGH, LVLI, COBJ
-    ptActor,              //ACHR
-    ptVoiceType,          //VTYP
-    ptIdleForm,           //IDLE
-    ptFormList,           //FLST
-    ptQuest,              //QUST
-    ptFaction,            //FACT
-    ptCell,               //CELL
-    ptClass,              //CLAS
-    ptRace,               //RACE
-    ptActorBase,          //NPC_
-    ptGlobal,             //GLOB
-    ptWeather,            //WTHR
-    ptPackage,            //PACK
-    ptEncounterZone,      //ECZN
-    ptPerk,               //PERK
-    ptOwner,              //FACT, NPC_
-    ptFurniture,          //FURN
-    ptMagicItem,          //SPEL
-    ptMagicEffect,        //MGEF
-    ptWorldspace,         //WRLD
-    ptVATSValueFunction,
-    ptVATSValueParam,
-    ptReferencableObject,
-    ptRegion,             //REGN
-    ptKeyword,            //KYWD
-    ptAdvanceAction,      // ?? Enum
-    ptCastingSource,      // ?? Enum
-    ptShout,              //SHOU
-    ptLocation,           //LCTN
-    ptRefType,            //LCRT
-    ptAlias,              // index into QUST quest aliases
-    ptPackdata,           // index into PACK package data inputs
-    ptAssociationType,    // ASTP
-    ptFurnitureAnim,      // enum
-    ptFurnitureEntry,     // flags
-    ptScene,              // SCEN
-    ptWardState,          // enum
-    ptEvent,              // Struct
-    ptEventData           // LCTN, KYWD or FLST
+    { 0} ptNone,
+    { 1} ptInteger,
+    { 2} ptFloat,
+    { 3} ptActor,              // ACHR
+    { 4} ptActorBase,          // NPC_
+    { 5} ptActorValue,         // Enum: wbActorValue
+    { 6} ptAdvanceAction,      // ?? Enum
+    { 7} ptAlias,              // index into QUST quest aliases
+    { 8} ptAlignment,          // ?? Enum
+    { 9} ptAssociationType,    // ASTP
+    {10} ptAxis,               // ?? Char
+    {11} ptCastingSource,      // ?? Enum
+    {12} ptCell,               // CELL
+    {13} ptClass,              // CLAS
+    {14} ptCrimeType,          // ?? Enum
+    {15} ptCriticalStage,      // ?? Enum
+    {16} ptEncounterZone,      // ECZN
+    {17} ptEquipType,          // ?? Enum
+    {18} ptEvent,              // Struct
+    {19} ptEventData,          // LCTN, KYWD or FLST
+    {20} ptFaction,            // FACT
+    {21} ptFormList,           // FLST
+    {22} ptFormType,           // ?? Enum
+    {23} ptFurniture,          // FURN
+    {24} ptFurnitureAnim,      // enum
+    {25} ptFurnitureEntry,     // flags
+    {26} ptGlobal,             // GLOB
+    {27} ptIdleForm,           // IDLE
+    {28} ptInventoryObject,    // ARMO, BOOK, MISC, WEAP, AMMO, KEYM, ALCH, ARMA, LIGH, LVLI, COBJ
+    {29} ptKeyword,            // KYWD
+    {30} ptLocation,           // LCTN
+    {31} ptMagicEffect,        // MGEF
+    {32} ptMagicItem,          // SPEL
+    {33} ptMiscStat,           // ?? Enum
+    {34} ptObjectReference,    // REFR, ACHR
+    {35} ptOwner,              // FACT, NPC_
+    {36} ptPackage,            // PACK
+    {37} ptPackdata,           // index into PACK package data inputs
+    {38} ptPerk,               // PERK
+    {39} ptQuest,              // QUST
+    {40} ptQuestStage,         // ?? Integer
+    {41} ptRace,               // RACE
+    {42} ptReferencableObject,
+    {43} ptRefType,            // LCRT
+    {44} ptRegion,             // REGN
+    {45} ptScene,              // SCEN
+    {46} ptSex,                // Enum: Male, Female
+    {47} ptShout,              // SHOU
+    {48} ptVariableName,       // Integer
+    {49} ptVATSValueFunction,  //
+    {50} ptVATSValueParam,
+    {51} ptVoiceType,          // VTYP
+    {52} ptWardState,          // enum
+    {53} ptWeather,            // WTHR
+    {54} ptWorldspace,         // WRLD
+    {55} ptDamageType          // DMGT
   );
 
   PCTDAFunction = ^TCTDAFunction;
@@ -2606,412 +2855,523 @@ type
   end;
 
 const
-  {>> N means New, V means verified that the name has not changed <<<}
-  wbCTDAFunctions : array[0..399] of TCTDAFunction = (
-{N} (Index:   0; Name: 'GetWantBlocking'),
-{V} (Index:   1; Name: 'GetDistance'; ParamType1: ptObjectReference),
-{V} (Index:   5; Name: 'GetLocked'),
-{V} (Index:   6; Name: 'GetPos'; ParamType1: ptAxis),
-{V} (Index:   8; Name: 'GetAngle'; ParamType1: ptAxis),
-{V} (Index:  10; Name: 'GetStartingPos'; ParamType1: ptAxis),
-{V} (Index:  11; Name: 'GetStartingAngle'; ParamType1: ptAxis),
-{V} (Index:  12; Name: 'GetSecondsPassed'),
-{V} (Index:  14; Name: 'GetActorValue'; ParamType1: ptActorValue),
-{V} (Index:  18; Name: 'GetCurrentTime'),
-{V} (Index:  24; Name: 'GetScale'),
-{V} (Index:  25; Name: 'IsMoving'),
-{V} (Index:  26; Name: 'IsTurning'),
-{V} (Index:  27; Name: 'GetLineOfSight'; ParamType1: ptObjectReference),
-{V} (Index:  32; Name: 'GetInSameCell'; ParamType1: ptObjectReference),
-{V} (Index:  35; Name: 'GetDisabled'),
-{V} (Index:  36; Name: 'MenuMode'; ParamType1: ptInteger), // was ptMenuMode
-{V} (Index:  39; Name: 'GetDisease'),
-{V} (Index:  41; Name: 'GetClothingValue'),
-{V} (Index:  42; Name: 'SameFaction'; ParamType1: ptActor),
-{V} (Index:  43; Name: 'SameRace'; ParamType1: ptActor),
-{V} (Index:  44; Name: 'SameSex'; ParamType1: ptActor),
-{V} (Index:  45; Name: 'GetDetected'; ParamType1: ptActor),
-{V} (Index:  46; Name: 'GetDead'),
-{V} (Index:  47; Name: 'GetItemCount'; ParamType1: ptInventoryObject),
-{V} (Index:  48; Name: 'GetGold'),
-{V} (Index:  49; Name: 'GetSleeping'),
-{V} (Index:  50; Name: 'GetTalkedToPC'),
-{V} (Index:  53; Name: 'GetScriptVariable'; ParamType1: ptObjectReference; ParamType2: ptVariableName),
-{V} (Index:  56; Name: 'GetQuestRunning'; ParamType1: ptQuest),
-{V} (Index:  58; Name: 'GetStage'; ParamType1: ptQuest),
-{V} (Index:  59; Name: 'GetStageDone'; ParamType1: ptQuest; ParamType2: ptQuestStage),
-{V} (Index:  60; Name: 'GetFactionRankDifference'; ParamType1: ptFaction; ParamType2: ptActor),
-{V} (Index:  61; Name: 'GetAlarmed'),
-{V} (Index:  62; Name: 'IsRaining'),
-{V} (Index:  63; Name: 'GetAttacked'),
-{V} (Index:  64; Name: 'GetIsCreature'),
-{V} (Index:  65; Name: 'GetLockLevel'),
-{V} (Index:  66; Name: 'GetShouldAttack'; ParamType1: ptActor),
-{V} (Index:  67; Name: 'GetInCell'; ParamType1: ptCell),
-{V} (Index:  68; Name: 'GetIsClass'; ParamType1: ptClass),
-{V} (Index:  69; Name: 'GetIsRace'; ParamType1: ptRace),
-{V} (Index:  70; Name: 'GetIsSex'; ParamType1: ptSex),
-{V} (Index:  71; Name: 'GetInFaction'; ParamType1: ptFaction),
-{V} (Index:  72; Name: 'GetIsID'; ParamType1: ptReferencableObject),
-{V} (Index:  73; Name: 'GetFactionRank'; ParamType1: ptFaction),
-{V} (Index:  74; Name: 'GetGlobalValue'; ParamType1: ptGlobal),
-{V} (Index:  75; Name: 'IsSnowing'),
-{V} (Index:  77; Name: 'GetRandomPercent'),
-{V} (Index:  79; Name: 'GetQuestVariable'; ParamType1: ptQuest; ParamType2: ptVariableName),
-{V} (Index:  80; Name: 'GetLevel'),
-{N} (Index:  81; Name: 'IsRotating'),
-{V} (Index:  84; Name: 'GetDeadCount'; ParamType1: ptActorBase),
-{V} (Index:  91; Name: 'GetIsAlerted'),
-{V} (Index:  98; Name: 'GetPlayerControlsDisabled'; ParamType1: ptInteger; ParamType2: ptInteger),
-{V} (Index:  99; Name: 'GetHeadingAngle'; ParamType1: ptObjectReference),
-{N} (Index: 101; Name: 'IsWeaponMagicOut'),
-{V} (Index: 102; Name: 'IsTorchOut'),
-{V} (Index: 103; Name: 'IsShieldOut'),
-{V} (Index: 106; Name: 'IsFacingUp'),
-{V} (Index: 107; Name: 'GetKnockedState'),
-{V} (Index: 108; Name: 'GetWeaponAnimType'),
-{V} (Index: 109; Name: 'IsWeaponSkillType'; ParamType1: ptActorValue),
-{V} (Index: 110; Name: 'GetCurrentAIPackage'),
-{V} (Index: 111; Name: 'IsWaiting'),
-{V} (Index: 112; Name: 'IsIdlePlaying'),
-{N} (Index: 116; Name: 'IsIntimidatebyPlayer'),
-{N} (Index: 117; Name: 'IsPlayerInRegion'; ParamType1: ptRegion),
-{V} (Index: 118; Name: 'GetActorAggroRadiusViolated'),
-{V} (Index: 122; Name: 'GetCrime'; ParamType1: ptActor; ParamType2: ptCrimeType),
-{V} (Index: 123; Name: 'IsGreetingPlayer'),
-{V} (Index: 125; Name: 'IsGuard'),
-{V} (Index: 127; Name: 'HasBeenEaten'),
-{V} (Index: 128; Name: 'GetStaminaPercentage'),
-{V} (Index: 129; Name: 'GetPCIsClass'; ParamType1: ptClass),
-{V} (Index: 130; Name: 'GetPCIsRace'; ParamType1: ptRace),
-{V} (Index: 131; Name: 'GetPCIsSex'; ParamType1: ptSex),
-{V} (Index: 132; Name: 'GetPCInFaction'; ParamType1: ptFaction),
-{V} (Index: 133; Name: 'SameFactionAsPC'),
-{V} (Index: 134; Name: 'SameRaceAsPC'),
-{V} (Index: 135; Name: 'SameSexAsPC'),
-{V} (Index: 136; Name: 'GetIsReference'; ParamType1: ptObjectReference),
-{V} (Index: 141; Name: 'IsTalking'),
-{V} (Index: 142; Name: 'GetWalkSpeed'),
-{V} (Index: 143; Name: 'GetCurrentAIProcedure'),
-{V} (Index: 144; Name: 'GetTrespassWarningLevel'),
-{V} (Index: 145; Name: 'IsTrespassing'),
-{V} (Index: 146; Name: 'IsInMyOwnedCell'),
-{V} (Index: 147; Name: 'GetWindSpeed'),
-{V} (Index: 148; Name: 'GetCurrentWeatherPercent'),
-{V} (Index: 149; Name: 'GetIsCurrentWeather'; ParamType1: ptWeather),
-{V} (Index: 150; Name: 'IsContinuingPackagePCNear'),
-{N} (Index: 152; Name: 'GetIsCrimeFaction'; ParamType1: ptFaction),
-{V} (Index: 153; Name: 'CanHaveFlames'),
-{V} (Index: 154; Name: 'HasFlames'),
-{V} (Index: 157; Name: 'GetOpenState'),
-{V} (Index: 159; Name: 'GetSitting'),
-{V} (Index: 161; Name: 'GetIsCurrentPackage'; ParamType1: ptPackage),
-{V} (Index: 162; Name: 'IsCurrentFurnitureRef'; ParamType1: ptObjectReference),
-{V} (Index: 163; Name: 'IsCurrentFurnitureObj'; ParamType1: ptFurniture),
-{V} (Index: 170; Name: 'GetDayOfWeek'),
-{V} (Index: 172; Name: 'GetTalkedToPCParam'; ParamType1: ptActor),
-{V} (Index: 175; Name: 'IsPCSleeping'),
-{V} (Index: 176; Name: 'IsPCAMurderer'),
-{N} (Index: 180; Name: 'HasSameEditorLocAsRef'; ParamType1: ptObjectReference; ParamType2: ptKeyword),
-{N} (Index: 181; Name: 'HasSameEditorLocAsRefAlias'; ParamType1: ptAlias; ParamType2: ptKeyword),
-{V} (Index: 182; Name: 'GetEquipped'; ParamType1: ptInventoryObject),
-{V} (Index: 185; Name: 'IsSwimming'),
-{V} (Index: 190; Name: 'GetAmountSoldStolen'),
-{V} (Index: 192; Name: 'GetIgnoreCrime'),
-{V} (Index: 193; Name: 'GetPCExpelled'; ParamType1: ptFaction),
-{V} (Index: 195; Name: 'GetPCFactionMurder'; ParamType1: ptFaction),
-{V} (Index: 197; Name: 'GetPCEnemyofFaction'; ParamType1: ptFaction),
-{V} (Index: 199; Name: 'GetPCFactionAttack'; ParamType1: ptFaction),
-{V} (Index: 203; Name: 'GetDestroyed'),
-{V} (Index: 214; Name: 'HasMagicEffect'; ParamType1: ptMagicEffect),
-{V} (Index: 215; Name: 'GetDefaultOpen'),
-{V} (Index: 219; Name: 'GetAnimAction'),
-{V} (Index: 223; Name: 'IsSpellTarget'; ParamType1: ptMagicItem),
-{V} (Index: 224; Name: 'GetVATSMode'),
-{V} (Index: 225; Name: 'GetPersuasionNumber'),
-{V} (Index: 226; Name: 'GetVampireFeed'),
-{V} (Index: 227; Name: 'GetCannibal'),
-{V} (Index: 228; Name: 'GetIsClassDefault'; ParamType1: ptClass),
-{V} (Index: 229; Name: 'GetClassDefaultMatch'),
-{V} (Index: 230; Name: 'GetInCellParam'; ParamType1: ptCell; ParamType2: ptObjectReference),
-{V} (Index: 235; Name: 'GetVatsTargetHeight'),
-{V} (Index: 237; Name: 'GetIsGhost'),
-{V} (Index: 242; Name: 'GetUnconscious'),
-{V} (Index: 244; Name: 'GetRestrained'),
-{V} (Index: 246; Name: 'GetIsUsedItem'; ParamType1: ptReferencableObject),
-{V} (Index: 247; Name: 'GetIsUsedItemType'; ParamType1: ptFormType),
-{N} (Index: 248; Name: 'IsScenePlaying'; ParamType1: ptScene),
-{N} (Index: 249; Name: 'IsInDialogueWithPlayer'),
-{N} (Index: 250; Name: 'GetLocationCleared'; ParamType1: ptLocation),
-{V} (Index: 254; Name: 'GetIsPlayableRace'),
-{V} (Index: 255; Name: 'GetOffersServicesNow'),
-{N} (Index: 258; Name: 'HasAssociationType'; ParamType1: ptActor; ParamType2: ptAssociationType),
-{N} (Index: 259; Name: 'HasFamilyRelationship'; ParamType1: ptActor),
-{N} (Index: 261; Name: 'HasParentRelationship'; ParamType1: ptActor),
-{N} (Index: 262; Name: 'IsWarningAbout'; ParamType1: ptFormList),
-{V} (Index: 263; Name: 'IsWeaponOut'),
-{N} (Index: 264; Name: 'HasSpell'; ParamType1: ptMagicItem),
-{V} (Index: 265; Name: 'IsTimePassing'),
-{V} (Index: 266; Name: 'IsPleasant'),
-{V} (Index: 267; Name: 'IsCloudy'),
-{N} (Index: 274; Name: 'IsSmallBump'),
-{V} (Index: 277; Name: 'GetBaseActorValue'; ParamType1: ptActorValue),
-{V} (Index: 278; Name: 'IsOwner'; ParamType1: ptOwner),
-{V} (Index: 280; Name: 'IsCellOwner'; ParamType1: ptCell; ParamType2: ptOwner),
-{V} (Index: 282; Name: 'IsHorseStolen'),
-{V} (Index: 285; Name: 'IsLeftUp'),
-{V} (Index: 286; Name: 'IsSneaking'),
-{V} (Index: 287; Name: 'IsRunning'),
-{V} (Index: 288; Name: 'GetFriendHit'),
-{V} (Index: 289; Name: 'IsInCombat'; ParamType1: ptInteger),
-{V} (Index: 300; Name: 'IsInInterior'),
-{V} (Index: 304; Name: 'IsWaterObject'),
-{N} (Index: 305; Name: 'GetPlayerAction'),
-{V} (Index: 306; Name: 'IsActorUsingATorch'),
-{V} (Index: 309; Name: 'IsXBox'),
-{V} (Index: 310; Name: 'GetInWorldspace'; ParamType1: ptWorldSpace),
-{V} (Index: 312; Name: 'GetPCMiscStat'; ParamType1: ptMiscStat),
-{N} (Index: 313; Name: 'GetPairedAnimation'),
-{V} (Index: 314; Name: 'IsActorAVictim'),
-{V} (Index: 315; Name: 'GetTotalPersuasionNumber'),
-{V} (Index: 318; Name: 'GetIdleDoneOnce'),
-{V} (Index: 320; Name: 'GetNoRumors'),
-{N} (Index: 323; Name: 'GetCombatState'),
-{N} (Index: 325; Name: 'GetWithinPackageLocation'; ParamType1: ptPackdata),
-{V} (Index: 327; Name: 'IsRidingMount'),
-{N} (Index: 329; Name: 'IsFleeing'),
-{V} (Index: 332; Name: 'IsInDangerousWater'),
-{V} (Index: 338; Name: 'GetIgnoreFriendlyHits'),
-{V} (Index: 339; Name: 'IsPlayersLastRiddenMount'),
-{V} (Index: 353; Name: 'IsActor'),
-{V} (Index: 354; Name: 'IsEssential'),
-{V} (Index: 358; Name: 'IsPlayerMovingIntoNewSpace'),
-{N} (Index: 359; Name: 'GetInCurrentLoc'; ParamType1: ptLocation),
-{N} (Index: 360; Name: 'GetInCurrentLocAlias'; ParamType1: ptAlias),
-{V} (Index: 361; Name: 'GetTimeDead'),
-{N} (Index: 362; Name: 'HasLinkedRef'; ParamType1: ptKeyword),
-{V} (Index: 365; Name: 'IsChild'),
-{N} (Index: 366; Name: 'GetStolenItemValueNoCrime'; ParamType1: ptFaction),
-{V} (Index: 367; Name: 'GetLastPlayerAction'),
-{V} (Index: 368; Name: 'IsPlayerActionActive'; ParamType1: ptInteger), // was ptPlayerAction
-{V} (Index: 370; Name: 'IsTalkingActivatorActor'; ParamType1: ptActor),
-{V} (Index: 372; Name: 'IsInList'; ParamType1: ptFormList),
-{N} (Index: 373; Name: 'GetStolenItemValue'; ParamType1: ptFaction),
-{N} (Index: 375; Name: 'GetCrimeGoldViolent'),
-{N} (Index: 376; Name: 'GetCrimeGoldNonviolent'),
-{N} (Index: 378; Name: 'HasShout'; ParamType1: ptShout),
-{V} (Index: 381; Name: 'GetHasNote'; ParamType1: ptInteger), // was ptNote
-{V} (Index: 390; Name: 'GetHitLocation'),
-{V} (Index: 391; Name: 'IsPC1stPerson'),
-{V} (Index: 396; Name: 'GetCauseofDeath'),
-{V} (Index: 397; Name: 'IsLimbGone'; ParamType1: ptInteger), // was ptBodyLocation
-{V} (Index: 398; Name: 'IsWeaponInList'; ParamType1: ptFormList),
-{N} (Index: 402; Name: 'IsBribedbyPlayer'),
-{V} (Index: 403; Name: 'GetRelationshipRank'; ParamType1: ptObjectReference),
-{V} (Index: 407; Name: 'GetVATSValue'; ParamType1: ptVATSValueFunction; ParamType2: ptVATSValueParam),
-{V} (Index: 408; Name: 'IsKiller'; ParamType1: ptActor),
-{V} (Index: 409; Name: 'IsKillerObject'; ParamType1: ptFormList),
-{V} (Index: 410; Name: 'GetFactionCombatReaction'; ParamType1: ptFaction; ParamType2: ptFaction),
-{V} (Index: 414; Name: 'Exists'; ParamType1: ptObjectReference),
-{V} (Index: 415; Name: 'GetGroupMemberCount'),
-{V} (Index: 416; Name: 'GetGroupTargetCount'),
-{V} (Index: 426; Name: 'GetIsVoiceType'; ParamType1: ptVoiceType),
-{V} (Index: 427; Name: 'GetPlantedExplosive'),
-{N} (Index: 429; Name: 'IsScenePackageRunning'),
-{V} (Index: 430; Name: 'GetHealthPercentage'),
-{V} (Index: 432; Name: 'GetIsObjectType'; ParamType1: ptFormType),
-{V} (Index: 434; Name: 'GetDialogueEmotion'),
-{V} (Index: 435; Name: 'GetDialogueEmotionValue'),
-{V} (Index: 437; Name: 'GetIsCreatureType'; ParamType1: ptInteger),
-{N} (Index: 444; Name: 'GetInCurrentLocFormList'; ParamType1: ptFormList),
-{V} (Index: 445; Name: 'GetInZone'; ParamType1: ptEncounterZone),
-{N} (Index: 446; Name: 'GetVelocity'; ParamType1: ptAxis),
-{N} (Index: 447; Name: 'GetGraphVariableFloat'; ParamType1: ptVariableName),
-{V} (Index: 448; Name: 'HasPerk'; ParamType1: ptPerk; ParamType2: ptInteger{Alt?}),
-{V} (Index: 449; Name: 'GetFactionRelation'; ParamType1: ptActor),
-{V} (Index: 450; Name: 'IsLastIdlePlayed'; ParamType1: ptIdleForm),
-{V} (Index: 453; Name: 'GetPlayerTeammate'),
-{V} (Index: 454; Name: 'GetPlayerTeammateCount'),
-{V} (Index: 458; Name: 'GetActorCrimePlayerEnemy'),
-{V} (Index: 459; Name: 'GetCrimeGold'),
-{V} (Index: 463; Name: 'IsPlayerGrabbedRef'; ParamType1: ptObjectReference),
-{N} (Index: 465; Name: 'GetKeywordItemCount'; ParamType1: ptKeyword),
-{V} (Index: 470; Name: 'GetDestructionStage'),
-{V} (Index: 473; Name: 'GetIsAlignment'; ParamType1: ptAlignment),
-{N} (Index: 476; Name: 'IsProtected'),
-{V} (Index: 477; Name: 'GetThreatRatio'; ParamType1: ptActor),
-{V} (Index: 479; Name: 'GetIsUsedItemEquipType'; ParamType1: ptEquipType),
-{N} (Index: 487; Name: 'IsCarryable'),
-{V} (Index: 488; Name: 'GetConcussed'),
-{V} (Index: 491; Name: 'GetMapMarkerVisible'),
-{N} (Index: 493; Name: 'PlayerKnows'; ParamType1: ptMagicEffect),
-{V} (Index: 494; Name: 'GetPermanentActorValue'; ParamType1: ptActorValue),
-{V} (Index: 495; Name: 'GetKillingBlowLimb'),
-{N} (Index: 497; Name: 'CanPayCrimeGold'),
-{N} (Index: 499; Name: 'GetDaysInJail'),
-{N} (Index: 500; Name: 'EPAlchemyGetMakingPoison'),
-{N} (Index: 501; Name: 'EPAlchemyEffectHasKeyword'; ParamType1: ptKeyword),
-{N} (Index: 503; Name: 'GetAllowWorldInteractions'),
-{V} (Index: 508; Name: 'GetLastHitCritical'),
-{N} (Index: 513; Name: 'IsCombatTarget'; ParamType1: ptActor),
-{V} (Index: 515; Name: 'GetVATSRightAreaFree'; ParamType1: ptObjectReference),
-{V} (Index: 516; Name: 'GetVATSLeftAreaFree'; ParamType1: ptObjectReference),
-{V} (Index: 517; Name: 'GetVATSBackAreaFree'; ParamType1: ptObjectReference),
-{V} (Index: 518; Name: 'GetVATSFrontAreaFree'; ParamType1: ptObjectReference),
-{N} (Index: 519; Name: 'GetLockIsBroken'),
-{N} (Index: 520; Name: 'IsPS3'),
-{N} (Index: 521; Name: 'IsWin32'),
-{V} (Index: 522; Name: 'GetVATSRightTargetVisible'; ParamType1: ptObjectReference),
-{V} (Index: 523; Name: 'GetVATSLeftTargetVisible'; ParamType1: ptObjectReference),
-{V} (Index: 524; Name: 'GetVATSBackTargetVisible'; ParamType1: ptObjectReference),
-{V} (Index: 525; Name: 'GetVATSFrontTargetVisible'; ParamType1: ptObjectReference),
-{V} (Index: 528; Name: 'IsInCriticalStage'; ParamType1: ptCriticalStage),
-{N} (Index: 530; Name: 'GetXPForNextLevel'),
-{N} (Index: 533; Name: 'GetInfamy'),
-{N} (Index: 534; Name: 'GetInfamyViolent'),
-{N} (Index: 535; Name: 'GetInfamyNonViolent'),
-{V} (Index: 543; Name: 'GetQuestCompleted'; ParamType1: ptQuest),
-{V} (Index: 547; Name: 'IsGoreDisabled'),
-{N} (Index: 550; Name: 'IsSceneActionComplete'; ParamType1: ptScene; ParamType2: ptInteger),
-{V} (Index: 552; Name: 'GetSpellUsageNum'; ParamType1: ptMagicItem),
-{N} (Index: 554; Name: 'GetActorsInHigh'),
-{V} (Index: 555; Name: 'HasLoaded3D'),
-{N} (Index: 560; Name: 'HasKeyword'; ParamType1: ptKeyword),
-{N} (Index: 561; Name: 'HasRefType'; ParamType1: ptRefType),
-{N} (Index: 562; Name: 'LocationHasKeyword'; ParamType1: ptKeyword),
-{N} (Index: 563; Name: 'LocationHasRefType'; ParamType1: ptRefType),
-{N} (Index: 565; Name: 'GetIsEditorLocation'; ParamType1: ptLocation),
-{N} (Index: 566; Name: 'GetIsAliasRef'; ParamType1: ptAlias),
-{N} (Index: 567; Name: 'GetIsEditorLocAlias'; ParamType1: ptAlias),
-{N} (Index: 568; Name: 'IsSprinting'),
-{N} (Index: 569; Name: 'IsBlocking'),
-{N} (Index: 570; Name: 'HasEquippedSpell'; ParamType1: ptCastingSource),
-{N} (Index: 571; Name: 'GetCurrentCastingType'; ParamType1: ptCastingSource),
-{N} (Index: 572; Name: 'GetCurrentDeliveryType'; ParamType1: ptCastingSource),
-{N} (Index: 574; Name: 'GetAttackState'),
-{N} (Index: 576; Name: 'GetEventData'; ParamType1: ptEvent; ParamType2: ptEventData; ParamType3: ptNone),
-{N} (Index: 577; Name: 'IsCloserToAThanB'; ParamType1: ptObjectReference; ParamType2: ptObjectReference),
-{N} (Index: 579; Name: 'GetEquippedShout'; ParamType1: ptShout),
-{N} (Index: 580; Name: 'IsBleedingOut'),
-{N} (Index: 584; Name: 'GetRelativeAngle'; ParamType1: ptObjectReference; ParamType2: ptAxis),
-{N} (Index: 589; Name: 'GetMovementDirection'),
-{N} (Index: 590; Name: 'IsInScene'),
-{N} (Index: 591; Name: 'GetRefTypeDeadCount'; ParamType1: ptLocation; ParamType2: ptRefType),
-{N} (Index: 592; Name: 'GetRefTypeAliveCount'; ParamType1: ptLocation; ParamType2: ptRefType),
-{N} (Index: 594; Name: 'GetIsFlying'),
-{N} (Index: 595; Name: 'IsCurrentSpell'; ParamType1: ptMagicItem; ParamType2: ptCastingSource),
-{N} (Index: 596; Name: 'SpellHasKeyword'; ParamType1: ptCastingSource; ParamType2: ptKeyword),
-{N} (Index: 597; Name: 'GetEquippedItemType'; ParamType1: ptCastingSource),
-{N} (Index: 598; Name: 'GetLocationAliasCleared'; ParamType1: ptAlias),
-{N} (Index: 600; Name: 'GetLocAliasRefTypeDeadCount'; ParamType1: ptAlias; ParamType2: ptRefType),
-{N} (Index: 601; Name: 'GetLocAliasRefTypeAliveCount'; ParamType1: ptAlias; ParamType2: ptRefType),
-{N} (Index: 602; Name: 'IsWardState'; ParamType1: ptWardState),
-{N} (Index: 603; Name: 'IsInSameCurrentLocAsRef'; ParamType1: ptObjectReference; ParamType2: ptKeyword),
-{N} (Index: 604; Name: 'IsInSameCurrentLocAsRefAlias'; ParamType1: ptAlias; ParamType2: ptKeyword),
-{N} (Index: 605; Name: 'LocAliasIsLocation'; ParamType1: ptAlias; ParamType2: ptLocation),
-{N} (Index: 606; Name: 'GetKeywordDataForLocation'; ParamType1: ptLocation; ParamType2: ptKeyword),
-{N} (Index: 608; Name: 'GetKeywordDataForAlias'; ParamType1: ptAlias; ParamType2: ptKeyword),
-{N} (Index: 610; Name: 'LocAliasHasKeyword'; ParamType1: ptAlias; ParamType2: ptKeyword),
-{N} (Index: 611; Name: 'IsNullPackageData'; ParamType1: ptPackdata),
-{N} (Index: 612; Name: 'GetNumericPackageData'; ParamType1: ptInteger),
-{N} (Index: 613; Name: 'IsFurnitureAnimType'; ParamType1: ptFurnitureAnim),
-{N} (Index: 614; Name: 'IsFurnitureEntryType'; ParamType1: ptFurnitureEntry),
-{N} (Index: 615; Name: 'GetHighestRelationshipRank'),
-{N} (Index: 616; Name: 'GetLowestRelationshipRank'),
-{N} (Index: 617; Name: 'HasAssociationTypeAny'; ParamType1: ptAssociationType),
-{N} (Index: 618; Name: 'HasFamilyRelationshipAny'),
-{N} (Index: 619; Name: 'GetPathingTargetOffset'; ParamType1: ptAxis),
-{N} (Index: 620; Name: 'GetPathingTargetAngleOffset'; ParamType1: ptAxis),
-{N} (Index: 621; Name: 'GetPathingTargetSpeed'),
-{N} (Index: 622; Name: 'GetPathingTargetSpeedAngle'; ParamType1: ptAxis),
-{N} (Index: 623; Name: 'GetMovementSpeed'),
-{N} (Index: 624; Name: 'GetInContainer'; ParamType1: ptObjectReference),
-{N} (Index: 625; Name: 'IsLocationLoaded'; ParamType1: ptLocation),
-{N} (Index: 626; Name: 'IsLocAliasLoaded'; ParamType1: ptAlias),
-{N} (Index: 627; Name: 'IsDualCasting'),
-{N} (Index: 629; Name: 'GetVMQuestVariable'; ParamType1: ptQuest; ParamType2: ptVariableName),
-{N} (Index: 630; Name: 'GetVMScriptVariable'; ParamType1: ptObjectReference; ParamType2: ptVariableName),
-{N} (Index: 631; Name: 'IsEnteringInteractionQuick'),
-{N} (Index: 632; Name: 'IsCasting'),
-{N} (Index: 633; Name: 'GetFlyingState'),
-{N} (Index: 635; Name: 'IsInFavorState'),
-{N} (Index: 636; Name: 'HasTwoHandedWeaponEquipped'),
-{N} (Index: 637; Name: 'IsExitingInstant'),
-{N} (Index: 638; Name: 'IsInFriendStateWithPlayer'),
-{N} (Index: 639; Name: 'GetWithinDistance'; ParamType1: ptObjectReference; ParamType2: ptFloat),
-{N} (Index: 640; Name: 'GetActorValuePercent'; ParamType1: ptActorValue),
-{N} (Index: 641; Name: 'IsUnique'),
-{N} (Index: 642; Name: 'GetLastBumpDirection'),
-{N} (Index: 644; Name: 'IsInFurnitureState'; ParamType1: ptFurnitureAnim),
-{N} (Index: 645; Name: 'GetIsInjured'),
-{N} (Index: 646; Name: 'GetIsCrashLandRequest'),
-{N} (Index: 647; Name: 'GetIsHastyLandRequest'),
-{N} (Index: 650; Name: 'IsLinkedTo'; ParamType1: ptObjectReference; ParamType2: ptKeyword),
-{N} (Index: 651; Name: 'GetKeywordDataForCurrentLocation'; ParamType1: ptKeyword),
-{N} (Index: 652; Name: 'GetInSharedCrimeFaction'; ParamType1: ptObjectReference),
-{N} (Index: 654; Name: 'GetBribeSuccess'),
-{N} (Index: 655; Name: 'GetIntimidateSuccess'),
-{N} (Index: 656; Name: 'GetArrestedState'),
-{N} (Index: 657; Name: 'GetArrestingActor'),
-{N} (Index: 659; Name: 'EPTemperingItemIsEnchanted'),
-{N} (Index: 660; Name: 'EPTemperingItemHasKeyword'; ParamType1: ptKeyword),
-{N} (Index: 664; Name: 'GetReplacedItemType'; ParamType1: ptCastingSource),
-{N} (Index: 672; Name: 'IsAttacking'),
-{N} (Index: 673; Name: 'IsPowerAttacking'),
-{N} (Index: 674; Name: 'IsLastHostileActor'),
-{N} (Index: 675; Name: 'GetGraphVariableInt'; ParamType1: ptVariableName),
-{N} (Index: 676; Name: 'GetCurrentShoutVariation'),
-{N} (Index: 678; Name: 'ShouldAttackKill'; ParamType1: ptActor),
-{N} (Index: 680; Name: 'GetActivatorHeight'),
-{N} (Index: 681; Name: 'EPMagic_IsAdvanceSkill'; ParamType1: ptActorValue),
-{N} (Index: 682; Name: 'WornHasKeyword'; ParamType1: ptKeyword),
-{N} (Index: 683; Name: 'GetPathingCurrentSpeed'),
-{N} (Index: 684; Name: 'GetPathingCurrentSpeedAngle'; ParamType1: ptAxis),
-{N} (Index: 691; Name: 'EPModSkillUsage_AdvanceObjectHasKeyword'; ParamType1: ptKeyword),
-{N} (Index: 692; Name: 'EPModSkillUsage_IsAdvanceAction'; ParamType1: ptAdvanceAction),
-{N} (Index: 693; Name: 'EPMagic_SpellHasKeyword'; ParamType1: ptKeyword),
-{N} (Index: 694; Name: 'GetNoBleedoutRecovery'),
-{N} (Index: 696; Name: 'EPMagic_SpellHasSkill'; ParamType1: ptActorValue),
-{N} (Index: 697; Name: 'IsAttackType'; ParamType1: ptKeyword),
-{N} (Index: 698; Name: 'IsAllowedToFly'),
-{N} (Index: 699; Name: 'HasMagicEffectKeyword'; ParamType1: ptKeyword),
-{N} (Index: 700; Name: 'IsCommandedActor'),
-{N} (Index: 701; Name: 'IsStaggered'),
-{N} (Index: 702; Name: 'IsRecoiling'),
-{N} (Index: 703; Name: 'IsExitingInteractionQuick'),
-{N} (Index: 704; Name: 'IsPathing'),
-{N} (Index: 705; Name: 'GetShouldHelp'; ParamType1: ptActor),
-{N} (Index: 706; Name: 'HasBoundWeaponEquipped'; ParamType1: ptCastingSource),
-{N} (Index: 707; Name: 'GetCombatTargetHasKeyword'; ParamType1: ptKeyword),
-{N} (Index: 709; Name: 'GetCombatGroupMemberCount'),
-{N} (Index: 710; Name: 'IsIgnoringCombat'),
-{N} (Index: 711; Name: 'GetLightLevel'),
-{N} (Index: 713; Name: 'SpellHasCastingPerk'; ParamType1: ptPerk),
-{N} (Index: 714; Name: 'IsBeingRidden'),
-{N} (Index: 715; Name: 'IsUndead'),
-{N} (Index: 716; Name: 'GetRealHoursPassed'),
-{N} (Index: 718; Name: 'IsUnlockedDoor'),
-{N} (Index: 719; Name: 'IsHostileToActor'; ParamType1: ptActor),
-{N} (Index: 720; Name: 'GetTargetHeight'; ParamType1: ptObjectReference),
-{N} (Index: 721; Name: 'IsPoison'),
-{N} (Index: 722; Name: 'WornApparelHasKeywordCount'; ParamType1: ptKeyword),
-{N} (Index: 723; Name: 'GetItemHealthPercent'),
-{N} (Index: 724; Name: 'EffectWasDualCast'),
-{N} (Index: 725; Name: 'GetKnockedStateEnum'),
-{N} (Index: 726; Name: 'DoesNotExist'),
-{N} (Index: 730; Name: 'IsOnFlyingMount'),
-{N} (Index: 731; Name: 'CanFlyHere'),
-{N} (Index: 732; Name: 'IsFlyingMountPatrolQueud'),
-{N} (Index: 733; Name: 'IsFlyingMountFastTravelling'),
+  wbCTDAFunctions : array[0..512] of TCTDAFunction = (
+    (Index:   0; Name: 'GetWantBlocking'),
+    (Index:   1; Name: 'GetDistance'; ParamType1: ptObjectReference),
+    (Index:   5; Name: 'GetLocked'),
+    (Index:   6; Name: 'GetPos'; ParamType1: ptAxis),
+    (Index:   8; Name: 'GetAngle'; ParamType1: ptAxis),
+    (Index:  10; Name: 'GetStartingPos'; ParamType1: ptAxis),
+    (Index:  11; Name: 'GetStartingAngle'; ParamType1: ptAxis),
+    (Index:  12; Name: 'GetSecondsPassed'),
+    (Index:  14; Name: 'GetValue'; ParamType1: ptActorValue),
+    (Index:  18; Name: 'GetCurrentTime'),
+    (Index:  24; Name: 'GetScale'),
+    (Index:  25; Name: 'IsMoving'),
+    (Index:  26; Name: 'IsTurning'),
+    (Index:  27; Name: 'GetLineOfSight'; ParamType1: ptObjectReference),
+    (Index:  31; Name: 'GetButtonPressed'),
+    (Index:  32; Name: 'GetInSameCell'; ParamType1: ptObjectReference),
+    (Index:  35; Name: 'GetDisabled'),
+    (Index:  39; Name: 'GetDisease'),
+    (Index:  41; Name: 'GetClothingValue'),
+    (Index:  42; Name: 'SameFaction'; ParamType1: ptActor),
+    (Index:  43; Name: 'SameRace'; ParamType1: ptActor),
+    (Index:  44; Name: 'SameSex'; ParamType1: ptActor),
+    (Index:  45; Name: 'GetDetected'; ParamType1: ptActor),
+    (Index:  46; Name: 'GetDead'),
+    (Index:  47; Name: 'GetItemCount'; ParamType1: ptReferencableObject),
+    (Index:  48; Name: 'GetGold'),
+    (Index:  49; Name: 'GetSleeping'),
+    (Index:  50; Name: 'GetTalkedToPC'),
+    (Index:  56; Name: 'GetQuestRunning'; ParamType1: ptQuest),
+    (Index:  58; Name: 'GetStage'; ParamType1: ptQuest),
+    (Index:  59; Name: 'GetStageDone'; ParamType1: ptQuest; ParamType2: ptQuestStage),
+    (Index:  60; Name: 'GetFactionRankDifference'; ParamType1: ptFaction; ParamType2: ptActor),
+    (Index:  61; Name: 'GetAlarmed'),
+    (Index:  62; Name: 'IsRaining'),
+    (Index:  63; Name: 'GetAttacked'),
+    (Index:  64; Name: 'GetIsCreature'),
+    (Index:  65; Name: 'GetLockLevel'),
+    (Index:  66; Name: 'GetShouldAttack'; ParamType1: ptActor),
+    (Index:  67; Name: 'GetInCell'; ParamType1: ptCell),
+    (Index:  68; Name: 'GetIsClass'; ParamType1: ptClass),
+    (Index:  69; Name: 'GetIsRace'; ParamType1: ptRace),
+    (Index:  70; Name: 'GetIsSex'; ParamType1: ptSex),
+    (Index:  71; Name: 'GetInFaction'; ParamType1: ptFaction),
+    (Index:  72; Name: 'GetIsID'; ParamType1: ptReferencableObject),
+    (Index:  73; Name: 'GetFactionRank'; ParamType1: ptFaction),
+    (Index:  74; Name: 'GetGlobalValue'; ParamType1: ptGlobal),
+    (Index:  75; Name: 'IsSnowing'),
+    (Index:  77; Name: 'GetRandomPercent'),
+    (Index:  79; Name: 'WouldBeStealing'; ParamType1: ptObjectReference),
+    (Index:  80; Name: 'GetLevel'),
+    (Index:  81; Name: 'IsRotating'),
+    (Index:  83; Name: 'GetLeveledEncounterValue'; ParamType1: ptInteger),
+    (Index:  84; Name: 'GetDeadCount'; ParamType1: ptActorBase),
+    (Index:  91; Name: 'GetIsAlerted'),
+    (Index:  99; Name: 'GetHeadingAngle'; ParamType1: ptObjectReference),
+    (Index: 101; Name: 'IsWeaponMagicOut'),
+    (Index: 102; Name: 'IsTorchOut'),
+    (Index: 103; Name: 'IsShieldOut'),
+    (Index: 105; Name: 'IsActionRef'; ParamType1: ptObjectReference),
+    (Index: 106; Name: 'IsFacingUp'),
+    (Index: 107; Name: 'GetKnockedState'),
+    (Index: 108; Name: 'GetWeaponAnimType'),
+    (Index: 109; Name: 'IsWeaponSkillType'; ParamType1: ptActorValue),
+    (Index: 110; Name: 'GetCurrentAIPackage'),
+    (Index: 111; Name: 'IsWaiting'),
+    (Index: 112; Name: 'IsIdlePlaying'),
+    (Index: 116; Name: 'IsIntimidatedbyPlayer'),
+    (Index: 117; Name: 'IsPlayerInRegion'; ParamType1: ptRegion),
+    (Index: 118; Name: 'GetActorAggroRadiusViolated'),
+    (Index: 119; Name: 'GetCrimeKnown'; ParamType1: ptCrimeType; ParamType2: ptActor; ParamType3: ptActor),
+    (Index: 122; Name: 'GetCrime'; ParamType1: ptActor; ParamType2: ptCrimeType),
+    (Index: 123; Name: 'IsGreetingPlayer'),
+    (Index: 125; Name: 'IsGuard'),
+    (Index: 127; Name: 'HasBeenEaten'),
+    (Index: 128; Name: 'GetStaminaPercentage'),
+    (Index: 129; Name: 'HasBeenRead'),
+    (Index: 130; Name: 'GetDying'),
+    (Index: 131; Name: 'GetSceneActionPercent'; ParamType1: ptScene; ParamType2: ptInteger),
+    (Index: 132; Name: 'WouldRefuseCommand'; ParamType1: ptObjectReference),
+    (Index: 133; Name: 'SameFactionAsPC'),
+    (Index: 134; Name: 'SameRaceAsPC'),
+    (Index: 135; Name: 'SameSexAsPC'),
+    (Index: 136; Name: 'GetIsReference'; ParamType1: ptObjectReference),
+    (Index: 141; Name: 'IsTalking'),
+    (Index: 142; Name: 'GetComponentCount'; ParamType1: ptReferencableObject),
+    (Index: 143; Name: 'GetCurrentAIProcedure'),
+    (Index: 144; Name: 'GetTrespassWarningLevel'),
+    (Index: 145; Name: 'IsTrespassing'),
+    (Index: 146; Name: 'IsInMyOwnedCell'),
+    (Index: 147; Name: 'GetWindSpeed'),
+    (Index: 148; Name: 'GetCurrentWeatherPercent'),
+    (Index: 149; Name: 'GetIsCurrentWeather'; ParamType1: ptWeather),
+    (Index: 150; Name: 'IsContinuingPackagePCNear'),
+    (Index: 152; Name: 'GetIsCrimeFaction'; ParamType1: ptFaction),
+    (Index: 153; Name: 'CanHaveFlames'),
+    (Index: 154; Name: 'HasFlames'),
+    (Index: 157; Name: 'GetOpenState'),
+    (Index: 159; Name: 'GetSitting'),
+    (Index: 160; Name: 'GetFurnitureMarkerID'),
+    (Index: 161; Name: 'GetIsCurrentPackage'; ParamType1: ptPackage),
+    (Index: 162; Name: 'IsCurrentFurnitureRef'; ParamType1: ptObjectReference),
+    (Index: 163; Name: 'IsCurrentFurnitureObj'; ParamType1: ptFurniture),
+    (Index: 167; Name: 'GetFactionReaction'; ParamType1: ptFaction; ParamType2: ptFaction),
+    (Index: 170; Name: 'GetDayOfWeek'),
+    (Index: 172; Name: 'GetTalkedToPCParam'; ParamType1: ptActor),
+    (Index: 175; Name: 'IsPCSleeping'),
+    (Index: 176; Name: 'IsPCAMurderer'),
+    (Index: 180; Name: 'HasSameEditorLocationAsRef'; ParamType1: ptObjectReference; ParamType2: ptKeyword),
+    (Index: 181; Name: 'HasSameEditorLocationAsRefAlias'; ParamType1: ptAlias; ParamType2: ptKeyword),
+    (Index: 182; Name: 'GetEquipped'; ParamType1: ptReferencableObject),
+    (Index: 185; Name: 'IsSwimming'),
+    (Index: 186; Name: 'ScriptEffectElapsedSeconds'),
+    (Index: 188; Name: 'GetPCSleepHours'),
+    (Index: 190; Name: 'GetAmountSoldStolen'),
+    (Index: 192; Name: 'GetIgnoreCrime'),
+    (Index: 193; Name: 'GetPCExpelled'; ParamType1: ptFaction),
+    (Index: 195; Name: 'GetPCFactionMurder'; ParamType1: ptFaction),
+    (Index: 197; Name: 'GetPCEnemyofFaction'; ParamType1: ptFaction),
+    (Index: 199; Name: 'GetPCFactionAttack'; ParamType1: ptFaction),
+    (Index: 203; Name: 'GetDestroyed'),
+    (Index: 205; Name: 'GetActionRef'),
+    (Index: 206; Name: 'GetSelf'),
+    (Index: 207; Name: 'GetContainer'),
+    (Index: 208; Name: 'GetForceRun'),
+    (Index: 210; Name: 'GetForceSneak'),
+    (Index: 214; Name: 'HasMagicEffect'; ParamType1: ptMagicEffect),
+    (Index: 215; Name: 'GetDefaultOpen'),
+    (Index: 223; Name: 'IsSpellTarget'; ParamType1: ptMagicItem),
+    (Index: 224; Name: 'GetVATSMode'),
+    (Index: 225; Name: 'GetPersuasionNumber'),
+    (Index: 226; Name: 'GetVampireFeed'),
+    (Index: 227; Name: 'GetCannibal'),
+    (Index: 228; Name: 'GetIsClassDefault'; ParamType1: ptClass),
+    (Index: 229; Name: 'GetClassDefaultMatch'),
+    (Index: 230; Name: 'GetInCellParam'; ParamType1: ptCell; ParamType2: ptObjectReference),
+    (Index: 231; Name: 'GetPlayerDialogueInput'),
+    (Index: 232; Name: 'GetCombatTarget'),
+    (Index: 233; Name: 'GetPackageTarget'),
+    (Index: 235; Name: 'GetVatsTargetHeight'),
+    (Index: 237; Name: 'GetIsGhost'),
+    (Index: 242; Name: 'GetUnconscious'),
+    (Index: 244; Name: 'GetRestrained'),
+    (Index: 246; Name: 'GetIsUsedItem'; ParamType1: ptReferencableObject),
+    (Index: 247; Name: 'GetIsUsedItemType'; ParamType1: ptFormType),
+    (Index: 248; Name: 'IsScenePlaying'; ParamType1: ptScene),
+    (Index: 249; Name: 'IsInDialogueWithPlayer'),
+    (Index: 250; Name: 'GetLocationCleared'; ParamType1: ptLocation),
+    (Index: 254; Name: 'GetIsPlayableRace'),
+    (Index: 255; Name: 'GetOffersServicesNow'),
+    (Index: 256; Name: 'GetGameSetting'; ParamType1: ptNone),
+    (Index: 258; Name: 'HasAssociationType'; ParamType1: ptActor; ParamType2: ptAssociationType),
+    (Index: 259; Name: 'HasFamilyRelationship'; ParamType1: ptActor),
+    (Index: 261; Name: 'HasParentRelationship'; ParamType1: ptActor),
+    (Index: 262; Name: 'IsWarningAbout'; ParamType1: ptFormList),
+    (Index: 263; Name: 'IsWeaponOut'),
+    (Index: 264; Name: 'HasSpell'; ParamType1: ptMagicItem),
+    (Index: 265; Name: 'IsTimePassing'),
+    (Index: 266; Name: 'IsPleasant'),
+    (Index: 267; Name: 'IsCloudy'),
+    (Index: 274; Name: 'IsSmallBump'),
+    (Index: 275; Name: 'GetParentRef'),
+    (Index: 277; Name: 'GetBaseValue'; ParamType1: ptActorValue),
+    (Index: 278; Name: 'IsOwner'; ParamType1: ptOwner),
+    (Index: 280; Name: 'IsCellOwner'; ParamType1: ptCell; ParamType2: ptOwner),
+    (Index: 282; Name: 'IsHorseStolen'),
+    (Index: 285; Name: 'IsLeftUp'),
+    (Index: 286; Name: 'IsSneaking'),
+    (Index: 287; Name: 'IsRunning'),
+    (Index: 288; Name: 'GetFriendHit'),
+    (Index: 289; Name: 'IsInCombat'; ParamType1: ptInteger),
+    (Index: 296; Name: 'IsAnimPlaying'; ParamType1: ptReferencableObject),
+    (Index: 300; Name: 'IsInInterior'),
+    (Index: 303; Name: 'IsActorsAIOff'),
+    (Index: 304; Name: 'IsWaterObject'),
+    (Index: 305; Name: 'GetPlayerAction'),
+    (Index: 306; Name: 'IsActorUsingATorch'),
+    (Index: 309; Name: 'IsXBox'),
+    (Index: 310; Name: 'GetInWorldspace'; ParamType1: ptWorldspace),
+    (Index: 312; Name: 'GetPCMiscStat'; ParamType1: ptMiscStat),
+    (Index: 313; Name: 'GetPairedAnimation'),
+    (Index: 314; Name: 'IsActorAVictim'),
+    (Index: 315; Name: 'GetTotalPersuasionNumber'),
+    (Index: 318; Name: 'GetIdleDoneOnce'),
+    (Index: 320; Name: 'GetNoRumors'),
+    (Index: 323; Name: 'GetCombatState'),
+    (Index: 325; Name: 'GetWithinPackageLocation'; ParamType1: ptPackdata),
+    (Index: 327; Name: 'IsRidingMount'),
+    (Index: 329; Name: 'IsFleeing'),
+    (Index: 332; Name: 'IsInDangerousWater'),
+    (Index: 338; Name: 'GetIgnoreFriendlyHits'),
+    (Index: 339; Name: 'IsPlayersLastRiddenMount'),
+    (Index: 344; Name: 'ReleaseWeatherOverride'),
+    (Index: 348; Name: 'SendTrespassAlarm'; ParamType1: ptActor),
+    (Index: 353; Name: 'IsActor'),
+    (Index: 354; Name: 'IsEssential'),
+    (Index: 358; Name: 'IsPlayerMovingIntoNewSpace'),
+    (Index: 359; Name: 'GetInCurrentLocation'; ParamType1: ptLocation),
+    (Index: 360; Name: 'GetInCurrentLocationAlias'; ParamType1: ptAlias),
+    (Index: 361; Name: 'GetTimeDead'),
+    (Index: 362; Name: 'HasLinkedRef'; ParamType1: ptKeyword),
+    (Index: 363; Name: 'GetLinkedRef'; ParamType1: ptKeyword),
+    (Index: 365; Name: 'IsChild'),
+    (Index: 366; Name: 'GetStolenItemValueNoCrime'; ParamType1: ptFaction),
+    (Index: 367; Name: 'GetLastPlayerAction'),
+    (Index: 368; Name: 'IsPlayerActionActive'; ParamType1: ptInteger),
+    (Index: 370; Name: 'IsTalkingActivatorActor'; ParamType1: ptActor),
+    (Index: 372; Name: 'IsInList'; ParamType1: ptFormList),
+    (Index: 373; Name: 'GetStolenItemValue'; ParamType1: ptFaction),
+    (Index: 375; Name: 'GetCrimeGoldViolent'; ParamType1: ptFaction),
+    (Index: 376; Name: 'GetCrimeGoldNonviolent'; ParamType1: ptFaction),
+    (Index: 378; Name: 'IsOwnedBy'; ParamType1: ptActor),
+    (Index: 380; Name: 'GetCommandDistance'),
+    (Index: 381; Name: 'GetCommandLocationDistance'),
+    (Index: 387; Name: 'GetObjectiveFailed'; ParamType1: ptQuest; ParamType2: ptInteger),
+    (Index: 390; Name: 'GetHitLocation'),
+    (Index: 391; Name: 'IsPC1stPerson'),
+    (Index: 396; Name: 'GetCauseofDeath'),
+    (Index: 397; Name: 'IsLimbGone'; ParamType1: ptInteger),
+    (Index: 398; Name: 'IsWeaponInList'; ParamType1: ptFormList),
+    (Index: 402; Name: 'IsBribedbyPlayer'),
+    (Index: 403; Name: 'GetRelationshipRank'; ParamType1: ptActor),
+    (Index: 407; Name: 'GetVATSValue'; ParamType1: ptInteger; ParamType2: ptInteger),
+    (Index: 408; Name: 'IsKiller'; ParamType1: ptActor),
+    (Index: 409; Name: 'IsKillerObject'; ParamType1: ptFormList),
+    (Index: 410; Name: 'GetFactionCombatReaction'; ParamType1: ptFaction; ParamType2: ptFaction),
+    (Index: 414; Name: 'Exists'; ParamType1: ptObjectReference),
+    (Index: 415; Name: 'GetGroupMemberCount'),
+    (Index: 416; Name: 'GetGroupTargetCount'),
+    (Index: 419; Name: 'GetObjectiveCompleted'; ParamType1: ptQuest; ParamType2: ptInteger),
+    (Index: 420; Name: 'GetObjectiveDisplayed'; ParamType1: ptQuest; ParamType2: ptInteger),
+    (Index: 425; Name: 'GetIsFormType'),
+    (Index: 426; Name: 'GetIsVoiceType'; ParamType1: ptVoiceType),
+    (Index: 427; Name: 'GetPlantedExplosive'),
+    (Index: 429; Name: 'IsScenePackageRunning'),
+    (Index: 430; Name: 'GetHealthPercentage'),
+    (Index: 432; Name: 'GetIsObjectType'; ParamType1: ptFormType),
+    (Index: 437; Name: 'GetIsCreatureType'; ParamType1: ptInteger),
+    (Index: 438; Name: 'HasKey'; ParamType1: ptObjectReference),
+    (Index: 439; Name: 'IsFurnitureEntryType'; ParamType1: ptReferencableObject),
+    (Index: 444; Name: 'GetInCurrentLocationFormList'; ParamType1: ptFormList),
+    (Index: 445; Name: 'GetInZone'; ParamType1: ptEncounterZone),
+    (Index: 446; Name: 'GetVelocity'; ParamType1: ptAxis),
+    (Index: 447; Name: 'GetGraphVariableFloat'),
+    (Index: 448; Name: 'HasPerk'; ParamType1: ptPerk),
+    (Index: 449; Name: 'GetFactionRelation'; ParamType1: ptActor),
+    (Index: 450; Name: 'IsLastIdlePlayed'; ParamType1: ptIdleForm),
+    (Index: 453; Name: 'GetPlayerTeammate'),
+    (Index: 454; Name: 'GetPlayerTeammateCount'),
+    (Index: 458; Name: 'GetActorCrimePlayerEnemy'),
+    (Index: 459; Name: 'GetCrimeGold'; ParamType1: ptFaction),
+    (Index: 462; Name: 'GetPlayerGrabbedRef'),
+    (Index: 463; Name: 'IsPlayerGrabbedRef'; ParamType1: ptObjectReference),
+    (Index: 465; Name: 'GetKeywordItemCount'; ParamType1: ptKeyword),
+    (Index: 467; Name: 'GetBroadcastState'),
+    (Index: 470; Name: 'GetDestructionStage'),
+    (Index: 473; Name: 'GetIsAlignment'; ParamType1: ptAlignment),
+    (Index: 476; Name: 'IsProtected'),
+    (Index: 477; Name: 'GetThreatRatio'; ParamType1: ptActor),
+    (Index: 479; Name: 'GetIsUsedItemEquipType'; ParamType1: ptEquipType),
+    (Index: 480; Name: 'GetPlayerName'),
+    (Index: 483; Name: 'GetPlayerActivated'),
+    (Index: 485; Name: 'GetFullyEnabledActorsInHigh'),
+    (Index: 487; Name: 'IsCarryable'),
+    (Index: 488; Name: 'GetConcussed'),
+    (Index: 489; Name: 'SetZoneRespawns'; ParamType1: ptEncounterZone; ParamType2: ptInteger),
+    (Index: 490; Name: 'SetVATSTarget'; ParamType1: ptInteger),
+    (Index: 491; Name: 'GetMapMarkerVisible'),
+    (Index: 493; Name: 'PlayerKnows'; ParamType1: ptReferencableObject),
+    (Index: 494; Name: 'GetPermanentValue'; ParamType1: ptActorValue),
+    (Index: 495; Name: 'GetKillingBlowLimb'),
+    (Index: 497; Name: 'CanPayCrimeGold'; ParamType1: ptFaction),
+    (Index: 499; Name: 'GetDaysInJail'),
+    (Index: 500; Name: 'EPAlchemyGetMakingPoison'),
+    (Index: 501; Name: 'EPAlchemyEffectHasKeyword'; ParamType1: ptKeyword),
+    (Index: 503; Name: 'GetAllowWorldInteractions'),
+    (Index: 506; Name: 'DialogueGetAv'; ParamType1: ptActorValue),
+    (Index: 507; Name: 'DialogueHasPerk'; ParamType1: ptPerk),
+    (Index: 508; Name: 'GetLastHitCritical'),
+    (Index: 510; Name: 'DialogueGetItemCount'; ParamType1: ptReferencableObject),
+    (Index: 511; Name: 'LastCrippledCondition'; ParamType1: ptActorValue),
+    (Index: 512; Name: 'HasSharedPowerGrid'; ParamType1: ptObjectReference),
+    (Index: 513; Name: 'IsCombatTarget'; ParamType1: ptActor),
+    (Index: 515; Name: 'GetVATSRightAreaFree'; ParamType1: ptObjectReference),
+    (Index: 516; Name: 'GetVATSLeftAreaFree'; ParamType1: ptObjectReference),
+    (Index: 517; Name: 'GetVATSBackAreaFree'; ParamType1: ptObjectReference),
+    (Index: 518; Name: 'GetVATSFrontAreaFree'; ParamType1: ptObjectReference),
+    (Index: 519; Name: 'GetIsLockBroken'),
+    (Index: 520; Name: 'IsPS3'),
+    (Index: 521; Name: 'IsWindowsPC'),
+    (Index: 522; Name: 'GetVATSRightTargetVisible'; ParamType1: ptObjectReference),
+    (Index: 523; Name: 'GetVATSLeftTargetVisible'; ParamType1: ptObjectReference),
+    (Index: 524; Name: 'GetVATSBackTargetVisible'; ParamType1: ptObjectReference),
+    (Index: 525; Name: 'GetVATSFrontTargetVisible'; ParamType1: ptObjectReference),
+    (Index: 528; Name: 'IsInCriticalStage'; ParamType1: ptCriticalStage),
+    (Index: 530; Name: 'GetXPForNextLevel'),
+    (Index: 533; Name: 'GetInfamy'; ParamType1: ptFaction),
+    (Index: 534; Name: 'GetInfamyViolent'; ParamType1: ptFaction),
+    (Index: 535; Name: 'GetInfamyNonViolent'; ParamType1: ptFaction),
+    (Index: 536; Name: 'GetTypeCommandPerforming'),
+    (Index: 543; Name: 'GetQuestCompleted'; ParamType1: ptQuest),
+    (Index: 544; Name: 'GetSpeechChallengeSuccessLevel'),
+    (Index: 545; Name: 'PipBoyRadioOff'),
+    (Index: 547; Name: 'IsGoreDisabled'),
+    (Index: 550; Name: 'IsSceneActionComplete'; ParamType1: ptScene; ParamType2: ptInteger),
+    (Index: 552; Name: 'GetSpellUsageNum'; ParamType1: ptMagicItem),
+    (Index: 554; Name: 'GetActorsInHigh'),
+    (Index: 555; Name: 'HasLoaded3D'),
+    (Index: 559; Name: 'IsImageSpaceActive'; ParamType1: ptReferencableObject),
+    (Index: 560; Name: 'HasKeyword'; ParamType1: ptKeyword),
+    (Index: 561; Name: 'HasRefType'; ParamType1: ptRefType),
+    (Index: 562; Name: 'LocationHasKeyword'; ParamType1: ptKeyword),
+    (Index: 563; Name: 'LocationHasRefType'; ParamType1: ptRefType),
+    (Index: 565; Name: 'GetIsEditorLocation'; ParamType1: ptLocation),
+    (Index: 566; Name: 'GetIsAliasRef'; ParamType1: ptAlias),
+    (Index: 567; Name: 'GetIsEditorLocationAlias'; ParamType1: ptAlias),
+    (Index: 568; Name: 'IsSprinting'),
+    (Index: 569; Name: 'IsBlocking'),
+    (Index: 570; Name: 'HasEquippedSpell'; ParamType1: ptCastingSource),
+    (Index: 571; Name: 'GetCurrentCastingType'; ParamType1: ptCastingSource),
+    (Index: 572; Name: 'GetCurrentDeliveryType'; ParamType1: ptCastingSource),
+    (Index: 574; Name: 'GetAttackState'),
+    (Index: 575; Name: 'GetAliasedRef'; ParamType1: ptAlias),
+    (Index: 576; Name: 'GetEventData'; ParamType1: ptEvent; ParamType2: ptEventData; ParamType3: ptNone),  // fireundubh: Event Function, Event Member, Data (FO4)
+    (Index: 577; Name: 'IsCloserToAThanB'; ParamType1: ptObjectReference; ParamType2: ptObjectReference),
+    (Index: 578; Name: 'LevelMinusPCLevel'),
+    (Index: 580; Name: 'IsBleedingOut'),
+    (Index: 584; Name: 'GetRelativeAngle'; ParamType1: ptObjectReference; ParamType2: ptAxis),
+    (Index: 589; Name: 'GetMovementDirection'),
+    (Index: 590; Name: 'IsInScene'),
+    (Index: 591; Name: 'GetRefTypeDeadCount'; ParamType1: ptLocation; ParamType2: ptRefType),
+    (Index: 592; Name: 'GetRefTypeAliveCount'; ParamType1: ptLocation; ParamType2: ptRefType),
+    (Index: 594; Name: 'GetIsFlying'),
+    (Index: 595; Name: 'IsCurrentSpell'; ParamType1: ptMagicItem; ParamType2: ptCastingSource),
+    (Index: 596; Name: 'SpellHasKeyword'; ParamType1: ptCastingSource; ParamType2: ptKeyword),
+    (Index: 597; Name: 'GetEquippedItemType'; ParamType1: ptCastingSource),
+    (Index: 598; Name: 'GetLocationAliasCleared'; ParamType1: ptAlias),
+    (Index: 600; Name: 'GetLocationAliasRefTypeDeadCount'; ParamType1: ptAlias; ParamType2: ptRefType),
+    (Index: 601; Name: 'GetLocationAliasRefTypeAliveCount'; ParamType1: ptAlias; ParamType2: ptRefType),
+    (Index: 602; Name: 'IsWardState'; ParamType1: ptWardState),
+    (Index: 603; Name: 'IsInSameCurrentLocationAsRef'; ParamType1: ptObjectReference; ParamType2: ptKeyword),
+    (Index: 604; Name: 'IsInSameCurrentLocationAsRefAlias'; ParamType1: ptAlias; ParamType2: ptKeyword),
+    (Index: 605; Name: 'LocationAliasIsLocation'; ParamType1: ptAlias; ParamType2: ptLocation),
+    (Index: 606; Name: 'GetKeywordDataForLocation'; ParamType1: ptLocation; ParamType2: ptKeyword),
+    (Index: 608; Name: 'GetKeywordDataForAlias'; ParamType1: ptAlias; ParamType2: ptKeyword),
+    (Index: 610; Name: 'LocationAliasHasKeyword'; ParamType1: ptAlias; ParamType2: ptKeyword),
+    (Index: 611; Name: 'IsNullPackageData'; ParamType1: ptPackdata),
+    (Index: 612; Name: 'GetNumericPackageData'; ParamType1: ptPackdata),
+    (Index: 613; Name: 'IsPlayerRadioOn'),
+    (Index: 614; Name: 'GetPlayerRadioFrequency'),
+    (Index: 615; Name: 'GetHighestRelationshipRank'),
+    (Index: 616; Name: 'GetLowestRelationshipRank'),
+    (Index: 617; Name: 'HasAssociationTypeAny'; ParamType1: ptAssociationType),
+    (Index: 618; Name: 'HasFamilyRelationshipAny'),
+    (Index: 619; Name: 'GetPathingTargetOffset'; ParamType1: ptAxis),
+    (Index: 620; Name: 'GetPathingTargetAngleOffset'; ParamType1: ptAxis),
+    (Index: 621; Name: 'GetPathingTargetSpeed'),
+    (Index: 622; Name: 'GetPathingTargetSpeedAngle'; ParamType1: ptAxis),
+    (Index: 623; Name: 'GetMovementSpeed'),
+    (Index: 624; Name: 'GetInContainer'; ParamType1: ptObjectReference),
+    (Index: 625; Name: 'IsLocationLoaded'; ParamType1: ptLocation),
+    (Index: 626; Name: 'IsLocationAliasLoaded'; ParamType1: ptAlias),
+    (Index: 627; Name: 'IsDualCasting'),
+    (Index: 629; Name: 'GetVMQuestVariable'; ParamType1: ptQuest; ParamType2: ptNone),
+    (Index: 630; Name: 'GetCombatAudioDetection'),
+    (Index: 631; Name: 'GetCombatVisualDetection'),
+    (Index: 632; Name: 'IsCasting'),
+    (Index: 633; Name: 'GetFlyingState'),
+    (Index: 635; Name: 'IsInFavorState'),
+    (Index: 636; Name: 'HasTwoHandedWeaponEquipped'),
+    (Index: 637; Name: 'IsFurnitureExitType'; ParamType1: ptReferencableObject),
+    (Index: 638; Name: 'IsInFriendStatewithPlayer'),
+    (Index: 639; Name: 'GetWithinDistance'; ParamType1: ptObjectReference; ParamType2: ptFloat),
+    (Index: 640; Name: 'GetValuePercent'; ParamType1: ptActorValue),
+    (Index: 641; Name: 'IsUnique'),
+    (Index: 642; Name: 'GetLastBumpDirection'),
+    (Index: 644; Name: 'GetInfoChallangeSuccess'),
+    (Index: 645; Name: 'GetIsInjured'),
+    (Index: 646; Name: 'GetIsCrashLandRequest'),
+    (Index: 647; Name: 'GetIsHastyLandRequest'),
+    (Index: 650; Name: 'IsLinkedTo'; ParamType1: ptObjectReference; ParamType2: ptKeyword),
+    (Index: 651; Name: 'GetKeywordDataForCurrentLocation'; ParamType1: ptKeyword),
+    (Index: 652; Name: 'GetInSharedCrimeFaction'; ParamType1: ptObjectReference),
+    (Index: 653; Name: 'GetBribeAmount'),
+    (Index: 654; Name: 'GetBribeSuccess'),
+    (Index: 655; Name: 'GetIntimidateSuccess'),
+    (Index: 656; Name: 'GetArrestedState'),
+    (Index: 657; Name: 'GetArrestingActor'),
+    (Index: 659; Name: 'HasVMScript'; ParamType1: ptNone),
+    (Index: 660; Name: 'GetVMScriptVariable'; ParamType1: ptNone; ParamType2: ptNone),
+    (Index: 661; Name: 'GetWorkshopResourceDamage'; ParamType1: ptActorValue),
+    (Index: 664; Name: 'HasValidRumorTopic'; ParamType1: ptQuest),
+    (Index: 672; Name: 'IsAttacking'),
+    (Index: 673; Name: 'IsPowerAttacking'),
+    (Index: 674; Name: 'IsLastHostileActor'),
+    (Index: 675; Name: 'GetGraphVariableInt'; ParamType1: ptNone),
+    (Index: 678; Name: 'ShouldAttackKill'; ParamType1: ptActor),
+    (Index: 680; Name: 'GetActivationHeight'),
+    (Index: 682; Name: 'WornHasKeyword'; ParamType1: ptKeyword),
+    (Index: 683; Name: 'GetPathingCurrentSpeed'),
+    (Index: 684; Name: 'GetPathingCurrentSpeedAngle'; ParamType1: ptAxis),
+    (Index: 691; Name: 'GetWorkshopObjectCount'; ParamType1: ptReferencableObject),
+    (Index: 693; Name: 'EPMagic_SpellHasKeyword'; ParamType1: ptKeyword),
+    (Index: 694; Name: 'GetNoBleedoutRecovery'),
+    (Index: 696; Name: 'EPMagic_SpellHasSkill'; ParamType1: ptActorValue),
+    (Index: 697; Name: 'IsAttackType'; ParamType1: ptKeyword),
+    (Index: 698; Name: 'IsAllowedToFly'),
+    (Index: 699; Name: 'HasMagicEffectKeyword'; ParamType1: ptKeyword),
+    (Index: 700; Name: 'IsCommandedActor'),
+    (Index: 701; Name: 'IsStaggered'),
+    (Index: 702; Name: 'IsRecoiling'),
+    (Index: 703; Name: 'HasScopeWeaponEquipped'),
+    (Index: 704; Name: 'IsPathing'),
+    (Index: 705; Name: 'GetShouldHelp'; ParamType1: ptActor),
+    (Index: 706; Name: 'HasBoundWeaponEquipped'; ParamType1: ptCastingSource),
+    (Index: 707; Name: 'GetCombatTargetHasKeyword'; ParamType1: ptKeyword),
+    (Index: 709; Name: 'GetCombatGroupMemberCount'),
+    (Index: 710; Name: 'IsIgnoringCombat'),
+    (Index: 711; Name: 'GetLightLevel'),
+    (Index: 713; Name: 'SpellHasCastingPerk'; ParamType1: ptPerk),
+    (Index: 714; Name: 'IsBeingRidden'),
+    (Index: 715; Name: 'IsUndead'),
+    (Index: 716; Name: 'GetRealHoursPassed'),
+    (Index: 718; Name: 'IsUnlockedDoor'),
+    (Index: 719; Name: 'IsHostileToActor'; ParamType1: ptActor),
+    (Index: 720; Name: 'GetTargetHeight'; ParamType1: ptObjectReference),
+    (Index: 721; Name: 'IsPoison'),
+    (Index: 722; Name: 'WornApparelHasKeywordCount'; ParamType1: ptKeyword),
+    (Index: 723; Name: 'GetItemHealthPercent'),
+    (Index: 724; Name: 'EffectWasDualCast'),
+    (Index: 725; Name: 'GetKnockStateEnum'),
+    (Index: 726; Name: 'DoesNotExist'),
+    (Index: 728; Name: 'GetPlayerWalkAwayFromDialogueScene'),
+    (Index: 729; Name: 'GetActorStance'),
+    (Index: 734; Name: 'CanProduceForWorkshop'),
+    (Index: 735; Name: 'CanFlyHere'),
+    (Index: 736; Name: 'EPIsDamageType'; ParamType1: ptDamageType),
+    (Index: 738; Name: 'GetActorGunState'),
+    (Index: 739; Name: 'GetVoiceLineLength'),
+    (Index: 741; Name: 'ObjectTemplateItem_HasKeyword'; ParamType1: ptKeyword),
+    (Index: 742; Name: 'ObjectTemplateItem_HasUniqueKeyword'; ParamType1: ptKeyword),
+    (Index: 743; Name: 'ObjectTemplateItem_GetLevel'),
+    (Index: 744; Name: 'MovementIdleMatches'; ParamType1: ptInteger; ParamType2: ptInteger), // TODO: determine correct param types (2)
+    (Index: 745; Name: 'GetActionData'),
+    (Index: 746; Name: 'GetActionDataShort'; ParamType1: ptInteger),
+    (Index: 747; Name: 'GetActionDataByte'; ParamType1: ptInteger),
+    (Index: 748; Name: 'GetActionDataFlag'; ParamType1: ptInteger),
+    (Index: 749; Name: 'ModdedItemHasKeyword'; ParamType1: ptKeyword),
+    (Index: 750; Name: 'GetAngryWithPlayer'),
+    (Index: 751; Name: 'IsCameraUnderWater'),
+    (Index: 753; Name: 'IsActorRefOwner'; ParamType1: ptActor),
+    (Index: 754; Name: 'HasActorRefOwner'; ParamType1: ptActor),
+    (Index: 756; Name: 'GetLoadedAmmoCount'),
+    (Index: 757; Name: 'IsTimeSpanSunrise'),
+    (Index: 758; Name: 'IsTimeSpanMorning'),
+    (Index: 759; Name: 'IsTimeSpanAfternoon'),
+    (Index: 760; Name: 'IsTimeSpanEvening'),
+    (Index: 761; Name: 'IsTimeSpanSunset'),
+    (Index: 762; Name: 'IsTimeSpanNight'),
+    (Index: 763; Name: 'IsTimeSpanMidnight'),
+    (Index: 764; Name: 'IsTimeSpanAnyDay'),
+    (Index: 765; Name: 'IsTimeSpanAnyNight'),
+    (Index: 766; Name: 'CurrentFurnitureHasKeyword'; ParamType1: ptKeyword),
+    (Index: 767; Name: 'GetWeaponEquipIndex'),
+    (Index: 769; Name: 'IsOverEncumbered'),
+    (Index: 770; Name: 'IsPackageRequestingBlockedIdles'),
+    (Index: 771; Name: 'GetActionDataInt'),
+    (Index: 772; Name: 'GetVATSRightMinusLeftAreaFree'; ParamType1: ptObjectReference),
+    (Index: 773; Name: 'GetInIronSights'; ParamType1: ptObjectReference),
+    (Index: 774; Name: 'GetActorStaggerDirection'),
+    (Index: 775; Name: 'GetActorStaggerMagnitude'),
+    (Index: 776; Name: 'WornCoversBipedSlot'; ParamType1: ptInteger),
+    (Index: 777; Name: 'GetInventoryValue'),
+    (Index: 778; Name: 'IsPlayerInConversation'),
+    (Index: 779; Name: 'IsInDialogueCamera'),
+    (Index: 780; Name: 'IsMyDialogueTargetPlayer'),
+    (Index: 781; Name: 'IsMyDialogueTargetActor'),
+    (Index: 782; Name: 'GetMyDialogueTargetDistance'),
+    (Index: 783; Name: 'IsSeatOccupied'; ParamType1: ptKeyword),
+    (Index: 784; Name: 'IsPlayerRiding'),
+    (Index: 785; Name: 'IsTryingEventCamera'),
+    (Index: 787; Name: 'GetNoteType'),
+    (Index: 788; Name: 'LocationHasPlayerOwnedWorkshop'),
+    (Index: 789; Name: 'IsStartingAction'),
+    (Index: 790; Name: 'IsMidAction'),
+    (Index: 791; Name: 'IsWeaponChargeAttack'),
+    (Index: 792; Name: 'IsInWorkshopMode'),
+    (Index: 793; Name: 'IsWeaponChargingHoldAttack'),
+    (Index: 794; Name: 'IsEncounterAbovePlayerLevel'),
+    (Index: 795; Name: 'IsMeleeAttacking'),
+    (Index: 796; Name: 'GetVATSQueuedTargetsUnique'),
+    (Index: 797; Name: 'GetCurrentLocationCleared'),
+    (Index: 798; Name: 'IsPowered'),
+    (Index: 799; Name: 'GetTransmitterDistance'),
+    (Index: 800; Name: 'GetCameraPlaybackTime'),
+    (Index: 801; Name: 'IsInWater'),
+    (Index: 802; Name: 'GetWithinActivateDistance'; ParamType1: ptObjectReference),
+    (Index: 803; Name: 'IsUnderWater'),
+    (Index: 804; Name: 'IsInSameSpace'; ParamType1: ptObjectReference),
+    (Index: 805; Name: 'LocationAllowsReset'),
+    (Index: 806; Name: 'GetVATSBackRightAreaFree'; ParamType1: ptObjectReference),
+    (Index: 807; Name: 'GetVATSBackLeftAreaFree'; ParamType1: ptObjectReference),
+    (Index: 808; Name: 'GetVATSBackRightTargetVisible'; ParamType1: ptObjectReference),
+    (Index: 809; Name: 'GetVATSBackLeftTargetVisible'; ParamType1: ptObjectReference),
+    (Index: 810; Name: 'GetVATSTargetLimbVisible'; ParamType1: ptObjectReference),
+    (Index: 811; Name: 'IsPlayerListening'; ParamType1: ptFloat),
+    (Index: 812; Name: 'GetPathingRequestedQuickTurn'),
+    (Index: 813; Name: 'EPIsCalculatingBaseDamage'),
+    (Index: 814; Name: 'GetReanimating'),
 
-    // Added by SKSE
+    // F4SE
     (Index: 1024; Name: 'GetSKSEVersion'; ),
     (Index: 1025; Name: 'GetSKSEVersionMinor'; ),
     (Index: 1026; Name: 'GetSKSEVersionBeta'; ),
     (Index: 1027; Name: 'GetSKSERelease'; ),
     (Index: 1028; Name: 'ClearInvalidRegistrations'; )
   );
-
 var
   wbCTDAFunctionEditInfo: string;
 
@@ -3335,6 +3695,15 @@ begin
 
     if MainRecord.ElementExists['Unused RNAM'] then
       MainRecord.RemoveElement('Unused RNAM');
+
+    if MainRecord.ElementExists['Unknown WLEV'] then
+      MainRecord.RemoveElement('Unknown WLEV');
+
+    if MainRecord.ElementExists['MHDT'] then
+      MainRecord.RemoveElement('MHDT');
+
+    if MainRecord.ElementExists['CLSZ'] then
+      MainRecord.RemoveElement('CLSZ');
 
     // large values in object bounds cause stutter and performance issues in game (reported by Arthmoor)
     // CK can occasionally set them wrong, so make a warning
@@ -4182,6 +4551,149 @@ begin
   end;
 end;
 
+procedure wbOMODpropertyAfterSet(const aElement: IwbElement; const aOldValue, aNewValue: Variant);
+begin
+  wbCounterAfterSet('Property Count', aElement);
+end;
+
+procedure wbOMODincludeAfterSet(const aElement: IwbElement; const aOldValue, aNewValue: Variant);
+begin
+  wbCounterAfterSet('Include Count', aElement);
+end;
+
+procedure wbOMODdataAfterSet(const aElement: IwbElement; const aOldValue, aNewValue: Variant);
+begin
+  wbCounterContainerAfterSet('Property Count', 'Properties', aElement);
+  wbCounterContainerAfterSet('Include Count', 'Includes', aElement);
+end;
+
+function wbOMODDataIncludeCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
+var
+  Container       : IwbContainer;
+begin
+  if Supports(aElement.Container, IwbContainer, Container) then
+    Result := Container.ElementNativeValues['Include Count']
+  else
+    Result := 0;
+end;
+
+function wbOMODDataPropertyCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
+var
+  Container       : IwbContainer;
+begin
+  if Supports(aElement.Container, IwbContainer, Container) then
+    Result := Container.ElementNativeValues['Property Count']
+  else
+    Result := 0;
+end;
+
+function wbOMODDataPropertyDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Container     : IwbContainer;
+  tContainer    : IwbContainer;
+  DataContainer : IwbDataContainer;
+  FormType      : Cardinal;
+  aPtr          : Pointer;
+const
+  OffsetFormType = 10;
+begin
+  Result := 0;
+  if not Assigned(aBasePtr) then Exit;
+  if not Assigned(aElement) then Exit;
+  Container := GetContainerFromUnion(aElement);
+  if not Assigned(Container) then Exit;
+
+  if Supports(Container.Container, IwbContainer, tContainer) and
+     Supports(tContainer.Container, IwbDataContainer, DataContainer) and
+     DataContainer.IsLocalOffset(OffsetFormType) then
+  begin
+    aPtr := Pointer(Cardinal(DataContainer.DataBasePtr) + OffsetFormType);
+    FormType := PCardinal(aPtr)^;
+  end
+  else
+    FormType := Container.ElementNativeValues['Form Type'];
+  if FormType = Sig2Int(ARMO) then
+    Result := 1
+  else if FormType = Sig2Int(NPC_) then
+    Result := 2
+  else if FormType = Sig2Int(WEAP) then
+    Result := 3;
+end;
+
+function wbOMODDataPropertyValue1Decider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Container     : IwbContainer;
+  ValueType      : Integer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Container := GetContainerFromUnion(aElement);
+  if not Assigned(Container) then Exit;
+
+  ValueType := Container.ElementNativeValues['Value Type'];
+
+  case ValueType of
+    0: Result := 1;
+    1: Result := 2;
+    2: Result := 3;
+    4: Result := 5;
+    5: Result := 4;
+    6: Result := 5;
+  end;
+end;
+
+function wbOMODDataPropertyValue2Decider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Container     : IwbContainer;
+  ValueType      : Integer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Container := GetContainerFromUnion(aElement);
+  if not Assigned(Container) then Exit;
+
+  ValueType := Container.ElementNativeValues['Value Type'];
+
+  case ValueType of
+    0: Result := 1;
+    1: Result := 2;
+    2: Result := 3;
+    4: Result := 1;
+    5: Result := 4;
+    6: Result := 2;
+  end;
+end;
+
+function wbOBTSCounter1(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
+var
+  Container       : IwbContainer;
+begin
+  if Supports(aElement.Container, IwbContainer, Container) then
+    Result := Container.ElementNativeValues['Parts A Count']
+  else
+    Result := 0;
+end;
+
+function wbOBTSCounter2(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
+var
+  Container       : IwbContainer;
+begin
+  if Supports(aElement.Container, IwbContainer, Container) then
+    Result := Container.ElementNativeValues['Parts B Count']
+  else
+    Result := 0;
+end;
+
+procedure wbOBTSCombinationsAfterSet(const aElement: IwbElement; const aOldValue, aNewValue: Variant);
+begin
+  wbCounterAfterSet('OBTE - Count', aElement);
+end;
+
+procedure wbINNRAfterSet(const aElement: IwbElement; const aOldValue, aNewValue: Variant);
+begin
+  wbCounterAfterSet('VNAM - Count', aElement);
+end;
+
 function wbREFRRecordFlagsDecider(const aElement: IwbElement): Integer;
 var
   MainRecord : IwbMainRecord;
@@ -4237,7 +4749,7 @@ end;
 var
   wbRecordFlagsFlags : IwbFlagsDef;
 
-procedure DefineTES5a;
+procedure DefineFO4a;
 
 begin
   wbNull := wbByteArray('Unused', -255);
@@ -4258,6 +4770,9 @@ begin
     wbReqKWDAs
   ], []);
 
+  //wbActorValue := wbInteger('Actor Value', itS32, wbActorValueEnum);
+  wbActorValue := wbFormIDCkNoReach('Actor Value', [AVIF, NULL]);
+
   wbCOED := wbStructExSK(COED, [2], [0, 1], 'Extra Data', [
     {00} wbFormIDCkNoReach('Owner', [NPC_, FACT, NULL]),
     {04} wbUnion('Global Variable / Required Rank', wbCOEDOwnerDecider, [
@@ -4271,7 +4786,7 @@ begin
   wbCNTO :=
     wbRStructExSK([0], [1], 'Item', [
       wbStructExSK(CNTO, [0], [1], 'Item', [
-        wbFormIDCk('Item', [ARMO, AMMO, APPA, MISC, WEAP, BOOK, LVLI, KEYM, ALCH, INGR, LIGH, SLGM, SCRL]),
+        wbFormIDCk('Item', [ARMO, AMMO, MISC, WEAP, BOOK, LVLI, KEYM, ALCH, INGR, LIGH, NOTE, CMPO]),
         wbInteger('Count', itS32)
       ]),
       wbCOED
@@ -4287,75 +4802,75 @@ begin
 
   {>>> When NAME is user defined these will be incorrect <<<}
   wbBipedObjectEnum := wbEnum([
-    '30 - Head',
-    '31 - Hair',
-    '32 - Body',
-    '33 - Hands',
-    '34 - Forearms',
-    '35 - Amulet',
-    '36 - Ring',
-    '37 - Feet',
-    '38 - Calves',
-    '39 - Shield',
-    '40 - Tail',
-    '41 - LongHair',
-    '42 - Circlet',
-    '43 - Ears',
-    '44 - Unnamed',
-    '45 - Unnamed',
-    '46 - Unnamed',
-    '47 - Unnamed',
-    '48 - Unnamed',
-    '49 - Unnamed',
-    '50 - DecapitateHead',
-    '51 - Decapitate',
-    '52 - Unnamed',
-    '53 - Unnamed',
+    '30 - Hair Top',
+    '31 - Hair Long',
+    '32 - FaceGen Head',
+    '33 - BODY',
+    '34 - L Hand',
+    '35 - R Hand',
+    '36 - [U] Torso',
+    '37 - [U] L Arm',
+    '38 - [U] R Arm',
+    '39 - [U] L Leg',
+    '40 - [U] R Leg',
+    '41 - [A] Torso',
+    '42 - [A] L Arm',
+    '43 - [A] R Arm',
+    '44 - [A] L Leg',
+    '45 - [A] R Leg',
+    '46 - Headband',
+    '47 - Eyes',
+    '48 - Beard',
+    '49 - Mouth',
+    '50 - Neck',
+    '51 - Ring',
+    '52 - Scalp',
+    '53 - Decapitation',
     '54 - Unnamed',
     '55 - Unnamed',
     '56 - Unnamed',
     '57 - Unnamed',
     '58 - Unnamed',
-    '59 - Unnamed',
-    '60 - Unnamed',
-    '61 - FX01'
+    '59 - Shield',
+    '60 - Pipboy',
+    '61 - FX'
   ], [
     -1, 'None'
   ]);
 
   wbBipedObjectFlags := wbFlags([
-    {0x00000001} '30 - Head',
-    {0x00000002} '31 - Hair',
-    {0x00000004} '32 - Body',
-    {0x00000008} '33 - Hands',
-    {0x00000010} '34 - Forearms',
-    {0x00000020} '35 - Amulet',
-    {0x00000040} '36 - Ring',
-    {0x00000080} '37 - Feet',
-    {0x00000100} '38 - Calves',
-    {0x00000200} '39 - Shield',
-    {0x00000400} '40 - Tail',
-    {0x00000800} '41 - LongHair',
-    {0x00001000} '42 - Circlet',
-    {0x00002000} '43 - Ears',
-    {0x00004000} '44 - Unnamed',
-    {0x00008000} '45 - Unnamed',
-    {0x00010000} '46 - Unnamed',
-    {0x00020000} '47 - Unnamed',
-    {0x00040000} '48 - Unnamed',
-    {0x00080000} '49 - Unnamed',
-    {0x00100000} '50 - DecapitateHead',
-    {0x00200000} '51 - Decapitate',
-    {0x00400000} '52 - Unnamed',
-    {0x00800000} '53 - Unnamed',
+    {0x00000001} '30 - Hair Top',
+    {0x00000002} '31 - Hair Long',
+    {0x00000004} '32 - FaceGen Head',
+    {0x00000008} '33 - BODY',
+    {0x00000010} '34 - L Hand',
+    {0x00000020} '35 - R Hand',
+    {0x00000040} '36 - [U] Torso',
+    {0x00000080} '37 - [U] L Arm',
+    {0x00000100} '38 - [U] R Arm',
+    {0x00000200} '39 - [U] L Leg',
+    {0x00000400} '40 - [U] R Leg',
+    {0x00000800} '41 - [A] Torso',
+    {0x00001000} '42 - [A] L Arm',
+    {0x00002000} '43 - [A] R Arm',
+    {0x00004000} '44 - [A] L Leg',
+    {0x00008000} '45 - [A] R Leg',
+    {0x00010000} '46 - Headband',
+    {0x00020000} '47 - Eyes',
+    {0x00040000} '48 - Beard',
+    {0x00080000} '49 - Mouth',
+    {0x00100000} '50 - Neck',
+    {0x00200000} '51 - Ring',
+    {0x00400000} '52 - Scalp',
+    {0x00800000} '53 - Decapitation',
     {0x01000000} '54 - Unnamed',
     {0x02000000} '55 - Unnamed',
     {0x04000000} '56 - Unnamed',
     {0x08000000} '57 - Unnamed',
     {0x10000000} '58 - Unnamed',
-    {0x20000000} '59 - Unnamed',
-    {0x40000000} '60 - Unnamed',
-    {0x80000000} '61 - FX01'
+    {0x20000000} '59 - Shield',
+    {0x40000000} '60 - Pipboy',
+    {0x80000000} '61 - FX'
   ], True);
 
   wbFirstPersonFlagsU32 := wbInteger('First Person Flags', itU32, wbBipedObjectFlags);
@@ -4377,8 +4892,8 @@ begin
   ], cpNormal, False, nil, 3);
 
   wbBOD2 := wbStruct(BOD2, 'Biped Body Template', [
-    wbFirstPersonFlagsU32,
-    wbInteger('Armor Type', itU32, wbArmorTypeEnum)
+    wbFirstPersonFlagsU32
+    //wbInteger('Armor Type', itU32, wbArmorTypeEnum)
   ], cpNormal, False);
 
   wbBODTBOD2 :=
@@ -4589,17 +5104,17 @@ begin
     ]);
 
   wbEntryPointsEnum := wbEnum([
-    { 0} 'Calculate Weapon Damage',
-    { 1} 'Calculate My Critical Hit Chance',
-    { 2} 'Calculate My Critical Hit Damage',
-    { 3} 'Calculate Mine Explode Chance',
-    { 4} 'Adjust Limb Damage',
-    { 5} 'Adjust Book Skill Points',
+    { 0} 'Mod Breath Timer',
+    { 1} 'Mod My Critical Hit Chance',
+    { 2} 'Mod My Critical Hit Damage Mult',
+    { 3} 'Mod Mine Explode Chance',
+    { 4} 'Mod Incoming Limb Damage',
+    { 5} 'Mod Book Actor Value Bonus',
     { 6} 'Mod Recovered Health',
-    { 7} 'Get Should Attack',
+    { 7} 'Set Should Attack',
     { 8} 'Mod Buy Prices',
     { 9} 'Add Leveled List On Death',
-    {10} 'Get Max Carry Weight',
+    {10} 'Set Max Carry Weight',
     {11} 'Mod Addiction Chance',
     {12} 'Mod Addiction Duration',
     {13} 'Mod Positive Chem Duration',
@@ -4611,12 +5126,12 @@ begin
     {19} 'Mod Max Placeable Mines',
     {20} 'Mod Bow Zoom',
     {21} 'Mod Recover Arrow Chance',
-    {22} 'Mod Skill Use',
+    {22} 'Mod Exp',
     {23} 'Mod Telekinesis Distance',
     {24} 'Mod Telekinesis Damage Mult',
     {25} 'Mod Telekinesis Damage',
     {26} 'Mod Bashing Damage',
-    {27} 'Mod Power Attack Stamina',
+    {27} 'Mod Power Attack Action Points',
     {28} 'Mod Power Attack Damage',
     {29} 'Mod Spell Magnitude',
     {30} 'Mod Spell Duration',
@@ -4624,8 +5139,8 @@ begin
     {32} 'Mod Armor Weight',
     {33} 'Mod Incoming Stagger',
     {34} 'Mod Target Stagger',
-    {35} 'Mod Attack Damage',
-    {36} 'Mod Incoming Damage',
+    {35} 'Mod Weapon Attack Damage',
+    {36} 'Mod Incoming Weapon Damage',
     {37} 'Mod Target Damage Resistance',
     {38} 'Mod Spell Cost',
     {39} 'Mod Percent Blocked',
@@ -4633,12 +5148,12 @@ begin
     {41} 'Mod Incoming Spell Magnitude',
     {42} 'Mod Incoming Spell Duration',
     {43} 'Mod Player Intimidation',
-    {44} 'Mod Player Reputation',
-    {45} 'Mod Favor Points',
+    {44} 'Mod Ricochet Chance',
+    {45} 'Mod Ricochet Damage',
     {46} 'Mod Bribe Amount',
     {47} 'Mod Detection Light',
     {48} 'Mod Detection Movement',
-    {49} 'Mod Soul Gem Recharge',
+    {49} 'Mod Scrap Reward Mult',
     {50} 'Set Sweep Attack',
     {51} 'Apply Combat Hit Spell',
     {52} 'Apply Bashing Spell',
@@ -4650,11 +5165,11 @@ begin
     {58} 'Mod Falling Damage',
     {59} 'Mod Lockpick Sweet Spot',
     {60} 'Mod Sell Prices',
-    {61} 'Can Pickpocket Equipped Item',
-    {62} 'Mod Lockpick Level Allowed',
+    {61} 'Set Pickpocket Equipped Item',
+    {62} 'Set Player Gate Lockpick',
     {63} 'Set Lockpick Starting Arc',
     {64} 'Set Progression Picking',
-    {65} 'Make Lockpicks Unbreakable',
+    {65} 'Set Lockpicks Unbreakable',
     {66} 'Mod Alchemy Effectiveness',
     {67} 'Apply Weapon Swing Spell',
     {68} 'Mod Commanded Actor Limit',
@@ -4663,40 +5178,107 @@ begin
     {71} 'Mod Ward Magicka Absorption Pct',
     {72} 'Mod Initial Ingredient Effects Learned',
     {73} 'Purify Alchemy Ingredients',
-    {74} 'Filter Activation',
-    {75} 'Can Dual Cast Spell',
-    {76} 'Mod Tempering Health',
+    {74} 'Set Filter Activation',
+    {75} 'Set Dual Cast',
+    {76} 'Mod Outgoing Explosion Limb Damage',
     {77} 'Mod Enchantment Power',
     {78} 'Mod Soul Pct Captured to Weapon',
-    {79} 'Mod Soul Gem Enchanting',
-    {80} 'Mod # Applied Enchantments Allowed',
+    {79} 'Mod VATS Attack Action Points',
+    {80} 'Mod Reflect Damage Chance',
     {81} 'Set Activate Label',
-    {82} 'Mod Shout OK',
+    {82} 'Mod Kill Experience',
     {83} 'Mod Poison Dose Count',
-    {84} 'Should Apply Placed Item',
+    {84} 'Set Apply Placed Item',
     {85} 'Mod Armor Rating',
-    {86} 'Mod Lockpicking Crime Chance',
-    {87} 'Mod Ingredients Harvested',
+    {86} 'Mod lockpicking crime chance',
+    {87} 'Mod ingredients harvested',
     {88} 'Mod Spell Range (Target Loc.)',
-    {89} 'Mod Potions Created',
-    {90} 'Mod Lockpicking Key Reward Chance',
-    {91} 'Allow Mount Actor'
+    {89} 'Mod Critical Charge Mult on Ricochet',
+    {90} 'Mod lockpicking key reward chance',
+    {91} 'Mod Auto Lockpicking Chance',
+    {92} 'Mod Auto Hacking Chance',
+    {93} 'Mod Typed Weapon Attack Damage',
+    {94} 'Mod Typed Incoming Weapon Damage',
+    {95} 'Mod Charisma Challenge Chance',
+    {96} 'Mod Sprint AP Drain Rate',
+    {97} 'Mod Drawn Weapon Weight Speed Effect',
+    {98} 'Set Player Gate Hacking',
+    {99} 'Mod Player Explosion Damage',
+   {100} 'Mod Player Explosion Scale',
+   {101} 'Set Rads To Health Mult',
+   {102} 'Mod Actor Scope Stability',
+   {103} 'Mod Actor Grenade Speed Mult',
+   {104} 'Mod Explosion Force',
+   {105} 'Mod VATS Penetration Min Visibility',
+   {106} 'Mod Rads for Rad Health Max',
+   {107} 'Mod VATS Player AP On Kill Chance',
+   {108} 'Set VATS Fill Critical Bar On Hit',
+   {109} 'Mod VATS Concentrated Fire Chance Bonus',
+   {110} 'Mod VATS Critical Count',
+   {111} 'Mod VATS Hold Em Steady Bonus',
+   {112} 'Mod Typed Spell Magnitude',
+   {113} 'Mod Typed Incoming Spell Magnitude',
+   {114} 'Set VATS Gun-Fu Num Targets For Crits',
+   {115} 'Mod Outgoing Limb Damage',
+   {116} 'Mod Restore Action Cost Value',
+   {117} 'Mod VATS Reload Action Points',
+   {118} 'Mod Incoming Battery Damage',
+   {119} 'Mod VATS Critical Charge',
+   {120} 'Mod Exp Location',
+   {121} 'Mod Exp Speech',
+   {122} 'Mod VATS Head Shot Chance',
+   {123} 'Mod VATS Hit Chance',
+   {124} 'Mod Incoming Explosion Damage',
+   {125} 'Mod Ammo Health Mult',
+   {126} 'Mod Hacking Guesses',
+   {127} 'Mod Terminal Lockout Time',
+   {128} 'Set Undetectable',
+   {129} 'Invest In Vendor',
+   {130} 'Mod Outgoing Limb Bash Damage',
+   {131} 'Set Run While Over Encumbered',
+   {132} 'Get Component Radar Distance',
+   {133} 'Show Grenade Trajectory',
+   {134} 'Mod Cone-of-fire Mult',
+   {135} 'Mod VATS Concentrated Fire Damage Mult',
+   {136} 'Apply Bloody Mess Spell',
+   {137} 'Mod VATS Critical Fill Chance On Bank',
+   {138} 'Mod VATS Critical Fill Chance On Use',
+   {139} 'Set VATS Critical Fill On AP Reward',
+   {140} 'Set VATS Critical Fill On Stranger',
+   {141} 'Mod Gun Range Mult',
+   {142} 'Mod Scope Hold Breath AP Drain Mult',
+   {143} 'Set Force Decapitate',
+   {144} 'Mod VATS Shoot Explosive Damage Mult',
+   {145} 'Mod Scrounger Fill Ammo Chance',
+   {146} 'Set Can Explode Pants',
+   {147} 'Set VATS Penetration Full Damage',
+   {148} 'Mod VATS Gun-Fu 2nd Target Dmg Mult',
+   {149} 'Mod VATS Gun-Fu 3rd Target Dmg Mult',
+   {150} 'Mod VATS Gun-Fu 4th+ Target Dmg Mult',
+   {151} 'Mod VATS Blitz Max Distance',
+   {152} 'Set VATS Blitz Max Dmg Mult',
+   {153} 'Mod VATS Blitz Dmg Bonus Dist',
+   {154} 'Mod Bash Critical Chance',
+   {155} 'VATS Apply Paralyzing Palm Spell',
+   {156} 'Null Function'
   ]);
 
   wbLocationEnum := wbEnum([
-    {0} 'Near reference',
-    {1} 'In cell',
-    {2} 'Near package start location',
-    {3} 'Near editor location',
+    {0} 'Near reference', // string dump: '%s' in '%s' radius %u
+    {1} 'In cell', // string dump: In cell '%s'
+    {2} 'Near package start location', // string dump: Near package start location, radius %u
+    {3} 'Near editor location', // string dump: Near editor location, radius %u
     {4} 'Object ID',
     {5} 'Object Type',
-    {6} 'Near linked reference',
-    {7} 'At package location',
-    {8} 'Alias (reference)',
-    {9} 'Alias (location)',
-   {10} 'Unknown 10',
-   {11} 'Unknown 11',
-   {12} 'Near self'
+    {6} 'Near linked reference', // string dump: Near linked reference, radius %u%s%s
+    {7} 'At package location', // string dump: At package location, radius %u
+    {8} 'Alias (reference)', // string dump: Alias: %s [item #%u], radius %u
+    {9} 'Alias (location)', // string dump: Alias: %s, radius %u
+   {10} 'Target', // string dump: <Target>
+   {11} 'Target (location)', // string dump: Target: %s, radius %u
+   {12} 'Near self', // Near Self, radius %u
+   {13} 'Unknown 13',
+   {14} 'Unknown 14'
   ]);
 
   wbEquipType := wbFlags([
@@ -4824,10 +5406,19 @@ begin
     {12} 'Array of String',
     {13} 'Array of Int32',
     {14} 'Array of Float',
-    {15} 'Array of Bool'
+    {15} 'Array of Bool',
+    {16} 'Unknown 16',
+    {17} 'Array of Struct'
   ]);
 
-  wbScriptObject := wbUnion('Object Union', wbScriptObjFormatDecider, [
+  wbScriptFlags := wbInteger('Flags', itU8, wbEnum([
+    {0x00} 'Local',
+    {0x01} 'Inherited',
+    {0x02} 'Removed',
+    {0x03} 'Inherited and Removed'
+  ]));
+
+  wbScriptPropertyObject := wbUnion('Object Union', wbScriptObjFormatDecider, [
     wbStructSK([1], 'Object v2', [
       wbInteger('Unused', itU16, nil, cpIgnore),
       wbInteger('Alias', itS16, wbScriptObjectAliasToStr, wbStrToAlias),
@@ -4840,17 +5431,35 @@ begin
     ])
   ]);
 
-  wbScriptEntry := wbStructSK([0], 'Script', [
-    wbLenString('scriptName', 2),
-    wbInteger('Flags', itU8, wbEnum([
-      {0x00} 'Local',
-      {0x01} 'Inherited',
-      {0x02} 'Removed',
-      {0x03} 'Inherited and Removed'
-    ])),
+  wbScriptPropertyStruct :=
+    wbArray('Struct', wbStruct('Member', [
+      wbLenString('memberName', 2),
+      wbInteger('Type', itU8, wbPropTypeEnum, cpNormal, False, nil, wbScriptPropertyTypeAfterSet),
+      wbInteger('Flags', itU8, wbEnum([
+        {0x00} '',
+        {0x01} 'Edited',
+        {0x02} '',
+        {0x03} 'Removed'
+      ])),
+      wbUnion('Value', wbScriptPropertyStructMemberDecider, [
+        {00} wbNull,
+        {01} wbScriptPropertyObject,
+        {02} wbLenString('String', 2),
+        {03} wbInteger('Int32', itS32),
+        {04} wbFloat('Float'),
+        {05} wbInteger('Bool', itU8, wbEnum(['False', 'True'])),
+        {11} wbArray('Array of Object', wbScriptPropertyObject, -1),
+        {12} wbArray('Array of String', wbLenString('Element', 2), -1),
+        {13} wbArray('Array of Int32', wbInteger('Element', itS32), -1),
+        {14} wbArray('Array of Float', wbFloat('Element'), -1),
+        {15} wbArray('Array of Bool', wbInteger('Element', itU8, wbEnum(['False', 'True'])), -1)
+      ])
+    ]), -1, cpNormal, False);
+
+  wbScriptProperties :=
     wbArrayS('Properties', wbStructSK([0], 'Property', [
       wbLenString('propertyName', 2),
-      wbInteger('Type', itU8, wbPropTypeEnum, cpNormal, False,nil, wbScriptPropertyTypeAfterSet),
+      wbInteger('Type', itU8, wbPropTypeEnum, cpNormal, False, nil, wbScriptPropertyTypeAfterSet),
       wbInteger('Flags', itU8, wbEnum([
         {0x00} '',
         {0x01} 'Edited',
@@ -4858,19 +5467,25 @@ begin
         {0x03} 'Removed'
       ])),
       wbUnion('Value', wbScriptPropertyDecider, [
-        {00} wbNull,
-        {01} wbScriptObject,
-        {02} wbLenString('String', 2),
-        {03} wbInteger('Int32', itS32),
-        {04} wbFloat('Float'),
-        {05} wbInteger('Bool', itU8, wbEnum(['False', 'True'])),
-        {11} wbArray('Array of Object', wbScriptObject, -1),
-        {12} wbArray('Array of String', wbLenString('Element', 2), -1),
-        {13} wbArray('Array of Int32', wbInteger('Element', itS32), -1),
-        {14} wbArray('Array of Float', wbFloat('Element'), -1),
-        {15} wbArray('Array of Bool', wbInteger('Element', itU8, wbEnum(['False', 'True'])), -1)
+       {00} wbNull,
+       {01} wbScriptPropertyObject,
+       {02} wbLenString('String', 2),
+       {03} wbInteger('Int32', itS32),
+       {04} wbFloat('Float'),
+       {05} wbInteger('Bool', itU8, wbEnum(['False', 'True'])),
+       {11} wbArray('Array of Object', wbScriptPropertyObject, -1),
+       {12} wbArray('Array of String', wbLenString('Element', 2), -1),
+       {13} wbArray('Array of Int32', wbInteger('Element', itS32), -1),
+       {14} wbArray('Array of Float', wbFloat('Element'), -1),
+       {15} wbArray('Array of Bool', wbInteger('Element', itU8, wbEnum(['False', 'True'])), -1),
+       {17} wbArray('Array of Struct', wbScriptPropertyStruct, -1)
       ])
-    ]), -2, cpNormal, False, nil, nil, nil, False)
+    ]), -2, cpNormal, False, nil, nil, nil, False);
+
+  wbScriptEntry := wbStructSK([0], 'Script', [
+    wbLenString('scriptName', 2),
+    wbScriptFlags,
+    wbScriptProperties
   ]);
 
   wbScriptFragmentsInfo := wbStruct('Script Fragments Info', [
@@ -4879,7 +5494,7 @@ begin
       {1} 'OnBegin',
       {2} 'OnEnd'
     ])),
-    wbLenString('fileName', 2),
+    wbScriptEntry,
     wbArray('Info Fragments',  // Do NOT sort, ordered OnBegin, OnEnd
       wbStruct('Info Fragment', [
         wbInteger('Unknown', itS8),
@@ -4895,7 +5510,8 @@ begin
       {2} 'OnEnd',
       {4} 'OnChange'
     ])),
-    wbLenString('fileName', 2),
+    //wbLenString('fileName', 2),
+    wbScriptEntry,
     wbArray('Package Fragments',  // Do NOT sort, ordered OnBegin, OnEnd, OnChange
       wbStruct('Package Fragment', [
         wbInteger('Unknown', itS8),
@@ -4904,23 +5520,24 @@ begin
       ]), [], wbScriptFragmentsPackCounter)
   ], cpNormal, false, wbScriptFragmentsDontShow);
 
-  wbScriptFragmentsPerk := wbStruct('Script Fragments Perk', [
-    wbInteger('Unknown', itS8),
-    wbLenString('fileName', 2),
-    wbArrayS('Perk Fragments',
-      wbStructSK([0], 'Perk Fragment', [
-        wbInteger('Fragment Index', itU16),
-        wbInteger('Unknown', itS16),
-        wbInteger('Unknown', itS8),
-        wbLenString('scriptName', 2),
-        wbLenString('fragmentName', 2)
-      ]), -2)
-  ], cpNormal, false, wbScriptFragmentsDontShow);
-
   wbScriptFragmentsQuest := wbStruct('Script Fragments Quest', [
     wbInteger('Unknown', itS8),
     wbInteger('fragmentCount', itU16),
-    wbLenString('fileName', 2),
+    wbLenString('scriptName', 2),
+    // if scriptName = "" then no Flags and Properties
+    wbUnion('Script', wbScriptFragmentsQuestScriptDecider, [
+      wbStruct('Script', [
+        wbScriptFlags,
+        wbScriptProperties
+      ]),
+//       Quest [000179EF] <DialogueGenericPlayer>
+//       Quest [000792CA] <DialogueGenericMerchants> "Merchant Dialogue System"
+//       Quest [00091FE1] <DialogueDiamondCityChapel>
+//       MQ101KelloggSequence "Kellogg Sequence in Vault 111" [QUST:000D3997]
+//       DialogueGlowingSeaAtom "Children of the Atom Dialogue" [QUST:0012DB31]
+//       BoSIdleHandlerQuest [QUST:00157460]
+      wbNull
+    ]),
     wbArrayS('Quest Fragments',
       wbStructSK([0, 2], 'Quest Fragment', [
         wbInteger('Quest Stage', itU16),
@@ -4929,13 +5546,14 @@ begin
         wbInteger('Unknown', itS8),
         wbLenString('scriptName', 2),
         wbLenString('fragmentName', 2)
-      ]), wbScriptFragmentsQuestCounter),
+      ]),
+      wbScriptFragmentsQuestCounter),
     wbArrayS('Aliases', wbStructSK([0], 'Alias', [
-      wbScriptObject,
+      wbScriptPropertyObject,
       wbInteger('Version', itS16, nil, cpIgnore),
       wbInteger('Object Format', itS16, nil, cpIgnore),
-	    wbArrayS('Alias Scripts', wbScriptEntry, -2)
-	  ]), -2)
+      wbArrayS('Alias Scripts', wbScriptEntry, -2)
+    ]), -2)
   ], cpNormal, false, wbScriptFragmentsDontShow);
 
   wbScriptFragmentsScen := wbStruct('Script Fragments Scene', [
@@ -4944,7 +5562,7 @@ begin
       {1} 'OnBegin',
       {2} 'OnEnd'
     ])),
-    wbLenString('fileName', 2),
+    wbScriptEntry,
     wbArray('Scene Fragments',  // Do NOT sort, ordered OnBegin, OnEnd
       wbStruct('Scene Fragment', [
         wbInteger('Unknown', itS8),
@@ -4966,7 +5584,21 @@ begin
       ]), -2)
   ], cpNormal, false, wbScriptFragmentsDontShow);
 
+  wbScriptFragments := wbStruct('Script Fragments', [
+    wbInteger('Unknown', itS8),
+    wbScriptEntry,
+    wbArrayS('Fragments',
+      wbStructSK([0], 'Fragment', [
+        wbInteger('Fragment Index', itU16),
+        wbInteger('Unknown', itS16),
+        wbInteger('Unknown', itS8),
+        wbLenString('scriptName', 2),
+        wbLenString('fragmentName', 2)
+      ]), -2)
+  ], cpNormal, false, wbScriptFragmentsDontShow);
+
   {>>> http://www.uesp.net/wiki/Tes5Mod:Mod_File_Format/VMAD_Field <<<}
+
   wbVMAD := wbStruct(VMAD, 'Virtual Machine Adapter', [
     wbInteger('Version', itS16, nil, cpIgnore),
     wbInteger('Object Format', itS16, nil, cpIgnore),
@@ -4982,7 +5614,7 @@ begin
       ], cpNormal, False, nil, 0),
       wbStruct('Perk VMAD', [
         wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
-        wbScriptFragmentsPerk
+        wbScriptFragments
       ], cpNormal, False, nil, 0),
       wbStruct('Quest VMAD', [
         wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
@@ -4991,6 +5623,10 @@ begin
       wbStruct('Scene VMAD', [
         wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
         wbScriptFragmentsScen
+      ], cpNormal, False, nil, 0),
+      wbStruct('Terminal VMAD', [
+        wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
+        wbScriptFragments
       ], cpNormal, False, nil, 0)
     ])
   ], cpNormal, false, nil, -1);
@@ -5026,7 +5662,10 @@ begin
       wbFloat('Recovery Time'),
       wbFloat('Stamina Mult')
     ]),
-    wbString(ATKE, 'Attack Event')
+    wbString(ATKE, 'Attack Event'),
+    wbUnknown(ATKW),
+    wbFormIDCk(ATKS, 'Unknown', [EQUP]),
+    wbString(ATKT, 'Unknown')
   ], []);
 
   wbPLDT := wbStruct(PLDT, 'Location', [
@@ -5044,9 +5683,12 @@ begin
       {9} wbInteger('Reference', itS32, wbPackageLocationAliasToStr, wbStrToAlias),
      {10} wbByteArray('Unknown', 4, cpIgnore),
      {11} wbByteArray('Unknown', 4, cpIgnore),
-     {12} wbByteArray('Unknown', 4, cpIgnore)
+     {12} wbByteArray('Unknown', 4, cpIgnore),
+     {13} wbByteArray('Unknown', 4),
+     {14} wbByteArray('Unknown', 4)
     ]),
-    wbInteger('Radius', itS32)
+    wbInteger('Radius', itS32),
+    wbUnknown
   ]);
 
   wbPLVD := wbStruct(PLVD, 'Location', [
@@ -5064,9 +5706,12 @@ begin
       {9} wbInteger('Reference', itS32, wbPackageLocationAliasToStr, wbStrToAlias),
      {10} wbByteArray('Unknown', 4, cpIgnore),
      {11} wbByteArray('Unknown', 4, cpIgnore),
-     {12} wbByteArray('Unknown', 4, cpIgnore)
+     {12} wbByteArray('Unknown', 4, cpIgnore),
+     {13} wbByteArray('Unknown', 4),
+     {14} wbByteArray('Unknown', 4)
     ]),
-    wbInteger('Radius', itS32)
+    wbInteger('Radius', itS32),
+    wbUnknown
   ]);
 
   wbTargetData := wbStruct('Target Data', [
@@ -5077,7 +5722,9 @@ begin
       {3} 'Linked Reference',
       {4} 'Ref Alias',
       {5} 'Unknown 5',
-      {6} 'Self'
+      {6} 'Self',
+      {7} 'Keyword',
+      {8} 'Unknown 8'
     ]), cpNormal, False, nil, nil, 2),
     wbUnion('Target', wbTypeDecider, [
       {0} wbFormIDCkNoReach('Reference', [NULL, PLYR, ACHR, REFR, PGRE, PHZD, PMIS, PARW, PBAR, PBEA, PCON, PFLA], True),
@@ -5086,7 +5733,9 @@ begin
       {3} wbFormID('Reference'),
       {4} wbInteger('Alias', itS32, wbPackageLocationAliasToStr, wbStrToAlias),
       {5} wbByteArray('Unknown', 4, cpIgnore),
-      {6} wbByteArray('Unknown', 4, cpIgnore)
+      {6} wbByteArray('Unknown', 4, cpIgnore),
+      {7} wbFormIDCk('Keyword', [KYWD, NULL]),
+      {8} wbByteArray('Unknown', 4, cpIgnore)
     ]),
     wbInteger('Count / Distance', itS32)
   ]);
@@ -5121,64 +5770,47 @@ begin
       ])
     ], cpNormal, True);
 
-  wbMO2S :=
-    wbArrayS(MO2S, 'Alternate Textures',
-      wbStructSK([0, 2], 'Alternate Texture', [
-        wbLenString('3D Name'),
-        wbFormIDCk('New Texture', [TXST]),
-        wbInteger('3D Index', itS32)
-      ]),
-    -1);
-  wbMO3S :=
-    wbArrayS(MO3S, 'Alternate Textures',
-      wbStructSK([0, 2], 'Alternate Texture', [
-        wbLenString('3D Name'),
-        wbFormIDCk('New Texture', [TXST]),
-        wbInteger('3D Index', itS32)
-      ]),
-    -1);
-  wbMO4S :=
-    wbArrayS(MO4S, 'Alternate Textures',
-      wbStructSK([0, 2], 'Alternate Texture', [
-        wbLenString('3D Name'),
-        wbFormIDCk('New Texture', [TXST]),
-        wbInteger('3D Index', itS32)
-      ]),
-    -1);
-  wbMO5S :=
-    wbArrayS(MO5S, 'Alternate Textures',
-      wbStructSK([0, 2], 'Alternate Texture', [
-        wbLenString('3D Name'),
-        wbFormIDCk('New Texture', [TXST]),
-        wbInteger('3D Index', itS32)
-      ]),
-    -1);
+  wbMO2S := wbFormIDCk(MO2S, 'Material Swap', [MSWP]);
+  wbMO3S := wbFormIDCk(MO3S, 'Material Swap', [MSWP]);
+  wbMO4S := wbFormIDCk(MO4S, 'Material Swap', [MSWP]);
+  wbMO5S := wbFormIDCk(MO5S, 'Material Swap', [MSWP]);
+  wbMODS := wbFormIDCk(MODS, 'Material Swap', [MSWP]);
 
-  wbMODS :=
-    wbArrayS(MODS, 'Alternate Textures',
-      wbStructSK([0, 2], 'Alternate Texture', [
-        wbLenString('3D Name'),
-        wbFormIDCk('New Texture', [TXST]),
-        wbInteger('3D Index', itS32)
-      ]),
-    -1);
+  wbMODC := wbUnknown(MODC);
+  wbMODF := wbUnknown(MODF);
 
-  wbMODD :=
-    wbInteger(MODD, 'FaceGen Model Flags', itU8, wbFlags([
-      'Head',
-      'Torso',
-      'Right Hand',
-      'Left Hand'
-    ]));
+  wbMO2F := wbUnknown(MO2F);
+  wbMO3F := wbUnknown(MO3F);
+  wbMO4F := wbUnknown(MO4F);
+  wbMO5F := wbUnknown(MO5F);
+
+  wbMO2C := wbUnknown(MO2C);
+  wbMO3C := wbUnknown(MO3C);
+  wbMO4C := wbUnknown(MO4C);
+  wbMO5C := wbUnknown(MO5C);
 
 	wbMODT := wbByteArray(MODT, 'Texture Files Hashes', 0, cpIgnore, false, false, wbNeverShow);
 	wbDMDT := wbByteArray(DMDT, 'Texture Files Hashes', 0, cpIgnore, false, false, wbNeverShow);
+  {wbMODT := wbStruct(MODT, 'Texture Files Hashes', [
+    wbInteger('Number of headers', itU32),
+    wbInteger('Textures count', itU32),
+    wbByteArray('Unused', 4),
+    wbInteger('Unique textures count', itU32),
+    wbInteger('Materials count', itU32),
+    wbArray('Hashes', wbStruct('Hash', [
+      wbByteArray('Flags', 4),
+      wbString('Type', 4),
+      wbByteArray('Texture hash', 4)
+    ]))
+  ]);}
 
   wbMODL :=
     wbRStructSK([0], 'Model', [
       wbString(MODL, 'Model Filename'),
       wbMODT,
-      wbMODS
+      wbMODS,
+      wbMODC,
+      wbMODF
     ], [], cpNormal, False, nil, True);
 
   wbMODLActor :=
@@ -5192,7 +5824,9 @@ begin
     wbRStructSK([0], 'Model', [
       wbString(MODL, 'Model Filename'),
       wbMODT,
-      wbMODS
+      wbMODS,
+      wbMODC,
+      wbMODF
     ], [], cpNormal, True, nil, True);
 
   wbDMDSs := wbArrayS(DMDS, 'Alternate Textures',
@@ -5203,12 +5837,16 @@ begin
     ]),
   -1);
 
-  wbDEST := wbRStruct('Destructable', [
+  wbDEST := wbRStruct('Destructible', [
     wbStruct(DEST, 'Header', [
       wbInteger('Health', itS32),
       wbInteger('DEST Count', itU8),
       wbInteger('VATS Targetable', itU8, wbEnum(['False', 'True'])),
-      wbByteArray('Unknown', 2)
+      wbByteArray('Unused', 2)
+    ]),
+    wbStructs(DAMC, 'Unknowns', 'Unknown', [
+      wbFormIDck('Damage Type?', [DMGT, NULL]),
+      wbInteger('Unknown', itU32)
     ]),
     wbRArray('Stages',
       wbRStruct('Stage', [
@@ -5227,6 +5865,7 @@ begin
           wbFormIDCk('Debris', [DEBR, NULL]),
           wbInteger('Debris Count', itS32)
         ], cpNormal, True),
+        wbString(DSTA, 'Unknown'),
         wbRStructSK([0], 'Model', [
           wbString(DMDL, 'Model Filename'),
           wbDMDT,
@@ -5237,7 +5876,7 @@ begin
     )
   ], [], cpNormal, False, nil);
 
-  wbDESTActor := wbRStruct('Destructable', [
+  wbDESTActor := wbRStruct('Destructible', [
     wbStruct(DEST, 'Header', [
       wbInteger('Health', itS32),
       wbInteger('Count', itU8),
@@ -5302,10 +5941,30 @@ begin
     'Very Hard'
   ]));
 
+  wbMHDT := wbByteArray(MHDT, 'Max Height Data', 0, cpNormal);
+//      wbStruct(MHDT, 'Max Height Data', [ // Rolled back temporarily due to issues while copying.
+//         wbUnion('Unknown', wbMHDTDecider, [
+//           wbArray('Unknown', wbInteger('Data', itS8)),
+//           wbStruct('Unknown', [
+//             wbInteger('Unknown', itU32)]), // First DWord is Endian swapped if the record size is 1028
+//             wbArray('Unknown', wbInteger('Data', itS8))
+//           ])
+//      ]),
+
+  if wbSimpleRecords then
+    wbOFST := wbByteArray(OFST, 'Offset Data')
+  else
+    wbOFST := wbArray(OFST, 'Offset Data', wbArray('Rows', wbInteger('Offset', itU32), wbOffsetDataColsCounter), 0);
+
   wbOwnership := wbRStruct('Ownership', [
-    wbFormIDCkNoReach(XOWN, 'Owner', [FACT, ACHR, NPC_]),
+    //wbFormIDCkNoReach(XOWN, 'Owner', [FACT, ACHR, NPC_]),
+    // GoodneighborWarehouse02
+    wbStruct(XOWN, 'Owner', [
+      wbFormIDCkNoReach('Owner', [FACT, ACHR, NPC_]),
+      wbUnknown
+    ]),
     wbInteger(XRNK, 'Faction rank', itS32)
-  ], []);
+  ], [XILL]);
 
   wbAmbientColors := wbStruct('Ambient Colors', [
     wbArray('Colors',
@@ -5330,9 +5989,40 @@ begin
 
   wbXGLB := wbFormIDCk(XGLB, 'Global variable', [GLOB]);
 
+  if wbSimpleRecords then
+    wbNVNM := wbStruct(NVNM, 'Navmesh Geometry', [
+      wbInteger('Unknown', itU32),
+      wbByteArray('Unknown', 4),
+      wbFormIDCk('Parent Worldspace', [WRLD, NULL]),
+      wbFormIDCk('Parent Cell', [CELL]),
+      wbByteArray('Vertices and Triangles')
+    ])
+  else
+    wbNVNM := wbStruct(NVNM, 'Navmesh Geometry', [
+      wbInteger('Unknown', itU32),
+      wbByteArray('Unknown', 4),
+      wbFormIDCk('Parent Worldspace', [WRLD, NULL]),
+      wbFormIDCk('Parent Cell', [CELL]),
+      wbArray('Vertices', wbStruct('Vertex', [
+        wbFloat('X'),
+        wbFloat('Y'),
+        wbFloat('Z')
+      ]), -1),
+      wbArray('Triangles', wbStruct('Triangle', [
+        wbInteger('Vertex 0', itS16),
+        wbInteger('Vertex 1', itS16),
+        wbInteger('Vertex 2', itS16),
+        wbInteger('Edge 0-1', itS16),
+        wbInteger('Edge 1-2', itS16),
+        wbInteger('Edge 2-0', itS16),
+        wbByteArray('Flags', 9)
+      ]), -1),
+      wbUnknown
+    ]);
+
 end;
 
-procedure DefineTES5b;
+procedure DefineFO4b;
 begin
 
   wbRecord(ACHR, 'Placed NPC',
@@ -5357,15 +6047,6 @@ begin
       wbFloat(XPRD, 'Idle Time', cpNormal, True),
       wbEmpty(XPPA, 'Patrol Script Marker', cpNormal, True),
       wbFormIDCk(INAM, 'Idle', [IDLE, NULL], False, cpNormal, True),
-      {>>> BEGIN leftover from earlier CK versions <<<}
-      wbRStruct('Unused', [
-        wbUnknown(SCHR),
-        wbUnknown(SCDA),
-        wbUnknown(SCTX),
-        wbUnknown(QNAM),
-        wbUnknown(SCRO)
-      ], [], cpIgnore, false, wbNeverShow),
-      {>>> END leftover from earlier CK versions <<<}
       wbPDTOs,
       wbFormIDCk(TNAM, 'Topic', [DIAL, NULL], False, cpNormal)
     ], []),
@@ -5415,6 +6096,12 @@ begin
       ])
     ]),
 
+    wbUnknown(XLKT),
+    wbFormIDCk(XRFG, 'Reference Group', [RFGP]),
+    wbFormIDCk(XLYR, 'Layer', [LAYR]),
+    wbFormIDCk(XMSP, 'Material Swap', [MSWP]),
+    wbUnknown(XRNK),
+
     wbFormIDCk(XLCN, 'Persistent Location', [LCTN]),
     wbFormIDCk(XLRL, 'Location Reference', [LCRT, LCTN, NULL], False, cpBenignIfAdded),
     wbEmpty(XIS2, 'Ignored by Sandbox'),
@@ -5442,67 +6129,6 @@ begin
     wbXSCL,
     wbDATAPosRot
   ], True, wbPlacedAddInfo);
-
-  wbRecord(ACTI, 'Activator',
-    wbFlags(wbRecordFlagsFlags, wbFlagsList([
-      {0x00000040}  6, 'Has Tree LOD',
-      {0x00000100}  8, 'Must Update Anims',
-      {0x00000200}  9, 'Hidden From Local Map',
-      {0x00008000} 15, 'Has Distant LOD',
-      {0x00010000} 16, 'Random Anim Start',
-      {0x00020000} 17, 'Dangerous',
-      {0x00100000} 20, 'Ignore Object Interaction',
-      {0x00800000} 23, 'Is Marker',
-      {0x02000000} 25, 'Obstacle',
-      {0x04000000} 26, 'NavMesh Generation - Filter',
-      {0x08000000} 27, 'NavMesh Generation - Bounding Box',
-      {0x20000000} 29, 'Child Can Use',
-      {0x40000000} 30, 'NavMesh Generation - Ground'
-    ])), [
-    wbEDID,
-    wbVMAD,
-    wbOBNDReq,
-    wbFULL,
-    wbMODL,
-    wbDEST,
-    wbKSIZ,
-    wbKWDAs,
-    wbStruct(PNAM, 'Marker Color', [
-      wbInteger('Red', itU8),
-      wbInteger('Green', itU8),
-      wbInteger('Blue', itU8),
-      wbInteger('Unused', itU8)
-    ]),
-    wbFormIDCk(SNAM, 'Sound - Looping', [SNDR, SOUN]),
-    wbFormIDCk(VNAM, 'Sound - Activation', [SNDR, SOUN]),
-    wbFormIDCk(WNAM, 'Water Type', [WATR]),
-    wbLString(RNAM, 'Activate Text Override', 0, cpTranslate),
-    wbInteger(FNAM, 'Flags', itU16, wbFlags([
-      'No Displacement',
-      'Ignored by Sandbox'
-    ])),
-    wbFormIDCk(KNAM, 'Interaction Keyword', [KYWD])
-  ], False, nil, cpNormal, False, nil, wbKeywordsAfterSet);
-
-  wbRecord(TACT, 'Talking Activator',
-    wbFlags(wbRecordFlagsFlags, wbFlagsList([
-      {0x00000200}  9, 'Hidden From Local Map',
-      {0x00010000} 16, 'Random Anim Start',
-      {0x00020000} 17, 'Radio Station'
-    ]), [17]), [
-    wbEDID,
-    wbVMAD,
-    wbOBNDReq,
-    wbFULL,
-    wbMODL,
-    wbDEST,
-    wbKSIZ,
-    wbKWDAs,
-    wbUnknown(PNAM, cpIgnore, True),
-    wbFormIDCk(SNAM, 'Looping Sound', [SNDR, SOUN]),
-    wbUnknown(FNAM, cpIgnore, True),
-    wbFormIDCk(VNAM, 'Voice Type', [VTYP])
-  ], False, nil, cpNormal, False, nil, wbKeywordsAfterSet);
 
   wbICON := wbRStruct('Icon', [
     wbString(ICON, 'Large Icon filename'),
@@ -5546,7 +6172,7 @@ begin
 
   wbActorValueEnum :=
     wbEnum([
-    {00} 'Aggresion',
+    {00} 'Aggression',
     {01} 'Confidence',
     {02} 'Energy',
     {03} 'Morality',
@@ -5778,8 +6404,6 @@ begin
     ], [
       -1, 'None'
     ]);
-
-  wbActorValue := wbInteger('Actor Value', itS32, wbActorValueEnum);
 
   wbETYP := wbFormIDCk(ETYP, 'Equipment Type', [EQUP, NULL]);
   wbETYPReq := wbFormIDCk(ETYP, 'Equipment Type', [EQUP, NULL], False, cpNormal, True);
@@ -6051,102 +6675,226 @@ begin
       wbInteger('Function', itU16, wbCTDAFunctionToStr, wbCTDAFunctionToInt),
       wbByteArray('Unused', 2, cpIgnore, False, wbNeverShow),
       wbUnion('Parameter #1', wbCTDAParam1Decider, [
+        { unknown }
         wbByteArray('Unknown', 4),
+        { 0 ptNone}
         wbByteArray('None', 4, cpIgnore),
+        { 1 ptInteger}
         wbInteger('Integer', itS32),
+        { 2 ptFloat}
         wbFloat('Float'),
-        wbByteArray('Variable Name (unused)', 4, cpIgnore),
-        wbInteger('Sex', itU32, wbSexEnum),
-        wbInteger('Actor Value', itS32, wbActorValueEnum),
-        wbInteger('Crime Type', itU32, wbCrimeTypeEnum),
-        wbInteger('Axis', itU32, wbAxisEnum),
-        wbInteger('Quest Stage (unused)', itS32),
-        wbInteger('Misc Stat', itU32, wbMiscStatEnum),
-        wbInteger('Alignment', itU32, wbAlignmentEnum),
-        wbFormIDCkNoReach('Equip Type', [EQUP]),
-        wbInteger('Form Type', itU32, wbFormTypeEnum),
-        wbInteger('Critical Stage', itU32, wbCriticalStageEnum),
-        wbFormIDCkNoReach('Object Reference', [NULL, PLYR, ACHR, REFR, PGRE, PHZD, PMIS, PARW, PBAR, PBEA, PCON, PFLA]),
-        wbFormIDCkNoReach('Inventory Object', [ARMO, BOOK, MISC, WEAP, AMMO, KEYM, ALCH, SCRL, SLGM, INGR, FLST, LIGH, LVLI, COBJ]),
+        { 3 ptActor}
         wbFormIDCkNoReach('Actor', [NULL, PLYR, ACHR, REFR]),
-        wbFormIDCkNoReach('Voice Type', [VTYP, FLST]),
-        wbFormIDCkNoReach('Idle', [IDLE]),
-        wbFormIDCkNoReach('Form List', [FLST]),
-        wbFormIDCkNoReach('Quest', [QUST]),
-        wbFormIDCkNoReach('Faction', [FACT]),
-        wbFormIDCkNoReach('Cell', [CELL]),
-        wbFormIDCkNoReach('Class', [CLAS]),
-        wbFormIDCkNoReach('Race', [RACE]),
+        { 4 ptActorBase}
         wbFormIDCkNoReach('Actor Base', [NPC_]),
-        wbFormIDCkNoReach('Global', [GLOB]),
-        wbFormIDCkNoReach('Weather', [WTHR]),
-        wbFormIDCkNoReach('Package', [PACK]),
-        wbFormIDCkNoReach('Encounter Zone', [ECZN]),
-        wbFormIDCkNoReach('Perk', [PERK]),
-        wbFormIDCkNoReach('Owner', [NULL, FACT, NPC_]),
-        wbFormIDCkNoReach('Furniture', [FURN, FLST]),
-        wbFormIDCkNoReach('Effect Item', [SPEL, ENCH, ALCH, INGR, SCRL]),
-        wbFormIDCkNoReach('Base Effect', [MGEF]),
-        wbFormIDCkNoReach('Worldspace', [WRLD, FLST]),
-        wbInteger('VATS Value Function', itU32, wbVATSValueFunctionEnum),
-        wbInteger('VATS Value Param (INVALID)', itU32),
-        wbFormIDCkNoReach('Referenceable Object', [NULL, NPC_, PROJ, TREE, SOUN, ACTI, DOOR, STAT, FURN, CONT, ARMO, AMMO, MISC, WEAP, BOOK, KEYM, ALCH, LIGH, GRAS, ASPC, IDLM, ARMA, MSTT, TACT, FLST, LVLI, LVSP, SPEL, SCRL, SHOU, SLGM, ENCH], [NPC_, PROJ, TREE, SOUN, ACTI, DOOR, STAT, FURN, CONT, ARMO, AMMO, MISC, WEAP, BOOK, KEYM, ALCH, LIGH, GRAS, ASPC, IDLM, ARMA, MSTT, TACT, LVLI, LVSP, SPEL, SCRL, SHOU, SLGM, ENCH]),
-        wbFormIDCkNoReach('Region', [REGN]),
-        wbFormIDCkNoReach('Keyword', [KYWD, NULL]),
+        { 5 ptActorValue}
+        wbActorValue,
+        { 6 ptAdvanceAction}
         wbInteger('Player Action', itU32, wbAdvanceActionEnum),
-        wbInteger('Casting Type', itU32, wbCastingSourceEnum),
-        wbFormIDCkNoReach('Shout', [SHOU]),
-        wbFormIDCkNoReach('Location', [LCTN]),
-        wbFormIDCkNoReach('Location Ref Type', [LCRT]),
+        { 7 ptAlias}
         wbInteger('Alias', itS32, wbConditionAliasToStr, wbStrToAlias),
-        wbInteger('Packdata ID', itU32),
-        wbFormIDCk('Association Type', [ASTP]),
-        wbInteger('Furniture Anim', itU32, wbFurnitureAnimTypeEnum),
-        wbInteger('Furniture Entry', itU32, wbEnum([], [$010000, 'Front', $020000, 'Behind', $040000, 'Right', $80000, 'Left', $100000, 'Up'])),
-        wbFormIDCk('Scene', [NULL, SCEN]),
-        wbInteger('Ward State', itU32, wbWardStateEnum),
-        wbInteger('Event', itU32, wbEventFunctionAndMemberToStr, wbEventFunctionAndMemberToInt),
-        wbFormID('Event Data')
-      ]),
-      wbUnion('Parameter #2', wbCTDAParam2Decider, [
-        wbByteArray('Unknown', 4),
-        wbByteArray('None', 4, cpIgnore),
-        wbInteger('Integer', itS32),
-        wbFloat('Float'),
-        wbByteArray('Variable Name (unused)', 4, cpIgnore),
-        wbInteger('Sex', itU32, wbSexEnum),
-        wbInteger('Actor Value', itS32, wbActorValueEnum),
-        wbInteger('Crime Type', itU32, wbCrimeTypeEnum),
-        wbInteger('Axis', itU32, wbAxisEnum),
-        wbInteger('Quest Stage', itS32, wbCTDAParam2QuestStageToStr, wbCTDAParam2QuestStageToInt),
-        wbInteger('Misc Stat', itU32, wbMiscStatEnum),
+        { 8 ptAlignment}
         wbInteger('Alignment', itU32, wbAlignmentEnum),
-        wbFormIDCkNoReach('Equip Type', [EQUP]),
-        wbInteger('Form Type', itU32, wbFormTypeEnum),
-        wbInteger('Critical Stage', itU32, wbCriticalStageEnum),
-        wbFormIDCkNoReach('Object Reference', [NULL, PLYR, ACHR, REFR, PGRE, PHZD, PMIS, PARW, PBAR, PBEA, PCON, PFLA]),
-        wbFormIDCkNoReach('Inventory Object', [ARMO, BOOK, MISC, WEAP, AMMO, KEYM, ALCH, SCRL, SLGM, INGR, FLST, LIGH, LVLI, COBJ]),
-        wbFormIDCkNoReach('Actor', [NULL, PLYR, ACHR, REFR]),
-        wbFormIDCkNoReach('Voice Type', [VTYP, FLST]),
-        wbFormIDCkNoReach('Idle', [IDLE]),
-        wbFormIDCkNoReach('Form List', [FLST]),
-        wbFormIDCkNoReach('Quest', [QUST]),
-        wbFormIDCkNoReach('Faction', [FACT]),
+        { 9 ptAssociationType}
+        wbFormIDCk('Association Type', [ASTP]),
+        {10 ptAxis}
+        wbInteger('Axis', itU32, wbAxisEnum),
+        {11 ptCastingSource}
+        wbInteger('Casting Type', itU32, wbCastingSourceEnum),
+        {12 ptCell}
         wbFormIDCkNoReach('Cell', [CELL]),
+        {13 ptClass}
         wbFormIDCkNoReach('Class', [CLAS]),
-        wbFormIDCkNoReach('Race', [RACE]),
-        wbFormIDCkNoReach('Actor Base', [NPC_]),
-        wbFormIDCkNoReach('Global', [GLOB]),
-        wbFormIDCkNoReach('Weather', [WTHR]),
-        wbFormIDCkNoReach('Package', [PACK]),
+        {14 ptCrimeType}
+        wbInteger('Crime Type', itU32, wbCrimeTypeEnum),
+        {15 ptCriticalStage}
+        wbInteger('Critical Stage', itU32, wbCriticalStageEnum),
+        {16 ptEncounterZone}
         wbFormIDCkNoReach('Encounter Zone', [ECZN]),
-        wbFormIDCkNoReach('Perk', [PERK]),
-        wbFormIDCkNoReach('Owner', [NULL, FACT, NPC_]),
+        {17 ptEquipType}
+        wbFormIDCkNoReach('Equip Type', [EQUP]),
+        {18 ptEvent}
+        wbInteger('Event', itU32, wbEventFunctionAndMemberToStr, wbEventFunctionAndMemberToInt),
+        {19 ptEventData}
+        wbFormID('Event Data'),
+        {20 ptFaction}
+        wbFormIDCkNoReach('Faction', [FACT]),
+        {21 ptFormList}
+        wbFormIDCkNoReach('Form List', [FLST]),
+        {22 ptFormType}
+        wbInteger('Form Type', itU32, wbFormTypeEnum),
+        {23 ptFurniture}
         wbFormIDCkNoReach('Furniture', [FURN, FLST]),
-        wbFormIDCkNoReach('Effect Item', [SPEL, ENCH, ALCH, INGR, SCRL]),
+        {24 ptFurnitureAnim}
+        wbInteger('Furniture Anim', itU32, wbFurnitureAnimTypeEnum),
+        {25 ptFurnitureEntry}
+        wbInteger('Furniture Entry', itU32, wbEnum([], [$010000, 'Front', $020000, 'Behind', $040000, 'Right', $80000, 'Left', $100000, 'Up'])),
+        {26 ptGlobal}
+        wbFormIDCkNoReach('Global', [GLOB]),
+        {27 ptIdleForm}
+        wbFormIDCkNoReach('Idle', [IDLE]),
+        {28 ptInventoryObject}
+        wbFormIDCkNoReach('Inventory Object', [ARMO, BOOK, MISC, WEAP, AMMO, KEYM, ALCH, INGR, FLST, LIGH, LVLI, COBJ, OMOD, NOTE, CMPO]),
+        {29 ptKeyword}
+        wbFormIDCkNoReach('Keyword', [KYWD, FLST, NULL]),
+        {30 ptLocation}
+        wbFormIDCkNoReach('Location', [LCTN]),
+        {31 ptMagicEffect}
         wbFormIDCkNoReach('Base Effect', [MGEF]),
-        wbFormIDCkNoReach('Worldspace', [WRLD, FLST]),
+        {32 ptMagicItem}
+        wbFormIDCkNoReach('Effect Item', [SPEL, ENCH, ALCH, INGR, SCRL]),
+        {33 ptMiscStat}
+        wbInteger('Misc Stat', itU32, wbMiscStatEnum),
+        {34 ptObjectReference}
+        wbFormIDCkNoReach('Object Reference', [NULL, PLYR, ACHR, REFR, PGRE, PHZD, PMIS, PARW, PBAR, PBEA, PCON, PFLA]),
+        {35 ptOwner}
+        wbFormIDCkNoReach('Owner', [NULL, FACT, NPC_]),
+        {36 ptPackage}
+        wbFormIDCkNoReach('Package', [PACK]),
+        {37 ptPackdata}
+        wbInteger('Packdata ID', itU32),
+        {38 ptPerk}
+        wbFormIDCkNoReach('Perk', [PERK]),
+        {39 ptQuest}
+        wbFormIDCkNoReach('Quest', [QUST]),
+        {40 ptQuestStage}
+        wbInteger('Quest Stage', itU32, wbCTDAParam2QuestStageToStr, wbCTDAParam2QuestStageToInt),
+        {41 ptRace}
+        wbFormIDCkNoReach('Race', [RACE]),
+        {42 ptReferencableObject}
+        wbFormIDCkNoReach('Referenceable Object', [NULL, NPC_, PROJ, TREE, SOUN, ACTI, DOOR, STAT, FURN, CONT, ARMO, AMMO, MISC, WEAP, BOOK, KEYM, ALCH, LIGH, GRAS, ASPC, IDLM, ARMA, MSTT, TACT, FLST, LVLI, LVSP, SPEL, ENCH, OMOD, NOTE, CMPO], [NPC_, PROJ, TREE, SOUN, ACTI, DOOR, STAT, FURN, CONT, ARMO, AMMO, MISC, WEAP, BOOK, KEYM, ALCH, LIGH, GRAS, ASPC, IDLM, ARMA, MSTT, TACT, LVLI, LVSP, SPEL, ENCH, OMOD, NOTE, CMPO]),
+        {43 ptRefType}
+        wbFormIDCkNoReach('Location Ref Type', [LCRT]),
+        {44 ptRegion}
+        wbFormIDCkNoReach('Region', [REGN]),
+        {45 ptScene}
+        wbFormIDCk('Scene', [NULL, SCEN]),
+        {46 ptSex}
+        wbInteger('Sex', itU32, wbSexEnum),
+        {47 ptShout}
+        wbFormIDCkNoReach('Shout', [SHOU]),
+        {48 ptVariableName}
+        wbByteArray('Variable Name (unused)', 4, cpIgnore),
+        {49 ptVATSValueFunction}
         wbInteger('VATS Value Function', itU32, wbVATSValueFunctionEnum),
+        {50 ptVATSValueParam}
+        wbInteger('VATS Value Param (unused)', itU32),
+        {51 ptVoiceType}
+        wbFormIDCkNoReach('Voice Type', [VTYP, FLST]),
+        {52 ptWardState}
+        wbInteger('Ward State', itU32, wbWardStateEnum),
+        {53 ptWeather}
+        wbFormIDCkNoReach('Weather', [WTHR]),
+        {54 ptWorldspace}
+        wbFormIDCkNoReach('Worldspace', [WRLD, FLST]),
+        {55 ptDamageType}
+        wbFormIDCkNoReach('Damage Type', [DMGT, FLST])
+      ]),
+
+      wbUnion('Parameter #2', wbCTDAParam2Decider, [
+        { unknown }
+        wbByteArray('Unknown', 4),
+        { 0 ptNone}
+        wbByteArray('None', 4, cpIgnore),
+        { 1 ptInteger}
+        wbInteger('Integer', itS32),
+        { 2 ptFloat}
+        wbFloat('Float'),
+        { 3 ptActor}
+        wbFormIDCkNoReach('Actor', [NULL, PLYR, ACHR, REFR]),
+        { 4 ptActorBase}
+        wbFormIDCkNoReach('Actor Base', [NPC_]),
+        { 5 ptActorValue}
+        wbActorValue,
+        { 6 ptAdvanceAction}
+        wbInteger('Player Action', itU32, wbAdvanceActionEnum),
+        { 7 ptAlias}
+        wbInteger('Alias', itS32, wbConditionAliasToStr, wbStrToAlias),
+        { 8 ptAlignment}
+        wbInteger('Alignment', itU32, wbAlignmentEnum),
+        { 9 ptAssociationType}
+        wbFormIDCk('Association Type', [ASTP]),
+        {10 ptAxis}
+        wbInteger('Axis', itU32, wbAxisEnum),
+        {11 ptCastingSource}
+        wbInteger('Casting Type', itU32, wbCastingSourceEnum),
+        {12 ptCell}
+        wbFormIDCkNoReach('Cell', [CELL]),
+        {13 ptClass}
+        wbFormIDCkNoReach('Class', [CLAS]),
+        {14 ptCrimeType}
+        wbInteger('Crime Type', itU32, wbCrimeTypeEnum),
+        {15 ptCriticalStage}
+        wbInteger('Critical Stage', itU32, wbCriticalStageEnum),
+        {16 ptEncounterZone}
+        wbFormIDCkNoReach('Encounter Zone', [ECZN]),
+        {17 ptEquipType}
+        wbFormIDCkNoReach('Equip Type', [EQUP]),
+        {18 ptEvent}
+        wbInteger('Event', itU32, wbEventFunctionAndMemberToStr, wbEventFunctionAndMemberToInt),
+        {19 ptEventData}
+        wbFormID('Event Data'),
+        {20 ptFaction}
+        wbFormIDCkNoReach('Faction', [FACT]),
+        {21 ptFormList}
+        wbFormIDCkNoReach('Form List', [FLST]),
+        {22 ptFormType}
+        wbInteger('Form Type', itU32, wbFormTypeEnum),
+        {23 ptFurniture}
+        wbFormIDCkNoReach('Furniture', [FURN, FLST]),
+        {24 ptFurnitureAnim}
+        wbInteger('Furniture Anim', itU32, wbFurnitureAnimTypeEnum),
+        {25 ptFurnitureEntry}
+        wbInteger('Furniture Entry', itU32, wbEnum([], [$010000, 'Front', $020000, 'Behind', $040000, 'Right', $80000, 'Left', $100000, 'Up'])),
+        {26 ptGlobal}
+        wbFormIDCkNoReach('Global', [GLOB]),
+        {27 ptIdleForm}
+        wbFormIDCkNoReach('Idle', [IDLE]),
+        {28 ptInventoryObject}
+        wbFormIDCkNoReach('Inventory Object', [ARMO, BOOK, MISC, WEAP, AMMO, KEYM, ALCH, INGR, FLST, LIGH, LVLI, COBJ, OMOD, NOTE, CMPO]),
+        {29 ptKeyword}
+        wbFormIDCkNoReach('Keyword', [KYWD, FLST, NULL]),
+        {30 ptLocation}
+        wbFormIDCkNoReach('Location', [LCTN]),
+        {31 ptMagicEffect}
+        wbFormIDCkNoReach('Base Effect', [MGEF]),
+        {32 ptMagicItem}
+        wbFormIDCkNoReach('Effect Item', [SPEL, ENCH, ALCH, INGR, SCRL]),
+        {33 ptMiscStat}
+        wbInteger('Misc Stat', itU32, wbMiscStatEnum),
+        {34 ptObjectReference}
+        wbFormIDCkNoReach('Object Reference', [NULL, PLYR, ACHR, REFR, PGRE, PHZD, PMIS, PARW, PBAR, PBEA, PCON, PFLA]),
+        {35 ptOwner}
+        wbFormIDCkNoReach('Owner', [NULL, FACT, NPC_]),
+        {36 ptPackage}
+        wbFormIDCkNoReach('Package', [PACK]),
+        {37 ptPackdata}
+        wbInteger('Packdata ID', itU32),
+        {38 ptPerk}
+        wbFormIDCkNoReach('Perk', [PERK]),
+        {39 ptQuest}
+        wbFormIDCkNoReach('Quest', [QUST]),
+        {40 ptQuestStage}
+        wbInteger('Quest Stage', itU32, wbCTDAParam2QuestStageToStr, wbCTDAParam2QuestStageToInt),
+        {41 ptRace}
+        wbFormIDCkNoReach('Race', [RACE]),
+        {42 ptReferencableObject}
+        wbFormIDCkNoReach('Referenceable Object', [NULL, NPC_, PROJ, TREE, SOUN, ACTI, DOOR, STAT, FURN, CONT, ARMO, AMMO, MISC, WEAP, BOOK, KEYM, ALCH, LIGH, GRAS, ASPC, IDLM, ARMA, MSTT, TACT, FLST, LVLI, LVSP, SPEL, ENCH, OMOD, NOTE, CMPO], [NPC_, PROJ, TREE, SOUN, ACTI, DOOR, STAT, FURN, CONT, ARMO, AMMO, MISC, WEAP, BOOK, KEYM, ALCH, LIGH, GRAS, ASPC, IDLM, ARMA, MSTT, TACT, LVLI, LVSP, SPEL, ENCH, OMOD, NOTE, CMPO]),
+        {43 ptRefType}
+        wbFormIDCkNoReach('Location Ref Type', [LCRT]),
+        {44 ptRegion}
+        wbFormIDCkNoReach('Region', [REGN]),
+        {45 ptScene}
+        wbFormIDCk('Scene', [NULL, SCEN]),
+        {46 ptSex}
+        wbInteger('Sex', itU32, wbSexEnum),
+        {47 ptShout}
+        wbFormIDCkNoReach('Shout', [SHOU]),
+        {48 ptVariableName}
+        wbByteArray('Variable Name (unused)', 4, cpIgnore),
+        {49 ptVATSValueFunction}
+        wbInteger('VATS Value Function', itU32, wbVATSValueFunctionEnum),
+        {50 ptVATSValueParam}
         wbUnion('VATS Value Param', wbCTDAParam2VATSValueParamDecider, [
          { 0} wbFormIDCkNoReach('Weapon', [WEAP]),
          { 1} wbFormIDCkNoReach('Weapon List', [FLST], [WEAP]),
@@ -6191,23 +6939,16 @@ begin
          {19} wbInteger('Delivery Type', itU32, wbTargetEnum),
          {20} wbInteger('Casting Type', itU32, wbCastEnum)
         ]),
-        wbFormIDCkNoReach('Referenceable Object', [NULL, NPC_, PROJ, TREE, SOUN, ACTI, DOOR, STAT, FURN, CONT, ARMO, AMMO, MISC, WEAP, BOOK, KEYM, ALCH, LIGH, GRAS, ASPC, IDLM, ARMA, MSTT, TACT, FLST, LVLI, LVSP, SPEL, SCRL, SHOU, SLGM, ENCH], [NPC_, PROJ, TREE, SOUN, ACTI, DOOR, STAT, FURN, CONT, ARMO, AMMO, MISC, WEAP, BOOK, KEYM, ALCH, LIGH, GRAS, ASPC, IDLM, ARMA, MSTT, TACT, LVLI, LVSP, SPEL, SCRL, SHOU, SLGM, ENCH]),
-        wbFormIDCkNoReach('Region', [REGN]),
-        wbFormIDCkNoReach('Keyword', [KYWD, NULL]),
-        wbInteger('Player Action', itU32, wbAdvanceActionEnum),
-        wbInteger('Casting Type', itU32, wbCastingSourceEnum),
-        wbFormIDCkNoReach('Shout', [SHOU]),
-        wbFormIDCkNoReach('Location', [LCTN]),
-        wbFormIDCkNoReach('Location Ref Type', [LCRT]),
-        wbInteger('Alias', itS32, wbConditionAliasToStr, wbStrToAlias),
-        wbInteger('Packdata ID', itU32),
-        wbFormIDCk('Association Type', [ASTP]),
-        wbInteger('Furniture Anim', itU32, wbFurnitureAnimTypeEnum),
-        wbInteger('Furniture Entry', itU32, wbEnum([], [$010000, 'Front', $020000, 'Behind', $040000, 'Right', $80000, 'Left', $100000, 'Up'])),
-        wbFormIDCk('Scene', [NULL, SCEN]),
+        {51 ptVoiceType}
+        wbFormIDCkNoReach('Voice Type', [VTYP, FLST]),
+        {52 ptWardState}
         wbInteger('Ward State', itU32, wbWardStateEnum),
-        wbInteger('Event', itU32, wbEventFunctionAndMemberToStr, wbEventFunctionAndMemberToInt),
-        wbFormID('Event Data')
+        {53 ptWeather}
+        wbFormIDCkNoReach('Weather', [WTHR]),
+        {54 ptWorldspace}
+        wbFormIDCkNoReach('Worldspace', [WRLD, FLST]),
+        {55 ptDamageType}
+        wbFormIDCkNoReach('Damage Type', [DMGT, FLST])
       ]),
       wbInteger('Run On', itU32, wbEnum([
         {0} 'Subject',
@@ -6234,6 +6975,76 @@ begin
   wbCTDAsReq := wbRArray('Conditions', wbCTDA, cpNormal, True);
   wbCTDAsReqCount := wbRArray('Conditions', wbCTDA, cpNormal, True, nil, wbCTDAsAfterSet);
 
+  wbPTRN := wbFormIDCk(PTRN, 'Transform', [TRNS]);
+  wbNTRM := wbFormIDCk(NTRM, 'Terminal', [TERM]);
+  wbCUSD := wbFormIDCk(CUSD, 'UI Sound', [SNDR]);
+  wbPRPS := wbArrayS(PRPS, 'Properties', wbStructSK([0], 'Property', [
+    wbActorValue,
+    wbFloat('Value')
+  ]));
+  wbFLTR := wbString(FLTR, 'Filter');
+  wbAPPR := wbArray(APPR, 'Keywords', wbFormIDCk('Keyword', [KYWD]));
+  wbFTYP := wbFormIDCk(FTYP, 'Unknown', [LCRT]);
+  wbATTX := wbLString(ATTX, 'Activate Text Override', 0, cpTranslate);
+  wbOBTS := wbStruct(OBTS, 'Object Mod Template Item', [
+    wbInteger('Parts A Count', itU32),
+    wbInteger('Parts B Count', itU32),
+    wbByteArray('Unknown', 7),
+    wbArray('Keywords', wbFormIDCk('Keyword', [KYWD, NULL]), -4),
+    wbByteArray('Unknown', 2),
+    wbArray('Parts A', wbStruct('Part A', [
+      wbFormIDCk('Mod', [OMOD]),
+      wbByteArray('Unknown', 2),
+      wbInteger('Flags', itU8)
+    ]), wbOBTSCounter1),
+    wbArray('Parts B', wbStruct('Part B', [
+      wbByteArray('Unknown', 4),
+      wbByteArray('Unknown', 4),
+      wbByteArray('Unknown', 4),
+      // STAT is here SkinMirelurkSpawnHatchlingJuice [ARMO:00176DA1]
+      // probably not a FormID depending on above values
+      wbFormIDCk('Material Swap', [MSWP, STAT]),
+      wbFloat('Unknown'),
+      wbByteArray('Unknown', 4)
+    ]), wbOBTSCounter2)
+  ], cpNormal, True);
+
+  wbOBTESequence := wbRStruct('Unknown', [
+    wbInteger(OBTE, 'Count', itU32, nil, cpBenign),
+    wbRArray('Combinations',
+      wbRUnion('Combination', [
+        wbRStruct('Combination', [
+          wbOBTS
+        ], []),
+
+        wbRStruct('Combination', [
+          wbFULL,
+          wbOBTS
+        ], []),
+
+        wbRStruct('Combination', [
+          wbEmpty(OBTF, 'Boolean True'),
+          wbFULL,
+          wbOBTS
+        ], [])
+      ], []),
+      cpNormal, False, nil, wbOBTSCombinationsAfterSet),
+    wbEmpty(STOP, 'Marker', cpNormal, True)
+  ], []);
+
+  wbBSMPSequence := wbRArray('Unknown',
+    wbRStruct('Unknown', [
+      wbInteger(BSMP, 'Unknown', itU32),
+      wbRArray('Unknown',
+        wbRStruct('Unknown', [
+          wbString(BSMB, 'Name'),
+          wbArray(BSMS, 'Weights?', wbFloat('Unknown')),
+          wbUnknown(BMMP)
+        ], [])
+      )
+    ], [])
+  );
+
   wbEffectsReq :=
     wbRStructs('Effects', 'Effect', [
       wbEFID,
@@ -6241,22 +7052,96 @@ begin
       wbCTDAs
     ], [], cpNormal, True);
 
+  wbRecord(ACTI, 'Activator',
+    wbFlags(wbRecordFlagsFlags, wbFlagsList([
+      {0x00000040}  6, 'Has Tree LOD',
+      {0x00000100}  8, 'Must Update Anims',
+      {0x00000200}  9, 'Hidden From Local Map',
+      {0x00008000} 15, 'Has Distant LOD',
+      {0x00010000} 16, 'Random Anim Start',
+      {0x00020000} 17, 'Dangerous',
+      {0x00100000} 20, 'Ignore Object Interaction',
+      {0x00800000} 23, 'Is Marker',
+      {0x02000000} 25, 'Obstacle',
+      {0x04000000} 26, 'NavMesh Generation - Filter',
+      {0x08000000} 27, 'NavMesh Generation - Bounding Box',
+      {0x20000000} 29, 'Child Can Use',
+      {0x40000000} 30, 'NavMesh Generation - Ground'
+    ])), [
+    wbEDID,
+    wbVMAD,
+    wbOBNDReq,
+    wbPTRN,
+    wbFormIDCk(STCP, 'Sound', [STAG]),
+    wbFULL,
+    wbMODL,
+    wbDEST,
+    wbKSIZ,
+    wbKWDAs,
+    wbPRPS,
+    wbNTRM,
+    wbFTYP,
+    wbStruct(PNAM, 'Marker Color', [
+      wbInteger('Red', itU8),
+      wbInteger('Green', itU8),
+      wbInteger('Blue', itU8),
+      wbInteger('Unused', itU8)
+    ]),
+    wbFormIDCk(SNAM, 'Sound - Looping', [SNDR]),
+    wbFormIDCk(VNAM, 'Sound - Activation', [SNDR]),
+    wbFormIDCk(WNAM, 'Water Type', [WATR]),
+    wbATTX,
+    wbInteger(FNAM, 'Flags', itU16, wbFlags([
+      'No Displacement',
+      'Ignored by Sandbox'
+    ])),
+    wbFormIDCk(KNAM, 'Interaction Keyword', [KYWD]),
+    wbStruct(RADR, 'Unknown', [
+      wbFormIDCk('Sound Model', [SOPM, NULL]),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbByteArray('Unknown', 2)
+    ]),
+    wbCITC,
+    wbCTDAs
+  ], False, nil, cpNormal, False, nil, wbKeywordsAfterSet);
+
+  wbRecord(TACT, 'Talking Activator',
+    wbFlags(wbRecordFlagsFlags, wbFlagsList([
+      {0x00000200}  9, 'Hidden From Local Map',
+      {0x00010000} 16, 'Random Anim Start',
+      {0x00020000} 17, 'Radio Station'
+    ]), [17]), [
+    wbEDID,
+    wbVMAD,
+    wbOBNDReq,
+    wbFULL,
+    wbMODL,
+    wbDEST,
+    wbKSIZ,
+    wbKWDAs,
+    wbUnknown(PNAM, cpIgnore, True),
+    wbFormIDCk(SNAM, 'Looping Sound', [SNDR]),
+    wbUnknown(FNAM, cpIgnore, True),
+    wbFormIDCk(VNAM, 'Voice Type', [VTYP])
+  ], False, nil, cpNormal, False, nil, wbKeywordsAfterSet);
+
   wbRecord(ALCH, 'Ingestible',
     wbFlags(wbRecordFlagsFlags, wbFlagsList([
       {0x20000000} 29, 'Medicine'
     ])), [
     wbEDID,
     wbOBNDReq,
+    wbPTRN,
     wbFULL,
     wbKSIZ,
     wbKWDAs,
-    wbDESC,
     wbMODL,
+    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR]),
+    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR]),
+    wbCUSD,
     wbDEST,
-    wbICON,
-    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR, SOUN]),
-    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR, SOUN]),
-    wbETYP,
+    wbDESC,
     wbFloat(DATA, 'Weight', cpNormal, True),
     wbStruct(ENIT, 'Effect Data', [
       wbInteger('Value', itS32),
@@ -6284,6 +7169,7 @@ begin
       wbFloat('Addiction Chance'),
       wbFormIDCk('Sound - Consume', [SNDR, NULL])
     ], cpNormal, True),
+    wbLString(DNAM, 'Unknown', 0, cpTranslate),
     wbEffectsReq
   ], False, nil, cpNormal, False, wbRemoveEmptyKWDA, wbKeywordsAfterSet);
 
@@ -6293,26 +7179,29 @@ begin
     ])), [
     wbEDID,
     wbOBNDReq,
+    wbPTRN,
     wbFULL,
     wbMODL,
-    wbICON,
     wbDEST,
-    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR, SOUN]),
-    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR, SOUN]),
+    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR]),
+    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR]),
     wbDESC,
     wbKSIZ,
     wbKWDAs,
-    wbStruct(DATA, 'Data', [
+    wbInteger(DATA, 'Value', itU32, nil, cpNormal, True),
+    wbStruct(DNAM, '', [
       wbFormIDCk('Projectile', [PROJ, NULL]),
-        wbInteger('Flags', itU32, wbFlags([
-          'Ignores Normal Weapon Resistance',
-          'Non-Playable',
-          'Non-Bolt'
-        ])),
-      wbFloat('Damage'),
-      wbInteger('Value', itU32)
+      wbInteger('Flags', itU32, wbFlags([
+        'Ignores Normal Weapon Resistance',
+        'Non-Playable',
+        'Ballistic?'
+      ])),
+      wbByteArray('Unknown', 4),
+      wbByteArray('Unknown', 4)
     ], cpNormal, True),
-    wbString(ONAM, 'Short Name')
+    wbLString(ONAM, 'Unknown', 0, cpTranslate),
+    wbString(NAM1, 'Casing Model'),
+    wbUnknown(NAM2)
   ], False, nil, cpNormal, False, wbRemoveEmptyKWDA, wbKeywordsAfterSet);
 
   wbRecord(ANIO, 'Animated Object',
@@ -6334,45 +7223,56 @@ begin
     wbEDID,
     wbVMAD,
     wbOBNDReq,
+    wbPTRN,
     wbFULL,
     wbEITM,
-    wbInteger(EAMT, 'Enchantment Amount', itU16),
     wbRStruct('Male world model', [
       wbString(MOD2, 'Model Filename'),
       wbByteArray(MO2T, 'Texture Files Hashes', 0, cpIgnore, false, false, wbNeverShow),
       wbMO2S
     ], []),
-    wbICON,
     wbRStruct('Female world model', [
       wbString(MOD4, 'Model Filename'),
       wbByteArray(MO4T, 'Texture Files Hashes', 0, cpIgnore, false, false, wbNeverShow),
       wbMO4S
     ], []),
-    wbICO2,
-    wbBODTBOD2,
+    wbBOD2,
     wbDEST,
-    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR, SOUN]),
-    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR, SOUN]),
-    wbString(BMCT, 'Ragdoll Constraint Template'),
+    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR]),
+    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR]),
     wbETYP,
-    wbFormIDCk(BIDS, 'Bash Impact Data Set', [IPDS]),
     wbFormIDCk(BAMT, 'Alternate Block Material', [MATT]),
     wbFormIDCk(RNAM, 'Race', [RACE]),
     wbKSIZ,
     wbKWDAs,
     wbDESC,
-    wbRArray('Armature', wbFormIDCK(MODL, 'Model Filename', [ARMA, NULL])),
+    wbFormIDCk(INRD, 'Unknown', [INNR]),
+    wbRArray('Armatures',
+      wbRStruct('Armature', [
+        wbInteger(INDX, 'Index', itU16),
+        wbFormIDCk(MODL, 'Armature', [ARMA])
+      ], [])
+    ),
     wbStruct(DATA, 'Data', [
       wbInteger('Value', itS32),
-      wbFloat('Weight')
+      wbFloat('Weight'),
+      wbByteArray('Unknown', 4)
     ], cpNormal, True),
-    wbInteger(DNAM, 'Armor Rating', itS32, wbDiv(100), cpNormal, True),
-    wbFormIDCk(TNAM, 'Template Armor', [ARMO])
+    wbStruct(FNAM, '', [
+      wbInteger('Damage Resistance', itU16),
+      wbUnknown
+    ]),
+    wbArrayS(DAMA, 'Resistances',wbStructSK([0], 'Resistance', [
+      wbFormIDCk('Damage Type', [DMGT]),
+      wbInteger('Value', itU32)
+    ])),
+    wbAPPR,
+    wbOBTESequence
   ], False, nil, cpNormal, False, wbARMOAfterLoad, wbKeywordsAfterSet);
 
   wbRecord(ARMA, 'Armor Addon', [
     wbEDID,
-    wbBODTBOD2,
+    wbBOD2,
     wbFormIDCk(RNAM, 'Race', [RACE]),
     wbStruct(DNAM, 'Data', [
       wbInteger('Male Priority', itU8),
@@ -6394,22 +7294,30 @@ begin
     wbRStruct('Male world model', [
       wbString(MOD2, 'Model Filename'),
       wbByteArray(MO2T, 'Texture Files Hashes', 0, cpIgnore, false, false, wbNeverShow),
-      wbMO2S
+      wbMO2S,
+      wbMO2C,
+      wbMO2F
     ], [], cpNormal, False),
     wbRStruct('Female world model', [
       wbString(MOD3, 'Model Filename'),
       wbByteArray(MO3T, 'Texture Files Hashes', 0, cpIgnore, false, false, wbNeverShow),
-      wbMO3S
+      wbMO3S,
+      wbMO3C,
+      wbMO3F
     ], []),
     wbRStruct('Male 1st Person', [
       wbString(MOD4, 'Model Filename'),
       wbByteArray(MO4T, 'Texture Files Hashes', 0, cpIgnore, false, false, wbNeverShow),
-      wbMO4S
+      wbMO4S,
+      wbMO4C,
+      wbMO4F
     ], []),
     wbRStruct('Female 1st Person', [
       wbString(MOD5, 'Model Filename'),
       wbByteArray(MO5T, 'Texture Files Hashes', 0, cpIgnore, false, false, wbNeverShow),
-      wbMO5S
+      wbMO5S,
+      wbMO5C,
+      wbMO5F
     ], []),
     wbFormIDCK(NAM0, 'Male Skin Texture', [TXST, NULL]),
     wbFormIDCK(NAM1, 'Female Skin texture', [TXST, NULL]),
@@ -6417,50 +7325,66 @@ begin
     wbFormIDCK(NAM3, 'Female Skin Texture Swap List', [FLST, NULL]),
     wbRArrayS('Additional Races', wbFormIDCK(MODL, 'Race', [RACE, NULL])),
     wbFormIDCk(SNDD, 'Footstep Sound', [FSTS, NULL]),
-    wbFormIDCk(ONAM, 'Art Object', [ARTO])
+    wbFormIDCk(ONAM, 'Art Object', [ARTO]),
+    wbBSMPSequence
   ], False, nil, cpNormal, False, wbARMAAfterLoad);
 
   wbRecord(BOOK, 'Book', [
     wbEDID,
     wbVMAD,
     wbOBNDReq,
+    wbPTRN,
     wbFULL,
     wbMODL,
-    wbICON,
     wbLStringKC(DESC, 'Book Text', 0, cpTranslate, True),
     wbDEST,
-    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR, SOUN]),
-    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR, SOUN]),
+    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR]),
+    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR]),
     wbKSIZ,
     wbKWDAs,
+    wbFormIDCk(FIMD, 'Unknown', [MESG]),
     wbStruct(DATA, 'Data', [
-      wbInteger('Flags', itU8, wbFlags([
-       {0x01} 'Teaches Skill',
-       {0x02} 'Can''t be Taken',
-       {0x04} 'Teaches Spell',
-       {0x08} 'Unknown 4',
-       {0x10} 'Unknown 5',
-       {0x20} 'Unknown 6',
-       {0x40} 'Unknown 7',
-       {0x80} 'Unknown 8'
-      ])),
-      wbInteger('Type', itU8, wbEnum([], [
-        0, 'Book/Tome', 255, 'Note/Scroll'
-      ])),
-      wbByteArray('Unused', 2),
-      wbUnion('Teaches', wbBOOKTeachesDecider, [
-        wbInteger('Skill', itS32, wbSkillEnum),
-        wbFormIDCk('Spell', [SPEL, NULL])
-      ]),
       wbInteger('Value', itU32),
-      wbFloat('Weight')
+      wbByteArray('Unknown', 4)
+//      wbInteger('Flags', itU8, wbFlags([
+//       {0x01} 'Teaches Skill',
+//       {0x02} 'Can''t be Taken',
+//       {0x04} 'Teaches Spell',
+//       {0x08} 'Unknown 4',
+//       {0x10} 'Unknown 5',
+//       {0x20} 'Unknown 6',
+//       {0x40} 'Unknown 7',
+//       {0x80} 'Unknown 8'
+//      ])),
+//      wbInteger('Type', itU8, wbEnum([], [
+//        0, 'Book/Tome', 255, 'Note/Scroll'
+//      ])),
+//      wbByteArray('Unused', 2),
+//      wbUnion('Teaches', wbBOOKTeachesDecider, [
+//        wbInteger('Skill', itS32, wbSkillEnum),
+//        wbFormIDCk('Spell', [SPEL, NULL])
+//      ]),
+//      wbInteger('Value', itU32),
+//      wbFloat('Weight')
     ], cpNormal, True),
-    wbFormIDCk(INAM, 'Inventory Art', [STAT]),
-    wbLString(CNAM, 'Description', 0, cpTranslate)
+    wbStruct(DNAM, 'Unknown', [
+      wbInteger('Flags', itU8, wbFlags([
+        {0x01} 'Unknown 0',
+        {0x02} 'Unknown 1',
+        {0x04} 'Unknown 2',
+        {0x08} 'Unknown 3',
+        {0x10} 'Add Perk'
+      ])),
+      wbFormIDCk('Perk', [PERK, NULL]),
+      wbByteArray('Unknown', 4),
+      wbByteArray('Unknown', 4)
+    ], cpNormal, True),
+    wbLString(CNAM, 'Description', 0, cpTranslate),
+    wbFormIDCk(INAM, 'Inventory Art', [STAT])
   ], False, nil, cpNormal, False, nil, wbKeywordsAfterSet);
 end;
 
-procedure DefineTES5c;
+procedure DefineFO4c;
 
   procedure ReferenceRecord(aSignature: TwbSignature; const aName: string);
   begin
@@ -6504,6 +7428,20 @@ procedure DefineTES5c;
           ])
         )
       ], []),
+
+      wbFormIDCk(XASP, 'Unknown', [REFR]),
+      wbUnknown(XATP),
+      wbUnknown(XAMC),
+      wbUnknown(XLKT),
+      wbFormIDCk(XLYR, 'Layer', [LAYR]),
+      wbFormIDCk(XMSP, 'Material Swap', [MSWP]),
+      wbFormIDCk(XRFG, 'Reference Group', [RFGP]),
+      wbUnknown(XRDO),
+      wbUnknown(XBSD),
+      wbUnknown(XPDD),
+      wbUnknown(XCVR),
+      wbUnknown(XRNK),
+
       wbXESP,
       wbFormIDCk(XEMI, 'Emittance', [LIGH, REGN]),
       wbFormIDCk(XMBR, 'MultiBound Reference', [REFR]),
@@ -6537,324 +7475,139 @@ begin
   ReferenceRecord(PHZD, 'Placed Hazard');
   ReferenceRecord(PMIS, 'Placed Missile');
 
-  if wbSimpleRecords then begin
+  wbRecord(CELL, 'Cell',
+    wbFlags(wbRecordFlagsFlags, wbFlagsList([
+      {0x00000400} 10, 'Persistent',
+      {0x00020000} 17, 'Off Limits',
+      {0x00040000} 18, 'Compressed',
+      {0x00080000} 19, 'Can''t Wait'
+    ]), [18]), [
+    wbEDID,
+    wbFULL,
+    wbInteger(DATA, 'Flags', itU16, wbFlags([
+      {0x0001} 'Is Interior Cell',
+      {0x0002} 'Has Water',
+      {0x0004} 'Can''t Travel From Here',
+      {0x0008} 'No LOD Water',
+      {0x0010} 'Unknown 5',
+      {0x0020} 'Public Area',
+      {0x0040} 'Hand Changed',
+      {0x0080} 'Show Sky',
+      {0x0100} 'Use Sky Lighting'
+    ]), cpNormal, True, False, nil, wbCELLDATAAfterSet),
+    wbStruct(XCLC, 'Grid', [
+      wbInteger('X', itS32),
+      wbInteger('Y', itS32),
+      wbInteger('Force Hide Land', itU32, wbFlags([
+        'Quad 1',
+        'Quad 2',
+        'Quad 3',
+        'Quad 4'
+      ], True))
+    ], cpNormal, False, nil, 2),
 
-    wbRecord(CELL, 'Cell',
-      wbFlags(wbRecordFlagsFlags, wbFlagsList([
-        {0x00000400} 10, 'Persistent',
-        {0x00020000} 17, 'Off Limits',
-        {0x00040000} 18, 'Compressed',
-        {0x00080000} 19, 'Can''t Wait'
-      ]), [18]), [
-      wbEDID,
-      wbFULL,
-      {>>>
-      Flags can be itU8, but CELL\DATA has a critical role in various wbImplementation.pas routines
-      and replacing it with wbUnion generates error when setting for example persistent flag in REFR.
-      So let it be always itU16
-      <<<}
-      wbInteger(DATA, 'Flags', itU16, wbFlags([
-        {0x0001} 'Is Interior Cell',
-        {0x0002} 'Has Water',
-        {0x0004} 'Can''t Travel From Here',
-        {0x0008} 'No LOD Water',
-        {0x0010} 'Unknown 5',
-        {0x0020} 'Public Area',
-        {0x0040} 'Hand Changed',
-        {0x0080} 'Show Sky',
-        {0x0100} 'Use Sky Lighting'
-      ]), cpNormal, True, False, nil, wbCELLDATAAfterSet),
-      wbStruct(XCLC, 'Grid', [
-        wbInteger('X', itS32),
-        wbInteger('Y', itS32),
-        wbInteger('Force Hide Land', itU32, wbFlags([
-          'Quad 1',
-          'Quad 2',
-          'Quad 3',
-          'Quad 4'
-        ], True))
-      ], cpNormal, False, nil, 2),
-      wbStruct(XCLL, 'Lighting', [
-        wbStruct('Ambient Color', [
-          wbInteger('Red', itU8),
-          wbInteger('Green', itU8),
-          wbInteger('Blue', itU8),
-          wbByteArray('Unknown', 1)
-        ]),
-        wbStruct('Directional Color', [
-          wbInteger('Red', itU8),
-          wbInteger('Green', itU8),
-          wbInteger('Blue', itU8),
-          wbByteArray('Unknown', 1)
-        ]),
-        wbStruct('Fog Color Near', [
-          wbInteger('Red', itU8),
-          wbInteger('Green', itU8),
-          wbInteger('Blue', itU8),
-          wbByteArray('Unknown', 1)
-        ]),
-        wbFloat('Fog Near'),
-        wbFloat('Fog Far'),
-        wbInteger('Directional Rotation XY', itS32),
-        wbInteger('Directional Rotation Z', itS32),
-        wbFloat('Directional Fade'),
-        wbFloat('Fog Clip Distance'),
-        wbFloat('Fog Power'),
-        wbAmbientColors,
-        wbStruct('Fog Color Far', [
-          wbInteger('Red', itU8),
-          wbInteger('Green', itU8),
-          wbInteger('Blue', itU8),
-          wbByteArray('Unknown', 1)
-        ]),
-        wbFloat('Fog Max'),
-        wbFloat('Light Fade Begin'),
-        wbFloat('Light Fade End'),
-        wbInteger('Inherits', itU32, wbFlags([
-          {0x00000001}'Ambient Color',
-          {0x00000002}'Directional Color',
-          {0x00000004}'Fog Color',
-          {0x00000008}'Fog Near',
-          {0x00000010}'Fog Far',
-          {0x00000020}'Directional Rotation',
-          {0x00000040}'Directional Fade',
-          {0x00000080}'Clip Distance',
-          {0x00000100}'Fog Power',
-          {0x00000200}'Fog Max',
-          {0x00000400}'Light Fade Distances'
-        ]))
-      ], cpNormal, False, nil, 11),
+    wbUnknown(VISI),
+    wbFormIDCk(RVIS, 'Unknown', [CELL]),
+    wbUnknown(PCMB),
 
-      wbByteArray(TVDT, 'Unknown', 0, cpNormal),
-      wbByteArray(MHDT, 'Max Height Data', 0, cpNormal),
-      wbFormIDCk(LTMP, 'Lighting Template', [LGTM, NULL], False, cpNormal, True),
-      wbByteArray(LNAM, 'Unknown', 0, cpIgnore), // leftover flags, they are now in XCLC
-
-      {>>> XCLW sometimes has $FF7FFFFF and causes invalid floation point <<<}
-      wbFloat(XCLW, 'Water Height', cpNormal, False, 1, -1, nil, nil, 0, wbCELLXCLWGetConflictPriority),
-      //wbByteArray(XCLW, 'Water Height', 4),
-      wbString(XNAM, 'Water Noise Texture'),
-      wbArrayS(XCLR, 'Regions', wbFormIDCk('Region', [REGN])),
-      wbFormIDCk(XLCN, 'Location', [LCTN]),
-      wbByteArray(XWCN, 'Unknown', 0, cpIgnore), // leftover
-      wbByteArray(XWCS, 'Unknown', 0, cpIgnore), // leftover
-      wbStruct(XWCU, 'Water Velocity', [
-        wbFloat('X Offset'),
-        wbFloat('Y Offset'),
-        wbFloat('Z Offset'),
-        wbByteArray('Unknown', 4),
-        wbFloat('X Angle'),
-        wbFloat('Y Angle'),
-        wbFloat('Z Angle'),
-        wbByteArray('Unknown', 0)
+    wbStruct(XCLL, 'Lighting', [
+      wbStruct('Ambient Color', [
+        wbInteger('Red', itU8),
+        wbInteger('Green', itU8),
+        wbInteger('Blue', itU8),
+        wbByteArray('Unknown', 1)
       ]),
-      wbFormIDCk(XCWT, 'Water', [WATR]),
-
-      {--- Ownership ---}
-      wbOwnership,
-      wbFormIDCk(XILL, 'Lock List', [FLST, NPC_]),
-
-      wbString(XWEM, 'Water Environment Map'),
-      wbFormIDCk(XCCM, 'Sky/Weather from Region', [REGN]),
-      wbFormIDCk(XCAS, 'Acoustic Space', [ASPC]),
-      wbFormIDCk(XEZN, 'Encounter Zone', [ECZN]),
-      wbFormIDCk(XCMO, 'Music Type', [MUSC]),
-      wbFormIDCk(XCIM, 'Image Space', [IMGS])
-    ], True, wbCellAddInfo, cpNormal, False, wbCELLAfterLoad)
-
-  end else begin
-
-    wbRecord(CELL, 'Cell',
-      wbFlags(wbRecordFlagsFlags, wbFlagsList([
-        {0x00000400} 10, 'Persistent',
-        {0x00020000} 17, 'Off Limits',
-        {0x00040000} 18, 'Compressed',
-        {0x00080000} 19, 'Can''t Wait'
-      ]), [18]), [
-      wbEDID,
-      wbFULL,
-      {>>>
-      Flags can be itU8, but CELL\DATA has a critical role in various wbImplementation.pas routines
-      and replacing it with wbUnion generates error when setting for example persistent flag in REFR.
-      So let it be always itU16
-      <<<}
-      wbInteger(DATA, 'Flags', itU16, wbFlags([
-        {0x0001} 'Is Interior Cell',
-        {0x0002} 'Has Water',
-        {0x0004} 'Can''t Travel From Here',
-        {0x0008} 'No LOD Water',
-        {0x0010} 'Unknown 5',
-        {0x0020} 'Public Area',
-        {0x0040} 'Hand Changed',
-        {0x0080} 'Show Sky',
-        {0x0100} 'Use Sky Lighting'
-      ]), cpNormal, True, False, nil, wbCELLDATAAfterSet),
-      wbStruct(XCLC, 'Grid', [
-        wbInteger('X', itS32),
-        wbInteger('Y', itS32),
-        wbInteger('Force Hide Land', itU32, wbFlags([
-          'Quad 1',
-          'Quad 2',
-          'Quad 3',
-          'Quad 4'
-        ], True))
-      ], cpNormal, False, nil, 2),
-      wbStruct(XCLL, 'Lighting', [
-        wbStruct('Ambient Color', [
-          wbInteger('Red', itU8),
-          wbInteger('Green', itU8),
-          wbInteger('Blue', itU8),
-          wbByteArray('Unknown', 1)
-        ]),
-        wbStruct('Directional Color', [
-          wbInteger('Red', itU8),
-          wbInteger('Green', itU8),
-          wbInteger('Blue', itU8),
-          wbByteArray('Unknown', 1)
-        ]),
-        wbStruct('Fog Color Near', [
-          wbInteger('Red', itU8),
-          wbInteger('Green', itU8),
-          wbInteger('Blue', itU8),
-          wbByteArray('Unknown', 1)
-        ]),
-        wbFloat('Fog Near'),
-        wbFloat('Fog Far'),
-        wbInteger('Directional Rotation XY', itS32),
-        wbInteger('Directional Rotation Z', itS32),
-        wbFloat('Directional Fade'),
-        wbFloat('Fog Clip Distance'),
-        wbFloat('Fog Power'),
-        wbAmbientColors,
-        wbStruct('Fog Color Far', [
-          wbInteger('Red', itU8),
-          wbInteger('Green', itU8),
-          wbInteger('Blue', itU8),
-          wbByteArray('Unknown', 1)
-        ]),
-        wbFloat('Fog Max'),
-        wbFloat('Light Fade Begin'),
-        wbFloat('Light Fade End'),
-        wbInteger('Inherits', itU32, wbFlags([
-          {0x00000001}'Ambient Color',
-          {0x00000002}'Directional Color',
-          {0x00000004}'Fog Color',
-          {0x00000008}'Fog Near',
-          {0x00000010}'Fog Far',
-          {0x00000020}'Directional Rotation',
-          {0x00000040}'Directional Fade',
-          {0x00000080}'Clip Distance',
-          {0x00000100}'Fog Power',
-          {0x00000200}'Fog Max',
-          {0x00000400}'Light Fade Distances'
-        ]))
-      ], cpNormal, False, nil, 11),
-
-      wbByteArray(TVDT, 'Unknown', 0, cpNormal),
-      wbByteArray(MHDT, 'Max Height Data', 0, cpNormal),
-//      wbArray(TVDT, 'Unknown', wbInteger('Unknown', itS32)),
-//      wbStruct(MHDT, 'Max Height Data', [ // Rolled back temporarily due to issues while copying.
-//         wbUnion('Unknown', wbMHDTDecider, [
-//           wbArray('Unknown', wbInteger('Data', itS8)),
-//           wbStruct('Unknown', [
-//             wbInteger('Unknown', itU32)]), // First DWord is Endian swapped if the record size is 1028
-//             wbArray('Unknown', wbInteger('Data', itS8))
-//           ])
-//      ]),
-      wbFormIDCk(LTMP, 'Lighting Template', [LGTM, NULL], False, cpNormal, True),
-      wbByteArray(LNAM, 'Unknown', 0, cpIgnore), // leftover flags, they are now in XCLC
-
-      {>>> XCLW sometimes has $FF7FFFFF and causes invalid floation point <<<}
-      wbFloat(XCLW, 'Water Height', cpNormal, False, 1, -1, nil, nil, 0, wbCELLXCLWGetConflictPriority),
-      //wbByteArray(XCLW, 'Water Height', 4),
-      wbString(XNAM, 'Water Noise Texture'),
-      wbArrayS(XCLR, 'Regions', wbFormIDCk('Region', [REGN])),
-      wbFormIDCk(XLCN, 'Location', [LCTN]),
-      wbByteArray(XWCN, 'Unknown', 0, cpIgnore), // leftover
-      wbByteArray(XWCS, 'Unknown', 0, cpIgnore), // leftover
-      wbStruct(XWCU, 'Water Velocity', [
-        wbFloat('X Offset'),
-        wbFloat('Y Offset'),
-        wbFloat('Z Offset'),
-        wbByteArray('Unknown', 4),
-        wbFloat('X Angle'),
-        wbFloat('Y Angle'),
-        wbFloat('Z Angle'),
-        wbByteArray('Unknown', 0)
+      wbStruct('Directional Color', [
+        wbInteger('Red', itU8),
+        wbInteger('Green', itU8),
+        wbInteger('Blue', itU8),
+        wbByteArray('Unknown', 1)
       ]),
-      wbFormIDCk(XCWT, 'Water', [WATR]),
+      wbStruct('Fog Color Near', [
+        wbInteger('Red', itU8),
+        wbInteger('Green', itU8),
+        wbInteger('Blue', itU8),
+        wbByteArray('Unknown', 1)
+      ]),
+      wbFloat('Fog Near'),
+      wbFloat('Fog Far'),
+      wbInteger('Directional Rotation XY', itS32),
+      wbInteger('Directional Rotation Z', itS32),
+      wbFloat('Directional Fade'),
+      wbFloat('Fog Clip Distance'),
+      wbFloat('Fog Power'),
+      wbAmbientColors,
+      wbStruct('Fog Color Far', [
+        wbInteger('Red', itU8),
+        wbInteger('Green', itU8),
+        wbInteger('Blue', itU8),
+        wbByteArray('Unknown', 1)
+      ]),
+      wbFloat('Fog Max'),
+      wbFloat('Light Fade Begin'),
+      wbFloat('Light Fade End'),
+      wbInteger('Inherits', itU32, wbFlags([
+        {0x00000001}'Ambient Color',
+        {0x00000002}'Directional Color',
+        {0x00000004}'Fog Color',
+        {0x00000008}'Fog Near',
+        {0x00000010}'Fog Far',
+        {0x00000020}'Directional Rotation',
+        {0x00000040}'Directional Fade',
+        {0x00000080}'Clip Distance',
+        {0x00000100}'Fog Power',
+        {0x00000200}'Fog Max',
+        {0x00000400}'Light Fade Distances'
+      ])),
+      wbUnknown
+    ], cpNormal, False, nil, 11),
 
-      {--- Ownership ---}
-      wbOwnership,
-      wbFormIDCk(XILL, 'Lock List', [FLST, NPC_]),
+    wbByteArray(TVDT, 'Unknown', 0, cpNormal),
+    wbMHDT,
+    wbFormIDCk(LTMP, 'Lighting Template', [LGTM, NULL], False, cpNormal, True),
 
-      wbString(XWEM, 'Water Environment Map'),
-      wbFormIDCk(XCCM, 'Sky/Weather from Region', [REGN]),
-      wbFormIDCk(XCAS, 'Acoustic Space', [ASPC]),
-      wbFormIDCk(XEZN, 'Encounter Zone', [ECZN]),
-      wbFormIDCk(XCMO, 'Music Type', [MUSC]),
-      wbFormIDCk(XCIM, 'Image Space', [IMGS])
-    ], True, wbCellAddInfo, cpNormal, False, wbCELLAfterLoad);
+    {>>> XCLW sometimes has $FF7FFFFF and causes invalid floation point <<<}
+    wbFloat(XCLW, 'Water Height', cpNormal, False, 1, -1, nil, nil, 0, wbCELLXCLWGetConflictPriority),
+    //wbString(XNAM, 'Water Noise Texture'),
+    wbArrayS(XCLR, 'Regions', wbFormIDCk('Region', [REGN])),
+    wbFormIDCk(XLCN, 'Location', [LCTN]),
+    wbByteArray(XWCN, 'Unknown', 0, cpIgnore), // leftover
+    //wbByteArray(XWCS, 'Unknown', 0, cpIgnore), // leftover
+    wbStruct(XWCU, 'Water Velocity', [
+      wbFloat('X Offset'),
+      wbFloat('Y Offset'),
+      wbFloat('Z Offset'),
+      wbByteArray('Unknown', 4),
+      wbFloat('X Angle'),
+      wbFloat('Y Angle'),
+      wbFloat('Z Angle'),
+      wbByteArray('Unknown', 0)
+    ]),
+    wbFormIDCk(XCWT, 'Water', [WATR]),
 
-  end;
+    {--- Ownership ---}
+    wbOwnership,
+    wbFormIDCk(XILL, 'Lock List', [FLST, NPC_]),
+
+    wbUnknown(XILW),
+    wbString(XWEM, 'Water Environment Map'),
+    wbFormIDCk(XCCM, 'Sky/Weather from Region', [REGN]),
+    wbFormIDCk(XCAS, 'Acoustic Space', [ASPC]),
+    wbFormIDCk(XEZN, 'Encounter Zone', [ECZN]),
+    wbFormIDCk(XCMO, 'Music Type', [MUSC]),
+    wbFormIDCk(XCIM, 'Image Space', [IMGS]),
+
+    wbUnknown(XGDR),
+    wbArrayS(XPRI, 'Unknown', wbFormIDCk('Unknown', [REFR])),
+    wbUnknown(XCRI)
+  ], True, wbCellAddInfo, cpNormal, False{, wbCELLAfterLoad});
 
   wbRecord(CLAS, 'Class', [
     wbEDID,
     wbFULLReq,
     wbDESCReq,
-    wbICON,
-    wbStruct(DATA, '', [
-      wbByteArray('Unknown', 4),
-      wbInteger('Teaches', itS8, wbEnum([
-        'One Handed',
-        'Two Handed',
-        'Archery',
-        'Block',
-        'Smithing',
-        'Heavy Armor',
-        'Light Armor',
-        'Pickpocket',
-        'Lockpicking',
-        'Sneak',
-        'Alchemy',
-        'Speech',
-        'Alteration',
-        'Conjuration',
-        'Destruction',
-        'Illusion',
-        'Restoration',
-        'Enchanting'
-      ])),
-      wbInteger('Maximum training level', itU8),
-      wbArray('Skill Weights', wbInteger('Weight', itU8), [
-        'One Handed',
-        'Two Handed',
-        'Archery',
-        'Block',
-        'Smithing',
-        'Heavy Armor',
-        'Light Armor',
-        'Pickpocket',
-        'Lockpicking',
-        'Sneak',
-        'Alchemy',
-        'Speech',
-        'Alteration',
-        'Conjuration',
-        'Destruction',
-        'Illusion',
-        'Restoration',
-        'Enchanting'
-      ]),
-      wbFloat('Bleedout Default'),
-      wbInteger('Voice Points', itU32),
-      wbArray('Attribute Weights', wbInteger('Weight', itU8), [
-        'Health',
-        'Magicka',
-        'Stamina',
-        'Unknown'
-      ])
-    ], cpNormal, True)
+    wbPRPS,
+    wbUnknown(DATA)
   ]);
 
   wbRecord(CLMT, 'Climate', [
@@ -6898,8 +7651,10 @@ begin
         'Snow'
       ])),
       wbInteger('Box Size', itU32),
-      wbFloat('Particle Density')
+      wbFloat('Particle Density'),
+      wbUnknown
     ], cpNormal, True, nil, 10),
+    wbString(MNAM, 'Unknown'),
     wbString(ICON, 'Particle Texture')
   ]);
 
@@ -6928,6 +7683,7 @@ begin
     wbEDID,
     wbVMAD,
     wbOBNDReq,
+    wbPTRN,
     wbFULL,
     wbMODL,
     wbCOCT,
@@ -6941,8 +7697,15 @@ begin
       ])),
       wbFloat('Weight')
     ], cpNormal, True),
-    wbFormIDCk(SNAM, 'Sound - Open', [SOUN, SNDR]),
-    wbFormIDCk(QNAM, 'Sound - Close', [SOUN, SNDR])
+    wbKSIZ,
+    wbKWDAs,
+    wbFTYP,
+    wbPRPS,
+    wbNTRM,
+    wbFormIDCk(SNAM, 'Sound - Open', [SNDR]),
+    wbFormIDCk(QNAM, 'Sound - Close', [SNDR]),
+    wbFormIDCk(TNAM, 'Sound - Take All', [SNDR]),
+    wbFormIDCk(ONAM, 'Filter List', [FLST])
   ], True, nil, cpNormal, False, nil, wbContainerAfterSet);
 
   wbCSDT := wbRStructSK([0], 'Sound Type', [
@@ -6972,7 +7735,7 @@ begin
       {21} 'PlayRandom/Loop'
     ])),
     wbRArrayS('Sounds', wbRStructSK([0], 'Sound', [
-      wbFormIDCk(CSDI, 'Sound', [SOUN, SNDR, NULL], False, cpNormal, True),
+      wbFormIDCk(CSDI, 'Sound', [SNDR, NULL], False, cpNormal, True),
       wbInteger(CSDC, 'Sound Chance', itU8, nil, cpNormal, True)
     ], []), cpNormal, True)
   ], []);
@@ -7022,7 +7785,8 @@ begin
             wbInteger('Warn', itU32),
             wbInteger('Warn/Attack', itU32),
             wbInteger('Attack', itU32)
-          ])
+          ]),
+          wbUnknown
     ], cpNormal, True, nil{wbActorTemplateUseAIData});
 
   wbAttackAnimationEnum := wbEnum([], [
@@ -7063,7 +7827,9 @@ begin
       wbFloat('Equipment Score Mult - Shout'),
       wbFloat('Equipment Score Mult - Unarmed'),
       wbFloat('Equipment Score Mult - Staff'),
-      wbFloat('Avoid Threat Chance')
+      wbFloat('Avoid Threat Chance'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
     ], cpNormal, True, nil, 0),
     wbUnknown(CSMD, cpIgnore),
     wbStruct(CSME, 'Melee', [
@@ -7074,17 +7840,32 @@ begin
       wbFloat('Bash Recoil Mult'),
       wbFloat('Bash Attack Mult'),
       wbFloat('Bash Power Attack Mult'),
-      wbFloat('Special Attack Mult')
-    ], cpNormal, False, nil, 0),
+      wbFloat('Special Attack Mult'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
+    ], cpNormal, False, nil, 9),
+    wbFloat(CSRA, 'Unknown'),
     wbStruct(CSCR, 'Close Range', [
       wbFloat('Circle Mult'),
       wbFloat('Fallback Mult'),
       wbFloat('Flank Distance'),
-      wbFloat('Stalk Time')
+      wbFloat('Stalk Time'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
     ], cpNormal, False, nil, 0),
     wbStruct(CSLR, 'Long Range', [
-      wbFloat('Strafe Mult')
-    ], cpNormal, False),
+      wbFloat('Strafe Mult'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
+    ], cpNormal, False, nil, 3),
+    wbFloat(CSCV, 'Unknown'),
     wbStruct(CSFL, 'Flight', [
       wbFloat('Hover Chance'),
       wbFloat('Dive Bomb Chance'),
@@ -7103,7 +7884,7 @@ begin
   ]);
 end;
 
-procedure DefineTES5d;
+procedure DefineFO4d;
 begin
   wbRecord(DIAL, 'Dialog Topic', [
     wbEDID,
@@ -7111,6 +7892,7 @@ begin
     wbFloat(PNAM, 'Priority', cpNormal, True, 1, -1, nil, nil, 50.0),
     wbFormIDCk(BNAM, 'Branch', [DLBR, NULL]),
     wbFormIDCk(QNAM, 'Quest', [QUST, NULL], False, cpNormal, False),
+    wbFormIDCk(KNAM, 'Unknown', [KYWD]),
     wbStruct(DATA, 'Data', [
       // this should not be named Flags since TwbFile.BuildReachable
       // expects Top-Level flag here from FNV
@@ -7246,12 +8028,16 @@ begin
     wbEDID,
     wbVMAD,
     wbOBNDReq,
+    wbPTRN,
     wbFULL,
     wbMODL,
     wbDEST,
-    wbFormIDCk(SNAM, 'Sound - Open', [SOUN, SNDR]),
-    wbFormIDCk(ANAM, 'Sound - Close', [SOUN, SNDR]),
-    wbFormIDCk(BNAM, 'Sound - Loop', [SOUN, SNDR]),
+    wbKSIZ,
+    wbKWDAs,
+    wbNTRM,
+    wbFormIDCk(SNAM, 'Sound - Open', [SNDR]),
+    wbFormIDCk(ANAM, 'Sound - Close', [SNDR]),
+    wbFormIDCk(BNAM, 'Sound - Loop', [SNDR]),
     wbInteger(FNAM, 'Flags', itU8, wbFlags([
       '',
       'Automatic',
@@ -7259,7 +8045,9 @@ begin
       'Minimal Use',
       'Sliding',
       'Do Not Open in Combat Search'
-    ]), cpNormal, True)
+    ]), cpNormal, True),
+    wbLString(ONAM, 'Unknown', 0, cpTranslate),
+    wbLString(CNAM, 'Unknown', 0, cpTranslate)
   ]);
 
   wbBlendModeEnum := wbEnum([
@@ -7305,9 +8093,11 @@ begin
     wbString(NAM7, 'Holes Texture'),
     wbString(NAM8, 'Membrane Palette Texture'),
     wbString(NAM9, 'Particle Palette Texture'),
-    wbStruct(DATA, '', [
-      wbByteArray('Unknown', 4),
-      wbInteger('Membrane Shader - Source Blend Mode', itU32, wbBlendModeEnum),
+    wbUnknown(DATA),  // Fixed 168 bytes if form version < 62, ignored otherwize
+    // format depends on Form Version (appear with form version 62, changed in form version 106), different for older records starting from the first field
+    wbStruct(DNAM, '', [
+      wbUnknown
+      {wbInteger('Membrane Shader - Source Blend Mode', itU32, wbBlendModeEnum),
       wbInteger('Membrane Shader - Blend Operation', itU32, wbBlendOpEnum),
       wbInteger('Membrane Shader - Z Test Function', itU32, wbZTestFuncEnum),
       wbStruct('Fill/Texture Effect - Color Key 1', [
@@ -7413,7 +8203,7 @@ begin
       wbFloat('Addon Models - Scale End'),
       wbFloat('Addon Models - Scale In Time'),
       wbFloat('Addon Models - Scale Out Time'),
-      wbFormIDCk('Ambient Sound', [SNDR, SOUN, NULL]),
+      wbFormIDCk('Ambient Sound', [SNDR, NULL]),
       wbStruct('Fill/Texture Effect - Color Key 2', [
         wbInteger('Red', itU8),
         wbInteger('Green', itU8),
@@ -7475,8 +8265,9 @@ begin
       ])),
       wbFloat('Fill/Texture Effect - Texture Scale (U)'),
       wbFloat('Fill/Texture Effect - Texture Scale (V)'),
-      wbInteger('Scene Graph Emit Depth Limit (unused)', itU32)
-    ], cpNormal, True, nil, 0)
+      wbInteger('Scene Graph Emit Depth Limit (unused)', itU32),}
+    ], cpNormal, True, nil, 0),
+    wbMODL
   ], False, nil, cpNormal, False, nil {wbEFSHAfterLoad});
 
   wbRecord(ENCH, 'Object Effect', [
@@ -7504,23 +8295,8 @@ begin
     wbEffectsReq
   ]);
 
-  wbRecord(EYES, 'Eyes',
-    wbFlags(wbRecordFlagsFlags, wbFlagsList([
-      {0x00000004}  2, 'Non-Playable'
-    ])), [
-    wbEDID,
-    wbFULLReq,
-    wbString(ICON, 'Texture', 0, cpNormal, True),
-    wbInteger(DATA, 'Flags', itU8, wbFlags([
-      {0x01}'Playable',
-      {0x02}'Not Male',
-      {0x04}'Not Female',
-      {0x08}'Unknown 4',
-      {0x10}'Unknown 5',
-      {0x20}'Unknown 6',
-      {0x40}'Unknown 7',
-      {0x80}'Unknown 8'
-    ]), cpNormal, True)
+  wbRecord(EYES, 'Eyes', [
+    wbEDID
   ]);
 
   wbRecord(FACT, 'Faction', [
@@ -7625,17 +8401,24 @@ begin
     wbEDID,
     wbVMAD,
     wbOBNDReq,
+    wbPTRN,
     wbFULL,
     wbMODL,
     wbDEST,
     wbKSIZ,
     wbKWDAs,
+    wbPRPS,
+    wbFTYP,
     wbUnknown(PNAM),
+    wbATTX,
     wbInteger(FNAM, 'Flags', itU16, wbFlags([
       {0x0001} 'Unknown 0',
       {0x0002} 'Ignored By Sandbox'
     ])),
-    wbFormIDCk(KNAM, 'Interaction Keyword', [KYWD, NULL]),
+    wbCITC,
+    wbCTDAsCount,
+    wbCOCT,
+    wbCNTOs,
     wbInteger(MNAM, 'Active Markers / Flags', itU32, wbFlags([
       {0x00000001} 'Sit 0',
       {0x00000002} 'Sit 1',
@@ -7673,30 +8456,42 @@ begin
     wbStruct(WBDT, 'Workbench Data', [
       wbInteger('Bench Type', itU8, wbEnum([
         {0} 'None',
-        {1} 'Create object',
-        {2} 'Smithing Weapon',
-        {3} 'Enchanting',
-        {4} 'Enchanting Experiment',
-        {5} 'Alchemy',
-        {6} 'Alchemy Experiment',
-        {7} 'Smithing Armor'
+        {1} 'Create object', // used only for MS11Workbench [FURN:00091FD5]
+        {2} 'Weapons', // used for the Weapons (plural) workbench
+        {3} 'Enchanting (unused)', // not used
+        {4} 'Enchanting Experiment (unused)', // not used
+        {5} 'Alchemy', // used for Chemistry and Cooking, so Alchemy is probably okay
+        {6} 'Alchemy Experiment (unused)', // not used
+        {7} 'Armor', // FO4 calls this the Armor workbench, no mention of Smithing
+        {8} 'Power Armor' // used for Power Armor stations
       ])),
       wbInteger('Uses Skill', itS8, wbSkillEnum)
-    ]),
-    wbFormIDCk(NAM1, 'Associated Spell', [SPEL]),
+    ], cpNormal, True, nil, 1),
+    wbFormIDCk(NAM1, 'Associated weapon', [WEAP]),
     wbRArray('Markers', wbRStruct('Marker', [
-      wbInteger(ENAM, 'Marker Index', itU32),
+      wbInteger(ENAM, 'Marker Index', itS32),
       wbStruct(NAM0, 'Disabled Entry Points', [
         wbByteArray('Unknown', 2),
         wbInteger('Disabled Points', itU16, wbFurnitureEntryTypeFlags)
-      ]),
-      wbFormIDCk(FNMK, 'Marker Keyword', [KYWD, NULL])
+      ])
+      //wbFormIDCk(FNMK, 'Marker Keyword', [KYWD, NULL])
     ], [])),
     wbRArray('Marker Entry Points', wbStruct(FNPR, 'Marker', [
       wbInteger('Type', itU16, wbFurnitureAnimTypeEnum),
       wbInteger('Entry Points', itU16, wbFurnitureEntryTypeFlags)
     ])),
-    wbString(XMRK, 'Model Filename')
+    wbString(XMRK, 'Model Filename'),
+    wbArray(SNAM, 'Marker Paramaters', wbStruct('Marker', [
+      wbFloat('Offset X'),
+      wbFloat('Offset Y'),
+      wbFloat('Offset Z'),
+      wbFloat('Rotation Z', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize),
+      wbFormIDCk('Keyword', [KYWD, NULL]),
+      wbInteger('Unknown', itS32)
+    ], cpNormal, False, nil, 4)),
+    wbNVNM,
+    wbAPPR,
+    wbOBTESequence
   ], False, nil, cpNormal, False, nil, wbKeywordsAfterSet);
 
 //----------------------------------------------------------------------------
@@ -7724,33 +8519,63 @@ begin
 
   wbRecord(KYWD, 'Keyword', [
     wbEDID,
-    wbCNAM
+    wbCNAM,
+    wbString(DNAM, 'Unknown'),
+    //wbUnknown(TNAM),
+    wbInteger(TNAM, 'Type', itU32, wbEnum([
+      {00} 'None',
+      {01} 'Unknown 1',
+      {02} 'Unknown 2',
+      {03} 'Unknown 3',
+      {04} 'Unknown 4',
+      {05} 'Unknown 5',
+      {06} 'Unknown 6',
+      {07} 'Unknown 7',
+      {08} 'Unknown 8',
+      {09} 'Unknown 9',
+      {10} 'Unknown 10',
+      {11} 'Unknown 11',
+      {12} 'Unknown 12',
+      {13} 'Unknown 13',
+      {14} 'Unknown 14',
+      {15} 'Unknown 15',
+      {16} 'Unknown 16',
+      {17} 'Unknown 17',
+      {18} 'Unknown 18'
+    ])),
+    wbFULL,
+    wbFormIDCk(DATA, 'Unknown', [AORU]),
+    wbString(NNAM, 'Unknown')
   ]);
 end;
 
-procedure DefineTES5e;
+procedure DefineFO4e;
 begin
   wbRecord(LCRT, 'Location Reference Type', [
     wbEDID,
-    wbCNAM
+    wbCNAM,
+    wbUnknown(TNAM)
   ]);
 
   wbRecord(AACT, 'Action', [
     wbEDID,
-    wbCNAM
+    wbCNAM,
+    wbString(DNAM, 'Name'),
+    wbUnknown(TNAM)
   ]);
 
   wbRecord(TXST, 'Texture Set', [
     wbEDID,
     wbOBNDReq,
+    { Unsure if texture names are the same }
     wbRStruct('Textures (RGB/A)', [
       wbString(TX00,'Difuse'),
       wbString(TX01,'Normal/Gloss'),
-      wbString(TX02,'Environment Mask/Subsurface Tint'),
       wbString(TX03,'Glow/Detail Map'),
       wbString(TX04,'Height'),
       wbString(TX05,'Environment'),
       wbString(TX06,'Multilayer'),
+      wbString(TX02,'Environment Mask/Subsurface Tint'), {Yes this has to go here but no idea why Bethesda moved it here}
       wbString(TX07,'Backlight Mask/Specular')
     ], []),
     wbDODT,
@@ -7758,7 +8583,8 @@ begin
       {0x0001}'No Specular Map',
       {0x0002}'Facegen Textures',
       {0x0004}'Has Model Space Normal Map'
-    ]), cpNormal, False)
+    ]), cpNormal, False),
+    wbString(MNAM, 'Material')
   ]);
 
   wbRecord(HDPT, 'Head Part',
@@ -7782,7 +8608,10 @@ begin
       'Hair',
       'Facial Hair',
       'Scar',
-      'Eyebrows'
+      'Eyebrows',
+      'Meatcaps',
+      'Teeth',
+      'Head Rear'
     ])),
     wbRArrayS('Extra Parts',
       wbFormIDCk(HNAM, 'Part', [HDPT])
@@ -7796,8 +8625,9 @@ begin
       wbString(NAM1, 'Filename', 0, cpTranslate, True)
     ], []),
     wbFormIDCk(TNAM, 'Texture Set', [TXST, NULL]),
-    wbFormIDCk(CNAM, 'Color', [CLFM, NULL]),
-    wbFormIDCk(RNAM, 'Valid Races', [FLST, NULL])
+    //wbFormIDCk(CNAM, 'Color', [CLFM, NULL]),
+    wbFormIDCk(RNAM, 'Valid Races', [FLST, NULL]),
+    wbCTDAs
   ]);
 
   wbRecord(ASPC, 'Acoustic Space', [
@@ -7805,7 +8635,9 @@ begin
     wbOBNDReq,
     wbFormIDCk(SNAM, 'Ambient Sound', [SNDR]),
     wbFormIDCk(RDAT, 'Use Sound from Region (Interiors Only)', [REGN]),
-    wbFormIDCk(BNAM, 'Environment Type (reverb)', [REVB])
+    wbFormIDCk(BNAM, 'Environment Type (reverb)', [REVB]),
+    wbUnknown(XTRI),
+    wbUnknown(WNAM)
   ]);
 
   wbRecord(MSTT, 'Moveable Static',
@@ -7821,10 +8653,15 @@ begin
       {0x40000000} 30, 'NavMesh Generation - Ground'
     ])), [
     wbEDID,
+    wbVMAD,
     wbOBNDReq,
+    wbPTRN,
     wbFULL,
     wbMODL,
     wbDEST,
+    wbKSIZ,
+    wbKWDAs,
+    wbPRPS,
     wbInteger(DATA, 'Flags', itU8, wbFlags([
       'On Local Map',
       'Unknown 2'
@@ -7833,7 +8670,7 @@ begin
   ]);
 end;
 
-procedure DefineTES5f;
+procedure DefineFO4f;
 begin
   wbRecord(IDLM, 'Idle Marker',
     wbFlags(wbRecordFlagsFlags, wbFlagsList([
@@ -7841,6 +8678,8 @@ begin
     ])), [
     wbEDID,
     wbOBNDReq,
+    wbKSIZ,
+    wbKWDAs,
     wbInteger(IDLF, 'Flags', itU8, wbFlags([
       'Run in Sequence',
       'Unknown 1',
@@ -7851,6 +8690,7 @@ begin
     wbInteger(IDLC, 'Animation Count', itU8, nil, cpBenign),
     wbFloat(IDLT, 'Idle Timer Setting', cpNormal, False),
     wbArray(IDLA, 'Animations', wbFormIDCk('Animation', [IDLE]), 0, nil, wbIDLAsAfterSet, cpNormal, False),
+    wbFormIDCk(QNAM, 'Unknown', [KYWD]),
     wbMODL
   ], False, nil, cpNormal, False, nil, wbAnimationsAfterSet);
 
@@ -7860,8 +8700,9 @@ begin
     wbFULL,
     wbMODL,
     wbDEST,
-    wbStruct(DATA, 'Data', [
-      {00} wbInteger('Flags', itU16, wbFlags([
+    wbUnknown(DATA),
+    wbStruct(DNAM, 'Data', [
+      wbInteger('Flags', itU16, wbFlags([
         'Hitscan',
         'Explosion',
         'Alt. Trigger',
@@ -7875,7 +8716,7 @@ begin
         'Disable Combat Aim Correction',
         'Rotation'
       ])),
-      {02} wbInteger('Type', itU16, wbEnum([], [
+      wbInteger('Type', itU16, wbEnum([], [
         $01, 'Missile',
         $02, 'Lobber',
         $04, 'Beam',
@@ -7884,29 +8725,30 @@ begin
         $20, 'Barrier',
         $40, 'Arrow'
       ])),
-      {04} wbFloat('Gravity'),
-      {08} wbFloat('Speed'),
-      {12} wbFloat('Range'),
-      {16} wbFormIDCk('Light', [LIGH, NULL]),
-      {20} wbFormIDCk('Muzzle Flash - Light', [LIGH, NULL]),
-      {24} wbFloat('Tracer Chance'),
-      {28} wbFloat('Explosion - Alt. Trigger - Proximity'),
-      {32} wbFloat('Explosion - Alt. Trigger - Timer'),
-      {36} wbFormIDCk('Explosion', [EXPL, NULL]),
-      {40} wbFormIDCk('Sound', [SOUN, SNDR, NULL]),
-      {44} wbFloat('Muzzle Flash - Duration'),
-      {48} wbFloat('Fade Duration'),
-      {52} wbFloat('Impact Force'),
-      {56} wbFormIDCk('Sound - Countdown', [SOUN, SNDR, NULL]),
-      {60} wbFormIDCk('Sound - Disable', [SOUN, SNDR, NULL]),
-      {64} wbFormIDCk('Default Weapon Source', [WEAP, NULL]),
-      {68} wbFloat('Cone Spread'),
-      {72} wbFloat('Collision Radius'),
-      {76} wbFloat('Lifetime'),
-      {80} wbFloat('Relaunch Interval'),
-           wbFormIDCk('Decal Data', [TXST, NULL]),
-           wbFormIDCk('Collision Layer', [COLL, NULL])
-    ], cpNormal, True, nil, 22),
+      wbFloat('Gravity'),
+      wbFloat('Speed'),
+      wbFloat('Range'),
+      wbFormIDCk('Light', [LIGH, NULL]),
+      wbFormIDCk('Muzzle Flash - Light', [LIGH, NULL]),
+      wbFloat('Explosion - Alt. Trigger - Proximity'),
+      wbFloat('Explosion - Alt. Trigger - Timer'),
+      wbFormIDCk('Explosion', [EXPL, NULL]),
+      wbFormIDCk('Sound', [SNDR, NULL]),
+      wbFloat('Muzzle Flash - Duration'),
+      wbFloat('Fade Duration'),
+      wbFloat('Impact Force'),
+      wbFormIDCk('Sound - Countdown', [SNDR, NULL]),
+      wbFormIDCk('Sound - Disable', [SNDR, NULL]),
+      wbFormIDCk('Default Weapon Source', [WEAP, NULL]),
+      wbFloat('Cone Spread'),
+      wbFloat('Collision Radius'),
+      wbFloat('Lifetime'),
+      wbFloat('Relaunch Interval'),
+      wbFormIDCk('Decal Data', [TXST, NULL]),
+      wbFormIDCk('Collision Layer', [COLL, NULL]),
+      wbByteArray('Unknown', 1),
+      wbFormIDCk('VATS Projectile', [PROJ, NULL])
+    ]),
     wbRStructSK([0], 'Muzzle Flash Model', [
       wbString(NAM1, 'Model Filename'),
       wbByteArray(NAM2, 'Texture Files Hashes', 0, cpIgnore, false, false, wbNeverShow)
@@ -7920,7 +8762,7 @@ begin
     wbFULL,
     wbMODL,
     wbFormIDCk(MNAM, 'Image Space Modifier', [IMAD, NULL]),
-    wbStruct(DATA, 'Data', [
+    wbStruct(DNAM, 'Data', [
       wbInteger('Limit', itU32),
       wbFloat('Radius'),
       wbFloat('Lifetime'),
@@ -7931,12 +8773,16 @@ begin
         {0x02} 'Inherit Duration from Spawn Spell',
         {0x04} 'Align to Impact Normal',
         {0x08} 'Inherit Radius from Spawn Spell',
-        {0x10} 'Drop to Ground'
+        {0x10} 'Drop to Ground',
+        {0x20} 'Unknown 5'
       ])),
-      wbFormIDCk('Spell', [SPEL, NULL]),
+      wbFormIDCk('Effect', [SPEL, ENCH, NULL]),
       wbFormIDCk('Light', [LIGH, NULL]),
       wbFormIDCk('Impact Data Set', [IPDS, NULL]),
-      wbFormIDCk('Sound', [SNDR, NULL])
+      wbFormIDCk('Sound', [SNDR, NULL]),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
     ])
   ]);
 
@@ -7949,28 +8795,9 @@ begin
     {5} 'Grand'
   ]);
 
-  wbRecord(SLGM, 'Soul Gem',
-    wbFlags(wbRecordFlagsFlags, wbFlagsList([
-      {0x00020000} 17, 'Can Hold NPC Soul'
-    ])), [
-    wbEDID,
-    wbOBND,
-    wbFULL,
-    wbMODL,
-    wbICON,
-    wbDEST,
-    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR, SOUN]),
-    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR, SOUN]),
-    wbKSIZ,
-    wbKWDAs,
-    wbStruct(DATA, '', [
-      wbInteger('Value', itU32),
-      wbFloat('Weight')
-    ], cpNormal, True),
-    wbInteger(SOUL, 'Contained Soul', itU8, wbSoulGemEnum, cpNormal, True),
-    wbInteger(SLCP, 'Maximum Capacity', itU8, wbSoulGemEnum, cpNormal, True),
-    wbFormIDCk(NAM0, 'Linked To', [SLGM])
-  ], False, nil, cpNormal, False, nil, wbKeywordsAfterSet);
+  wbRecord(SLGM, 'Soul Gem', [
+    wbEDID
+  ]);
 
   if wbSimpleRecords then begin
 
@@ -8036,7 +8863,7 @@ begin
         ]),
         wbArray('Vertices', wbByteArray('Vertex', 12), -1),
         wbArray('Triangles', wbByteArray('Triangle', 16), -1),
-        wbArray('External Connections',
+        {wbArray('External Connections',
           wbStruct('Connection', [
             wbByteArray('Unknown', 4),
             wbFormIDCk('Mesh', [NAVM]),
@@ -8049,12 +8876,12 @@ begin
             wbByteArray('Unknown', 4),
             wbFormIDCk('Door', [REFR])
           ])
-        , -1),
+        , -1),}
         wbUnknown
       ]),
       wbUnknown(ONAM),
-      wbUnknown(PNAM),
-      wbUnknown(NNAM)
+      wbUnknown(NNAM),
+      wbUnknown(MNAM)
     ], False, wbNAVMAddInfo);
 
   end else begin
@@ -8189,7 +9016,8 @@ begin
             //wbInteger('Cover Edge #2 Flags', itU8)
           ])
         , -1),
-        wbArray('Edge Links',
+        wbUnknown
+        {wbArray('Edge Links',
           wbStruct('Edge Link', [
             wbByteArray('Unknown', 4),
             wbFormIDCk('Mesh', [NAVM]),
@@ -8213,18 +9041,18 @@ begin
         wbFloat('Max X'),
         wbFloat('Max Y'),
         wbFloat('Max Z'),
-        wbArray('NavMeshGrid', wbArray('NavMeshGridCell', wbInteger('Triangle', itS16), -1))
+        wbArray('NavMeshGrid', wbArray('NavMeshGridCell', wbInteger('Triangle', itS16), -1))}
       ]),
       wbUnknown(ONAM),
-      wbUnknown(PNAM),
-      wbUnknown(NNAM)
+      wbUnknown(NNAM),
+      wbUnknown(MNAM)
     ], False, wbNAVMAddInfo);
 
   end;
 
 end;
 
-procedure DefineTES5g;
+procedure DefineFO4g;
 begin
 
    wbRecord(EXPL, 'Explosion', [
@@ -8246,7 +9074,7 @@ begin
       wbFloat('Radius'),
       wbFloat('IS Radius'),
       wbFloat('Vertical Offset Mult'),
-      wbInteger('Flags', itU32, wbFlags([
+      {wbInteger('Flags', itU32, wbFlags([
         'Unknown 0',
         'Always Uses World Orientation',
         'Knock Down - Always',
@@ -8257,7 +9085,8 @@ begin
         'Chain',
         'No Controller Vibration'
       ])),
-      wbInteger('Sound Level', itU32, wbSoundLevelEnum, cpNormal, True)
+      wbInteger('Sound Level', itU32, wbSoundLevelEnum, cpNormal, True),}
+      wbUnknown
     ], cpNormal, True, nil, 10)
   ]);
 
@@ -8324,8 +9153,10 @@ begin
         16952, 'No Sky, Radius 5',
         16984, 'No Sky, Radius 6',
         17016, 'No Sky, Radius 7'
-      ]))
-    ], cpNormal, False, nil, 3)
+      ])),
+      wbUnknown
+    ], cpNormal, False, nil, 3),
+    wbString(TX00, 'Unknown')
   ]);
 
   wbTimeInterpolator := wbStruct('Data', [
@@ -8423,7 +9254,8 @@ begin
       wbInteger('Radial Blur Ramp Down', itU32),
       wbInteger('Radial Blur Down Start', itU32),
       wbInteger('Fade Color', itU32),
-      wbInteger('Motion Blur Strength', itU32)
+      wbInteger('Motion Blur Strength', itU32),
+      wbUnknown
     ]),
     wbArray(BNAM, 'Blur Radius', wbTimeInterpolator),
     wbArray(VNAM, 'Double Vision Strength', wbTimeInterpolator),
@@ -8437,6 +9269,8 @@ begin
     wbArray(WNAM, 'DoF Strength', wbTimeInterpolator),
     wbArray(XNAM, 'DoF Distance', wbTimeInterpolator),
     wbArray(YNAM, 'DoF Range', wbTimeInterpolator),
+    wbUnknown(NAM5),
+    wbUnknown(NAM6),
     wbArray(NAM4, 'Motion Blur Strength', wbTimeInterpolator),
     wbRStruct('HDR', [
       wbArray(_00_IAD, 'Eye Adapt Speed Mult', wbTimeInterpolator),
@@ -8488,6 +9322,7 @@ begin
 
   wbRecord(FLST, 'FormID List', [
     wbString(EDID, 'Editor ID', 0, cpBenign, True, nil, wbFLSTEDIDAfterSet),
+    wbFULL,
     wbRArrayS('FormIDs', wbFormID(LNAM, 'FormID'), cpNormal, False, nil, nil, nil, wbFLSTLNAMIsSorted)
   ]);
 
@@ -8499,7 +9334,6 @@ begin
     wbVMAD,
     wbFULL,
     wbDESCReq,
-    wbICON,
     wbCTDAs,
     wbStruct(DATA, 'Data', [
       wbInteger('Trait', itU8, wbEnum(['False', 'True'])),
@@ -8508,7 +9342,9 @@ begin
       wbInteger('Playable', itU8, wbEnum(['False', 'True'])),
       wbInteger('Hidden', itU8, wbEnum(['False', 'True']))
     ], cpNormal, True),
+    wbFormIDCk(SNAM, 'UI Sound', [SNDR]),
     wbFormIDCK(NNAM, 'Next Perk', [PERK, NULL]),
+    wbString(FNAM, 'Unknown'),
 
     wbRStructsSK('Effects', 'Effect', [0, 1], [
       wbStructSK(PRKE, [1, 2, 0], 'Header', [
@@ -8523,8 +9359,8 @@ begin
       wbUnion(DATA, 'Effect Data', wbPerkDATADecider, [
         wbStructSK([0, 1], 'Quest + Stage', [
           wbFormIDCk('Quest', [QUST]),
-          wbInteger('Quest Stage', itU8, wbPerkDATAQuestStageToStr, wbCTDAParam2QuestStageToInt),
-          wbByteArray('Unused', 3)
+          wbInteger('Quest Stage', itU16, wbPerkDATAQuestStageToStr, wbCTDAParam2QuestStageToInt),
+          wbByteArray('Unused', 2)
         ]),
         wbFormIDCk('Ability', [SPEL]),
         wbStructSK([0, 1], 'Entry Point', [
@@ -8565,7 +9401,8 @@ begin
           {4} 'SPEL,lstring,flags',
           {5} 'SPEL',
           {6} 'string',
-          {7} 'lstring'
+          {7} 'lstring',
+          {8} 'AVIF'
         ])),
         // case(EPFT) of
         // 1: EPFD=float
@@ -8575,13 +9412,15 @@ begin
         // 5: EPFD=SPEL
         // 6: EPFD=string
         // 7: EPFD=lstring
+
+        wbUnknown(EPFB),
         wbLString(EPF2, 'Button Label', 0, cpTranslate),
         wbStruct(EPF3, 'Script Flags', [
           wbInteger('Script Flags', itU8, wbFlags([
             'Run Immediately',
             'Replace Default'
           ])),
-          wbByteArray('Unknown', 3)
+          wbByteArray('Unknown', 1)
         ]),
         wbUnion(EPFD, 'Data', wbEPFDDecider, [
           {0} wbByteArray('Unknown'),
@@ -8596,7 +9435,7 @@ begin
           {6} wbString('Text', 0, cpTranslate),
           {7} wbLString('Text', 0, cpTranslate),
           {8} wbStruct('Actor Value, Float', [
-                wbInteger('Actor Value', itU32, wbEPFDActorValueToStr, wbEPFDActorValueToInt),
+                wbActorValue, // wbInteger('Actor Value', itU32, wbEPFDActorValueToStr, wbEPFDActorValueToInt),
                 wbFloat('Float')
               ])
         ], cpNormal, False{, wbEPFDDontShow})
@@ -8613,61 +9452,86 @@ begin
       wbString(PNAM, 'Pose Matching', 0, cpNormal, False),
       wbString(BPNN, 'Part Node', 0, cpNormal, True),
       wbString(BPNT, 'VATS Target', 0, cpNormal, True),
-      wbString(BPNI, 'IK Data - Start Node', 0, cpNormal, True),
+      wbString(BPNI, 'IK Data - Start Node', 0, cpNormal, False),
       wbStruct(BPND, '', [
-        {00} wbFloat('Damage Mult'),
-        {04} wbInteger('Flags', itU8, wbFlags([
-          'Severable',
-          'IK Data',
-          'IK Data - Biped Data',
-          'Explodable',
-          'IK Data - Is Head',
-          'IK Data - Headtracking',
-          'To Hit Chance - Absolute'
-        ])),
-        {05} wbInteger('Part Type', itU8, wbEnum([
-               'Torso',
-               'Head',
-               'Eye',
-               'LookAt',
-               'Fly Grab',
-               'Saddle'
-             ])),
-        {06} wbInteger('Health Percent', itU8),
-        {07} wbInteger('Actor Value', itS8, wbActorValueEnum),
-        {08} wbInteger('To Hit Chance', itU8),
-        {09} wbInteger('Explodable - Explosion Chance %', itU8),
-        {10} wbInteger('Explodable - Debris Count', itU16),
-        {12} wbFormIDCk('Explodable - Debris', [DEBR, NULL]),
-        {16} wbFormIDCk('Explodable - Explosion', [EXPL, NULL]),
-        {20} wbFloat('Tracking Max Angle'),
-        {24} wbFloat('Explodable - Debris Scale'),
-        {28} wbInteger('Severable - Debris Count', itS32),
-        {32} wbFormIDCk('Severable - Debris', [DEBR, NULL]),
-        {36} wbFormIDCk('Severable - Explosion', [EXPL, NULL]),
-        {40} wbFloat('Severable - Debris Scale'),
-        wbStruct('Gore Effects Positioning', [
-          wbStruct('Translate', [
-            {44} wbFloat('X'),
-            {48} wbFloat('Y'),
-            {52} wbFloat('Z')
-          ]),
-          wbStruct('Rotation', [
-            {56} wbFloat('X', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize),
-            {60} wbFloat('Y', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize),
-            {64} wbFloat('Z', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize)
-          ])
-        ]),
-        {68} wbFormIDCk('Severable - Impact DataSet', [IPDS, NULL]),
-        {72} wbFormIDCk('Explodable - Impact DataSet', [IPDS, NULL]),
-        {28} wbInteger('Severable - Decal Count', itU8),
-        {28} wbInteger('Explodable - Decal Count', itU8),
-        {76} wbByteArray('Unknown', 2),
-        {80} wbFloat('Limb Replacement Scale')
+        wbFloat('Damage Mult'),
+        wbFormIDCk('Unknown2', [DEBR, NULL]),
+        wbFormIDCk('Unknown3', [EXPL, NULL]),
+        wbFloat('Unknown4'),
+        wbFormIDCk('Unknown5', [DEBR, NULL]),
+        wbFormIDCk('Unknown6', [EXPL, NULL]),
+        wbFloat('Unknown7'),
+        wbByteArray('Unknown8', 24),
+        wbFormIDCk('Unknown9', [IPDS, NULL]),
+        wbFormIDCk('Unknown10', [IPDS, NULL]),
+        wbFloat('Unknown11'),
+        wbByteArray('Unknown12', 15),
+        wbFormIDCk('Unknown13', [ARTO, NULL]),
+        wbFormIDCk('Unknown14', [DEBR, NULL]),
+        wbFormIDCk('Unknown15', [EXPL, NULL]),
+        wbByteArray('Unknown16', 4),
+        wbFloat('Unknown17'),
+        wbByteArray('Unknown18', 2)
+//        {00} wbFloat('Damage Mult'),
+//        {04} wbInteger('Flags', itU8, wbFlags([
+//          'Severable',
+//          'IK Data',
+//          'IK Data - Biped Data',
+//          'Explodable',
+//          'IK Data - Is Head',
+//          'IK Data - Headtracking',
+//          'To Hit Chance - Absolute'
+//        ])),
+//        {05} wbInteger('Part Type', itU8, wbEnum([
+//               'Torso',
+//               'Head',
+//               'Eye',
+//               'LookAt',
+//               'Fly Grab',
+//               'Saddle'
+//             ])),
+//        {06} wbInteger('Health Percent', itU8),
+//        {07} wbInteger('Actor Value', itS8, wbActorValueEnum),
+//        {08} wbInteger('To Hit Chance', itU8),
+//        {09} wbInteger('Explodable - Explosion Chance %', itU8),
+//        {10} wbInteger('Explodable - Debris Count', itU16),
+//        {12} wbFormIDCk('Explodable - Debris', [DEBR, NULL]),
+//        {16} wbFormIDCk('Explodable - Explosion', [EXPL, NULL]),
+//        {20} wbFloat('Tracking Max Angle'),
+//        {24} wbFloat('Explodable - Debris Scale'),
+//        {28} wbInteger('Severable - Debris Count', itS32),
+//        {32} wbFormIDCk('Severable - Debris', [DEBR, NULL]),
+//        {36} wbFormIDCk('Severable - Explosion', [EXPL, NULL]),
+//        {40} wbFloat('Severable - Debris Scale'),
+//        wbStruct('Gore Effects Positioning', [
+//          wbStruct('Translate', [
+//            {44} wbFloat('X'),
+//            {48} wbFloat('Y'),
+//            {52} wbFloat('Z')
+//          ]),
+//          wbStruct('Rotation', [
+//            {56} wbFloat('X', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize),
+//            {60} wbFloat('Y', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize),
+//            {64} wbFloat('Z', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize)
+//          ])
+//        ]),
+//        {68} wbFormIDCk('Severable - Impact DataSet', [IPDS, NULL]),
+//        {72} wbFormIDCk('Explodable - Impact DataSet', [IPDS, NULL]),
+//        {28} wbInteger('Severable - Decal Count', itU8),
+//        {28} wbInteger('Explodable - Decal Count', itU8),
+//        {76} wbByteArray('Unknown', 2),
+//        {80} wbFloat('Limb Replacement Scale'),
       ], cpNormal, True),
       wbString(NAM1, 'Limb Replacement Model', 0, cpNormal, True),
       wbString(NAM4, 'Gore Effects - Target Bone', 0, cpNormal, True),
-      wbByteArray(NAM5, 'Texture Files Hashes', 0, cpNormal)
+      wbByteArray(NAM5, 'Texture Files Hashes', 0, cpNormal),
+      wbString(ENAM, 'Unknown'),
+      wbString(FNAM, 'Unknown'),
+      wbFormIDCk(BNAM, 'Unknown', [ARTO]),
+      wbFormIDCk(CNAM, 'Unknown', [TXST]),
+      wbFormIDCk(INAM, 'Unknown', [MATT]),
+      wbFormIDCk(JNAM, 'Unknown', [MATT]),
+      wbString(DNAM, 'Unknown')
     ], [], cpNormal, True)
   ]);
 
@@ -8676,7 +9540,8 @@ begin
     wbOBNDReq,
     wbMODL,
     wbInteger(DATA, 'Node Index', itS32, nil, cpNormal, True),
-    wbFormIDCk(SNAM, 'Sound', [SOUN, SNDR, NULL]),
+    wbFormIDCk(SNAM, 'Sound', [SNDR, NULL]),
+    wbFormIDCk(LNAM, 'Light', [LIGH]),
     wbStruct(DNAM, 'Data', [
       wbInteger('Master Particle System Cap', itU16),
       wbInteger('Flags', itU16, wbEnum([], [
@@ -8688,38 +9553,22 @@ begin
   ]);
 end;
 
-procedure DefineTES5h;
+procedure DefineFO4h;
 begin
   wbRecord(AVIF, 'Actor Value Information', [
     wbEDID,
     wbFULL,
     wbDESCReq,
-    wbString(ANAM, 'Abbreviation'),
-    wbUnknown(CNAM),
-    wbStruct(AVSK, 'Skill', [
-      wbFloat('Skill Use Mult'),
-      wbFloat('Skill Offset Mult'),
-      wbFloat('Skill Improve Mult'),
-      wbFloat('Skill Improve Offset')
-    ]),
-    wbRArray('Perk Tree',
-      wbRStruct('Node', [
-        wbFormIDCk(PNAM, 'Perk', [PERK, NULL]),
-        wbUnknown(FNAM),
-        wbInteger(XNAM, 'Perk-Grid X', itU32),
-        wbInteger(YNAM, 'Perk-Grid Y', itU32),
-        wbFloat(HNAM, 'Horizontal Position'),
-        wbFloat(VNAM, 'Vertical Position'),
-        wbFormIDCk(SNAM, 'Associated Skill', [AVIF, NULL]),
-        wbRArray('Connections', wbInteger(CNAM, 'Line to Index', itU32)),
-        wbInteger(INAM, 'Index', itU32)
-      ], [])
-    )
+    wbLString(ANAM, 'Abbreviation', 0, cpTranslate),
+    wbUnknown(NAM0),
+    wbUnknown(AVFL),
+    wbUnknown(NAM1)
   ]);
 
   wbRecord(CAMS, 'Camera Shot', [
     wbEDID,
     wbMODL,
+    wbCTDAs,
     wbStruct(DATA, 'Data', [
       {00} wbInteger('Action', itU32, wbEnum([
         'Shoot',
@@ -8755,8 +9604,14 @@ begin
       {28} wbFloat('Max Time'),
       {32} wbFloat('Min Time'),
       {36} wbFloat('Target % Between Actors'),
-      {40} wbFloat('Near Target Distance')
-    ], cpNormal, True, nil, 8),
+      {40} wbFloat('Near Target Distance'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
+      //wbUnknown
+    ], cpNormal, True, nil, 11),
     wbFormIDCk(MNAM, 'Image Space Modifier', [IMAD])
   ]);
 
@@ -8797,7 +9652,9 @@ begin
       'Stair Material',
       'Arrows Stick'
     ], False)),
-    wbFormIDCk(HNAM, 'Havok Impact Data Set', [IPDS, NULL])
+    wbFormIDCk(HNAM, 'Havok Impact Data Set', [IPDS, NULL]),
+    wbString(ANAM, 'Unknown'),
+    wbMODT
   ]);
 
   wbRecord(IPCT, 'Impact', [
@@ -8828,9 +9685,10 @@ begin
     wbDODT,
     wbFormIDCk(DNAM, 'Texture Set', [TXST]),
     wbFormIDCk(ENAM, 'Secondary Texture Set', [TXST]),
-    wbFormIDCk(SNAM, 'Sound 1', [SNDR, SOUN, NULL]),
-    wbFormIDCk(NAM1, 'Sound 2', [SNDR, SOUN, NULL]),
-    wbFormIDCk(NAM2, 'Hazard', [HAZD, NULL])
+    wbFormIDCk(SNAM, 'Sound 1', [SNDR, NULL]),
+    wbFormIDCk(NAM1, 'Sound 2', [SNDR, NULL]),
+    wbFormIDCk(NAM2, 'Hazard', [HAZD, NULL]),
+    wbUnknown(FNAM)
   ]);
 
   wbRecord(IPDS, 'Impact Data Set', [
@@ -8958,7 +9816,8 @@ begin
     wbFormIDCk(FNAM, 'Unreported Crime Faction', [FACT]),
     wbFormIDCk(MNAM, 'World Location Marker Ref', [REFR, ACHR]),
     wbFloat(RNAM, 'World Location Radius'),
-    wbFormIDCk(NAM0, 'Horse Marker Ref', [REFR]),
+    //wbFormIDCk(NAM0, 'Horse Marker Ref', [REFR]),
+    wbFloat(ANAM, 'Unknown'),
     wbCNAM
   ], False, nil, cpNormal, False, nil, wbKeywordsAfterSet);
 
@@ -8987,7 +9846,7 @@ begin
 end;
 
 
-procedure DefineTES5i;
+procedure DefineFO4i;
 var
   a, b, c : TVarRecs;
 begin
@@ -9002,6 +9861,8 @@ begin
       'Auto Display'
     ]), cpNormal, True, False, nil, wbMESGDNAMAfterSet),
     wbInteger(TNAM, 'Display Time', itU32, nil, cpNormal, False, False, wbMESGTNAMDontShow),
+    wbLString(NNAM, 'Unknown', 0, cpTranslate),
+    wbString(SNAM, 'Unknown'),
     wbRStructs('Menu Buttons', 'Menu Button', [
       wbLString(ITXT, 'Button Text', 0, cpTranslate),
       wbCTDAs
@@ -9010,361 +9871,403 @@ begin
 
   a := MakeVarRecs([
                         0, 'None',
-          Sig2Int('RADA'), 'RADA (Unused)',
-          Sig2Int('MORP'), 'MORP (Unused)',
-          Sig2Int('PPAR'), 'PPAR (Unused)',
-          Sig2Int('MYSN'), 'MYSN (Unused)',
-          Sig2Int('MYSF'), 'MYSF (Unused)',
-          Sig2Int('WWSP'), 'Werewolf Spell',
-          Sig2Int('SALT'), 'Sitting Angle Limit',
-          Sig2Int('APSH'), 'Allow Player Shout',
-          Sig2Int('GOLD'), 'Gold',
-          Sig2Int('LKPK'), 'Lockpick',
-          Sig2Int('SKLK'), 'SkeletonKey',
-          Sig2Int('PFAC'), 'Player Faction',
-          Sig2Int('GFAC'), 'Guard Faction',
-          Sig2Int('DFMS'), 'Default Music',
-          Sig2Int('BTMS'), 'Battle Music',
-          Sig2Int('DTMS'), 'Death Music',
-          Sig2Int('SCMS'), 'Success Music',
-          Sig2Int('LUMS'), 'Level Up Music',
-          Sig2Int('DCMS'), 'Dungeon Cleared Music',
-          Sig2Int('PVMA'), 'Player Voice (Male)',
-          Sig2Int('PVMC'), 'Player Voice (Male Child)',
-          Sig2Int('PVFA'), 'Player Voice (Female)',
-          Sig2Int('PVFC'), 'Player Voice (Female Child)',
-          Sig2Int('EPDF'), 'Eat Package Default Food',
-          Sig2Int('LHEQ'), 'LeftHand Equip',
-          Sig2Int('RHEQ'), 'RightHand Equip',
-          Sig2Int('EHEQ'), 'EitherHand Equip',
-          Sig2Int('VOEQ'), 'Voice Equip',
-          Sig2Int('POEQ'), 'Potion Equip',
-          Sig2Int('EACA'), 'Every Actor Ability',
-          Sig2Int('CACA'), 'Commanded Actor Ability',
-          Sig2Int('DEIS'), 'Drug Wears Off Image Space',
-          Sig2Int('DFTS'), 'Footstep Set',
-          Sig2Int('DLMT'), 'Landscape Material',
-          Sig2Int('DLZM'), 'Dragon Land Zone Marker',
-          Sig2Int('DCZM'), 'Dragon Crash Zone Marker',
-          Sig2Int('CSTY'), 'Combat Style',
-          Sig2Int('PLST'), 'Default Pack List',
-          Sig2Int('PWFD'), 'Wait-For-Dialogue Package',
-          Sig2Int('LRTB'), 'LocRefType Boss',
-          Sig2Int('VLOC'), 'Virtual Location',
-          Sig2Int('PLOC'), 'PersistAll Location',
-          Sig2Int('INVP'), 'Inventory Player',
-          Sig2Int('PTNP'), 'Pathing Test NPC',
-          Sig2Int('FPCS'), 'Favor Cost Small',
-          Sig2Int('FPCM'), 'Favor Cost Medium',
-          Sig2Int('FPCL'), 'Favor Cost Large',
-          Sig2Int('FGPD'), 'Favor Gifts Per Day',
-          Sig2Int('AASW'), 'Action Swim State Change',
-          Sig2Int('AALK'), 'Action Look',
-          Sig2Int('AALA'), 'Action LeftAttack',
-          Sig2Int('AALD'), 'Action LeftReady',
-          Sig2Int('AALR'), 'Action LeftRelease',
-          Sig2Int('AALI'), 'Action LeftInterrupt',
-          Sig2Int('AARA'), 'Action RightAttack',
-          Sig2Int('AARD'), 'Action RightReady',
-          Sig2Int('AARR'), 'Action RightRelease',
-          Sig2Int('AARI'), 'Action RightInterrupt',
-          Sig2Int('AADA'), 'Action DualAttack',
-          Sig2Int('AADL'), 'Action DualRelease',
           Sig2Int('AAAC'), 'Action Activate',
-          Sig2Int('AAJP'), 'Action Jump',
-          Sig2Int('AAFA'), 'Action Fall',
-          Sig2Int('AALN'), 'Action Land',
-          Sig2Int('AASN'), 'Action Sneak',
-          Sig2Int('AAVC'), 'Action Voice',
-          Sig2Int('AAVD'), 'Action VoiceReady',
-          Sig2Int('AAVR'), 'Action VoiceRelease',
-          Sig2Int('AAVI'), 'Action VoiceInterrupt',
-          Sig2Int('AAID'), 'Action Idle',
-          Sig2Int('AAST'), 'Action Sprint Start',
-          Sig2Int('AASP'), 'Action Sprint Stop',
-          Sig2Int('AADR'), 'Action Draw',
-          Sig2Int('AASH'), 'Action Sheath',
-          Sig2Int('ALPA'), 'Action Left Power Attack',
-          Sig2Int('AAPA'), 'Action Right Power Attack',
-          Sig2Int('ADPA'), 'Action Dual Power Attack',
-          Sig2Int('AAS1'), 'Action Stagger Start',
-          Sig2Int('AABH'), 'Action Block Hit',
-          Sig2Int('AABA'), 'Action Block Anticipate',
-          Sig2Int('AARC'), 'Action Recoil',
-          Sig2Int('AAR2'), 'Action Large Recoil',
           Sig2Int('AAB1'), 'Action Bleedout Start',
           Sig2Int('AAB2'), 'Action Bleedout Stop',
-          Sig2Int('AAIS'), 'Action Idle Stop',
-          Sig2Int('AAWH'), 'Action Ward Hit',
-          Sig2Int('AAFQ'), 'Action Force Equip',
-          Sig2Int('AASC'), 'Action Shield Change',
-          Sig2Int('AAPS'), 'Action Path Start',
-          Sig2Int('AAPE'), 'Action Path End',
-          Sig2Int('AALM'), 'Action Large Movement Delta',
+          Sig2Int('AABA'), 'Action Block Anticipate',
+          Sig2Int('AABH'), 'Action Block Hit',
+          Sig2Int('AABI'), 'Action Bumped Into',
+          Sig2Int('AADA'), 'Action Dual Attack',
+          Sig2Int('AADE'), 'Action Death',
+          Sig2Int('AADL'), 'Action Dual Release',
+          Sig2Int('AADR'), 'Action Draw',
+          Sig2Int('AADW'), 'Action Death Wait',
           Sig2Int('AAF1'), 'Action Fly Start',
           Sig2Int('AAF2'), 'Action Fly Stop',
+          Sig2Int('AAFA'), 'Action Fall',
+          Sig2Int('AAFQ'), 'Action Force Equip',
+          Sig2Int('AAGU'), 'Action Get Up',
           Sig2Int('AAH1'), 'Action Hover Start',
           Sig2Int('AAH2'), 'Action Hover Stop',
-          Sig2Int('AABI'), 'Action Bumped Into',
+          Sig2Int('AAID'), 'Action Idle',
+          Sig2Int('AAIS'), 'Action Idle Stop',
+          Sig2Int('AAJP'), 'Action Jump',
+          Sig2Int('AALA'), 'Action Left Attack',
+          Sig2Int('AALD'), 'Action Left Ready',
+          Sig2Int('AALI'), 'Action Left Interrupt',
+          Sig2Int('AALK'), 'Action Look',
+          Sig2Int('AALM'), 'Action Large Movement Delta',
+          Sig2Int('AALN'), 'Action Land',
+          Sig2Int('AALR'), 'Action Left Release',
+          Sig2Int('AALS'), 'Action Left Sync Attack',
+          Sig2Int('AAMT'), 'Action Mantle',
+          Sig2Int('AAOE'), 'Action AoE Attack',
+          Sig2Int('AAPA'), 'Action Right Power Attack',
+          Sig2Int('AAPE'), 'Action Path End',
+          Sig2Int('AAPS'), 'Action Path Start',
+          Sig2Int('AAR2'), 'Action Large Recoil',
+          Sig2Int('AARA'), 'Action Right Attack',
+          Sig2Int('AARC'), 'Action Recoil',
+          Sig2Int('AARD'), 'Action Right Ready',
+          Sig2Int('AARI'), 'Action Right Interrupt',
+          Sig2Int('AARR'), 'Action Right Release',
+          Sig2Int('AARS'), 'Action Right Sync Attack',
+          Sig2Int('AAS1'), 'Action Stagger Start',
+          Sig2Int('AASC'), 'Action Shield Change',
+          Sig2Int('AASH'), 'Action Sheath',
+          Sig2Int('AASN'), 'Action Sneak',
+          Sig2Int('AASP'), 'Action Sprint Stop',
           Sig2Int('AASS'), 'Action Summoned Start',
-          Sig2Int('ATKI'), 'Action Talking Idle',
-          Sig2Int('ALTI'), 'Action Listen Idle',
-          Sig2Int('AADE'), 'Action Death',
-          Sig2Int('AADW'), 'Action Death Wait',
+          Sig2Int('AAST'), 'Action Sprint Start',
+          Sig2Int('AASW'), 'Action Swim State Change',
+          Sig2Int('AAVC'), 'Action Voice',
+          Sig2Int('AAVD'), 'Action Voice Ready',
+          Sig2Int('AAVI'), 'Action Voice Interrupt',
+          Sig2Int('AAVR'), 'Action Voice Release',
+          Sig2Int('AAWH'), 'Action Ward Hit',
+          Sig2Int('ABLA'), 'Action Begin Looping Activate',
+          Sig2Int('ABOL'), 'Action Bolt Charge',
+          Sig2Int('ABSE'), 'Art Object Absorb Effect',
+          Sig2Int('ACHI'), 'Action Hide',
+          Sig2Int('ACSS'), 'Action Cover Sprint Start',
+          Sig2Int('ACTN'), 'Action Tunnel',
+          Sig2Int('ACWR'), 'Action Cower',
+          Sig2Int('ADGE'), 'Action Dodge',
+          Sig2Int('ADPA'), 'Action Dual Power Attack',
+          Sig2Int('AECL'), 'Action Enter Cover',
+          Sig2Int('AELA'), 'Action End Looping Activate',
+          Sig2Int('AENC'), 'Action Enter Combat',
+          Sig2Int('AENI'), 'Action Dialogue Enter',
+          Sig2Int('AEVD'), 'Action Evade',
+          Sig2Int('AEXC'), 'Action Exit Cover',
+          Sig2Int('AEXI'), 'Action Dialogue Exit',
+          Sig2Int('AEXT'), 'Action Exit Combat',
+          Sig2Int('AFCH'), 'Action Fire Charge',
+          Sig2Int('AFCO'), 'Action Fire Charge Hold',
+          Sig2Int('AFEM'), 'Action Fire Empty',
+          Sig2Int('AFIA'), 'Action Fire Auto',
+          Sig2Int('AFIS'), 'Action Fire Single',
+          Sig2Int('AFLT'), 'Action Flip-Throw',
+          Sig2Int('AFNP'), 'Keyword Activator Furniture No Player',
+          Sig2Int('AGAL'), 'Action Gun Alert',
+          Sig2Int('AGCS'), 'Action Gun Charge Start',
+          Sig2Int('AGDN'), 'Action Gun Down',
+          Sig2Int('AGRX'), 'Action Gun Relaxed',
+          Sig2Int('AGRY'), 'Action Gun Ready',
           Sig2Int('AIDW'), 'Action Idle Warn',
-          Sig2Int('AMST'), 'Action Move Start',
-          Sig2Int('AMSP'), 'Action Move Stop',
-          Sig2Int('ATRI'), 'Action Turn Right',
-          Sig2Int('ATLE'), 'Action Turn Left',
-          Sig2Int('ATSP'), 'Action Turn Stop',
-          Sig2Int('AMFD'), 'Action Move Forward',
+          Sig2Int('AIEN'), 'Action Interaction Enter',
+          Sig2Int('AIEQ'), 'Action Interaction Exit Quick',
+          Sig2Int('AIEX'), 'Action Interaction Exit',
+          Sig2Int('AILN'), 'Action Dialogue Listen Negative',
+          Sig2Int('AILp'), 'Action Dialogue Listen Positive',
+          Sig2Int('AILQ'), 'Action Dialogue Listen Question',
+          Sig2Int('AINT'), 'Action Intimidate',
+          Sig2Int('AIVC'), 'Verlet Cape',
+          Sig2Int('AIXA'), 'Action Interaction Exit Alternate',
+          Sig2Int('AKDN'), 'Action Knockdown',
+          Sig2Int('ALIC'), 'Action Limb Critical',
+          Sig2Int('ALIK'), 'Alcohol Item keyword',
+          Sig2Int('ALPA'), 'Action Left Power Attack',
+          Sig2Int('ALTI'), 'Action Dialogue Listen',
           Sig2Int('AMBK'), 'Action Move Backward',
+          Sig2Int('AMEL'), 'Action Melee',
+          Sig2Int('AMFD'), 'Action Move Forward',
           Sig2Int('AMLT'), 'Action Move Left',
           Sig2Int('AMRT'), 'Action Move Right',
-          Sig2Int('ARAG'), 'Action Reset Animation Graph',
-          Sig2Int('AKDN'), 'Action Knockdown',
-          Sig2Int('AAGU'), 'Action Get Up',
-          Sig2Int('ASID'), 'Action Idle Stop Instant',
-          Sig2Int('ARGI'), 'Action Ragdoll Instant',
-          Sig2Int('AWWS'), 'Action Waterwalk Start',
+          Sig2Int('AMSP'), 'Action Move Stop',
+          Sig2Int('AMST'), 'Action Move Start',
+          Sig2Int('ANML'), 'Keyword Animal',
+          Sig2Int('ANSC'), 'Action NonSupport Contact',
+          Sig2Int('AODA'), 'Keyword Armor Material Daedric',
+          Sig2Int('AODB'), 'Keyword Armor Material Dragonbone',
+          Sig2Int('AODP'), 'Keyword Armor Material Dragonplate',
+          Sig2Int('AODS'), 'Keyword Armor Material Dragonscale',
+          Sig2Int('AODW'), 'Keyword Armor Material Dwarven',
+          Sig2Int('AOEB'), 'Keyword Armor Material Ebony',
+          Sig2Int('AOEL'), 'Keyword Armor Material Elven',
+          Sig2Int('AOES'), 'Keyword Armor Material ElvenSplinted',
+          Sig2Int('AOFE'), 'Keyword Armor Material Iron',
+          Sig2Int('AOFL'), 'Keyword Armor Material FullLeather',
+          Sig2Int('AOGL'), 'Keyword Armor Material Glass',
+          Sig2Int('AOHI'), 'Keyword Armor Material Hide',
+          Sig2Int('AOIB'), 'Keyword Armor Material IronBanded',
+          Sig2Int('AOIH'), 'Keyword Armor Material ImperialHeavy',
+          Sig2Int('AOIM'), 'Keyword Armor Material Imperial',
+          Sig2Int('AOIR'), 'Keyword Armor Material ImperialReinforced',
+          Sig2Int('AOOR'), 'Keyword Armor Material Orcish',
+          Sig2Int('AOSC'), 'Keyword Armor Material Scaled',
+          Sig2Int('AOSD'), 'Keyword Armor Material Studded',
+          Sig2Int('AOSK'), 'Keyword Armor Material Stormcloak',
+          Sig2Int('AOSP'), 'Keyword Armor Material SteelPlate',
+          Sig2Int('AOST'), 'Keyword Armor Material Steel',
+          Sig2Int('APIC'), 'Action Pipboy Close',
+          Sig2Int('APID'), 'Action Pipboy Data',
+          Sig2Int('APII'), 'Action Pipboy Inventory',
+          Sig2Int('APIM'), 'Action Pipboy Map',
+          Sig2Int('APIN'), 'Action Pipboy Inspect',
+          Sig2Int('APIP'), 'Action Pipboy',
+          Sig2Int('APIS'), 'Action Pipboy Stats',
+          Sig2Int('APIT'), 'Action Pipboy Tab',
+          Sig2Int('APIZ'), 'Action Pipboy Zoom',
+          Sig2Int('APLH'), 'Action Pipboy Load Holotape',
+          Sig2Int('APLN'), 'Action Dialogue Listen Neutral',
+          Sig2Int('APNC'), 'Action Panic',
+          Sig2Int('APPS'), 'Action Pipboy Select',
+          Sig2Int('APR0'), 'Action Pipboy Radio Off',
+          Sig2Int('APR1'), 'Action Pipboy Radio On',
+          Sig2Int('APSH'), 'Allow Player Shout',
+          Sig2Int('APTP'), 'Action Pipboy Tab Previous',
           Sig2Int('AREL'), 'Action Reload',
-          Sig2Int('PUSG'), 'Pickup Sound Generic',
-          Sig2Int('PDSG'), 'Putdown Sound Generic',
-          Sig2Int('PUSW'), 'Pickup Sound Weapon',
-          Sig2Int('PDSW'), 'Putdown Sound Weapon',
-          Sig2Int('PUSA'), 'Pickup Sound Armor',
-          Sig2Int('PDSA'), 'Putdown Sound Armor',
-          Sig2Int('PUSB'), 'Pickup Sound Book',
-          Sig2Int('PDSB'), 'Putdown Sound Book',
-          Sig2Int('PUSI'), 'Pickup Sound Ingredient',
-          Sig2Int('PDSI'), 'Putdown Sound Ingredient',
-          Sig2Int('HVSS'), 'Harvest Sound',
-          Sig2Int('HVFS'), 'Harvest Failed Sound',
-          Sig2Int('WBSN'), 'Ward Break Sound',
-          Sig2Int('WASN'), 'Ward Absorb Sound',
-          Sig2Int('WDSN'), 'Ward Deflect Sound',
-          Sig2Int('MFSN'), 'Magic Fail Sound',
-          Sig2Int('SFSN'), 'Shout Fail Sound',
-          Sig2Int('HFSD'), 'Heartbeat Sound Fast',
-          Sig2Int('HSSD'), 'Heartbeat Sound Slow',
-          Sig2Int('IMLH'), 'Imagespace: Low Health',
-          Sig2Int('SCSD'), 'Soul Captured Sound',
-          Sig2Int('NASD'), 'No-Activation Sound',
-          Sig2Int('MMSD'), 'Map Menu Looping Sound',
-          Sig2Int('DDSC'), 'Dialogue Voice Category',
-          Sig2Int('NDSC'), 'Non-Dialogue Voice Category',
-          Sig2Int('SFDC'), 'SFX To Fade In Dialogue Category',
-          Sig2Int('PDMC'), 'Pause During Menu Category (Fade)',
-          Sig2Int('PIMC'), 'Pause During Menu Category (Immediate)',
-          Sig2Int('PDLC'), 'Pause During Loading Menu Category',
-          Sig2Int('MDSC'), 'Music Sound Category',
-          Sig2Int('SMSC'), 'Stats Mute Category',
-          Sig2Int('SSSC'), 'Stats Music',
-          Sig2Int('MTSC'), 'Master Sound Category',
-          Sig2Int('TSSC'), 'Time Sensitive Sound Category',
-          Sig2Int('DOP2'), 'Dialogue Output Model (3D)',
-          Sig2Int('DOP3'), 'Dialogue Output Model (2D)',
-          Sig2Int('POPM'), 'Player''s Output Model (1st Person)',
-          Sig2Int('P3OM'), 'Player''s Output Model (3rd Person)',
-          Sig2Int('IOPM'), 'Interface Output Model',
-          Sig2Int('RVBT'), 'Reverb Type',
-          Sig2Int('UWLS'), 'Underwater Loop Sound',
-          Sig2Int('URVT'), 'Underwater Reverb Type',
-          Sig2Int('HRSK'), 'Keyword - Horse',
-          Sig2Int('UNDK'), 'Keyword - Undead',
-          Sig2Int('NPCK'), 'Keyword - NPC',
-          Sig2Int('KWBR'), 'Keyword - BeastRace',
-          Sig2Int('KWDM'), 'Keyword - DummyObject',
-          Sig2Int('KWGE'), 'Keyword - UseGeometryEmitter',
-          Sig2Int('KWMS'), 'Keyword - MustStop',
-          Sig2Int('KWUA'), 'Keyword - UpdateDuringArchery',
-          Sig2Int('KWOT'), 'Keyword - Skip Outfit Items',
-          Sig2Int('FTHD'), 'Male Face Texture Set: Head',
-          Sig2Int('FTMO'), 'Male Face Texture Set: Mouth',
-          Sig2Int('FTEL'), 'Male Face Texture Set: Eyes',
-          Sig2Int('FTHF'), 'Female Face Texture Set: Head',
-          Sig2Int('FTMF'), 'Female Face Texture Set: Mouth',
-          Sig2Int('FTRF'), 'Female Face Texture Set: Eyes',
-          Sig2Int('IMID'), 'ImageSpaceModifier for inventory menu.',
-          Sig2Int('PTEM'), 'Package template',
-          Sig2Int('MMCL'), 'Main Menu Cell',
-          Sig2Int('DMWL'), 'Default MovementType: Walk',
-          Sig2Int('DMRN'), 'Default MovementType: Run',
-          Sig2Int('DMSW'), 'Default MovementType: Swim',
-          Sig2Int('DMFL'), 'Default MovementType: Fly',
-          Sig2Int('DMSN'), 'Default MovementType: Sneak',
-          Sig2Int('DMSP'), 'Default MovementType: Sprint',
-          Sig2Int('SPFK'), 'Keyword - Special Furniture',
-          Sig2Int('FFFP'), 'Keyword - Furniture Forces 1st Person',
-          Sig2Int('FFTP'), 'Keyword - Furniture Forces 3rd Person',
-          Sig2Int('AFNP'), 'Keyword - Activator Furniture No Player',
-          Sig2Int('TKGS'), 'Telekinesis Grab Sound',
-          Sig2Int('TKTS'), 'Telekinesis Throw Sound',
-          Sig2Int('WMWE'), 'World Map Weather',
-          Sig2Int('HMPC'), 'Help Manual PC',
-          Sig2Int('HMXB'), 'Help Manual XBox',
-          Sig2Int('TKAM'), 'Keyword - Type Ammo',
-          Sig2Int('TKAR'), 'Keyword - Type Armor',
-          Sig2Int('TKBK'), 'Keyword - Type Book',
-          Sig2Int('TKIG'), 'Keyword - Type Ingredient',
-          Sig2Int('TKKY'), 'Keyword - Type Key',
-          Sig2Int('TKMS'), 'Keyword - Type Misc',
-          Sig2Int('TKSG'), 'Keyword - Type SoulGem',
-          Sig2Int('TKWP'), 'Keyword - Type Weapon',
-          Sig2Int('TKPT'), 'Keyword - Type Potion',
-          Sig2Int('BENW'), 'Base Weapon Enchantment',
-          Sig2Int('BENA'), 'Base Armor Enchantment',
+          Sig2Int('ARGI'), 'Action Ragdoll Instant',
+          Sig2Int('ARTL'), 'Armor Material List',
+          Sig2Int('ASFL'), 'Action Shuffle',
+          Sig2Int('ASID'), 'Action Idle Stop Instant',
+          Sig2Int('ASIR'), 'Action Sighted Release',
+          Sig2Int('ASIT'), 'Action Sighted',
+          Sig2Int('ATHR'), 'Action Throw',
+          Sig2Int('ATKI'), 'Action Dialogue Talking',
+          Sig2Int('ATLE'), 'Action Turn Left',
+          Sig2Int('ATRI'), 'Action Turn Right',
+          Sig2Int('ATSP'), 'Action Turn Stop',
+          Sig2Int('AVVP'), 'Vampire Available Perks',
+          Sig2Int('AVWP'), 'Unused',
+          Sig2Int('AWWS'), 'Action Waterwalk Start',
+          Sig2Int('AWWW'), 'Bunny Faction',
           Sig2Int('BAPO'), 'Base Potion',
           Sig2Int('BAPS'), 'Base Poison',
-          Sig2Int('DRAK'), 'Keyword - Dragon',
-          Sig2Int('MVBL'), 'Keyword - Movable',
-          Sig2Int('ABSE'), 'Art Object - Absorb Effect',
-          Sig2Int('WEML'), 'Weapon Material List',
-          Sig2Int('ARTL'), 'Armor Material List',
-          Sig2Int('DIEN'), 'Keyword - Disallow Enchanting',
-          Sig2Int('FTML'), 'Favor travel marker location',
-          Sig2Int('LKHO'), 'Keyword - Hold Location',
-          Sig2Int('CWOK'), 'Keyword - Civil War Owner',
-          Sig2Int('CWNE'), 'Keyword - Civil War Neutral',
-          Sig2Int('LRSO'), 'LocRefType - Civil War Soldier',
-          Sig2Int('KWDO'), 'Keyword - ClearableLocation',
-          Sig2Int('LRRD'), 'LocRefType - Resource Destructible',
-          Sig2Int('HCLL'), 'FormList - Hair Color List',
+          Sig2Int('BEEP'), 'Keyword Robot',
+          Sig2Int('BENA'), 'Base Armor Enchantment',
+          Sig2Int('BENW'), 'Base Weapon Enchantment',
+          Sig2Int('BTMS'), 'Battle Music',
+          Sig2Int('CACA'), 'Commanded Actor Ability',
+          Sig2Int('CHIK'), 'Chem Item keyword',
+          Sig2Int('CLIK'), 'Clothes Item keyword',
           Sig2Int('CMPX'), 'Complex Scene Object',
-          Sig2Int('RUSG'), 'Keyword - Reusable SoulGem',
-          Sig2Int('ANML'), 'Keyword - Animal',
-          Sig2Int('DAED'), 'Keyword - Daedra'
+          Sig2Int('CNMK'), 'Keyword nullptr Mod',
+          Sig2Int('COEX'), 'Keyword Conditional Explosion',
+          Sig2Int('COOK'), 'Keyword Cooking Pot',
+          Sig2Int('CSTY'), 'Combat Style',
+          Sig2Int('CWNE'), 'Keyword Civil War Neutral',
+          Sig2Int('CWOK'), 'Keyword Civil War Owner',
+          Sig2Int('DAED'), 'Keyword Daedra',
+          Sig2Int('DBHF'), 'Dark Brotherhood Faction',
+          Sig2Int('DCMS'), 'Dungeon Cleared Music',
+          Sig2Int('DCZM'), 'Dragon Crash Zone Marker',
+          Sig2Int('DDSC'), 'Dialogue Voice Category',
+          Sig2Int('DEIS'), 'Drug Wears Off Image Space',
+          Sig2Int('DFTS'), 'Footstep Set',
+          Sig2Int('DGFL'), 'DialogueFollower Quest',
+          Sig2Int('DIEN'), 'Keyword Disallow Enchanting',
+          Sig2Int('DLMT'), 'Landscape Material',
+          Sig2Int('DLZM'), 'Dragon Land Zone Marker',
+          Sig2Int('DMFL'), 'Default Movement Type: Fly',
+          Sig2Int('DMSN'), 'Default Movement Type: Sneak',
+          Sig2Int('DMSW'), 'Default Movement Type: Swim',
+          Sig2Int('DMWL'), 'Default Movement Type: Default',
+          Sig2Int('DOP2'), 'Dialogue Output Model 3D',
+          Sig2Int('DOP3'), 'Dialogue Output Model 2D',
+          Sig2Int('DRAK'), 'Keyword Dragon',
+          Sig2Int('DTMS'), 'Death Music',
+          Sig2Int('EACA'), 'Every Actor Ability',
+          Sig2Int('EPDF'), 'Eat Package Default Food',
+          Sig2Int('FFFP'), 'Keyword Furniture Forces 1st Person',
+          Sig2Int('FFTP'), 'Keyword Furniture Forces 3rd Person',
+          Sig2Int('FOIK'), 'Food Item Keyword',
+          Sig2Int('FORG'), 'Keyword Forge',
+          Sig2Int('FTEL'), 'Male Face Texture Set: Eyes',
+          Sig2Int('FTGF'), 'Fighters'' Guild Faction',
+          Sig2Int('FTHD'), 'Male Face Texture Set: Head',
+          Sig2Int('FTHF'), 'Female Face Texture Set: Head',
+          Sig2Int('FTMF'), 'Female Face Texture Set: Mouth',
+          Sig2Int('FTML'), 'Favor travel marker location',
+          Sig2Int('FTMO'), 'Male Face Texture Set: Mouth',
+          Sig2Int('FTNP'), 'Furniture Test NPC',
+          Sig2Int('FTRF'), 'Female Face Texture Set: Eyes'
         ]);
 
   b := MakeVarRecs([
-          Sig2Int('BEEP'), 'Keyword - Robot',
-          Sig2Int('NRNT'), 'Keyword - Nirnroot',
-          Sig2Int('FTGF'), 'Fighters'' Guild Faction',
-          Sig2Int('MGGF'), 'Mages'' Guild Faction',
-          Sig2Int('TVGF'), 'Thieves'' Guild Faction',
-          Sig2Int('DBHF'), 'Dark Brotherhood Faction',
+          Sig2Int('GCK1'), 'Keyword Generic Craftable Keyword 01',
+          Sig2Int('GCK2'), 'Keyword Generic Craftable Keyword 02',
+          Sig2Int('GCK3'), 'Keyword Generic Craftable Keyword 03',
+          Sig2Int('GCK4'), 'Keyword Generic Craftable Keyword 04',
+          Sig2Int('GCK5'), 'Keyword Generic Craftable Keyword 05',
+          Sig2Int('GCK6'), 'Keyword Generic Craftable Keyword 06',
+          Sig2Int('GCK7'), 'Keyword Generic Craftable Keyword 07',
+          Sig2Int('GCK8'), 'Keyword Generic Craftable Keyword 08',
+          Sig2Int('GCK9'), 'Keyword Generic Craftable Keyword 09',
+          Sig2Int('GCKX'), 'Keyword Generic Craftable Keyword 10',
+          Sig2Int('GFAC'), 'Guard Faction',
+          Sig2Int('GLIK'), 'Gloves Item Keyword',
+          Sig2Int('GOLD'), 'Gold',
+          Sig2Int('GRIK'), 'Grenade Item Keyword',
+          Sig2Int('HBAL'), 'Help Basic Alchemy',
+          Sig2Int('HBBR'), 'Help Barter',
+          Sig2Int('HBCO'), 'Help Basic Cooking',
+          Sig2Int('HBEC'), 'Help Basic Enchanting',
+          Sig2Int('HBFG'), 'Help Basic Forging',
+          Sig2Int('HBFS'), 'Help Favorites',
+          Sig2Int('HBFT'), 'Help Teamate Favor',
+          Sig2Int('HBHJ'), 'Help Jail',
+          Sig2Int('HBJL'), 'Help Journal',
+          Sig2Int('HBLH'), 'Help Low Health',
+          Sig2Int('HBLK'), 'Help Basic Lockpicking PC',
+          Sig2Int('HBLM'), 'Help Low Magicka',
+          Sig2Int('HBLS'), 'Help Low Stamina',
+          Sig2Int('HBLU'), 'Help Leveling up',
+          Sig2Int('HBLX'), 'Help Basic Lockpicking Console',
+          Sig2Int('HBML'), 'Help Basic Smelting',
+          Sig2Int('HBMM'), 'Help Map Menu',
+          Sig2Int('HBOC'), 'Help Basic Object Creation',
+          Sig2Int('HBSA'), 'Help Basic Smithing Armor',
+          Sig2Int('HBSK'), 'Help Skills Menu',
+          Sig2Int('HBSM'), 'Help Basic Smithing Weapon',
+          Sig2Int('HBTA'), 'Help Basic Tanning',
+          Sig2Int('HBWC'), 'Help Weapon Charge',
+          Sig2Int('HCLL'), 'FormList Hair Color List',
+          Sig2Int('HEIK'), 'Helmet Item Keyword',
+          Sig2Int('HFSD'), 'Heartbeat Sound Fast',
+          Sig2Int('HMPC'), 'Help Manual PC',
+          Sig2Int('HMXB'), 'Help Manual XBox',
+          Sig2Int('HRSK'), 'Keyword Horse',
+          Sig2Int('HSSD'), 'Heartbeat Sound Slow',
+          Sig2Int('HVFS'), 'Harvest Failed Sound',
+          Sig2Int('HVSS'), 'Harvest Sound',
+          Sig2Int('HWIK'), 'Heavy Weapon Item keyword',
+          Sig2Int('IMDI'), 'Dialogue Imagespace',
+          Sig2Int('IMID'), 'ImageSpaceModifier for inventory menu.',
+          Sig2Int('IMLH'), 'Imagespace: Low Health',
+          Sig2Int('IMPP'), 'ImageSpaceModifier for Pipboy menu in Power armor.',
+          Sig2Int('IOPM'), 'Interface Output Model',
           Sig2Int('JRLF'), 'Jarl Faction',
-          Sig2Int('AWWW'), 'Bunny Faction',
-          Sig2Int('PIVV'), 'Player Is Vampire Variable',
-          Sig2Int('PIWV'), 'Player Is Werewolf Variable',
-          Sig2Int('NMRD'), 'Road Marker',
-          Sig2Int('SAT1'), 'Keyword: Scale Actor To 1.0',
-          Sig2Int('VAMP'), 'Keyword: Vampire',
-          Sig2Int('FORG'), 'Keyword: Forge',
-          Sig2Int('COOK'), 'Keyword: Cooking Pot',
-          Sig2Int('SMLT'), 'Keyword: Smelter',
-          Sig2Int('TANN'), 'Keyword: Tanning Rack',
-          Sig2Int('HBLK'), 'Help - Basic Lockpicking (PC)',
-          Sig2Int('HBLX'), 'Help - Basic Lockpicking (Console)',
-          Sig2Int('HBFG'), 'Help - Basic Forging',
-          Sig2Int('HBCO'), 'Help - Basic Cooking',
-          Sig2Int('HBML'), 'Help - Basic Smelting',
-          Sig2Int('HBTA'), 'Help - Basic Tanning',
-          Sig2Int('HBOC'), 'Help - Basic Object Creation',
-          Sig2Int('HBEC'), 'Help - Basic Enchanting',
-          Sig2Int('HBSM'), 'Help - Basic Smithing Weapon',
-          Sig2Int('HBSA'), 'Help - Basic Smithing Armor',
-          Sig2Int('HBAL'), 'Help - Basic Alchemy',
-          Sig2Int('HBBR'), 'Help - Barter',
-          Sig2Int('HBLU'), 'Help - Leveling up',
-          Sig2Int('HBSK'), 'Help - Skills Menu',
-          Sig2Int('HBMM'), 'Help - Map Menu',
-          Sig2Int('HBJL'), 'Help - Journal',
-          Sig2Int('HBLH'), 'Help - Low Health',
-          Sig2Int('HBLM'), 'Help - Low Magicka',
-          Sig2Int('HBLS'), 'Help - Low Stamina',
-          Sig2Int('HBHJ'), 'Help - Jail',
-          Sig2Int('HBFT'), 'Help - Teamate Favor',
-          Sig2Int('HBWC'), 'Help - Weapon Charge',
-          Sig2Int('HBFS'), 'Help - Favorites',
+          Sig2Int('JWLR'), 'Keyword Jewelry',
           Sig2Int('KHFL'), 'Kinect Help FormList',
-          Sig2Int('HBFM'), 'Help - Flying Mount',
-          Sig2Int('HBTL'), 'Help - Target Lock',
-          Sig2Int('HBAT'), 'Help - Attack Target',
-          Sig2Int('LSIS'), 'Imagespace: Load screen',
-          Sig2Int('WMDA'), 'Keyword - Weapon Material Daedric',
-          Sig2Int('WMDR'), 'Keyword - Weapon Material Draugr',
-          Sig2Int('WMDH'), 'Keyword - Weapon Material DraugrHoned',
-          Sig2Int('WMDW'), 'Keyword - Weapon Material Dwarven',
-          Sig2Int('WMEB'), 'Keyword - Weapon Material Ebony',
-          Sig2Int('WMEL'), 'Keyword - Weapon Material Elven',
-          Sig2Int('WMFA'), 'Keyword - Weapon Material Falmer',
-          Sig2Int('WMFH'), 'Keyword - Weapon Material FalmerHoned',
-          Sig2Int('WMGL'), 'Keyword - Weapon Material Glass',
-          Sig2Int('WMIM'), 'Keyword - Weapon Material Imperial',
-          Sig2Int('WMIR'), 'Keyword - Weapon Material Iron',
-          Sig2Int('WMOR'), 'Keyword - Weapon Material Orcish',
-          Sig2Int('WMST'), 'Keyword - Weapon Material Steel',
-          Sig2Int('WMWO'), 'Keyword - Weapon Material Wood',
-          Sig2Int('WTBA'), 'Keyword - WeaponTypeBoundArrow',
-          Sig2Int('AODA'), 'Keyword - Armor Material Daedric',
-          Sig2Int('AODP'), 'Keyword - Armor Material Dragonplate',
-          Sig2Int('AODS'), 'Keyword - Armor Material Dragonscale',
-          Sig2Int('AODB'), 'Keyword - Armor Material Dragonbone',
-          Sig2Int('AODW'), 'Keyword - Armor Material Dwarven',
-          Sig2Int('AOEB'), 'Keyword - Armor Material Ebony',
-          Sig2Int('AOEL'), 'Keyword - Armor Material Elven',
-          Sig2Int('AOES'), 'Keyword - Armor Material ElvenSplinted',
-          Sig2Int('AOFL'), 'Keyword - Armor Material FullLeather',
-          Sig2Int('AOGL'), 'Keyword - Armor Material Glass',
-          Sig2Int('AOHI'), 'Keyword - Armor Material Hide',
-          Sig2Int('AOIM'), 'Keyword - Armor Material Imperial',
-          Sig2Int('AOIH'), 'Keyword - Armor Material ImperialHeavy',
-          Sig2Int('AOIR'), 'Keyword - Armor Material ImperialReinforced',
-          Sig2Int('AOFE'), 'Keyword - Armor Material Iron',
-          Sig2Int('AOIB'), 'Keyword - Armor Material IronBanded',
-          Sig2Int('AOOR'), 'Keyword - Armor Material Orcish',
-          Sig2Int('AOSC'), 'Keyword - Armor Material Scaled',
-          Sig2Int('AOST'), 'Keyword - Armor Material Steel',
-          Sig2Int('AOSP'), 'Keyword - Armor Material SteelPlate',
-          Sig2Int('AOSK'), 'Keyword - Armor Material Stormcloak',
-          Sig2Int('AOSD'), 'Keyword - Armor Material Studded',
-          Sig2Int('GCK1'), 'Keyword - Generic Craftable Keyword 01',
-          Sig2Int('GCK2'), 'Keyword - Generic Craftable Keyword 02',
-          Sig2Int('GCK3'), 'Keyword - Generic Craftable Keyword 03',
-          Sig2Int('GCK4'), 'Keyword - Generic Craftable Keyword 04',
-          Sig2Int('GCK5'), 'Keyword - Generic Craftable Keyword 05',
-          Sig2Int('GCK6'), 'Keyword - Generic Craftable Keyword 06',
-          Sig2Int('GCK7'), 'Keyword - Generic Craftable Keyword 07',
-          Sig2Int('GCK8'), 'Keyword - Generic Craftable Keyword 08',
-          Sig2Int('GCK9'), 'Keyword - Generic Craftable Keyword 09',
-          Sig2Int('GCKX'), 'Keyword - Generic Craftable Keyword 10',
-          Sig2Int('JWLR'), 'Keyword - Jewelry',
-          Sig2Int('KWCU'), 'Keyword - Cuirass',
-          Sig2Int('MNTK'), 'Keyword - Mount',
+          Sig2Int('KTRW'), 'Teammate Ready Weapon',
+          Sig2Int('KWBR'), 'Color Form',
+          Sig2Int('KWCU'), 'Keyword Cuirass',
+          Sig2Int('KWDM'), 'Keyword DummyObject',
+          Sig2Int('KWDO'), 'Keyword ClearableLocation',
+          Sig2Int('KWGE'), 'Keyword UseGeometryEmitter',
+          Sig2Int('KWMS'), 'Keyword MustStop',
+          Sig2Int('LGH1'), 'Default Light 1',
+          Sig2Int('LGH2'), 'Default Light 2',
+          Sig2Int('LGH3'), 'Default Light 3',
+          Sig2Int('LGH4'), 'Default Light 4',
+          Sig2Int('LGHP'), 'Pipboy Light',
+          Sig2Int('LKHO'), 'Keyword Hold Location',
+          Sig2Int('LKPK'), 'Lockpick',
           Sig2Int('LMHP'), 'Local Map Hide Plane',
-          Sig2Int('SLDM'), 'Snow LOD Material',
-          Sig2Int('SLHD'), 'Snow LOD Material (HD)',
-          Sig2Int('ALDM'), 'Ash LOD Material',
-          Sig2Int('ALHD'), 'Ash LOD Material (HD)',
-          Sig2Int('DGFL'), 'DialogueFollower Quest',
+          Sig2Int('LRRD'), 'LocRefType Resource Destructible',
+          Sig2Int('LRSO'), 'LocRefType Civil War Soldier',
+          Sig2Int('LSIS'), 'Imagespace: Load screen',
+          Sig2Int('MBIK'), 'Med Bag Item Keyword',
+          Sig2Int('MDSC'), 'Music Sound Category',
+          Sig2Int('MFSN'), 'Magic Fail Sound',
+          Sig2Int('MGGF'), 'Mages'' Guild Faction',
+          Sig2Int('MIIK'), 'Mine Item Keyword',
+          Sig2Int('MMCL'), 'Main Menu Cell',
+          Sig2Int('MMSD'), 'Map Menu Looping Sound',
+          Sig2Int('MNTK'), 'Keyword Mount',
+          Sig2Int('MTSC'), 'Master Sound Category',
+          Sig2Int('MVBL'), 'Keyword Movable',
+          Sig2Int('NASD'), 'No-Activation Sound',
+          Sig2Int('NDSC'), 'Non-Dialogue Voice Category',
+          Sig2Int('NMRD'), 'Road Marker',
+          Sig2Int('NPCK'), 'Keyword NPC',
+          Sig2Int('NRNT'), 'Keyword Nirnroot',
+          Sig2Int('P3OM'), 'Player''s Output Model 3rd Person',
+          Sig2Int('PDLC'), 'Pause During Loading Menu Category',
+          Sig2Int('PDMC'), 'Pause During Menu Category Fade',
+          Sig2Int('PDSA'), 'Putdown Sound Armor',
+          Sig2Int('PDSB'), 'Putdown Sound Book',
+          Sig2Int('PDSG'), 'Putdown Sound Generic',
+          Sig2Int('PDSI'), 'Putdown Sound Ingredient',
+          Sig2Int('PDSW'), 'Putdown Sound Weapon',
+          Sig2Int('PFAC'), 'Player Faction',
+          Sig2Int('PIMC'), 'Pause During Menu Category Immediate',
+          Sig2Int('PIVV'), 'Player Is Vampire Variable',
+          Sig2Int('PIWV'), 'UNUSED01',
+          Sig2Int('PLOC'), 'PersistAll Location',
+          Sig2Int('PLST'), 'Default Pack List',
+          Sig2Int('POEQ'), 'Potion Equip',
+          Sig2Int('POPM'), 'Player''s Output Model 1st Person',
+          Sig2Int('PTEM'), 'Package Template',
           Sig2Int('PTFR'), 'PotentialFollower Faction',
-          Sig2Int('AVWP'), 'Werewolf Available Perks',
-          Sig2Int('AVVP'), 'Vampire Available Perks',
-          Sig2Int('RIWR'), 'Werewolf Race',
+          Sig2Int('PTNP'), 'Pathing Test NPC',
+          Sig2Int('PUSA'), 'Pickup Sound Armor',
+          Sig2Int('PUSB'), 'Pickup Sound Book',
+          Sig2Int('PUSG'), 'Pickup Sound Generic',
+          Sig2Int('PUSI'), 'Pickup Sound Ingredient',
+          Sig2Int('PUSW'), 'Pickup Sound Weapon',
+          Sig2Int('PVFA'), 'Player Voice Female',
+          Sig2Int('PVFC'), 'Player Voice Female Child',
+          Sig2Int('PVMA'), 'Player Voice Male',
+          Sig2Int('PVMC'), 'Player Voice Male Child',
+          Sig2Int('PWFD'), 'Wait-For-Dialogue Package',
+          Sig2Int('QMEA'), 'Quest Marker Enemy Above',
+          Sig2Int('QMEB'), 'Quest Marker Enemy Below',
+          Sig2Int('QMEN'), 'Quest Marker Enemy',
+          Sig2Int('QMFO'), 'Quest Marker Follower',
+          Sig2Int('QMLO'), 'Quest Marker Location',
           Sig2Int('RIVR'), 'Vampire Race',
           Sig2Int('RIVS'), 'Vampire Spells',
-          Sig2Int('DMXL'), 'Dragon Mount No Land List',
-          Sig2Int('PCMD'), 'Player Can Mount Dragon Here List',
-          Sig2Int('FMYS'), 'Flying Mount - Allowed Spells',
-          Sig2Int('FMNS'), 'Flying Mount - Disallowed Spells',
-          Sig2Int('MNT2'), 'Keyword - Mount',
-          Sig2Int('AIVC'), 'Verlet Cape',
-          Sig2Int('FTNP'), 'Furniture Test NPC',
-          Sig2Int('COEX'), 'Keyword - Conditional Explosion',
-          Sig2Int('VFNC'), 'Vampire Feed No Crime Faction',
-          Sig2Int('KWSP'), 'Skyrim - Worldspace',
-          Sig2Int('ALBM'), 'Keyword - Armor Material Light Bonemold',
-          Sig2Int('ALCH'), 'Keyword - Armor Material Light Chitin',
-          Sig2Int('ALNC'), 'Keyword - Armor Material Light Nordic',
-          Sig2Int('ALSM'), 'Keyword - Armor Material Light Stalhrim',
-          Sig2Int('FMFF'), 'Flying Mount - Fly Fast Worldspaces',
-          Sig2Int('AHBM'), 'Keyword - Armor Material Heavy Bonemold',
-          Sig2Int('AHCH'), 'Keyword - Armor Material Heavy Chitin',
-          Sig2Int('AHNC'), 'Keyword - Armor Material Heavy Nordic',
-          Sig2Int('AHSM'), 'Keyword - Armor Material Heavy Stalhrim',
-          Sig2Int('WPNC'), 'Keyword - Weapon Material Nordic',
-          Sig2Int('WPSM'), 'Keyword - Weapon Material Stalhrim'
+          Sig2Int('RIWR'), 'UNUSED02',
+          Sig2Int('RKIK'), 'Repair Kit Item Keyword',
+          Sig2Int('RUSG'), 'Keyword Reusable SoulGem',
+          Sig2Int('RVBT'), 'Reverb Type',
+          Sig2Int('SALT'), 'Sitting Angle Limit',
+          Sig2Int('SAT1'), 'Keyword Scale Actor To 1.0',
+          Sig2Int('SCSD'), 'Soul Captured Sound',
+          Sig2Int('SFDC'), 'SFX To Fade In Dialogue Category',
+          Sig2Int('SFSN'), 'Shout Fail Sound',
+          Sig2Int('SKLK'), 'Skeleton Key',
+          Sig2Int('SLDM'), 'Snow LOD Material',
+          Sig2Int('SLHD'), 'Snow LOD Material HD',
+          Sig2Int('SMLT'), 'Keyword Smelter',
+          Sig2Int('SMSC'), 'Stats Mute Category',
+          Sig2Int('SPFK'), 'Keyword Special Furniture',
+          Sig2Int('SSSC'), 'Stats Music',
+          Sig2Int('TANN'), 'Keyword Tanning Rack',
+          Sig2Int('TKAM'), 'Keyword Type Ammo',
+          Sig2Int('TKAR'), 'Keyword Type Armor',
+          Sig2Int('TKBK'), 'Keyword Type Book',
+          Sig2Int('TKGS'), 'Telekinesis Grab Sound',
+          Sig2Int('TKIG'), 'Keyword Type Ingredient',
+          Sig2Int('TKKY'), 'Keyword Type Key',
+          Sig2Int('TKMS'), 'Keyword Type Misc',
+          Sig2Int('TKPT'), 'Keyword Type Potion',
+          Sig2Int('TKSG'), 'Keyword Type SoulGem',
+          Sig2Int('TKTS'), 'Telekinesis Throw Sound',
+          Sig2Int('TKWP'), 'Keyword Type Weapon',
+          Sig2Int('TVGF'), 'Thieves'' Guild Faction',
+          Sig2Int('UNDK'), 'Keyword Undead',
+          Sig2Int('URVT'), 'Underwater Reverb Type',
+          Sig2Int('UWLS'), 'Underwater Loop Sound',
+          Sig2Int('VAMP'), 'Keyword Vampire',
+          Sig2Int('VLOC'), 'Virtual Location',
+          Sig2Int('VOEQ'), 'Voice Equip',
+          Sig2Int('WASN'), 'Ward Absorb Sound',
+          Sig2Int('WBSN'), 'Ward Break Sound',
+          Sig2Int('WDSN'), 'Ward Deflect Sound',
+          Sig2Int('WEML'), 'Weapon Material List',
+          Sig2Int('WMDA'), 'Keyword Weapon Material Daedric',
+          Sig2Int('WMDH'), 'Keyword Weapon Material DraugrHoned',
+          Sig2Int('WMDR'), 'Keyword Weapon Material Draugr',
+          Sig2Int('WMDW'), 'Keyword Weapon Material Dwarven',
+          Sig2Int('WMEB'), 'Keyword Weapon Material Ebony',
+          Sig2Int('WMEL'), 'Keyword Weapon Material Elven',
+          Sig2Int('WMFA'), 'Keyword Weapon Material Falmer',
+          Sig2Int('WMFH'), 'Keyword Weapon Material FalmerHoned',
+          Sig2Int('WMGL'), 'Keyword Weapon Material Glass',
+          Sig2Int('WMIK'), 'Workshop Misc Item Keyword',
+          Sig2Int('WMIM'), 'Keyword Weapon Material Imperial',
+          Sig2Int('WMIR'), 'Keyword Weapon Material Iron',
+          Sig2Int('WMOR'), 'Keyword Weapon Material Orcish',
+          Sig2Int('WMST'), 'Keyword Weapon Material Steel',
+          Sig2Int('WMWE'), 'World Map Weather',
+          Sig2Int('WMWO'), 'Keyword Weapon Material Wood',
+          Sig2Int('WPOK'), 'Workshop Player Ownership',
+          Sig2Int('WTBA'), 'Keyword WeaponTypeBoundArrow',
+          Sig2Int('WWSP'), 'UNUSED03'
         ]);
 
   c := CombineVarRecs(a, b);
@@ -9419,8 +10322,20 @@ begin
         wbFloat('Start'),
         wbFloat('End')
       ]),
-      wbByteArray('Unknown', 4)
-    ], cpNormal, True, nil, 11),
+      wbByteArray('Unknown', 4),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbByteArray('Unknown', 4),
+      wbByteArray('Unknown', 4),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
+      //wbUnknown
+    ], cpNormal, True, nil, 15),
     wbStruct(DALC, 'Directional Ambient Lighting Colors', [wbAmbientColors], cpNormal, True)
   ]);
 
@@ -9468,7 +10383,7 @@ begin
   wbRecord(SMBN, 'Story Manager Branch Node', [
     wbEDID,
     wbFormIDCk(PNAM, 'Parent ', [SMQN, SMBN, SMEN, NULL]),
-    wbFormIDCk(SNAM, 'Child ', [SMQN, SMBN, SMEN, NULL]),
+    wbFormIDCk(SNAM, 'Child ', [SMQN, SMBN, SMEN, NULL], False, cpBenign),
     wbCITC,
     wbCTDAsCount,
     wbInteger(DNAM, 'Flags', itU32, wbSMNodeFlags),
@@ -9478,7 +10393,7 @@ begin
   wbRecord(SMQN, 'Story Manager Quest Node', [
     wbEDID,
     wbFormIDCk(PNAM, 'Parent ', [SMQN, SMBN, SMEN, NULL]),
-    wbFormIDCk(SNAM, 'Child ', [SMQN, SMBN, SMEN, NULL]),
+    wbFormIDCk(SNAM, 'Child ', [SMQN, SMBN, SMEN, NULL], False, cpBenign),
     wbCITC,
     wbCTDAsCount,
     wbStruct(DNAM, 'Flags', [
@@ -9491,6 +10406,7 @@ begin
     ]),
     wbInteger(XNAM, 'Max concurrent quests', itU32),
     wbInteger(MNAM, 'Num quests to run', itU32),
+    wbFloat(HNAM, 'Unknown'),
     wbInteger(QNAM, 'Quest Count', itU32, nil, cpBenign),
     wbRArray('Quests', wbRStructSK([0], 'Quest', [
       wbFormIDCk(NNAM, 'Quest', [QUST]),
@@ -9511,7 +10427,7 @@ begin
   ], False, nil, cpNormal, False, nil, wbConditionsAfterSet);
 end;
 
-procedure DefineTES5j;
+procedure DefineFO4j;
 begin
   wbRecord(DLBR, 'Dialog Branch', [
     wbEDID,
@@ -9536,12 +10452,12 @@ begin
     wbFloat(DNAM, 'Fade-Out'),
     wbString(ANAM, 'Track Filename'),
     wbString(BNAM, 'Finale Filename'),
-    wbArray(FNAM, 'Cue Points', wbFloat('Point')),
     wbStruct(LNAM, 'Loop Data', [
       wbFloat('Loop Begins'),
       wbFloat('Loop Ends'),
       wbInteger('Loop Count', itU32)
     ]),
+    wbArray(FNAM, 'Cue Points', wbFloat('Point')),
     wbCITC,
     wbCTDAsCount,
     wbArray(SNAM, 'Tracks', wbFormIDCk('Track', [MUST, NULL]))
@@ -9559,33 +10475,18 @@ begin
   ]);
 
   wbRecord(WOOP, 'Word of Power', [
-    wbEDID,
-    wbFULL,
-    wbLString(TNAM, 'Translation', 0, cpTranslate, True)
+    wbEDID
   ]);
 
-  wbRecord(SHOU, 'Shout',
-    wbFlags(wbRecordFlagsFlags, wbFlagsList([
-      {0x00000080}  7, 'Treat spells as powers'
-    ])), [
-    wbEDID,
-    wbFULL,
-    wbMDOB,
-    wbDESC,
-    {>>> Don't sort <<<}
-    wbRArray('Words of Power',
-      wbStruct(SNAM, '', [
-        wbFormIDCk('Word', [WOOP, NULL]),
-        wbFormIDCk('Spell', [SPEL, NULL]),
-        wbFloat('Recovery Time')
-      ])
-    )
+  wbRecord(SHOU, 'Shout', [
+    wbEDID
   ]);
 
   wbRecord(EQUP, 'Equip Type', [
     wbEDID,
     wbArray(PNAM, 'Slot Parents', wbFormID('Can Be Equipped'), 0, nil, nil, cpNormal, False),
-    wbInteger(DATA, 'Use All Parents', itU32, wbEnum(['False', 'True']))
+    wbInteger(DATA, 'Use All Parents', itU32, wbEnum(['False', 'True'])),
+    wbUnknown(ANAM)
   ]);
 
   wbRecord(RELA, 'Relationship',
@@ -9636,29 +10537,13 @@ begin
       wbRStruct('Phase', [
         wbEmpty(HNAM, 'Marker Phase Start'),
         wbString(NAM0, 'Name'),
-        // CTDA before or after next
-        //wbEmpty(NEXT, 'Marker'),
         wbRStruct('Start Conditions', [wbCTDAs], []),
-        wbEmpty(NEXT, 'Marker'),
+        wbUnknown(NEXT),
         wbRStruct('Completion Conditions', [wbCTDAs], []),
-        {>>> BEGIN leftover from earlier CK versions <<<}
-        wbRStruct('Unused', [
-          wbUnknown(SCHR),
-          wbUnknown(SCDA),
-          wbUnknown(SCTX),
-          wbUnknown(QNAM),
-          wbUnknown(SCRO)
-        ], [], cpIgnore, false, wbNeverShow),
-        wbEmpty(NEXT, 'Marker'),
-        wbRStruct('Unused', [
-          wbUnknown(SCHR),
-          wbUnknown(SCDA),
-          wbUnknown(SCTX),
-          wbUnknown(QNAM),
-          wbUnknown(SCRO)
-        ], [], cpIgnore, false, wbNeverShow),
-        {>>> END leftover from earlier CK versions begin <<<}
+        wbUnknown(NEXT),
         wbInteger(WNAM, 'Editor Width', itU32),
+        wbUnknown(FNAM),
+        wbUnknown(SCQS),
         wbEmpty(HNAM, 'Marker Phase End')
       ], [])
     ),
@@ -9712,44 +10597,57 @@ begin
       wbInteger(SNAM, 'Start Phase', itU32),
       wbInteger(ENAM, 'End Phase', itU32),
       wbFloat(SNAM, 'Timer Seconds'),
+      wbUnknown(TNAM),
+      wbUnknown(SCQS),
+      wbUnknown(STSC),
+      wbRStructs('Unknown', 'Unknown', [
+        wbFormIDCk(LCEP, 'Unknown', [SCEN]),
+        wbUnknown(INTT),
+        wbString(SSPN, 'Unknown'),
+        wbCITC,
+        wbCTDAs
+      ], []),
+      wbFormIDCk(PTOP, 'Unknown', [DIAL]),
+      wbFormIDCk(NTOP, 'Unknown', [DIAL]),
+      wbFormIDCk(NETO, 'Unknown', [DIAL]),
+      wbFormIDCk(QTOP, 'Unknown', [DIAL]),
+      wbFormIDCk(JOUT, 'Unknown', [KYWD]),
+      wbUnknown(DTID),
+      wbFormIDCk(DALC, 'Unknown', [KYWD]),
+      wbFormIDCk(NPOT, 'Unknown', [DIAL]),
+      wbFormIDCk(NNGT, 'Unknown', [DIAL]),
+      wbFormIDCk(NNUT, 'Unknown', [DIAL]),
+      wbFormIDCk(NQUT, 'Unknown', [DIAL]),
+      wbFormIDCk(NQUS, 'Unknown', [KYWD]),
+      wbFormIDCk(NPOS, 'Unknown', [KYWD]),
+      wbUnknown(DTGT),
       wbRArray('Packages', wbFormIDCk(PNAM, 'Package', [PACK])),
       wbFormIDCk(DATA, 'Topic', [DIAL, NULL]),
-      wbInteger(HTID, 'Headtrack Actor ID', itS32),
+      wbArray(HTID, 'Headtrack', wbInteger('Actor ID', itS32)), // very rare in this place, Scene [001D2863] <MQ302RadioEvacScene>
       wbFloat(DMAX, 'Looping - Max'),
       wbFloat(DMIN, 'Looping - Min'),
+      wbUnknown(CRIS),
       wbInteger(DEMO, 'Emotion Type', itU32, wbEmotionTypeEnum),
       wbInteger(DEVA, 'Emotion Value', itU32),
-      {>>> BEGIN leftover from earlier CK versions <<<}
-      wbRStruct('Unused', [
-        wbUnknown(SCHR),
-        wbUnknown(SCDA),
-        wbUnknown(SCTX),
-        wbUnknown(QNAM),
-        wbUnknown(SCRO)
-      ], [], cpIgnore, false, wbNeverShow),
-      {>>> END leftover from earlier CK versions <<<}
+      wbArray(HTID, 'Headtrack', wbInteger('Actor ID', itS32)),
+      wbFormIDCk(VENC, 'Unknown', [KYWD]),
+      wbFormIDCk(PNAM, 'Unknown', [KYWD]),
+      wbFormIDCk(ONAM, 'Unknown', [SOPM]),
       wbEmpty(ANAM, 'End Marker')
     ], [])),
-    {>>> BEGIN leftover from earlier CK versions <<<}
-    wbRStruct('Unused', [
-      wbUnknown(SCHR),
-      wbUnknown(SCDA),
-      wbUnknown(SCTX),
-      wbUnknown(QNAM),
-      wbUnknown(SCRO)
-    ], [], cpIgnore, false, wbNeverShow),
-    wbEmpty(NEXT, 'Marker'),
-    wbRStruct('Unused', [
-      wbUnknown(SCHR),
-      wbUnknown(SCDA),
-      wbUnknown(SCTX),
-      wbUnknown(QNAM),
-      wbUnknown(SCRO)
-    ], [], cpIgnore, false, wbNeverShow),
-    {>>> END leftover from earlier CK versions <<<}
     wbFormIDCk(PNAM, 'Quest', [QUST]),
     wbInteger(INAM, 'Last Action Index', itU32),
     wbUnknown(VNAM),
+    wbUnknown(CNAM),
+    wbUnknown(ACTV),
+    wbKSIZ,
+    wbKWDAs,
+    wbCTDAs,
+    wbUnknown(CRIS),
+    wbUnknown(SCQS),
+    wbUnknown(NNAM),
+    wbFormIDCk(TNAM, 'Unknown', [SCEN]),
+    wbUnknown(XNAM),
     wbCTDAs
   ]);
 
@@ -9765,7 +10663,7 @@ begin
   ]);
 end;
 
-procedure DefineTES5k;
+procedure DefineFO4k;
 begin
 
   wbRecord(OTFT, 'Outfit', [
@@ -9776,6 +10674,9 @@ begin
   wbRecord(ARTO, 'Art Object', [
     wbEDID,
     wbOBNDReq,
+    wbPTRN,
+    wbKSIZ,
+    wbKWDAs,
     wbMODL,
     wbInteger(DNAM, 'Art Type', itU32, wbEnum([
       'Magic Casting',
@@ -9822,15 +10723,34 @@ begin
       wbFloat('Forward Run'),
       wbFloat('Back Walk'),
       wbFloat('Back Run'),
-      wbFloat('Rotate in Place Walk', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize),
-      wbFloat('Rotate in Place Run', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize),
-      wbFloat('Rotate while Moving Run', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize)
-    ], cpNormal, True, nil, 10),
+      wbFloat('Rotate in Place Walk'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Rotate in Place Run'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Rotate while Moving Run'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Unknown'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Unknown'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Unknown'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Unknown'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Unknown'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Unknown'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Unknown'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Unknown'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Unknown'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Unknown'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize}),
+      wbFloat('Unknown'{, cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize})
+    ], cpNormal, True, nil, 11),
     wbStruct(INAM, 'Anim Change Thresholds', [
       wbFloat('Directional', cpNormal, True, 180/Pi),
       wbFloat('Movement Speed'),
       wbFloat('Rotation Speed', cpNormal, True, 180/Pi)
-    ])
+    ]),
+    wbUnknown(JNAM),
+    wbFloat(LNAM, 'Unknown')
   ]);
 
   wbRecord(SNDR, 'Sound Descriptor', [
@@ -9841,10 +10761,9 @@ begin
     wbRArray('Sounds',
       wbRStruct('Sound Files', [
         wbString(ANAM, 'File Name')
-      ],[])
+      ], [])
     ),
     wbFormIDCk(ONAM, 'Output Model', [SOPM, NULL]),
-    wbLString(FNAM, 'String', 0, cpIgnore),
     wbCTDAs,
     wbStruct(LNAM, 'Values', [
       wbByteArray('Unknown', 1),
@@ -9863,24 +10782,21 @@ begin
       wbInteger('Priority', itU8),
       wbInteger('db Variance', itU8),
       wbInteger('Static Attenuation (db)', itU16, wbDiv(100))
-    ])
+    ], cpNormal, False, nil, 4),
+    wbRArray('Layers', wbFormIDCk(DNAM, 'Layer', [SNDR])),
+    wbInteger(ITMC, 'Count', itU32, nil, cpBenign),
+    wbRArray('Unknown',
+      wbRStruct('Unknown', [
+        wbEmpty(ITMS, 'Marker Start'),
+        wbUnknown(INTV),
+        wbString(FNAM, 'Unknown'),
+        wbEmpty(ITME, 'Marker End')
+      ], [])
+    )
   ]);
 
   wbRecord(DUAL, 'Dual Cast Data', [
-    wbEDID,
-    wbOBNDReq,
-    wbStruct(DATA, 'Data', [
-      wbFormIDCk('Projectile', [PROJ, NULL]),
-      wbFormIDCk('Explosion', [EXPL, NULL]),
-      wbFormIDCk('Effect Shader', [EFSH, NULL]),
-      wbFormIDCk('Hit Effect Art', [ARTO, NULL]),
-      wbFormIDCk('Impact Data Set', [IPDS, NULL]),
-      wbInteger('Inherit Scale', itU32, wbFlags([
-        'Hit Effect Art',
-        'Projectile',
-        'Explosion'
-      ]))
-    ], cpNormal, True)
+    wbEDID
   ]);
 
   wbRecord(SNCT, 'Sound Category', [
@@ -9891,8 +10807,11 @@ begin
       'Should Appear on Menu'
     ]), cpNormal, True),
     wbFormIDCk(PNAM, 'Parent', [SNCT]),
+    wbFormIDCk(ONAM, 'Unknown', [SNCT]),
     wbInteger(VNAM, 'Static Volume Multiplier', itU16, wbDiv(65535)),
-    wbInteger(UNAM, 'Default Menu Value', itU16, wbDiv(65535))
+    wbInteger(UNAM, 'Default Menu Value', itU16, wbDiv(65535)),
+    wbFloat(MNAM, 'Unknown'),
+    wbUnknown(CNAM)
   ]);
 
   wbRecord(SOPM, 'Sound Output Model', [
@@ -9905,13 +10824,11 @@ begin
       wbByteArray('Unknown', 2),
       wbInteger('Reverb Send %', itU8)
     ]),
-    wbUnknown(FNAM), // leftover, unused
     wbInteger(MNAM, 'Type', itU32, wbEnum([
       'Uses HRTF',
       'Defined Speaker Output'
     ])),
-    wbUnknown(CNAM), // leftover, unused
-    wbUnknown(SNAM), // leftover, unused
+    wbUnknown(VNAM),
     wbStruct(ONAM, 'Output Values', [
       wbArray('Channels', wbStruct('', [
         wbInteger('L', itU8),
@@ -9928,13 +10845,15 @@ begin
         'Channel 2? (unused)'
       ])
     ]),
-    wbStruct(ANAM, 'Attenuation Values', [
+    {wbStruct(ANAM, 'Attenuation Values', [
       wbByteArray('Unknown', 4),
       wbFloat('Min Distance'),
       wbFloat('Max Distance'),
       wbArray('Curve', wbInteger('Value', itU8), 5),
       wbByteArray('Unknown')
-    ])
+    ]),}
+    wbUnknown(ATTN),
+    wbFormIDCk(ENAM, 'Unknown', [AECH])
   ]);
 
   wbRecord(COLL, 'Collision Layer', [
@@ -9964,11 +10883,14 @@ begin
     wbEDID,
     wbFULL,
     wbCNAMReq,
-    wbInteger(FNAM, 'Playable', itU32, wbEnum(['False', 'True']), cpNormal, True)
+    wbInteger(FNAM, 'Flags', itU32, wbFlags([
+      'Playable',
+      'Hair Color'
+    ]), cpNormal, True)
   ]);
 end;
 
-procedure DefineTES5l;
+procedure DefineFO4l;
 begin
   wbRecord(REVB, 'Reverb Parameters', [
     wbEDID,
@@ -9985,7 +10907,8 @@ begin
       wbInteger('Diffusion %', itU8),
       wbInteger('Density %', itU8),
       wbInteger('Unknown', itU8)
-    ], cpNormal, True)
+    ], cpNormal, True),
+    wbUnknown(ANAM)
   ]);
 
   wbRecord(GRAS, 'Grass', [
@@ -10042,7 +10965,8 @@ begin
       ], True)),
       wbInteger('Animation Group Section', itU8{, wbIdleAnam}),
       wbInteger('Replay Delay', itU16)
-    ], cpIgnore, True)
+    ], cpIgnore, True),
+    wbString(GNAM, 'Unknown')
   ]);
 
   wbRecord(INFO, 'Dialog response',
@@ -10051,7 +10975,7 @@ begin
     ])), [
     wbEDID,
     wbVMAD,
-    wbUnknown(DATA),
+    //wbUnknown(DATA),
     wbStruct(ENAM, 'Response flags', [
       wbInteger('Flags', itU16, wbFlags([
         {0x0001} 'Goodbye',
@@ -10073,54 +10997,46 @@ begin
       ])),
       wbInteger('Reset Hours', itU16, wbDiv(2730))
     ]),
-    wbFormIDCk(TPIC, 'Topic', [DIAL]),
-    wbFormIDCkNoReach(PNAM, 'Previous INFO', [INFO, NULL], False, cpBenign),
-    wbInteger(CNAM, 'Favor Level', itU8, wbEnum([
-      'None',
-      'Small',
-      'Medium',
-      'Large'
-    ])),
-
-    wbRArray('Link To', wbFormIDCk(TCLT, 'Response', [DIAL, INFO, NULL])),
-    wbFormID(DNAM, 'Response Data'),
+    wbFormIDCk(DNAM, 'Unknown', [INFO]),
+    wbFormIDCk(GNAM, 'Unknown', [INFO]),
+    wbString(IOVR, 'Unknown'),
 
     wbRArray('Responses', wbRStruct('Response', [
-      wbStruct(TRDT, 'Response Data', [
-        wbInteger('Emotion Type', itU32, wbEmotionTypeEnum),
-        wbInteger('Emotion Value', itU32),
-        wbByteArray('Unused', 4),
+      wbStruct(TRDA, 'Response Data', [
+        wbFormIDCk('Emotion', [KYWD, FFFF]),
         wbInteger('Response number', itU8),
         wbByteArray('Unused', 3),
-        wbFormIDCk('Sound', [SNDR, NULL]),
-        wbInteger('Flags', itU8, wbFlags([
-          'Use Emotion Animation'
-        ])),
-        wbByteArray('Unused', 3)
+        //wbFormIDCk('Sound', [SNDR, NULL]),
+        //wbInteger('Flags', itU8, wbFlags([
+        //  'Use Emotion Animation'
+        //])),
+        wbUnknown
       ]),
       wbLStringKC(NAM1, 'Response Text', 0, cpTranslate),
-      wbString(NAM2, 'Script Notes'),
-      wbString(NAM3, 'Edits'),
+      wbString(NAM2, 'Script Notes', 0),
+      wbString(NAM3, 'Edits', 0),
+      wbUnknown(NAM4),
       wbFormIDCk(SNAM, 'Idle Animations: Speaker', [IDLE]),
-      wbFormIDCk(LNAM, 'Idle Animations: Listener', [IDLE])
+      //wbFormIDCk(LNAM, 'Idle Animations: Listener', [IDLE])
+      wbUnknown(TNAM),
+      wbUnknown(NAM9),
+      wbFormID(SRAF),
+      wbUnknown(WZMD)
     ], [])),
 
     wbCTDAs,
-
-    {>>> BEGIN leftover from earlier CK versions <<<}
-    wbRArray('Unknown',
-      wbRStruct('Unknown', [
-        wbUnknown(SCHR),
-        wbFormID(QNAM, 'Unknown'),
-        wbEmpty(NEXT, 'Marker')
-      ], []), cpIgnore, false, nil, nil, wbNeverShow
-    ),
-    {>>> END leftover from earlier CK versions <<<}
-
     wbLString(RNAM, 'Prompt', 0, cpTranslate),
     wbFormIDCk(ANAM, 'Speaker', [NPC_]),
-    wbFormIDCk(TWAT, 'Walk Away Topic', [DIAL]),
-    wbFormIDCk(ONAM, 'Audio Output Override', [SOPM])
+    wbFormIDCk(TSCE, 'Scene', [SCEN]),
+    wbUnknown(ALFA),
+    wbUnknown(INTV),
+    wbFormIDCk(ONAM, 'Audio Output Override', [SOPM]),
+    wbUnknown(GREE),
+    wbUnknown(TIQS),
+    wbString(NAM0),
+    wbFormIDCk(MODQ, 'Unknown', [GLOB]),
+    wbUnknown(INCC),
+    wbUnknown(INAM)
   ], False, wbINFOAddInfo, cpNormal, False, nil{wbINFOAfterLoad});
 
   wbRecord(INGR, 'Ingredient', [
@@ -10131,11 +11047,10 @@ begin
     wbKSIZ,
     wbKWDAs,
     wbMODL,
-    wbICON,
     wbDEST,
     wbETYP,
-    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR, SOUN]),
-    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR, SOUN]),
+    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR]),
+    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR]),
     wbStruct(DATA, '', [
       wbInteger('Value', itS32),
       wbFloat('Weight')
@@ -10164,12 +11079,12 @@ begin
     wbEDID,
     wbVMAD,
     wbOBNDReq,
+    wbPTRN,
     wbFULLReq,
     wbMODL,
-    wbICON,
     wbDEST,
-    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR, SOUN]),
-    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR, SOUN]),
+    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR]),
+    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR]),
     wbKSIZ,
     wbKWDAs,
     wbStruct(DATA, '', [
@@ -10215,8 +11130,8 @@ begin
           wbByteArray(VTXT, 'Alpha Layer Data')
         ], [])
       ], [])),
-
-      wbArray(VTEX, 'Textures', wbFormIDCk('Texture', [LTEX, NULL]))
+      wbArray(VTEX, 'Textures', wbFormIDCk('Texture', [LTEX, NULL])),
+      wbRArray('Unknown', wbUnknown(MPCD))
     ]);
 
   end else begin
@@ -10271,8 +11186,8 @@ begin
           ]))
         ], [])
       ], [])),
-
-      wbArray(VTEX, 'Textures', wbFormIDCk('Texture', [LTEX, NULL]))
+      wbArray(VTEX, 'Textures', wbFormIDCk('Texture', [LTEX, NULL])),
+      wbRArray('Unknown', wbUnknown(MPCD))
     ]);
 
   end;
@@ -10286,10 +11201,13 @@ begin
     wbEDID,
     wbVMAD,
     wbOBNDReq,
+    wbPTRN,
     wbMODL,
+    wbKSIZ,
+    wbKWDAs,
     wbDEST,
+    wbPRPS,
     wbFULL,
-    wbICON,
     wbStruct(DATA, '', [
       wbInteger('Time', itS32),
       wbInteger('Radius', itU32),
@@ -10324,14 +11242,20 @@ begin
         wbFloat('Movement Amplitude')
       ]),
       wbInteger('Value', itU32),
-      wbFloat('Weight')
+      wbFloat('Weight'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbUnknown
     ], cpNormal, True),
     wbFloat(FNAM, 'Fade value', cpNormal, True),
+    wbString(NAM0, 'Unknown'),
+    wbFormIDCk(LNAM, 'Lens', [LENS]),
+    wbFormIDCk(WGDR, 'Godray', [GDRY]),
     wbFormIDCk(SNAM, 'Sound', [SNDR])
   ], False, nil, cpNormal, False, wbLIGHAfterLoad);
 end;
 
-procedure DefineTES5m;
+procedure DefineFO4m;
 begin
 
   wbRecord(LSCR, 'Load Screen',
@@ -10339,19 +11263,23 @@ begin
       {0x00000400} 10, 'Displays In Main Menu'
     ])), [
     wbEDID,
-    wbICON,
     wbDESCReq,
     wbCTDAs,
-    wbFormIDCk(NNAM, 'Loading Screen NIF', [STAT, NULL], False, cpNormal, True),
+    wbFormIDCk(NNAM, 'Loading Screen NIF', [STAT, SCOL, NULL], False, cpNormal, True),
     wbFloat(SNAM, 'Initial Scale'),
     wbStruct(RNAM, 'Initial Rotation', [
       wbInteger('X', itS16),
       wbInteger('Y', itS16),
       wbInteger('Z', itS16)
     ]),
+    wbFormIDCk(TNAM, 'Transform', [TRNS]),
     wbStruct(ONAM, 'Rotation Offset Constraints', [
       wbInteger('Min', itS16),
       wbInteger('Max', itS16)
+    ]),
+    wbStruct(ZNAM, 'Unknown', [
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
     ]),
     wbStruct(XNAM, 'Initial Translation Offset', [
       wbFloat('X'),
@@ -10377,6 +11305,7 @@ begin
     wbEDID,
     wbOBNDReq,
     wbLVLD,
+    wbUnknown(LVLM), { Always 00 }
     wbInteger(LVLF, 'Flags', itU8, wbFlags([
       {0x01} 'Calculate from all levels <= player''s level',
       {0x02} 'Calculate for each item in count'
@@ -10395,6 +11324,10 @@ begin
 				wbCOED
       ], []),
     cpNormal, True, nil, wbLVLOsAfterSet),
+    wbStructs(LLKC, 'Unknown', 'Unknown', [
+      wbFormIDCk('Keyword', [KYWD]),
+      wbByteArray('Unknown', 4)
+    ]),
     wbMODL
   ], False, nil, cpNormal, False, nil, wbLLEAfterSet);
 
@@ -10402,6 +11335,7 @@ begin
     wbEDID,
     wbOBNDReq,
     wbLVLD,
+    wbUnknown(LVLM), { Always 00 }
     wbInteger(LVLF, 'Flags', itU8, wbFlags([
       {0x01} 'Calculate from all levels <= player''s level',
       {0x02} 'Calculate for each item in count',
@@ -10415,39 +11349,26 @@ begin
         wbStructExSK(LVLO , [0, 2], [3], 'Base Data', [
           wbInteger('Level', itU16),
           wbByteArray('Unknown', 2, cpIgnore, false, wbNeverShow),
-          wbFormIDCk('Reference', [ARMO, AMMO, APPA, MISC, WEAP, BOOK, LVLI, KEYM, ALCH, LIGH, INGR, SLGM, SCRL]),
+          wbFormIDCk('Reference', [ARMO, AMMO, MISC, WEAP, BOOK, LVLI, KEYM, ALCH, LIGH, INGR, NOTE, CMPO]),
           wbInteger('Count', itU16),
           wbByteArray('Unknown', 2, cpIgnore, false, wbNeverShow)
         ]),
         wbCOED
       ], []), cpNormal, False, nil, wbLVLOsAfterSet
-    )
+    ),
+    wbStructs(LLKC, 'Unknown', 'Unknown', [
+      wbFormIDCk('Keyword', [KYWD]),
+      wbByteArray('Unknown', 4)
+    ]),
+    wbFormIDCk(LVSG, 'Unknown', [GLOB]),
+    wbLString(ONAM, 'Unknown', 0, cpTranslate)
   ], False, nil, cpNormal, False, nil, wbLLEAfterSet);
 
-   wbRecord(LVSP, 'Leveled Spell', [
-    wbEDID,
-    wbOBNDReq,
-    wbLVLD,
-    wbInteger(LVLF, 'Flags', itU8, wbFlags([
-      {0x01} 'Calculate from all levels <= player''s level',
-      {0x02} 'Calculate for each item in count',
-      {0x04} 'Use All Spells'
-    ]), cpNormal, True),
-    wbLLCT,
-    wbRArrayS('Leveled List Entries',
-      wbRStructSK([0], 'Leveled List Entry', [
-        wbStructExSK(LVLO , [0, 2], [3], 'Base Data', [
-        wbInteger('Level', itU16),
-        wbByteArray('Unknown', 2, cpIgnore, false, wbNeverShow),
-        wbFormIDCk('Reference', [SPEL, LVSP]),
-        wbInteger('Count', itU16),
-        wbByteArray('Unknown', 2, cpIgnore, false, wbNeverShow)
-      ])
-      ], []), cpNormal, False, nil, wbLVLOsAfterSet
-    )
-  ], False, nil, cpNormal, False, nil, wbLLEAfterSet);
+  wbRecord(LVSP, 'Leveled Spell', [
+    wbEDID
+  ]);
 
-  wbMGEFType := wbInteger('Archtype', itU32, wbEnum([
+  wbMGEFType := wbInteger('Archetype', itU32, wbEnum([
     {00} 'Value Modifier',
     {01} 'Script',
     {02} 'Dispel',
@@ -10461,8 +11382,8 @@ begin
     {10} 'Command Summoned',
     {11} 'Invisibility',
     {12} 'Light',
-    {13} 'Unknown 13',
-    {14} 'Unknown 14',
+    {13} 'Darkness',
+    {14} 'Nighteye',
     {15} 'Lock',
     {16} 'Open',
     {17} 'Bound Weapon',
@@ -10474,17 +11395,17 @@ begin
     {23} 'Soul Trap',
     {24} 'Turn Undead',
     {25} 'Guide',
-    {26} 'Werewolf Feed',
+    {26} 'Unknown 26',
     {27} 'Cure Paralysis',
     {28} 'Cure Addiction',
     {29} 'Cure Poison',
     {30} 'Concussion',
-    {31} 'Value and Parts',
+    {31} 'Stimpack',
     {32} 'Accumulate Magnitude',
     {33} 'Stagger',
     {34} 'Peak Value Modifier',
     {35} 'Cloak',
-    {36} 'Werewolf',
+    {36} 'Unknown 36',
     {37} 'Slow Time',
     {38} 'Rally',
     {39} 'Enhance Weapon',
@@ -10493,8 +11414,11 @@ begin
     {42} 'Banish',
     {43} 'Spawn Scripted Ref',
     {44} 'Disguise',
-    {45} 'Grab Actor',
-    {46} 'Vampire Lord'
+    {45} 'Damage',
+    {46} 'Immunity',
+    {47} 'Permanent Reanimate',
+    {48} 'Jetpack',
+    {49} 'Chameleon'
   ]), cpNormal, False, nil, wbMGEFArchtypeAfterSet);
 
   wbMGEFData := wbRStruct('Magic Effect Data', [
@@ -10545,8 +11469,8 @@ begin
         wbFormIDCk('Assoc. Item', [ENCH, NULL]),
         wbFormIDCk('Assoc. Item', [KYWD, NULL])
       ], cpNormal, False, nil, wbMGEFAssocItemAfterSet),
-      wbInteger('Magic Skill', itS32, wbActorValueEnum),
-      wbInteger('Resist Value', itS32, wbActorValueEnum),
+      wbByteArray('Magic Skill (unused)', 4),
+      wbFormIDCk('Resist Value', [AVIF, NULL]),
       wbInteger('Counter Effect count', itU16),
       wbByteArray('Unused', 2),
       wbFormIDCk('Casting Light', [LIGH, NULL]),
@@ -10567,7 +11491,7 @@ begin
       wbFormIDCk('Explosion', [EXPL, NULL]),
       wbInteger('Casting Type', itU32, wbCastEnum),
       wbInteger('Delivery', itU32, wbTargetEnum),
-      wbInteger('Second Actor Value', itS32, wbActorValueEnum),
+      wbActorValue, //wbInteger('Second Actor Value', itS32, wbActorValueEnum),
       wbFormIDCk('Casting Art', [ARTO, NULL]),
       wbFormIDCk('Hit Effect Art', [ARTO, NULL]),
       wbFormIDCk('Impact Data', [IPDS, NULL]),
@@ -10621,53 +11545,51 @@ begin
     wbEDID,
     wbVMAD,
     wbOBNDReq,
+    wbPTRN,
     wbFULL,
     wbMODL,
-    wbICON,
     wbDEST,
-    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR, SOUN]),
-    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR, SOUN]),
+    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR]),
+    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR]),
     wbKSIZ,
     wbKWDAs,
+    wbFormID(FIMD),
     wbStruct(DATA, 'Data', [
       wbInteger('Value', itS32),
       wbFloat('Weight')
-    ], cpNormal, True)
+    ], cpNormal, True),
+    // the amount of components is the same as size of CDIX, so should not be sorted probably
+    wbStructs(CVPA, 'Components', 'Component', [
+      wbFormIDCk('Component', [CMPO, MISC, ALCH, AMMO]),
+      wbInteger('Count', itU32)
+    ]),
+    wbArray(CDIX, 'Unknowns', wbInteger('Unknown', itU8))
   ], False, nil, cpNormal, False, wbRemoveEmptyKWDA, wbKeywordsAfterSet);
-
-  wbRecord(APPA, 'Alchemical Apparatus', [
-    wbEDID,
-    wbVMAD,
-    wbOBNDReq,
-    wbFULL,
-    wbMODL,
-    wbICON,
-    wbDEST,
-    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR, SOUN]),
-    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR, SOUN]),
-    wbInteger(QUAL, 'Quality', itS32, wbEnum([], [
-      0, 'Novice',
-      1, 'Apprentice',
-      2, 'Journeyman',
-      3, 'Expert',
-      4, 'Master'
-    ])),
-    wbDESC,
-    wbStruct(DATA, 'Data', [
-      wbInteger('Value', itU32),
-      wbFloat('Weight')
-    ])
-  ]);
 
   wbRecord(COBJ, 'Constructible Object', [
     wbEDID,
-    wbCOCT,
-    wbCNTOs,
+    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR]),
+    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR]),
+    wbArrayS(FVPA, 'Components',
+      wbStructSK([0], 'Component', [
+        wbFormIDCk('Component', [CMPO, MISC, ALCH, AMMO]),
+        wbInteger('Count', itU32)
+      ])
+    ),
+    wbLString(DESC, 'Description', 0, cpTranslate),
     wbCTDAs,
     wbFormID(CNAM, 'Created Object'),
     wbFormIDCk(BNAM, 'Workbench Keyword', [KYWD]),
-    wbInteger(NAM1, 'Created Object Count', itU16)
-  ], False, nil, cpNormal, False, nil, wbContainerAfterSet);
+    wbByteArray(NAM1, 'Unused', 0, cpIgnore), // co_PA_FusionCore01
+    wbByteArray(NAM2, 'Unused', 0, cpIgnore), // co_PA_FusionCore01
+    wbByteArray(NAM3, 'Unused', 0, cpIgnore), // co_PA_FusionCore01
+    wbFormIDCk(ANAM, 'Unknown', [ARTO]),
+    wbArrayS(FNAM, 'Category', wbFormIDCk('Keyword', [KYWD])),
+    wbStruct(INTV, '', [
+      wbInteger('Created Object Count', itU16),
+      wbInteger('Priority', itU16)
+    ])
+  ]);
 
   wbRecord(NPC_, 'Non-Player Character (Actor)',
     wbFlags(wbRecordFlagsFlags, wbFlagsList([
@@ -10679,6 +11601,8 @@ begin
     wbEDID,
     wbVMAD,
     wbOBNDReq,
+    wbPTRN,
+    wbFormIDCk(STCP, 'Unknown', [STAG]),
     wbStruct(ACBS, 'Configuration', [
       wbInteger('Flags', itU32, wbFlags([
         {0x00000001} 'Female',
@@ -10714,7 +11638,7 @@ begin
         {0x40000000} 'Unknown 30',
         {0x80000000} 'Invulnerable'
       ])),
-      wbInteger('Magicka Offset', itS16, nil, cpNormal, True, nil{wbActorTemplateUseStats}),
+      wbInteger('Health Offset', itS16, nil, cpNormal, True, nil{wbActorTemplateUseStats}),
       wbInteger('Stamina Offset', itS16, nil, cpNormal, False, nil{wbActorTemplateUseAIData}),
       wbUnion('Level', wbNPCLevelDecider, [
         wbInteger('Level', itS16, nil, cpNormal, True, nil{wbActorTemplateUseStats}),
@@ -10722,8 +11646,7 @@ begin
       ], cpNormal, True, nil{wbActorTemplateUseStats}),
       wbInteger('Calc min level', itU16, nil, cpNormal, True, nil{wbActorTemplateUseStats}),
       wbInteger('Calc max level', itU16, nil, cpNormal, True, nil{wbActorTemplateUseStats}),
-      wbInteger('Speed Multiplier', itU16, nil, cpNormal, True, nil{wbActorTemplateUseStats}),
-      wbInteger('Disposition Base (unused)', itS16, nil, cpIgnore, True, nil{wbActorTemplateUseTraits}),
+      wbByteArray('Unknown', 4),
       wbInteger('Template Flags', itU16, wbFlags([
         {0x0001} 'Use Traits',
         {0x0002} 'Use Stats',
@@ -10738,20 +11661,20 @@ begin
         {0x0400} 'Use Def Pack List',
         {0x0800} 'Use Attack Data',
         {0x1000} 'Use Keywords'
-      ])),
-      wbInteger('Health Offset', itS16, nil, cpNormal, True, nil{wbActorTemplateUseStats}),
-      wbInteger('Bleedout Override', itU16, nil, cpNormal, True, nil{wbActorTemplateUseStats})
+      ]))
     ], cpNormal, True),
     wbRArrayS('Factions',
       wbStructSK(SNAM, [0], 'Faction', [
         wbFormIDCk('Faction', [FACT]),
-        wbInteger('Rank', itS8),
-        wbByteArray('Unused', 3, cpIgnore)
+        wbInteger('Rank', itS8)
       ]), cpNormal, False, nil, nil, nil{wbActorTemplateUseFactions}
     ),
     wbFormIDCk(INAM, 'Death item', [LVLI], False, cpNormal, False, nil{wbActorTemplateUseTraits}),
     wbFormIDCk(VTCK, 'Voice', [VTYP], False, cpNormal, False, nil{wbActorTemplateUseTraits}),
     wbFormIDCk(TPLT, 'Template', [LVLN, NPC_]),
+    wbFormIDCk(LTPT, 'Legendary Template', [LVLN, NPC_]),
+    wbFormIDCk(LTPC, 'Legendary Chance', [GLOB]),
+    wbArray(TPTA, 'Unknown', wbFormIDCk('Unknown', [LVLN, NPC_, NULL])),
     wbFormIDCk(RNAM, 'Race', [RACE], False, cpNormal, True, nil{wbActorTemplateUseTraits}),
     wbSPCT,
     wbSPLOs,
@@ -10764,74 +11687,30 @@ begin
     wbFormIDCk(OCOR, 'Observe dead body override package list', [FLST], False, cpNormal, False),
     wbFormIDCk(GWOR, 'Guard warn override package list', [FLST], False, cpNormal, False),
     wbFormIDCk(ECOR, 'Combat override package list', [FLST], False, cpNormal, False),
+    wbFormIDCk(RCLR, 'Unknown', [FLST]),
     wbInteger(PRKZ, 'Perk Count', itU32, nil, cpBenign),
     wbRArrayS('Perks',
       wbStructSK(PRKR, [0], 'Perk', [
         wbFormIDCk('Perk', [PERK]),
-        wbInteger('Rank', itU8),
-        wbByteArray('Unused', 3, cpIgnore)
+        wbInteger('Rank', itU8)
       ]), cpNormal, False, nil, wbPRKRsAfterSet
     ),
+    wbPRPS,
+    wbFTYP,
+    wbNTRM,
     wbCOCT,
     wbCNTOs,
     wbAIDT,
     wbRArray('Packages', wbFormIDCk(PKID, 'Package', [PACK]), cpNormal, False, nil{wbActorTemplateUseAIPackages}),
     wbKSIZ,
     wbKWDAs,
+    wbAPPR,
+    wbOBTESequence,
     wbFormIDCk(CNAM, 'Class', [CLAS], False, cpNormal, True),
     wbFULL,
     wbLString(SHRT, 'Short Name', 0, cpTranslate),
     wbByteArray(DATA, 'Marker'),
-    wbStruct(DNAM, 'Player Skills', [
-      wbArray('Skill Values', wbInteger('Skill', itU8), [
-        'OneHanded',
-        'TwoHanded',
-        'Marksman',
-        'Block',
-        'Smithing',
-        'HeavyArmor',
-        'LightArmor',
-        'Pickpocket',
-        'Lockpicking',
-        'Sneak',
-        'Alchemy',
-        'Speechcraft',
-        'Alteration',
-        'Conjuration',
-        'Destruction',
-        'Illusion',
-        'Restoration',
-        'Enchanting'
-      ]),
-      wbArray('Skill Offsets', wbInteger('Skill', itU8), [
-        'OneHanded',
-        'TwoHanded',
-        'Marksman',
-        'Block',
-        'Smithing',
-        'HeavyArmor',
-        'LightArmor',
-        'Pickpocket',
-        'Lockpicking',
-        'Sneak',
-        'Alchemy',
-        'Speechcraft',
-        'Alteration',
-        'Conjuration',
-        'Destruction',
-        'Illusion',
-        'Restoration',
-        'Enchanting'
-      ]),
-      //wbByteArray('Unknown', 4),
-      wbInteger('Health', itU16),
-      wbInteger('Magicka', itU16),
-      wbInteger('Stamina', itU16),
-      wbByteArray('Unused', 2, cpIgnore),
-      wbFloat('Far away model distance'),
-      wbInteger('Geared up weapons', itU8),
-      wbByteArray('Unused', 3, cpIgnore)
-    ], cpNormal, False, nil{wbActorTemplateUseStatsAutoCalc}),
+    wbUnknown(DNAM),
     wbRArrayS('Head Parts', wbFormIDCk(PNAM, 'Head Part', [HDPT]), cpNormal, False, nil, nil, nil{wbActorTemplateUseModelAnimation}),
     wbFormIDCk(HCLF, 'Hair Color', [CLFM], False, cpNormal, False),
     wbFormIDCk(ZNAM, 'Combat Style', [CSTY], False, cpNormal, False),
@@ -10839,8 +11718,24 @@ begin
     wbUnknown(NAM5, cpNormal, True),
     wbFloat(NAM6, 'Height', cpNormal, True),
     wbFloat(NAM7, 'Weight', cpNormal, True),
+    wbFloat(NAM4, 'Unknown'),
+    wbStruct(MWGT, 'Unknown', [
+       wbFloat('Unknown'),
+       wbFloat('Unknown'),
+       wbFloat('Unknown')
+    ]),
     wbInteger(NAM8, 'Sound Level', itU32, wbSoundLevelEnum, cpNormal, True),
-    wbCSDTs,
+    wbFormIDCk(PFRN, 'Power Armor Stand', [FURN]),
+    //wbCSDTs,
+    wbInteger(CS2H, 'Sound Count', itU32),
+    wbRArray('Sounds',
+      wbRStruct('Sound', [
+        wbFormIDCk(CS2D, 'Sound', [SNDR]),
+        wbUnknown(CS2K)
+      ], [])
+    ),
+    wbEmpty(CS2E, 'Marker'),
+    wbUnknown(CS2F),
     // When CSCR exists CSDT, CSDI, CSDC are not present
     wbFormIDCk(CSCR, 'Inherits Sounds From', [NPC_], False, cpNormal, False),
     wbFormIDCk(DOFT, 'Default outfit', [OTFT], False, cpNormal, False),
@@ -10851,47 +11746,25 @@ begin
     wbStruct(QNAM, 'Texture lighting', [
       wbFloat('Red'),
       wbFloat('Green'),
-      wbFloat('Blue')
+      wbFloat('Blue'),
+      wbFloat('Alpha')
     ]),
-    wbStruct(NAM9, 'Face morph', [
-      wbFloat('Nose Long/Short'),
-      wbFloat('Nose Up/Down'),
-      wbFloat('Jaw Up/Down'),
-      wbFloat('Jaw Narrow/Wide'),
-      wbFloat('Jaw Farward/Back'),
-      wbFloat('Cheeks Up/Down'),
-      wbFloat('Cheeks Farward/Back'),
-      wbFloat('Eyes Up/Down'),
-      wbFloat('Eyes In/Out'),
-      wbFloat('Brows Up/Down'),
-      wbFloat('Brows In/Out'),
-      wbFloat('Brows Farward/Back'),
-      wbFloat('Lips Up/Down'),
-      wbFloat('Lips In/Out'),
-      wbFloat('Chin Narrow/Wide'),
-      wbFloat('Chin Up/Down'),
-      wbFloat('Chin Underbite/Overbite'),
-      wbFloat('Eyes Farward/Back'),
-      wbFloat('Unknown')
-    ], cpNormal, False),
-    wbStruct(NAMA, 'Face parts', [
-      wbInteger('Nose', itU32),
-      wbInteger('Unknown', itS32),
-      wbInteger('Eyes', itU32),
-      wbInteger('Mouth', itU32)
-    ]),
-    wbRArrayS('Tint Layers',
-      wbRStructSK([0], 'Layer', [
-        wbInteger(TINI, 'Tint Index', itU16),
-        wbStruct(TINC, 'Tint Color', [
-          wbInteger('Red', itU8),
-          wbInteger('Green', itU8),
-          wbInteger('Blue', itU8),
-          wbInteger('Alpha', itU8)
-        ]),
-        wbInteger(TINV, 'Interpolation Value', itU32, wbDiv(100)),
-        wbInteger(TIAS, 'Preset', itS16)
-      ], []))
+    wbUnknown(MSDK),
+    wbUnknown(MSDV),
+    wbRArray('Unknown',
+      wbRStruct('Unknown', [
+        wbUnknown(TETI),
+        wbUnknown(TEND)
+      ], [])
+    ),
+    wbUnknown(MRSV),
+    wbRArray('Unknown',
+      wbRStruct('Unknown', [
+        wbUnknown(FMRI),
+        wbUnknown(FMRS)
+      ], [])
+    ),
+    wbFloat(FMIN, 'Unknown')
   ], False, nil, cpNormal, False, wbNPCAfterLoad, wbNPCAfterSet);
 
   wbObjectTypeEnum := wbEnum([
@@ -10983,7 +11856,7 @@ begin
   ]);
 end;
 
-procedure DefineTES5n;
+procedure DefineFO4n;
 begin
 
   wbUNAMs:= wbRArray('Data Inputs', wbRStruct('Data Input', [
@@ -11045,6 +11918,7 @@ begin
       wbByteArray('Unused', 3, cpIgnore),
       wbInteger('Duration (minutes)', itS32)
     ], cpNormal, True),
+
     wbCTDAs,
 
     wbRStruct('Idle Animations', [
@@ -11129,35 +12003,16 @@ begin
     wbRStruct('OnBegin', [
       wbEmpty(POBA, 'OnBegin Marker', cpNormal, True),
       wbFormIDCk(INAM, 'Idle', [IDLE, NULL], False, cpNormal, True),
-      {>>> BEGIN leftover from earlier CK versions <<<}
-      wbByteArray(SCHR, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      wbByteArray(SCTX, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      wbByteArray(QNAM, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      wbByteArray(TNAM, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      {>>> END leftover from earlier CK versions <<<}
       wbPDTOs
     ], []),
     wbRStruct('OnEnd', [
       wbEmpty(POEA, 'OnEnd Marker', cpNormal, True),
       wbFormIDCk(INAM, 'Idle', [IDLE, NULL], False, cpNormal, True),
-      {>>> BEGIN leftover from earlier CK versions <<<}
-      wbByteArray(SCHR, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      wbByteArray(SCTX, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      wbByteArray(QNAM, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      wbByteArray(TNAM, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      {>>> END leftover from earlier CK versions <<<}
       wbPDTOs
     ], []),
     wbRStruct('OnChange', [
       wbEmpty(POCA, 'OnChange Marker', cpNormal, True),
       wbFormIDCk(INAM, 'Idle', [IDLE, NULL], False, cpNormal, True),
-      {>>> BEGIN leftover from earlier CK versions <<<}
-      wbByteArray(SCHR, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      wbByteArray(SCDA, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      wbByteArray(SCTX, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      wbByteArray(QNAM, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      wbByteArray(TNAM, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      {>>> END leftover from earlier CK versions <<<}
       wbPDTOs
     ], [])
   ], False, nil, cpNormal, False, nil {wbPACKAfterLoad});
@@ -11227,8 +12082,10 @@ begin
       ]))
     ]),
     wbString(ENAM, 'Event', 4),
+    wbFormIDCk(LNAM, 'Location', [LCTN]),
+    wbFormIDCk(XNAM, 'Global', [GLOB]),
     wbRArray('Text Display Globals', wbFormIDCk(QTGL, 'Global', [GLOB])),
-    wbString(FLTR, 'Object Window Filter', 0, cpTranslate),
+    wbFLTR,
     wbRStruct('Quest Dialogue Conditions', [wbCTDAs], [], cpNormal, False),
     wbEmpty(NEXT, 'Marker'),
     wbCTDAs, {>>> Unknown, doesn't show up in CK <<<}
@@ -11249,13 +12106,9 @@ begin
           {0x02} 'Fail Quest'
         ])),
         wbCTDAs,
+        wbString(NAM2, 'Note'),
         wbLString(CNAM, 'Log Entry', 0, cpTranslate),
-        wbFormIDCk(NAM0, 'Next Quest', [QUST]),
-        {>>> BEGIN leftover from earlier CK versions <<<}
-        wbByteArray(SCHR, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-        wbByteArray(SCTX, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-        wbByteArray(QNAM, 'Unused', 0, cpIgnore, false, false, wbNeverShow)
-        {>>> END leftover from earlier CK versions <<<}
+        wbFormIDCk(NAM0, 'Next Quest', [QUST])
       ], []))
     ], [])),
     wbRArray('Objectives', wbRStruct('Objective', [
@@ -11268,7 +12121,7 @@ begin
           wbInteger('Flags', itU8, wbFlags([
             {0x01} 'Compass Marker Ignores Locks'
           ])),
-          wbByteArray('Unused', 3)
+          wbUnknown
         ]),
         wbCTDAs
       ], []))
@@ -11322,7 +12175,9 @@ begin
             wbString(ALFE, 'From Event', 4),
             wbByteArray(ALFD, 'Event Data')
           ], []),
+          wbUnknown(ALCC),
           wbCTDAs,
+          wbUnknown(ALCC),
           wbKSIZ,
           wbKWDAs,
           wbCOCT,
@@ -11331,11 +12186,16 @@ begin
           wbFormIDCk(OCOR, 'Observe dead body override package list', [FLST], False, cpNormal, False),
           wbFormIDCk(GWOR, 'Guard warn override package list', [FLST], False, cpNormal, False),
           wbFormIDCk(ECOR, 'Combat override package list', [FLST], False, cpNormal, False),
+          wbArray(ALLA, 'Unknown', wbStruct('Unknown', [
+            wbFormIDCk('Unknown', [KYWD]),
+            wbByteArray('Unknown', 4)
+          ])),
           wbFormIDCk(ALDN, 'Display Name', [MESG]),
+          wbFormIDCk(ALFV, 'Forced Voice', [VTYP]),
           wbRArray('Alias Spells', wbFormIDCk(ALSP, 'Spell', [SPEL])),
           wbRArray('Alias Factions', wbFormIDCk(ALFC, 'Faction', [FACT])),
           wbRArray('Alias Package Data', wbFormIDCk(ALPC, 'Package', [PACK])),
-          wbFormIDCk(VTCK, 'Voice Types', [NPC_, FLST, NULL]),
+          wbFormIDCk(VTCK, 'Voice Types', [NPC_, FACT, FLST, VTYP, NULL]),
           wbEmpty(ALED, 'Alias End', cpNormal, True)
         ], [], cpNormal, False, nil, False, nil, wbContainerAfterSet),
 
@@ -11384,7 +12244,9 @@ begin
             wbString(ALFE, 'From Event', 4),
             wbByteArray(ALFD, 'Event Data')
           ], []),
+          wbUnknown(ALCC),
           wbCTDAs,
+          wbUnknown(ALCC),
           wbKSIZ,
           wbKWDAs,
           wbCOCT,
@@ -11393,16 +12255,27 @@ begin
           wbFormIDCk(OCOR, 'Observe dead body override package list', [FLST], False, cpNormal, False),
           wbFormIDCk(GWOR, 'Guard warn override package list', [FLST], False, cpNormal, False),
           wbFormIDCk(ECOR, 'Combat override package list', [FLST], False, cpNormal, False),
+          wbArray(ALLA, 'Unknown', wbStruct('Unknown', [
+            wbFormIDCk('Unknown', [KYWD]),
+            wbByteArray('Unknown', 4)
+          ])),
           wbFormIDCk(ALDN, 'Display Name', [MESG]),
+          wbFormIDCk(ALFV, 'Forced Voice', [VTYP]),
           wbRArray('Alias Spells', wbFormIDCk(ALSP, 'Spell', [SPEL])),
           wbRArray('Alias Factions', wbFormIDCk(ALFC, 'Faction', [FACT])),
           wbRArray('Alias Package Data', wbFormIDCk(ALPC, 'Package', [PACK])),
-          wbFormIDCk(VTCK, 'Voice Types', [NPC_, FLST, NULL]),
+          wbFormIDCk(VTCK, 'Voice Types', [NPC_, FACT, FLST, VTYP, NULL]),
           wbEmpty(ALED, 'Alias End', cpNormal, True)
-        ], [], cpNormal, False, nil, False, nil, wbContainerAfterSet)
+        ], [], cpNormal, False, nil, False, nil, wbContainerAfterSet),
+
+        wbRStruct('Alias', [
+          wbUnknown(ALCS),
+          wbUnknown(ALMI)
+        ], [])
+
       ], [])
     ),
-    wbString(NNAM, 'Description', 0, cpNormal, False),
+    wbString(NNAM, 'Description', 0, cpTranslate, False),
     wbRArray('Targets', wbRStruct('Target', [
       wbStruct(QSTA, 'Target', [
         wbFormIDCkNoReach('Target', [ACHR, REFR, PGRE, PHZD, PMIS, PARW, PBAR, PBEA, PCON, PFLA], True),
@@ -11412,151 +12285,14 @@ begin
         wbByteArray('Unknown', 3)
       ]),
       wbCTDAs
-    ], []))
+    ], [])),
+    wbFormIDCk(GNAM, 'Keyword', [KYWD]),
+    wbString(SNAM, 'Unknown')
   ]);
 
   wbBodyPartIndexEnum := wbEnum([
     'Body Texture'
   ]);
-
-  wbNoseMorphFlags := wbInteger('Nose Morph Flags', itU32, wbFlags([
-    {0x00000001}'NoseType0',
-    {0x00000002}'NoseType1',
-    {0x00000004}'NoseType2',
-    {0x00000008}'NoseType3',
-    {0x00000010}'NoseType4',
-    {0x00000020}'NoseType5',
-    {0x00000040}'NoseType6',
-    {0x00000080}'NoseType7',
-    {0x00000100}'NoseType8',
-    {0x00000200}'NoseType9',
-    {0x00000400}'NoseType10',
-    {0x00000800}'NoseType11',
-    {0x00001000}'NoseType12',
-    {0x00002000}'NoseType13',
-    {0x00004000}'NoseType14',
-    {0x00008000}'NoseType15',
-    {0x00010000}'NoseType16',
-    {0x00020000}'NoseType17',
-    {0x00040000}'NoseType18',
-    {0x00080000}'NoseType19',
-    {0x00100000}'NoseType20',
-    {0x00200000}'NoseType21',
-    {0x00400000}'NoseType22',
-    {0x00800000}'NoseType23',
-    {0x01000000}'NoseType24',
-    {0x02000000}'NoseType25',
-    {0x04000000}'NoseType26',
-    {0x08000000}'NoseType27',
-    {0x10000000}'NoseType28',
-    {0x20000000}'NoseType29',
-    {0x40000000}'NoseType30',
-    {0x80000000}'NoseType31'
-  ]));
-
-  wbBrowMorphFlags := wbInteger('Brow Morph Flags', itU32, wbFlags([
-    {0x00000001}'BrowType0',
-    {0x00000002}'BrowType1',
-    {0x00000004}'BrowType2',
-    {0x00000008}'BrowType3',
-    {0x00000010}'BrowType4',
-    {0x00000020}'BrowType5',
-    {0x00000040}'BrowType6',
-    {0x00000080}'BrowType7',
-    {0x00000100}'BrowType8',
-    {0x00000200}'BrowType9',
-    {0x00000400}'BrowType10',
-    {0x00000800}'BrowType11',
-    {0x00001000}'BrowType12',
-    {0x00002000}'BrowType13',
-    {0x00004000}'BrowType14',
-    {0x00008000}'BrowType15',
-    {0x00010000}'BrowType16',
-    {0x00020000}'BrowType17',
-    {0x00040000}'BrowType18',
-    {0x00080000}'BrowType19',
-    {0x00100000}'BrowType20'
-  ], True));
-
-  wbEyesMorphFlags01 := wbInteger('Eye Morph Flags 1', itU32, wbFlags([
-    {0x00000001}'EyesType0',
-    {0x00000002}'EyesType1',
-    {0x00000004}'EyesType2',
-    {0x00000008}'EyesType3',
-    {0x00000010}'EyesType4',
-    {0x00000020}'EyesType5',
-    {0x00000040}'EyesType6',
-    {0x00000080}'EyesType7',
-    {0x00000100}'EyesType8',
-    {0x00000200}'EyesType9',
-    {0x00000400}'EyesType10',
-    {0x00000800}'EyesType11',
-    {0x00001000}'EyesType12',
-    {0x00002000}'EyesType13',
-    {0x00004000}'EyesType14',
-    {0x00008000}'EyesType15',
-    {0x00010000}'EyesType16',
-    {0x00020000}'EyesType17',
-    {0x00040000}'EyesType18',
-    {0x00080000}'EyesType19',
-    {0x00100000}'EyesType20',
-    {0x00200000}'EyesType21',
-    {0x00400000}'EyesType22',
-    {0x00800000}'EyesType23',
-    {0x01000000}'EyesType24',
-    {0x02000000}'EyesType25',
-    {0x04000000}'EyesType26',
-    {0x08000000}'EyesType27',
-    {0x10000000}'EyesType28',
-    {0x20000000}'EyesType29',
-    {0x40000000}'EyesType30',
-    {0x80000000}'EyesType31'
-  ]));
-
-  wbEyesMorphFlags02 := wbInteger('Eye Morph Flags 2', itU8, wbFlags([
-    {0x00000001}'EyesType32',
-    {0x00000002}'EyesType33',
-    {0x00000004}'EyesType34',
-    {0x00000008}'EyesType35',
-    {0x00000010}'EyesType36',
-    {0x00000020}'EyesType37',
-    {0x00000040}'EyesType38'
-  ], True));
-
-  wbLipMorphFlags := wbInteger('Lip Morph Flags', itU32, wbFlags([
-    {0x00000001}'LipType0',
-    {0x00000002}'LipType1',
-    {0x00000004}'LipType2',
-    {0x00000008}'LipType3',
-    {0x00000010}'LipType4',
-    {0x00000020}'LipType5',
-    {0x00000040}'LipType6',
-    {0x00000080}'LipType7',
-    {0x00000100}'LipType8',
-    {0x00000200}'LipType9',
-    {0x00000400}'LipType10',
-    {0x00000800}'LipType11',
-    {0x00001000}'LipType12',
-    {0x00002000}'LipType13',
-    {0x00004000}'LipType14',
-    {0x00008000}'LipType15',
-    {0x00010000}'LipType16',
-    {0x00020000}'LipType17',
-    {0x00040000}'LipType18',
-    {0x00080000}'LipType19',
-    {0x00100000}'LipType20',
-    {0x00200000}'LipType21',
-    {0x00400000}'LipType22',
-    {0x00800000}'LipType23',
-    {0x01000000}'LipType24',
-    {0x02000000}'LipType25',
-    {0x04000000}'LipType26',
-    {0x08000000}'LipType27',
-    {0x10000000}'LipType28',
-    {0x20000000}'LipType29',
-    {0x40000000}'LipType30',
-    {0x80000000}'LipType31'
-  ]));
 
   wbTintMaskTypeEnum := wbEnum([
     'None',
@@ -11644,7 +12380,8 @@ begin
     wbFloat('OohQ'),
     wbFloat('R'),
     wbFloat('TH'),
-    wbFloat('W')
+    wbFloat('W'),
+    wbUnknown
   ], cpNormal, False, nil, 8);
 
   wbPHWT := wbRStruct('FaceFX Phonemes', [
@@ -11693,138 +12430,139 @@ begin
     wbRStruct('FLAP', [wbPhonemeTargets], [])
   ], []);
 
-  wbMorphs := wbRStruct('Available Morphs', [
-    wbByteArray(MPAI, 'Unknown', 0),
-    wbStruct(MPAV, 'Nose Variants', [
-      wbNoseMorphFlags,
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4)
-    ]),
-    wbByteArray(MPAI, 'Unknown', 0),
-    wbStruct(MPAV, 'Brow Variants', [
-      wbBrowMorphFlags,
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4)
-    ]),
-    wbByteArray(MPAI, 'Unknown', 0),
-    wbStruct(MPAV, 'Eye Variants', [
-      wbEyesMorphFlags01,
-      wbEyesMorphFlags02,
-      wbByteArray('Unknown', 3),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4)
-    ]),
-    wbByteArray(MPAI, 'Unknown', 0),
-    wbStruct(MPAV, 'Lip Variants', [
-      wbLipMorphFlags,
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4),
-      wbByteArray('Unknown', 4)
-    ])
-  ], []);
-
   wbHeadPart := wbRStructSK([0],'Head Part', [
     wbInteger(INDX, 'Head Part Number', itU32),
     wbFormIDCk(HEAD, 'Head', [HDPT, NULL])
   ], []);
+
+  wbTintTemplateGroups :=
+    wbRArray{S}('Tint Template Groups',
+      wbRStruct{SK}({[0], }'Tint Template Group', [
+        wbLString(TTGP, 'Name', 0, cpTranslate),
+        wbUnknown(TTEF),
+        wbCTDAs,
+        wbRArray('Textures', wbString(TTET, 'Texture')),
+        wbUnknown(TTEB),
+        wbArray(TTEC, 'Template Colors', wbStruct('Template Color', [
+          wbFormIDCk('Color', [CLFM]),
+          wbFloat('Alpha'),
+          wbInteger('Template Index', itU16),
+          wbByteArray('Unknown', 4)
+        ])),
+        wbUnknown(TTED),
+        wbUnknown(TETI),
+        wbUnknown(TTGE)
+      ], [])
+    );
+
+  wbMorphGroups :=
+    wbRArray('Morph Groups',
+      wbRStruct('Morph Group', [
+        wbString(MPGN, 'Name'),
+        wbUnknown(MPPC),
+        wbRArray('Morph Presets',
+          wbRStruct('Morph Preset', [
+            wbByteArray(MPPI, 'Intensity'),
+            wbLString(MPPN, 'Name', 0, cpTranslate),
+            wbString(MPPM, 'Unknown'),
+            wbFormIDCk(MPPT, 'Texture', [TXST]),
+            wbUnknown(MPPF)
+          ], [])
+        ),
+        wbUnknown(MPPK),
+        wbUnknown(MPGS)
+      ], [])
+    );
+
+  wbRaceFRMI :=
+    wbRArray('Unknown',
+      wbRStruct('Unknown', [
+        wbUnknown(FMRI),
+        wbLString(FMRN, 'Unknown')
+      ], [])
+    );
 
   wbRecord(RACE, 'Race',
     wbFlags(wbRecordFlagsFlags, wbFlagsList([
       {0x00080000} 19, 'Critter?'
     ])), [
     wbEDID,
+    wbFormIDCk(STCP, 'Sound', [STAG]),
     wbFULL,
     wbDESCReq,
     wbSPCT,
     wbSPLOs,
     wbFormIDCk(WNAM, 'Skin', [ARMO, NULL]),
-//    wbBODT,
-//    wbBOD2,
-    wbBODTBOD2,
+    wbBOD2,
     wbKSIZ,
     wbKWDAs,
+    wbPRPS,
     wbStruct(DATA, '', [
-      wbArrayS('Skill Boosts', wbStructSK([0], 'Skill Boost', [
-        wbInteger('Skill', itS8, wbActorValueEnum),
-        wbInteger('Boost', itS8)
-      ]), 7),
-      wbByteArray('Unknown', 2),
-      wbFloat('Male Height'),
-      wbFloat('Female Height'),
-      wbFloat('Male Weight'),
-      wbFloat('Female Weight'),
-      wbRACE_DATAFlags01,
-      wbFloat('Starting Health'),
-      wbFloat('Starting Magicka'),
-      wbFloat('Starting Stamina'),
-      wbFloat('Base Carry Weight'),
-      wbFloat('Base Mass'),
-      wbFloat('Acceleration rate'),
-      wbFloat('Deceleration rate'),
-      wbInteger('Size', itU32, wbEnum([
-        'Small',
-        'Medium',
-        'Large',
-        'Extra Large'
-      ])),
-      wbInteger('Head Biped Object', itS32, wbBipedObjectEnum),
-      wbInteger('Hair Biped Object', itS32, wbBipedObjectEnum),
-      wbFloat('Injured Health Pct'),
-      wbInteger('Shield Biped Object', itS32, wbBipedObjectEnum),
-      wbFloat('Health Regen'),
-      wbFloat('Magicka Regen'),
-      wbFloat('Stamina Regen'),
-      wbFloat('Unarmed Damage'),
-      wbFloat('Unarmed Reach'),
-      wbInteger('Body Biped Object', itS32, wbBipedObjectEnum),
-      wbFloat('Aim Angle Tolerance'),
-      wbFloat('Flight Radius'),
-      wbFloat('Angular Acceleration Rate'),
-      wbFloat('Angular Tolerance'),
-      wbInteger('Flags 2', itU32, wbFlags([
-        {0x00000001} 'Use Advanced Avoidance',
-        {0x00000002} 'Non-Hostile',
-        {0x00000004} 'Unknown 2',
-        {0x00000008} 'Unknown 3',
-        {0x00000010} 'Allow Mounted Combat'
-      ])),
-      wbStruct('Mount Data', [
-        wbFloat('Offset X', cpNormal, False, 1, -1, nil, nil, -63.479000),
-        wbFloat('Offset Y'),
-        wbFloat('Unknown'),
-        wbFloat('Unknown', cpNormal, False, 1, -1, nil, nil, -50.0),
-        wbFloat('Unknown'),
-        wbFloat('Unknown', cpNormal, False, 1, -1, nil, nil, 65.0),
-        wbFloat('Unknown'),
-        wbFloat('Unknown', cpNormal, False, 1, -1, nil, nil, -300.0),
-        wbFloat('Unknown')
-      ])
-      //wbByteArray('Unknown', 4*7)
-    ], cpNormal, True, nil, 29),
+      wbUnknown
+//      wbArrayS('Skill Boosts', wbStructSK([0], 'Skill Boost', [
+//        wbInteger('Skill', itS8, wbActorValueEnum),
+//        wbInteger('Boost', itS8)
+//      ]), 7),
+//      wbByteArray('Unknown', 2),
+//      wbFloat('Male Height'),
+//      wbFloat('Female Height'),
+//      wbFloat('Male Weight'),
+//      wbFloat('Female Weight'),
+//      wbRACE_DATAFlags01,
+//      wbFloat('Starting Health'),
+//      wbFloat('Starting Magicka'),
+//      wbFloat('Starting Stamina'),
+//      wbFloat('Base Carry Weight'),
+//      wbFloat('Base Mass'),
+//      wbFloat('Acceleration rate'),
+//      wbFloat('Deceleration rate'),
+//      wbInteger('Size', itU32, wbEnum([
+//        'Small',
+//        'Medium',
+//        'Large',
+//        'Extra Large'
+//      ])),
+//      wbInteger('Head Biped Object', itS32, wbBipedObjectEnum),
+//      wbInteger('Hair Biped Object', itS32, wbBipedObjectEnum),
+//      wbFloat('Injured Health Pct'),
+//      wbInteger('Shield Biped Object', itS32, wbBipedObjectEnum),
+//      wbFloat('Health Regen'),
+//      wbFloat('Magicka Regen'),
+//      wbFloat('Stamina Regen'),
+//      wbFloat('Unarmed Damage'),
+//      wbFloat('Unarmed Reach'),
+//      wbInteger('Body Biped Object', itS32, wbBipedObjectEnum),
+//      wbFloat('Aim Angle Tolerance'),
+//      wbFloat('Flight Radius'),
+//      wbFloat('Angular Acceleration Rate'),
+//      wbFloat('Angular Tolerance'),
+//      wbInteger('Flags 2', itU32, wbFlags([
+//        {0x00000001} 'Use Advanced Avoidance',
+//        {0x00000002} 'Non-Hostile',
+//        {0x00000004} 'Unknown 2',
+//        {0x00000008} 'Unknown 3',
+//        {0x00000010} 'Allow Mounted Combat'
+//      ])),
+//      wbStruct('Mount Data', [
+//        wbFloat('Offset X', cpNormal, False, 1, -1, nil, nil, -63.479000),
+//        wbFloat('Offset Y'),
+//        wbFloat('Unknown'),
+//        wbFloat('Unknown', cpNormal, False, 1, -1, nil, nil, -50.0),
+//        wbFloat('Unknown'),
+//        wbFloat('Unknown', cpNormal, False, 1, -1, nil, nil, 65.0),
+//        wbFloat('Unknown'),
+//        wbFloat('Unknown', cpNormal, False, 1, -1, nil, nil, -300.0),
+//        wbFloat('Unknown')
+//      ]),
+    ], cpNormal, True),
     wbEmpty(MNAM, 'Male Marker'),
     wbString(ANAM, 'Male Skeletal Model'),
     wbMODT,
     wbEmpty(FNAM, 'Female Marker'),
     wbString(ANAM, 'Female Skeletal Model'),
     wbMODT,
+    //wbRArray('Unknown', wbUnknown(MTNM)),
+    wbRArray('Unknown', wbString(MTNM, 'Unknown', 4)),
     wbEmpty(NAM2, 'Marker NAM2 #1'),
     wbRArrayS('Movement Type Names', wbString(MTNM, 'Name')),
     wbArray(VTCK, 'Voices', wbFormIDCk('Voice', [VTYP]), ['Male', 'Female'], cpNormal, True),
@@ -11868,10 +12606,13 @@ begin
     wbFormIDCk(NAM4, 'Material Type', [MATT, NULL]),
     wbFormIDCk(NAM5, 'Impact Data Set', [IPDS, NULL]),
 		wbFormIDCk(NAM7, 'Decapitation FX', [ARTO, NULL]),
+		wbFormIDCk(CNAM, 'Unknown', [TXST, NULL]),
+		wbFormIDCk(NAM2, 'Unknown', [TXST, NULL]),
     wbFormIDCk(ONAM, 'Open Loot Sound', [SNDR, NULL]),
     wbFormIDCk(LNAM, 'Close Loot Sound', [SNDR, NULL]),
     {>>> When NAME is user defined wbBipedObjectEnum will be incorrect <<<}
     wbRArray('Biped Object Names', wbString(NAME, 'Name')),
+    wbUnknown(RBPC),
     wbRArrayS('Movement Types', wbRStructSK([0], 'Movement Types', [
       wbFormIDCk(MTYP, 'Movement Type', [MOVT, NULL]),
       wbStruct(SPED, 'Override Values', [
@@ -11889,8 +12630,14 @@ begin
       ])
     ], [])),
     wbInteger(VNAM, 'Equipment Flags', itU32, wbEquipType),
-    wbRArrayS('Equip Slots', wbFormIDCk(QNAM, 'Equip Slot', [EQUP, NULL])),
+    wbRArray('Equip Slots',
+      wbRStruct('Equip Slot', [
+        wbFormIDCk(QNAM, 'Equip Slot', [EQUP, NULL]),
+        wbString(ZNAM, 'Unknown')
+      ], [])
+    ),
     wbFormIDCk(UNES, 'Unarmed Equip Slot', [EQUP, NULL]),
+    wbFormID(UNWP, 'Unknown'),
     wbRArray('Phoneme Target Names', wbString(PHTN, 'Name')),
     wbPHWT,
     wbFormIDCk(WKMV, 'Base Movement Default - Walk', [MOVT, NULL]),
@@ -11899,36 +12646,121 @@ begin
     wbFormIDCk(FLMV, 'Base Movement Default - Fly', [MOVT, NULL]),
     wbFormIDCk(SNMV, 'Base Movement Default - Sneak', [MOVT, NULL]),
     wbFormIDCk(SPMV, 'Base Movement Default - Sprint', [MOVT, NULL]),
+
     // Start Head Data
-    wbRStruct('Head Data', [
+    {wbRStruct('Head Data', [
       wbEmpty(NAM0, 'Head Data Marker', cpNormal, True),
       wbRStruct('Male Head Data', [
         wbEmpty(MNAM, 'Male Data Marker', cpNormal, True),
-          wbRArrayS('Head Parts', wbHeadPart),
-          wbMorphs,
-          wbRArrayS('Race Presets Male', wbFormIDCk(RPRM, 'Preset NPC', [NPC_, NULL])),
-          wbRArrayS('Available Hair Colors Male', wbFormIDCk(AHCM, 'Hair Color', [CLFM, NULL])),
-          wbRArrayS('Face Details Texture Set List Male', wbFormIDCk(FTSM, 'Texture Set', [TXST, NULL])),
-          wbFormIDCk(DFTM, 'Default Face Texture Male', [TXST, NULL]),
-          wbTints,
-          wbMODL
+        wbUnknown(NNAM),
+        wbRArrayS('Head Parts', wbHeadPart),
+        wbRArrayS('Race Presets Male', wbFormIDCk(RPRM, 'Preset NPC', [NPC_, NULL])),
+        wbRArrayS('Available Hair Colors Male', wbFormIDCk(AHCM, 'Hair Color', [CLFM, NULL])),
+        wbRArrayS('Face Details Texture Set List Male', wbFormIDCk(FTSM, 'Texture Set', [TXST, NULL])),
+        wbFormIDCk(DFTM, 'Default Face Texture Male', [TXST, NULL]),
+        wbTintTemplateGroups,
+        wbMorphGroups,
+        wbRaceFRMI,
+        wbString(WMAP, 'Unknown')
       ], [], cpNormal, True),
       wbRStruct('Female Head Data', [
         wbEmpty(NAM0, 'Head Data Marker', cpNormal, True),
         wbEmpty(FNAM, 'Female Data Marker', cpNormal, True),
-          wbRArrayS('Head Parts', wbHeadPart),
-          wbMorphs,
-          wbRArrayS('Race Presets Female', wbFormIDCk(RPRF, 'Preset NPC', [NPC_, NULL])),
-          wbRArrayS('Available Hair Colors Female', wbFormIDCk(AHCF, 'Hair Color', [CLFM, NULL])),
-          wbRArrayS('Face Details Texture Set List Female', wbFormIDCk(FTSF, 'Texture Set', [TXST, NULL])),
-          wbFormIDCk(DFTF, 'Default Face Texture Female', [TXST, NULL]),
-          wbTints,
-          wbMODL
+        wbUnknown(NNAM),
+        wbRArrayS('Head Parts', wbHeadPart),
+        wbRArrayS('Race Presets Female', wbFormIDCk(RPRF, 'Preset NPC', [NPC_, NULL])),
+        wbRArrayS('Available Hair Colors Female', wbFormIDCk(AHCF, 'Hair Color', [CLFM, NULL])),
+        wbRArrayS('Face Details Texture Set List Female', wbFormIDCk(FTSF, 'Texture Set', [TXST, NULL])),
+        wbFormIDCk(DFTF, 'Default Face Texture Female', [TXST, NULL]),
+        wbTintTemplateGroups,
+        wbMorphGroups,
+        wbRaceFRMI,
+        wbString(WMAP, 'Unknown')
       ], [], cpNormal, True)
-    ], [], cpNormal, False),
+    ], [], cpNormal, False),}
     // End Head Data
-    wbFormIDCk(NAM8, 'Morph race', [RACE, NULL]),
-    wbFormIDCk(RNAM, 'Armor race', [RACE, NULL])
+    wbEmpty(NAM0, 'Head Data Marker'),
+    wbEmpty(MNAM, 'Male Data Marker'),
+    wbUnknown(NNAM),
+    wbRArrayS('Head Parts Male', wbHeadPart),
+    wbRArrayS('Race Presets Male', wbFormIDCk(RPRM, 'Preset NPC', [NPC_, NULL])),
+    wbRArrayS('Available Hair Colors Male', wbFormIDCk(AHCM, 'Hair Color', [CLFM, NULL])),
+    wbRArrayS('Face Details Texture Set List Male', wbFormIDCk(FTSM, 'Texture Set', [TXST, NULL])),
+    wbFormIDCk(DFTM, 'Default Face Texture Male', [TXST, NULL]),
+    wbTintTemplateGroups,
+    wbMorphGroups,
+    wbRaceFRMI,
+    wbString(WMAP, 'Unknown'),
+
+    wbEmpty(NAM0, 'Head Data Marker'),
+    wbEmpty(FNAM, 'Female Data Marker'),
+    wbUnknown(NNAM),
+    wbRArrayS('Head Parts Female', wbHeadPart),
+    wbRArrayS('Race Presets Female', wbFormIDCk(RPRF, 'Preset NPC', [NPC_, NULL])),
+    wbRArrayS('Available Hair Colors Female', wbFormIDCk(AHCF, 'Hair Color', [CLFM, NULL])),
+    wbRArrayS('Face Details Texture Set List Female', wbFormIDCk(FTSF, 'Texture Set', [TXST, NULL])),
+    wbFormIDCk(DFTF, 'Default Face Texture Female', [TXST, NULL]),
+    wbTintTemplateGroups,
+    wbMorphGroups,
+    wbRaceFRMI,
+    wbString(WMAP, 'Unknown'),
+
+    wbFormIDCk(RNAM, 'Armor Race', [RACE]),
+    wbFormIDCk(SRAC, 'States Race', [RACE]),
+
+    // Doesn't copy properly!!! Only the first RUnion member def is copied
+    // sequence starts with any of those: SGNM, STKD, SAKD
+    {wbRArray('State Groups',
+      wbRUnion('State Group', [
+        wbRStruct('State Group', [
+          wbString(SGNM, 'Group Name'),
+          wbRArray('Unknown', wbString(SAPT, 'Unknown')),
+          wbUnknown(SRAF)
+        ], []),
+
+        wbRStruct('State Group', [
+          wbRArray('Unknown', wbFormIDCk(STKD, 'Unknown', [KYWD])),
+          wbString(SGNM, 'Group Name'),
+          wbRArray('Unknown', wbString(SAPT, 'Unknown')),
+          wbUnknown(SRAF)
+        ], []),
+
+        wbRStruct('State Group', [
+          wbRArray('Unknown', wbFormIDCk(SAKD, 'Unknown', [KYWD])),
+          wbRArray('Unknown', wbFormIDCk(STKD, 'Unknown', [KYWD])),
+          wbString(SGNM, 'Group Name'),
+          wbRArray('Unknown', wbString(SAPT, 'Unknown')),
+          wbUnknown(SRAF)
+        ], [])
+      ], [])
+    ),}
+
+    // temporary workaround to make this copyable
+    wbRArray('Unknown', wbFormIDCk(SAKD, 'Unknown', [KYWD])),
+    wbRArray('Unknown', wbFormIDCk(STKD, 'Unknown', [KYWD])),
+    wbRArray('State Groups',
+      wbRStruct('State Group', [
+        wbString(SGNM, 'Group Name'),
+        wbRArray('Unknown', wbString(SAPT, 'Unknown')),
+        wbUnknown(SRAF),
+        wbRArray('Unknown', wbFormIDCk(SAKD, 'Unknown', [KYWD])),
+        wbRArray('Unknown', wbFormIDCk(STKD, 'Unknown', [KYWD]))
+      ], [])
+    ),
+
+    wbUnknown(PTOP),
+    wbUnknown(NTOP),
+    wbRArray('Unknown',
+      wbRStruct('Unknown', [
+        wbUnknown(MSID),
+        wbString(MSM0, 'Unknown'),
+        wbString(MSM1, 'Unknown')
+      ], [])
+    ),
+    wbUnknown(MLSI),
+    wbString(HNAM, 'Unknown'),
+    wbFormIDCk(QSTI, 'Unknown', [QUST]),
+    wbBSMPSequence
   ], False, nil, cpNormal, False, wbRACEAfterLoad, wbRACEAfterSet);
 
 
@@ -12025,7 +12857,8 @@ begin
     wbFormIDCk(NAME, 'Base', [
       TREE, SNDR, ACTI, DOOR, STAT, FURN, CONT, ARMO, AMMO, LVLN, LVLC,
       MISC, WEAP, BOOK, KEYM, ALCH, LIGH, GRAS, ASPC, IDLM, ARMA, INGR,
-      MSTT, TACT, TXST, FLOR, SLGM, SCRL, SOUN, APPA, SPEL, ARTO, ADDN
+      MSTT, TACT, TXST, FLOR, NOTE, CMPO, SCOL, SOUN, SPEL, ARTO, ADDN,
+      BNDS, TERM
     ], False, cpNormal, True),
 
     {--- Bound Contents ---}
@@ -12148,7 +12981,7 @@ begin
       wbFloat('Fade 1.35+/-'),
       wbByteArray('Unknown', 4),
       wbFloat('Shadow Depth Bias'),
-      wbByteArray('Unknown', 4) // optional
+      wbUnknown
     ], cpNormal, False, nil, 4),
 		wbStruct(XALP, 'Alpha', [
       wbInteger('Cutoff', itU8),
@@ -12161,15 +12994,16 @@ begin
       wbPosRot,
       wbInteger('Flags', itU32, wbFlags([
         'No Alarm'
-      ]))
+      ])),
+      wbUnknown
     ]),
     wbFormIDCk(XTNM, 'Teleport Message Box', [MESG]),
 
     {--- MultiBound ---}
     wbFormIDCk(XMBR, 'MultiBound Reference', [REFR]),
 
-    wbByteArray(XWCN, 'Unknown', 0, cpIgnore), // leftover
-    wbByteArray(XWCS, 'Unknown', 0, cpIgnore), // leftover
+    wbUnknown(XWCN),
+    //wbByteArray(XWCS, 'Unknown', 0, cpIgnore), // leftover
     wbStruct(XWCU, 'Water Velocity', [
       wbFloat('X Offset'),
       wbFloat('Y Offset'),
@@ -12180,6 +13014,19 @@ begin
       wbFloat('Z Angle'),
       wbByteArray('Unknown', 0)
     ]),
+
+    wbFormIDCk(XASP, 'Unknown', [REFR]),
+    wbUnknown(XATP),
+    wbUnknown(XAMC),
+    wbUnknown(XLKT),
+    wbFormIDCk(XLYR, 'Layer', [LAYR]),
+    wbFormIDCk(XMSP, 'Material Swap', [MSWP]),
+    wbFormIDCk(XRFG, 'Reference Group', [RFGP]),
+    wbUnknown(XRDO),
+    wbUnknown(XBSD),
+    wbUnknown(XPDD),
+    wbUnknown(XCVR),
+    wbUnknown(XRNK),
 
     wbStruct(XCVL, 'Unknown', [
 			wbByteArray('Unknown', 4),
@@ -12221,13 +13068,15 @@ begin
         50, 'Adept',
         75, 'Expert',
        100, 'Master',
+       253, 'Requires Terminal',
+       254, 'Inaccessible',
        255, 'Requires Key'
       ])),
       wbByteArray('Unused', 3, cpIgnore),
       wbFormIDCkNoReach('Key', [KEYM, NULL]),
       wbInteger('Flags', itU8, wbFlags(['', '', 'Leveled Lock'])),
       wbByteArray('Unused', 3, cpIgnore),
-      wbByteArray('Unused', 8, cpIgnore)
+      wbUnknown
     ], cpNormal, False, nil, 4),
 
     wbFormIDCk(XEZN, 'Encounter Zone', [ECZN]),
@@ -12246,6 +13095,7 @@ begin
     wbOwnership,
 
     wbInteger(XCNT, 'Item Count', itS32),
+    wbUnknown(XHLT),
     wbFloat(XCHG, 'Charge'),
     wbFormIDCk(XLRL, 'Location Reference', [LCRT, LCTN, NULL], False, cpBenignIfAdded),
 
@@ -12255,12 +13105,19 @@ begin
       wbFormIDCk('Ref', [PLYR, ACHR, REFR, PGRE, PHZD, PMIS, PARW, PBAR, PBEA, PCON, PFLA])
     ], cpNormal, False, nil, 1)),
 
+    wbRArray('Unknown', wbUnknown(XPLK)),
+
+    wbRStruct('Unknown', [
+      wbUnknown(XWPG),
+      wbRArray('Unknown', wbUnknown(XWPN))
+    ], []),
+
     wbRArray('Patrol', wbRStruct('Data', [
       wbFloat(XPRD, 'Idle Time', cpNormal, True),
       wbEmpty(XPPA, 'Patrol Script Marker', cpNormal, True),
       wbFormIDCk(INAM, 'Idle', [IDLE, NULL], False, cpNormal, True),
-      wbByteArray(SCHR, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
-      wbByteArray(SCTX, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
+      //wbByteArray(SCHR, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
+      //wbByteArray(SCTX, 'Unused', 0, cpIgnore, false, false, wbNeverShow),
       wbPDTOs
     ], [])),
 
@@ -12392,10 +13249,13 @@ begin
         wbByteArray('Unused', 1)
       ], cpNormal, True)
     ], []),
+
     {--- Attach reference ---}
     wbFormIDCk(XATR, 'Attach Ref', [REFR, PGRE, PHZD, PMIS, PARW, PBAR, PBEA, PCON, PFLA]),
+
     wbXLOD,
-    wbDataPosRot
+    wbDataPosRot,
+    wbUnknown(MNAM)
   ], True, wbPlacedAddInfo, cpNormal, False, wbREFRAfterLoad);
 
   wbRecord(REGN, 'Region',
@@ -12416,7 +13276,8 @@ begin
       wbArray(RPLD, 'Region Point List Data', wbStruct('Point', [
         wbFloat('X'),
         wbFloat('Y')
-      ]), 0, wbRPLDAfterLoad)
+      ]), 0, wbRPLDAfterLoad),
+      wbUnknown(ANAM)
     ], [])),
     wbRArrayS('Region Data Entries', wbRStructSK([0], 'Region Data Entry', [
       {always starts with an RDAT}
@@ -12452,7 +13313,7 @@ begin
       {--- Sound ---}
       wbFormIDCk(RDMO, 'Music', [MUSC], False, cpNormal, False, wbREGNSoundDontShow),
       wbArrayS(RDSA, 'Sounds', wbStructSK([0], 'Sound', [
-        wbFormIDCk('Sound', [SOUN, SNDR, NULL]),
+        wbFormIDCk('Sound', [SNDR, NULL]),
         wbInteger('Flags', itU32, wbFlags([
           {0x00000001}'Pleasant',
           {0x00000002}'Cloudy',
@@ -12513,7 +13374,9 @@ begin
         wbFormIDCk('Weather', [WTHR]),
         wbInteger('Chance', itU32),
         wbFormIDCk('Global', [GLOB, NULL])
-      ]), 0, cpNormal, False, nil, nil, wbREGNWeatherDontShow)
+      ]), 0, cpNormal, False, nil, nil, wbREGNWeatherDontShow),
+
+      wbUnknown(ANAM)
 
     ], []))
   ], True);
@@ -12521,9 +13384,12 @@ begin
   wbRecord(SOUN, 'Sound Marker', [
     wbEDID,
     wbOBNDReq,
-    wbUnknown(FNAM, cpIgnore), // leftover, unused
-    wbUnknown(SNDD, cpIgnore), // leftover, unused
-    wbFormIDCk(SDSC, 'Sound Descriptor', [SNDR, NULL])
+    wbFormIDCk(SDSC, 'Sound Descriptor', [SNDR, NULL]),
+    wbStruct(REPT, 'Unknown', [
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbInteger('Unknown', itU8)
+    ], cpNormal, False, nil, 2)
   ]);
 
   wbSPIT := wbStruct(SPIT, 'Data', [
@@ -12590,7 +13456,7 @@ begin
     wbFULL,
     wbKSIZ,
     wbKWDAs,
-    wbMDOB,
+    //wbMDOB,
     wbETYP,
     wbDESCReq,
     wbSPIT,
@@ -12598,25 +13464,8 @@ begin
   ], False, nil, cpNormal, False, nil, wbKeywordsAfterSet);
 
   wbRecord(SCRL, 'Scroll', [
-    wbEDID,
-    wbOBNDReq,
-    wbFULL,
-    wbKSIZ,
-    wbKWDAs,
-    wbMDOB,
-    wbETYP,
-    wbDESC,
-    wbMODL,
-    wbDEST,
-    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR, SOUN]),
-    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR, SOUN]),
-    wbStruct(DATA, 'Item', [
-      wbInteger('Value', itU32),
-      wbFloat('Weight')
-    ], cpNormal, True),
-    wbSPIT,
-    wbEffectsReq
-  ], False, nil, cpNormal, False, nil, wbKeywordsAfterSet);
+    wbEDID
+  ]);
 
   wbRecord(STAT, 'Static',
     wbFlags(wbRecordFlagsFlags, [
@@ -12654,12 +13503,20 @@ begin
       {0x80000000} {31} ''
     ], [11, 16]), [
     wbEDID,
+    wbVMAD,
     wbOBNDReq,
+    wbPTRN,
+    wbFTYP,
     wbMODL,
+    wbPRPS,
+    wbFULL,
     wbStruct(DNAM, 'Direction Material', [
       wbFloat('Max Angle (30-120)'),
-      wbFormIDCk('Material', [MATO, NULL])
-    ], cpNormal, True),
+      wbFormIDCk('Material', [MATO, NULL]),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
+    ], cpNormal, True, nil, 2),
+    wbNVNM,
     wbArray(MNAM, 'Distant LOD',
       wbStruct('LOD', [
         {>>> Contains null-terminated mesh filename followed by random data up to 260 bytes <<<}
@@ -12685,24 +13542,27 @@ begin
       wbInteger('Number of Records', itU32),
       wbInteger('Next Object ID', itU32)
     ], cpNormal, True),
-    wbByteArray(OFST, 'Unknown', 0, cpIgnore),
-    wbByteArray(DELE, 'Unknown', 0, cpIgnore),
+    wbByteArray(OFST, 'Unknown', 0, cpIgnore),            // If possible then ignored by the runtime
+    wbByteArray(DELE, 'Unknown', 0, cpIgnore),            // If possible then ignored by the runtime
     wbString(CNAM, 'Author', 0, cpTranslate, True),
     wbString(SNAM, 'Description', 0, cpTranslate),
     wbRArray('Master Files', wbRStruct('Master File', [
       wbString(MAST, 'Filename', 0, cpNormal, True),
       wbByteArray(DATA, 'Unknown', 8, cpIgnore, True)
     ], [ONAM])),
-    wbArray(ONAM, 'Overridden Forms',
+    wbArray(ONAM, 'Overridden Forms',                     // If possible then ignored by the runtime
       wbFormIDCk('Form', [ACHR, LAND, NAVM, REFR, PGRE, PHZD, PMIS, PARW, PBAR, PBEA, PCON, PFLA]),
-      0, nil, nil, cpNormal, False, wbTES4ONAMDontShow),
-    wbByteArray(SCRN, 'Screenshot'),
-    wbUnknown(INTV),
-    wbUnknown(INCC)
+      0, nil, nil, cpNormal, False, wbTES4ONAMDontShow),  // If possible then ignored by the runtime
+    wbByteArray(SCRN, 'Screenshot'),                      // If possible then ignored by the runtime
+    wbRArray('TNAM Array', wbRStruct('Array', [
+      wbUnknown(TNAM)                                     // Ignored by the runtime
+    ], [])),
+    wbUnknown(INTV),                                      // Ignored by the runtime
+    wbInteger(INCC, 'Unknown', itU32)                     // Size of some array of 12 bytes elements
   ], True, nil, cpNormal, True, wbRemoveOFST);
 end;
 
-procedure DefineTES5o;
+procedure DefineFO4o;
 begin
 
   wbRecord(TREE, 'Tree',
@@ -12743,16 +13603,19 @@ begin
     wbEDID,
     wbVMAD,
     wbOBNDReq,
+    wbPTRN,
     wbFULLReq,
     wbMODL,
     wbDEST,
     wbKSIZ,
     wbKWDAs,
+    wbPRPS,
     wbUnknown(PNAM),
+    wbATTX,
     wbLString(RNAM, 'Activate Text Override', 0, cpTranslate),
     wbUnknown(FNAM),
     wbFormIDCk(PFIG, 'Ingredient', [INGR, ALCH, LVLI, MISC, NULL]),
-    wbFormIDCK(SNAM, 'Sound', [SNDR, SOUN, NULL]),
+    wbFormIDCK(SNAM, 'Sound', [SNDR, NULL]),
     wbStruct(PFPC, 'Seasonal ingredient production', [
       wbInteger('Spring', itU8),
       wbInteger('Summer ', itU8),
@@ -12771,8 +13634,10 @@ begin
     wbFormIDCk(TNAM, 'Material', [MATT]),
     wbFormIDCk(SNAM, 'Open Sound', [SNDR, NULL]),
     wbFormIDCk(XNAM, 'Spell', [SPEL]),
+    wbFormIDCk(YNAM, 'Unknown', [SPEL]),
     wbFormIDCk(INAM, 'Image Space', [IMGS]),
-    wbInteger(DATA, 'Damage Per Second', itU16, nil, cpNormal, True, True),
+    {>>> wbInteger(DATA, 'Damage Per Second', itU16, nil, cpNormal, True, True), <<<}
+    wbByteArray(DATA, 'Unused', 0),
     wbStruct(DNAM, 'Visual Data', [
       wbFloat('Unknown'),
       wbFloat('Unknown'),
@@ -12839,13 +13704,14 @@ begin
       wbFloat('Noise Properties - Layer Two - Amplitude Scale'),
       wbFloat('Noise Properties - Layer Three - Amplitude Scale'),
       wbFloat('Water Properties - Reflection Magnitude'),
-      wbFloat('Specular Properties - Sun Sparkle Magnitude'),
-      wbFloat('Specular Properties - Sun Specular Magnitude'),
-      wbFloat('Depth Properties - Reflections'),
-      wbFloat('Depth Properties - Refraction'),
-      wbFloat('Depth Properties - Normals'),
-      wbFloat('Depth Properties - Specular Lighting'),
-      wbFloat('Specular Properties - Sun Sparkle Power')
+      wbUnknown
+//      wbFloat('Specular Properties - Sun Sparkle Magnitude'),
+//      wbFloat('Specular Properties - Sun Specular Magnitude'),
+//      wbFloat('Depth Properties - Reflections'),
+//      wbFloat('Depth Properties - Refraction'),
+//      wbFloat('Depth Properties - Normals'),
+//      wbFloat('Depth Properties - Specular Lighting'),
+//      wbFloat('Specular Properties - Sun Sparkle Power')
     ]),
     wbByteArray(GNAM, 'Unused', 0, cpNormal, True),  // leftover
     wbStruct(NAM0, 'Linear Velocity', [
@@ -12859,8 +13725,8 @@ begin
       wbFloat('Z')
     ], cpNormal, False),
     wbString(NAM2, 'Noise Texture', 0, cpNormal, False),
-    wbString(NAM3, 'Unused', 0, cpNormal),  // leftover
-    wbString(NAM4, 'Unused', 0, cpNormal)  // leftover
+    wbString(NAM3, 'Unknown', 0, cpNormal),  // leftover
+    wbString(NAM4, 'Unknown', 0, cpNormal)
   ], False, nil, cpNormal, False);
 
   wbRecord(WEAP, 'Weapon',
@@ -12870,314 +13736,240 @@ begin
     wbEDID,
     wbVMAD,
     wbOBNDReq,
+    wbPTRN,
     wbFULL,
     wbMODL,
-    wbICON,
     wbEITM,
     wbInteger(EAMT, 'Enchantment Amount', itU16),
     wbDEST,
     wbETYP,
     wbFormIDCk(BIDS, 'Block Bash Impact Data Set', [IPDS, NULL]),
     wbFormIDCk(BAMT, 'Alternate Block Material', [MATT, NULL]),
-    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR, SOUN]),
-    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR, SOUN]),
+    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR]),
+    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR]),
     wbKSIZ,
     wbKWDAs,
     wbDESC,
-    wbRStruct('Has Scope', [
-      wbString(MOD3, 'Model Filename'),
-      wbByteArray(MO3T, 'Texture Files Hashes', 0, cpIgnore, false, false, wbNeverShow),
-      wbMO3S
+    wbFormIDCk(INRD, 'Unknown', [INNR]),
+    wbAPPR,
+    wbOBTESequence,
+    wbFormIDCk(NNAM, 'Modification', [OMOD]),
+    wbRStruct('Unknown', [
+      wbString(MOD4, 'Model Filename'),
+      wbByteArray(MO4T, 'Texture Files Hashes', 0, cpIgnore, false, false, wbNeverShow),
+      wbMO4S
     ], []),
-    wbByteArray(NNAM, 'Unused', 0, cpIgnore, False), // leftover
-    wbFormIDCk(INAM, 'Impact Data Set', [IPDS, NULL]),
-    wbFormIDCk(WNAM, '1st Person Model Object', [STAT, NULL]),
-    wbFormIDCk(SNAM, 'Attack Sound', [SNDR]),
-    wbFormIDCk(XNAM, 'Attack Sound 2D', [SNDR]),
-    wbFormIDCk(NAM7, 'Attack Loop Sound', [SNDR]),
-    wbFormIDCk(TNAM, 'Attack Fail Sound', [SNDR]),
-    wbFormIDCk(UNAM, 'Idle Sound', [SNDR]),
-    wbFormIDCk(NAM9, 'Equip Sound', [SNDR]),
-    wbFormIDCk(NAM8, 'Unequip Sound', [SNDR]),
-    wbStruct(DATA, 'Game Data', [
-      wbInteger('Value', itU32),
-      wbFloat('Weight'),
-      wbInteger('Damage', itU16)
-    ]),
     wbStruct(DNAM, 'Data', [
-      wbInteger('Animation Type', itU8, wbWeaponAnimTypeEnum),
-      wbByteArray('Unused', 3, cpIgnore),
-      wbFloat('Speed'),
-      wbFloat('Reach'),
-      wbInteger('Flags', itU16, wbFlags([
-        {0x0001}'Ignores Normal Weapon Resistance',
-        {0x0002}'Automatic (unused)',
-        {0x0004}'Has Scope (unused)',
-        {0x0008}'Can''t Drop',
-        {0x0010}'Hide Backpack (unused)',
-        {0x0020}'Embedded Weapon (unused)',
-        {0x0040}'Don''t Use 1st Person IS Anim (unused)',
-        {0x0080}'Non-playable'
-      ], [1, 2, 4, 5, 6])),
-      wbByteArray('Unused', 2, cpIgnore),
-      wbFloat('Sight FOV'),
-      wbByteArray('Unknown', 4),
-      wbInteger('Base VATS To-Hit Chance', itU8),
-      wbInteger('Attack Animation', itU8, wbAttackAnimationEnum),
-      wbInteger('# Projectiles', itU8),
-      wbInteger('Embedded Weapon AV (unused)', itU8),
-      wbFloat('Range Min'),
-      wbFloat('Range Max'),
-      wbInteger('On Hit', itU32, wbEnum([
-        'No formula behaviour',
-        'Dismember only',
-        'Explode only',
-        'No dismember/explode'
-      ])),
-      wbInteger('Flags2', itU32, wbFlags([
-        {0x00000001}'Player Only',
-        {0x00000002}'NPCs Use Ammo',
-        {0x00000004}'No Jam After Reload (unused)',
-        {0x00000008}'Unknown 4',
-        {0x00000010}'Minor Crime',
-        {0x00000020}'Range Fixed',
-        {0x00000040}'Not Used in Normal Combat',
-        {0x00000080}'Unknown 8',
-        {0x00000100}'Don''t Use 3rd Person IS Anim (unused)',
-        {0x00000200}'Unknown 10',
-        {0x00000400}'Rumble - Alternate',
-        {0x00000800}'Unknown 12',
-        {0x00001000}'Non-hostile',
-        {0x00002000}'Bound Weapon'
-      ], [2, 8])),
-      wbFloat('Animation Attack Mult'),
+      //wbInteger('Animation Type', itU8, wbWeaponAnimTypeEnum),
+      //wbByteArray('Unused', 4, cpIgnore),
+      wbFormIDCk('Ammo', [AMMO, NULL]),
+      wbFloat('Fire Speed'),
+      wbFloat('Reload Anim Speed'),
       wbFloat('Unknown'),
-      wbFloat('Rumble - Left Motor Strength'),
-      wbFloat('Rumble - Right Motor Strength'),
-      wbFloat('Rumble - Duration'),
-      wbByteArray('Unknown', 12),
-      wbInteger('Skill', itS32, wbSkillEnum),
-      wbByteArray('Unknown', 8),
-      wbInteger('Resist', itS32, wbActorValueEnum),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Attack Delay'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbByteArray('Unknown', 16),
+      wbInteger('Magazine Size', itU16),
+      wbByteArray('Unknown', 1),
       wbByteArray('Unknown', 4),
-      wbFloat('Stagger')
+      wbFloat('Weight'),
+      wbInteger('Value', itU16),
+      wbByteArray('Unknown', 2),
+      wbInteger('Damage', itU16),
+      wbByteArray('Unknown', 4),
+      wbFormIDCk('Sound - ?', [SNDR, NULL]),
+      wbByteArray('Unknown', 8),
+      wbFormIDCk('Sound - Fire Dry', [SNDR, NULL]),
+      wbFormIDCk('Sound - Charge', [SNDR, NULL]),
+      wbFormIDCk('Sound - Equip Up', [SNDR, NULL]),
+      wbFormIDCk('Sound - Equip Down', [SNDR, NULL]),
+      wbFormIDCk('Sound - Fast Equip', [SNDR, NULL]),
+      wbByteArray('Unknown', 1),
+      wbFloat('Unknown'),
+      wbByteArray('Unknown', 2),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbByteArray('Unknown', 4),
+      wbByteArray('Unknown', 4)
+//      wbInteger('Flags', itU16, wbFlags([
+//        {0x0001}'Ignores Normal Weapon Resistance',
+//        {0x0002}'Automatic (unused)',
+//        {0x0004}'Has Scope (unused)',
+//        {0x0008}'Can''t Drop',
+//        {0x0010}'Hide Backpack (unused)',
+//        {0x0020}'Embedded Weapon (unused)',
+//        {0x0040}'Don''t Use 1st Person IS Anim (unused)',
+//        {0x0080}'Non-playable'
+//      ], [1, 2, 4, 5, 6])),
+//      wbByteArray('Unused', 2, cpIgnore),
+//      wbFloat('Sight FOV'),
+//      wbByteArray('Unknown', 4),
+//      wbInteger('Base VATS To-Hit Chance', itU8),
+//      wbInteger('Attack Animation', itU8, wbAttackAnimationEnum),
+//      wbInteger('# Projectiles', itU8),
+//      wbInteger('Embedded Weapon AV (unused)', itU8),
+//      wbFloat('Range Min'),
+//      wbFloat('Range Max'),
+//      wbInteger('On Hit', itU32, wbEnum([
+//        'No formula behaviour',
+//        'Dismember only',
+//        'Explode only',
+//        'No dismember/explode'
+//      ])),
+//      wbInteger('Flags2', itU32, wbFlags([
+//        {0x00000001}'Player Only',
+//        {0x00000002}'NPCs Use Ammo',
+//        {0x00000004}'No Jam After Reload (unused)',
+//        {0x00000008}'Unknown 4',
+//        {0x00000010}'Minor Crime',
+//        {0x00000020}'Range Fixed',
+//        {0x00000040}'Not Used in Normal Combat',
+//        {0x00000080}'Unknown 8',
+//        {0x00000100}'Don''t Use 3rd Person IS Anim (unused)',
+//        {0x00000200}'Unknown 10',
+//        {0x00000400}'Rumble - Alternate',
+//        {0x00000800}'Unknown 12',
+//        {0x00001000}'Non-hostile',
+//        {0x00002000}'Bound Weapon'
+//      ], [2, 8])),
+//      wbFloat('Animation Attack Mult'),
+//      wbFloat('Unknown'),
+//      wbFloat('Rumble - Left Motor Strength'),
+//      wbFloat('Rumble - Right Motor Strength'),
+//      wbFloat('Rumble - Duration'),
+//      wbByteArray('Unknown', 12),
+//      wbInteger('Skill', itS32, wbSkillEnum),
+//      wbByteArray('Unknown', 8),
+//      wbInteger('Resist', itS32, wbActorValueEnum),
+//      wbByteArray('Unknown', 4),
+//      wbFloat('Stagger'),
+    ]),
+    wbStruct(FNAM, '', [
+      wbByteArray('Unknown', 4),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbByteArray('Unknown', 4),
+      wbByteArray('Unknown', 4),
+      wbFloat('Unknown'),
+      wbByteArray('Unknown', 1),
+      wbFormIDCk('Projectile', [PROJ, NULL]),
+      wbByteArray('Unknown', 8)
     ]),
     wbStruct(CRDT, 'Critical Data', [
-      wbInteger('Damage', itU16),
-      wbByteArray('Unused', 2, cpIgnore),
+      wbByteArray('Unknown', 4),
       wbFloat('% Mult'),
-      wbInteger('Flags', itU8, wbFlags([
-        'On Death'
-      ])),
-      wbByteArray('Unused', 3, cpIgnore),
       wbFormIDCk('Effect', [SPEL, NULL])
     ]),
-    wbInteger(VNAM, 'Detection Sound Level', itU32, wbSoundlevelEnum),
-    wbFormIDCk(CNAM, 'Template', [WEAP])
-  ], False, nil, cpNormal, False, wbWEAPAfterLoad, wbKeywordsAfterSet);
+    wbFormIDCk(INAM, 'Impact Data Set', [IPDS, NULL]),
+    wbUnknown(MASE),
+    wbFormIDCk(LNAM, 'Ammunition', [LVLI]),
+    wbFormIDCk(WAMD, 'Aim Model', [AMDL]),
+    wbFormIDCk(WZMD, 'Zoom', [ZOOM]),
+    wbStruct(DAMA, 'Critical Data', [
+      wbFormIDCk('Damage Type', [DMGT]),
+      wbInteger('Damage', itU32)
+    ])
+  ], False, nil, cpNormal, False, nil{wbWEAPAfterLoad}, wbKeywordsAfterSet);
 
-  if wbSimpleRecords then
-    wbRecord(WRLD, 'Worldspace',
-      wbFlags(wbRecordFlagsFlags, wbFlagsList([
-        {0x00080000} 19, 'Can''t Wait'
-      ])), [
-      wbEDID,
-      {>>> BEGIN leftover from earlier CK versions <<<}
-      wbRArray('Unused RNAM', wbUnknown(RNAM), cpIgnore, False{, wbNeverShow}),
-      {>>> END leftover from earlier CK versions <<<}
-      wbByteArray(MHDT, 'Max Height Data', 0, cpNormal),
-      wbFULL,
-      wbStruct(WCTR, 'Fixed Dimensions Center Cell', [
-        wbInteger('X', itS16),
-        wbInteger('Y', itS16)
+  wbRecord(WRLD, 'Worldspace',
+    wbFlags(wbRecordFlagsFlags, wbFlagsList([
+      {0x00080000} 19, 'Can''t Wait'
+    ])), [
+    wbEDID,
+    wbRArray('Unused RNAM', wbUnknown(RNAM), cpIgnore, False{, wbNeverShow}),
+    wbMHDT,
+    wbFULL,
+    wbStruct(WCTR, 'Fixed Dimensions Center Cell', [
+      wbInteger('X', itS16),
+      wbInteger('Y', itS16)
+    ]),
+    wbFormIDCk(LTMP, 'Interior Lighting', [LGTM]),
+    wbFormIDCk(XEZN, 'Encounter Zone', [ECZN, NULL]),
+    wbFormIDCk(XLCN, 'Location', [LCTN, NULL]),
+    wbRStruct('Parent', [
+      wbFormIDCk(WNAM, 'Worldspace', [WRLD]),
+      wbStruct(PNAM, '', [
+        wbInteger('Flags', itU8, wbFlags([
+          {0x0001}'Use Land Data',
+          {0x0002}'Use LOD Data',
+          {0x0004}'Don''t Use Map Data',
+          {0x0008}'Use Water Data',
+          {0x0010}'Use Climate Data',
+          {0x0020}'Use Image Space Data (unused)',
+          {0x0040}'Use Sky Cell'
+        ], [5])),
+        wbByteArray('Unknown', 1)
+      ], cpNormal, True)
+    ], []),
+    wbFormIDCk(CNAM, 'Climate', [CLMT]),
+    wbFormIDCk(NAM2, 'Water', [WATR]),
+    wbFormIDCk(NAM3, 'LOD Water Type', [WATR]),
+    wbFloat(NAM4, 'LOD Water Height'),
+    wbStruct(DNAM, 'Land Data', [
+      wbFloat('Default Land Height'),
+      wbFloat('Default Water Height')
+    ]),
+    wbString(ICON, 'Map Image'),
+    wbRStruct('Cloud Model', [wbMODL], []),
+    wbStruct(MNAM, 'Map Data', [
+      wbStruct('Usable Dimensions', [
+        wbInteger('X', itS32),
+        wbInteger('Y', itS32)
       ]),
-      wbFormIDCk(LTMP, 'Interior Lighting', [LGTM]),
-      wbFormIDCk(XEZN, 'Encounter Zone', [ECZN, NULL]),
-      wbFormIDCk(XLCN, 'Location', [LCTN, NULL]),
-      wbRStruct('Parent', [
-        wbFormIDCk(WNAM, 'Worldspace', [WRLD]),
-        wbStruct(PNAM, '', [
-          wbInteger('Flags', itU8, wbFlags([
-            {0x0001}'Use Land Data',
-            {0x0002}'Use LOD Data',
-            {0x0004}'Don''t Use Map Data',
-            {0x0008}'Use Water Data',
-            {0x0010}'Use Climate Data',
-            {0x0020}'Use Image Space Data (unused)',
-            {0x0040}'Use Sky Cell'
-          ], [5])),
-          wbByteArray('Unknown', 1)
-        ], cpNormal, True)
-      ], []),
-      wbFormIDCk(CNAM, 'Climate', [CLMT]),
-      wbFormIDCk(NAM2, 'Water', [WATR]),
-      wbFormIDCk(NAM3, 'LOD Water Type', [WATR]),
-      wbFloat(NAM4, 'LOD Water Height'),
-      wbStruct(DNAM, 'Land Data', [
-        wbFloat('Default Land Height'),
-        wbFloat('Default Water Height')
-      ]),
-      wbString(ICON, 'Map Image'),
-      wbRStruct('Cloud Model', [wbMODL], []),
-      wbStruct(MNAM, 'Map Data', [
-        wbStruct('Usable Dimensions', [
-          wbInteger('X', itS32),
-          wbInteger('Y', itS32)
+      wbStruct('Cell Coordinates', [
+        wbStruct('NW Cell', [
+          wbInteger('X', itS16),
+          wbInteger('Y', itS16)
         ]),
-        wbStruct('Cell Coordinates', [
-          wbStruct('NW Cell', [
-            wbInteger('X', itS16),
-            wbInteger('Y', itS16)
-          ]),
-          wbStruct('SE Cell', [
-            wbInteger('X', itS16),
-            wbInteger('Y', itS16)
-          ])
-        ]),
-        wbStruct('Camera Data', [
-          wbFloat('Min Height'),
-          wbFloat('Max Height'),
-          wbFloat('Initial Pitch')
+        wbStruct('SE Cell', [
+          wbInteger('X', itS16),
+          wbInteger('Y', itS16)
         ])
-        //wbByteArray('Unknown')
-      ], cpNormal, False, nil, 2),
-      wbStruct(ONAM, 'World Map Offset Data', [
-        wbFloat('World Map Scale'),
-        wbFloat('Cell X Offset'),
-        wbFloat('Cell Y Offset'),
-        wbFloat('Cell Z Offset')
-      ], cpNormal, True),
-      wbFloat(NAMA, 'Distant LOD Multiplier'),
-      wbInteger(DATA, 'Flags', itU8, wbFlags([
-        {0x01} 'Small World',
-        {0x02} 'Can''t Fast Travel',
-        {0x04} 'Unknown 3',
-        {0x08} 'No LOD Water',
-        {0x10} 'No Landscape',
-        {0x20} 'No Sky',
-        {0x40} 'Fixed Dimensions',
-        {0x80} 'No Grass'
-      ]), cpNormal, True),
-      {>>> Object Bounds doesn't show up in CK <<<}
-      wbRStruct('Object Bounds', [
-        wbStruct(NAM0, 'Min', [
-          wbFloat('X', cpNormal, False, 1/4096),
-          wbFloat('Y', cpNormal, False, 1/4096)
-        ], cpIgnore, True),
-        wbStruct(NAM9, 'Max', [
-          wbFloat('X', cpNormal, False, 1/4096),
-          wbFloat('Y', cpNormal, False, 1/4096)
-        ], cpIgnore, True)
-      ], []),
-      wbFormIDCk(ZNAM, 'Music', [MUSC]),
-      wbString(NNAM, 'Canopy Shadow (unused)', 0, cpIgnore),
-      wbString(XNAM, 'Water Noise Texture'),
-      wbString(TNAM, 'HD LOD Diffuse Texture'),
-      wbString(UNAM, 'HD LOD Normal Texture'),
-      wbString(XWEM, 'Water Environment Map (unused)', 0, cpIgnore),
-      wbByteArray(OFST, 'Offset Data')
-    ], False, nil, cpNormal, False, wbWRLDAfterLoad)
-  else
-    wbRecord(WRLD, 'Worldspace',
-      wbFlags(wbRecordFlagsFlags, wbFlagsList([
-        {0x00080000} 19, 'Can''t Wait'
-      ])), [
-      wbEDID,
-      {>>> BEGIN leftover from earlier CK versions <<<}
-      wbRArray('Unused RNAM', wbUnknown(RNAM), cpIgnore, False{, wbNeverShow}),
-      {>>> END leftover from earlier CK versions <<<}
-      wbByteArray(MHDT, 'Max Height Data', 0, cpNormal),
-      wbFULL,
-      wbStruct(WCTR, 'Fixed Dimensions Center Cell', [
-        wbInteger('X', itS16),
-        wbInteger('Y', itS16)
-      ]),
-      wbFormIDCk(LTMP, 'Interior Lighting', [LGTM]),
-      wbFormIDCk(XEZN, 'Encounter Zone', [ECZN, NULL]),
-      wbFormIDCk(XLCN, 'Location', [LCTN, NULL]),
-      wbRStruct('Parent', [
-        wbFormIDCk(WNAM, 'Worldspace', [WRLD]),
-        wbStruct(PNAM, '', [
-          wbInteger('Flags', itU8, wbFlags([
-            {0x0001}'Use Land Data',
-            {0x0002}'Use LOD Data',
-            {0x0004}'Don''t Use Map Data',
-            {0x0008}'Use Water Data',
-            {0x0010}'Use Climate Data',
-            {0x0020}'Use Image Space Data (unused)',
-            {0x0040}'Use Sky Cell'
-          ], [5])),
-          wbByteArray('Unknown', 1)
-        ], cpNormal, True)
-      ], []),
-      wbFormIDCk(CNAM, 'Climate', [CLMT]),
-      wbFormIDCk(NAM2, 'Water', [WATR]),
-      wbFormIDCk(NAM3, 'LOD Water Type', [WATR]),
-      wbFloat(NAM4, 'LOD Water Height'),
-      wbStruct(DNAM, 'Land Data', [
-        wbFloat('Default Land Height'),
-        wbFloat('Default Water Height')
-      ]),
-      wbString(ICON, 'Map Image'),
-      wbRStruct('Cloud Model', [wbMODL], []),
-      wbStruct(MNAM, 'Map Data', [
-        wbStruct('Usable Dimensions', [
-          wbInteger('X', itS32),
-          wbInteger('Y', itS32)
-        ]),
-        wbStruct('Cell Coordinates', [
-          wbStruct('NW Cell', [
-            wbInteger('X', itS16),
-            wbInteger('Y', itS16)
-          ]),
-          wbStruct('SE Cell', [
-            wbInteger('X', itS16),
-            wbInteger('Y', itS16)
-          ])
-        ]),
-        wbStruct('Camera Data', [
-          wbFloat('Min Height'),
-          wbFloat('Max Height'),
-          wbFloat('Initial Pitch')
-        ])
-        //wbByteArray('Unknown')
-      ], cpNormal, False, nil, 2),
-      wbStruct(ONAM, 'World Map Offset Data', [
-        wbFloat('World Map Scale'),
-        wbFloat('Cell X Offset'),
-        wbFloat('Cell Y Offset'),
-        wbFloat('Cell Z Offset')
-      ], cpNormal, True),
-      wbFloat(NAMA, 'Distant LOD Multiplier'),
-      wbInteger(DATA, 'Flags', itU8, wbFlags([
-        {0x01} 'Small World',
-        {0x02} 'Can''t Fast Travel',
-        {0x04} 'Unknown 3',
-        {0x08} 'No LOD Water',
-        {0x10} 'No Landscape',
-        {0x20} 'No Sky',
-        {0x40} 'Fixed Dimensions',
-        {0x80} 'No Grass'
-      ]), cpNormal, True),
-      {>>> Object Bounds doesn't show up in CK <<<}
-      wbRStruct('Object Bounds', [
-        wbStruct(NAM0, 'Min', [
-          wbFloat('X', cpNormal, False, 1/4096),
-          wbFloat('Y', cpNormal, False, 1/4096)
-        ], cpIgnore, True),
-        wbStruct(NAM9, 'Max', [
-          wbFloat('X', cpNormal, False, 1/4096),
-          wbFloat('Y', cpNormal, False, 1/4096)
-        ], cpIgnore, True)
-      ], []),
-      wbFormIDCk(ZNAM, 'Music', [MUSC]),
-      wbString(NNAM, 'Canopy Shadow (unused)', 0, cpIgnore),
-      wbString(XNAM, 'Water Noise Texture'),
-      wbString(TNAM, 'HD LOD Diffuse Texture'),
-      wbString(UNAM, 'HD LOD Normal Texture'),
-      wbString(XWEM, 'Water Environment Map (unused)', 0, cpIgnore),
-      wbArray(OFST, 'Offset Data', wbArray('Rows', wbInteger('Offset', itU32), wbOffsetDataColsCounter), 0)
-    ], False, nil, cpNormal, False, wbWRLDAfterLoad);
+      ])
+    ]),
+    wbStruct(ONAM, 'World Map Offset Data', [
+      wbFloat('World Map Scale'),
+      wbFloat('Cell X Offset'),
+      wbFloat('Cell Y Offset'),
+      wbFloat('Cell Z Offset')
+    ], cpNormal, True),
+    wbFloat(NAMA, 'Distant LOD Multiplier'),
+    wbInteger(DATA, 'Flags', itU8, wbFlags([
+      {0x01} 'Small World',
+      {0x02} 'Can''t Fast Travel',
+      {0x04} 'Unknown 3',
+      {0x08} 'No LOD Water',
+      {0x10} 'No Landscape',
+      {0x20} 'No Sky',
+      {0x40} 'Fixed Dimensions',
+      {0x80} 'No Grass'
+    ]), cpNormal, True),
+    {>>> Object Bounds doesn't show up in CK <<<}
+    wbRStruct('Object Bounds', [
+      wbStruct(NAM0, 'Min', [
+        wbFloat('X', cpNormal, False, 1/4096),
+        wbFloat('Y', cpNormal, False, 1/4096)
+      ], cpIgnore, True),
+      wbStruct(NAM9, 'Max', [
+        wbFloat('X', cpNormal, False, 1/4096),
+        wbFloat('Y', cpNormal, False, 1/4096)
+      ], cpIgnore, True)
+    ], []),
+    wbFormIDCk(ZNAM, 'Music', [MUSC]),
+    wbString(NNAM, 'Canopy Shadow (unused)', 0, cpIgnore),
+    wbString(XNAM, 'Water Noise Texture'),
+    wbString(TNAM, 'HD LOD Diffuse Texture'),
+    wbString(UNAM, 'HD LOD Normal Texture'),
+    wbString(XWEM, 'Water Environment Map (unused)', 0, cpIgnore),
+    wbRArray('Unknown WLEV', wbUnknown(WLEV)),
+    wbOFST,
+    wbUnknown(CLSZ)
+  ], False, nil, cpNormal, False, wbWRLDAfterLoad);
 
   wbRecord(WTHR, 'Weather', [
     wbEDID,
@@ -13230,35 +14022,41 @@ begin
           wbInteger('Blue', itU8),
           wbByteArray('Unknown', 1)
         ]),
-        ['Sunrise', 'Day', 'Sunset', 'Night']
+        ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']
       )
     ])),
     wbArray(JNAM, 'Cloud Alphas', wbStruct('Layer', [
       wbFloat('Sunrise'),
       wbFloat('Day'),
       wbFloat('Sunset'),
-      wbFloat('Night')
+      wbFloat('Night'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
     ])),
-    {>>> not as an array since last entries are omitted in skyrim.esm <<<}
     wbStruct(NAM0, 'Weather Colors', [
-      wbArray('Sky-Upper',         wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Fog Near',          wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Unknown',           wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Ambient',           wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Sunlight',          wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Sun',               wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Stars',             wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Sky-Lower',         wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Horizon',           wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Effect Lighting',   wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Cloud LOD Diffuse', wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Cloud LOD Ambient', wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Fog Far',           wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Sky Statics',       wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Water Multiplier',  wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Sun Glare',         wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night']),
-      wbArray('Moon Glare',        wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night'])
-    ], cpNormal, True, nil, 13),
+      wbArray('Sky-Upper',         wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Fog Near',          wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Unknown',           wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Ambient',           wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Sunlight',          wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Sun',               wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Stars',             wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Sky-Lower',         wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Horizon',           wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Effect Lighting',   wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Cloud LOD Diffuse', wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Cloud LOD Ambient', wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Fog Far',           wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Sky Statics',       wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Water Multiplier',  wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Sun Glare',         wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Moon Glare',        wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Unknown1',          wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown']),
+      wbArray('Unknown2',          wbStruct('Color', [wbInteger('Red', itU8), wbInteger('Green', itU8), wbInteger('Blue', itU8), wbByteArray('Unknown', 1)]), ['Sunrise', 'Day', 'Sunset', 'Night', 'Unknown', 'Unknown', 'Unknown', 'Unknown'])
+    ], cpNormal, True),
+    wbArray(NAM4, 'Unknown', wbFloat('Unknown')),
     wbStruct(FNAM, 'Fog Distance', [
       wbFloat('Day - Near'),
       wbFloat('Day - Far'),
@@ -13267,7 +14065,17 @@ begin
       wbFloat('Day - Power'),
       wbFloat('Night - Power'),
       wbFloat('Day - Max'),
-      wbFloat('Night - Max')
+      wbFloat('Night - Max'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
     ], cpNormal, True),
     wbStruct(DATA, 'Data', [
       wbInteger('Wind Speed', itU8), // scaled 0..1
@@ -13286,7 +14094,9 @@ begin
         {0x04} 'Weather - Rainy',
         {0x08} 'Weather - Snow',
         {0x10} 'Sky Statics - Always Visible',
-        {0x20} 'Sky Statics - Follows Sun Position'
+        {0x20} 'Sky Statics - Follows Sun Position',
+        {0x40} 'Unknown 7',
+        {0x80} 'Unknown 8'
       ])),
       wbStruct('Lightning Color', [
         wbInteger('Red', itU8),
@@ -13296,12 +14106,13 @@ begin
       wbInteger('Visual Effect - Begin', itU8), // scaled 0..1
       wbInteger('Visual Effect - End', itU8), // scaled 0..1
       wbInteger('Wind Direction', itU8), // scaled 0..360
-      wbInteger('Wind Direction Range', itU8) // scaled 0..180
+      wbInteger('Wind Direction Range', itU8), // scaled 0..180
+      wbInteger('Unknown', itU8)
     ], cpNormal, True),
     wbInteger(NAM1, 'Disabled Cloud Layers', itU32, wbFlags(['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'])),
     wbRArray('Sounds',
       wbStruct(SNAM, 'Sound', [
-        wbFormIDCK('Sound', [SOUN, SNDR, NULL]),
+        wbFormIDCK('Sound', [SNDR, NULL]),
         wbInteger('Type', itU32, wbEnum([
           {0x01} 'Default',
           {0x02} 'Precipitation',
@@ -13315,62 +14126,682 @@ begin
       wbFormIDCK('Sunrise', [IMGS, NULL]),
       wbFormIDCK('Day', [IMGS, NULL]),
       wbFormIDCK('Sunset', [IMGS, NULL]),
-      wbFormIDCK('Night', [IMGS, NULL])
+      wbFormIDCK('Night', [IMGS, NULL]),
+      wbFormIDCK('Unknown', [IMGS, NULL]),
+      wbFormIDCK('Unknown', [IMGS, NULL]),
+      wbFormIDCK('Unknown', [IMGS, NULL]),
+      wbFormIDCK('Unknown', [IMGS, NULL])
+    ]),
+    wbStruct(WGDR, 'God Rays', [
+      wbFormIDCK('Sunrise', [GDRY, NULL]),
+      wbFormIDCK('Day', [GDRY, NULL]),
+      wbFormIDCK('Sunset', [GDRY, NULL]),
+      wbFormIDCK('Night', [GDRY, NULL]),
+      wbFormIDCK('Unknown', [GDRY, NULL]),
+      wbFormIDCK('Unknown', [GDRY, NULL]),
+      wbFormIDCK('Unknown', [GDRY, NULL]),
+      wbFormIDCK('Unknown', [GDRY, NULL])
     ]),
     wbRArray('Directional Ambient Lighting Colors',
-      wbStruct(DALC, 'Sunrise/Day/Sunset/Night Order', [wbAmbientColors], cpNormal, True)
+      wbStruct(DALC, 'Sunrise/Day/Sunset/Night/Unknown/Unknown/Unknown/Unknown', [wbAmbientColors], cpNormal, True)
     ),
-    wbByteArray(NAM2, 'Unused', 0, cpIgnore),
-    wbByteArray(NAM3, 'Unused', 0, cpIgnore),
-    wbRStruct('Aurora', [wbMODL], [])
+    wbRStruct('Aurora', [wbMODL], []),
+    wbFormIDCk(GNAM, 'Lens', [LENS]),
+    wbStruct(UNAM, 'Unknown', [
+      wbFormIDCk('Unknown', [SPEL, NULL]),
+      wbByteArray('Unknown', 4),
+      wbFormIDCk('Unknown', [SPEL, NULL]),
+      wbByteArray('Unknown', 4),
+      wbByteArray('Unknown', 4),
+      wbByteArray('Unknown', 4)
+    ], cpNormal, False, nil, 3),
+    wbFloat(VNAM, 'Unknown'),
+    wbFloat(WNAM, 'Unknown')
   ]);
 end;
 
-{>>> Unused records, they have empty GRUP in skyrim.esm <<<}
-procedure DefineTES5p;
+{>>> Unused records, they have empty GRUP in skyrim.esm and still in Fallout 4.esm <<<}
+procedure DefineFO4p;
 begin
-  wbRecord(CLDC, 'CLDC', [
-    wbEDID
-  ]);
-  wbRecord(HAIR, 'HAIR', [
-    wbEDID
-  ]);
-  wbRecord(PWAT, 'PWAT', [
-    wbEDID
-  ]);
-  wbRecord(RGDL, 'RGDL', [
-    wbEDID
-  ]);
-  wbRecord(SCOL, 'SCOL', [
-    wbEDID
-  ]);
   wbRecord(SCPT, 'SCPT', [
     wbEDID
   ]);
 end;
 
-procedure DefineTES5q;
+{>>> Start of new Fallout 4 Records <<<}
+
+procedure DefineFO4q;
+begin
+  wbRecord(AECH, 'Audio Effect Chain', [
+    wbEDID,
+    wbRArray('Effects',
+      wbRStruct('Effect', [
+        wbUnknown(KNAM),
+        wbUnknown(DNAM)
+      ], [])
+    )
+  ]);
+
+  wbRecord(AMDL, 'Aim Model', [
+    wbEDID,
+    wbStruct(DNAM, 'Unknown', [
+      wbByteArray('Unknown', 4),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbInteger('Unknown', itU32),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbInteger('Unknown', itU32),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
+    ])
+  ]);
+
+  wbRecord(AORU, 'Object Rule', [
+    wbEDID,
+    wbStruct(AOR2, 'Unknown', [
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbByteArray('Unknown', 4)
+    ])
+  ]);
+
+  wbRecord(BNDS, 'Bendable Spline', [
+    wbEDID,
+    wbOBND,
+    wbStruct(DNAM, 'Data', [
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
+    ]),
+    wbFormIDCk(TNAM, 'Texture', [TXST])
+  ]);
+
+  wbRecord(CMPO, 'Component', [
+    wbEDID,
+    wbOBND,
+    wbFULL,
+    wbCUSD,
+    wbInteger(DATA, 'Rarity?', itU32),
+    wbFormIDCk(MNAM, 'Scrap Item', [MISC]),
+    wbFormIDCk(GNAM, 'Rarity', [GLOB])
+  ]);
+
+  wbRecord(DFOB, 'Default Object', [
+    wbEDID,
+    wbFormID(DATA)
+  ]);
+
+  wbRecord(DMGT, 'Damage Type', [
+    wbEDID,
+    wbUnknown(DNAM)
+  ]);
+
+  wbRecord(GDRY, 'God Ray', [
+    wbEDID,
+    wbStruct(DATA, 'Data', [
+      wbStruct('Sky/Fog Color', [
+        wbFloat('Red'),
+        wbFloat('Green'),
+        wbFloat('Blue')
+      ]),
+      wbStruct('Light/Ray Color', [
+        wbFloat('Red'),
+        wbFloat('Green'),
+        wbFloat('Blue')
+      ]),
+      wbFloat('Intensity'),
+      wbFloat('Multiscatter'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
+    ])
+  ]);
+
+end;
+
+procedure DefineFO4r;
+begin
+  wbRecord(INNR, 'Instance Naming Rule', [
+    wbEDID,
+    wbUnknown(UNAM),
+    wbRArray('Naming Rules',
+      wbRStruct('Naming Rule', [
+        wbInteger(VNAM, 'Count', itU32),
+        wbRArrayS('Names',
+          wbRStructSK([0], 'Name', [
+            wbLString(WNAM, 'Label', 0, cpTranslate),
+            wbKSIZ,
+            wbKWDAs
+          ], []),
+          cpNormal, False, nil, wbINNRAfterSet
+        )
+      ], [])
+    )
+  ]);
+
+  wbRecord(KSSM, 'Sound Keyword Mapping', [
+    wbEDID,
+    wbFormIDCk(DNAM, 'Sound', [SNDR]),
+    wbFormIDCk(ENAM, 'Sound', [SNDR]),
+    wbFormIDCk(VNAM, 'Sound', [SNDR]),
+    wbFloat(TNAM),
+    wbRArray('Keywords', wbFormIDCk(KNAM, 'Keyword', [KYWD])),
+    wbRArray('Sounds', wbStruct(RNAM, 'Sound', [
+      wbInteger('Unknown', itU32),
+      wbFormIDCk('Sound', [SNDR])
+    ]))
+  ]);
+
+  wbRecord(LAYR, 'Layer', [
+    wbEDID,
+    wbFormIDCk(PNAM, 'Parent', [LAYR])
+  ]);
+
+  wbRecord(LENS, 'Lens Flare', [
+    wbEDID,
+    wbFloat(CNAM),
+    wbFloat(DNAM),
+    wbInteger(LFSP, 'Count', itU32),
+    wbRArrayS('Flares',
+      wbRStructSK([0], 'Flare', [
+        wbString(DNAM, 'Shape'),
+        wbString(FNAM, 'Texture'),
+        wbStruct(LFSD, 'Unknown', [
+          wbFloat('Unknown'),
+          wbFloat('Unknown'),
+          wbFloat('Unknown'),
+          wbFloat('Unknown'),
+          wbFloat('Unknown'),
+          wbFloat('Unknown'),
+          wbFloat('Unknown'),
+          wbFloat('Unknown'),
+          wbByteArray('Unknown', 4)
+        ])
+      ], [])
+    )
+  ]);
+
+  wbRecord(LSPR, 'LSPR', [
+    wbEDID
+  ]);
+
+  wbRecord(MICN, 'MICN', [
+    wbEDID
+  ]);
+
+  wbRecord(MSWP, 'Material Swap', [
+    wbEDID,
+    wbString(FNAM),
+    wbRArray('Unknown',
+      wbRStruct('Unknown', [
+        wbString(BNAM, 'Base Material'),
+        wbString(SNAM, 'Swap Material'),
+        wbString(FNAM),
+        wbUnknown(CNAM)
+      ], [])
+    )
+  ]);
+
+  wbRecord(NOCM, 'Navigation Mesh Obstacle Manager', [
+    wbRArray('Unknown',
+      wbRStruct('Unknown', [
+        wbInteger(INDX, 'Index', itU32),
+        wbRArray('Unknown', wbUnknown(DATA)),
+        wbUnknown(INTV),
+        wbString(NAM1, 'Model')
+      ], [])
+    )
+  ]);
+
+end;
+
+procedure DefineFO4s;
+begin
+  wbRecord(NOTE, 'Note', [
+    wbEDID,
+    wbVMAD,
+    wbOBND,
+    wbPTRN,
+    wbFULL,
+    wbMODL,
+    wbFormIDCk(YNAM, 'Sound - Pick Up', [SNDR]),
+    wbFormIDCk(ZNAM, 'Sound - Drop', [SNDR]),
+    wbInteger(DNAM, 'Type', itU8, wbEnum([
+      'Unknown',
+      'Quest holotapes',
+      'Holotape games',
+      'Special/collectible/recipe holotapes'
+    ])),
+    wbStruct(DATA, 'Data', [      // was DNAM before form version 65. Now holds value and weight
+      wbInteger('Value', itU32),
+      wbFloat('Weight')
+    ]),
+    wbFormIDCk(SNAM, 'Unknown', [SCEN, TERM]),  // valid if type is 0, 1 or 3. if type 0, not resolved as a LoadOrderFormID (null only ?)
+    wbString(PNAM, 'Game')
+  ]);
+
+  wbArmorPropertyEnum := wbEnum([
+    { 0} 'Enchantments',
+    { 1} 'BashImpactDataSet',
+    { 2} 'BlockMaterial',
+    { 3} 'Keywords',
+    { 4} 'Weight',
+    { 5} 'Value',
+    { 6} 'Rating',
+    { 7} 'AddonIndex',
+    { 8} 'BodyPart',
+    { 9} 'DamageTypeValue',
+    {10} 'ActorValues',
+    {11} 'Health',
+    {12} 'ColorRemappingIndex',
+    {13} 'MaterialSwaps'
+  ]);
+
+  wbActorPropertyEnum := wbEnum([
+    { 0} 'Keywords',
+    { 1} 'ForcedInventory',
+    { 2} 'XPOffset',
+    { 3} 'Enchantments',
+    { 4} 'ColorRemappingIndex',
+    { 5} 'MaterialSwaps'
+  ]);
+
+  wbWeaponPropertyEnum := wbEnum([
+    { 0} 'Speed',
+    { 1} 'Reach',
+    { 2} 'MinRange',
+    { 3} 'MaxRange',
+    { 4} 'AttackDelaySec',
+    { 5} 'Unknown 5',
+    { 6} 'OutOfRangeDamageMult',
+    { 7} 'SecondaryDamage',
+    { 8} 'CriticalChargeBonus',
+    { 9} 'HitBehaviour',
+    {10} 'Rank',
+    {11} 'Unknown 11',
+    {12} 'AmmoCapacity',
+    {13} 'Unknown 13',
+    {14} 'Unknown 14',
+    {15} 'Type',
+    {16} 'IsPlayerOnly',
+    {17} 'NPCsUseAmmo',
+    {18} 'HasChargingReload',
+    {19} 'IsMinorCrime',
+    {20} 'IsFixedRange',
+    {21} 'HasEffectOnDeath',
+    {22} 'HasAlternateRumble',
+    {23} 'IsNonHostile',
+    {24} 'IgnoreResist',
+    {25} 'IsAutomatic',
+    {26} 'CantDrop',
+    {27} 'IsNonPlayable',
+    {28} 'AttackDamage',
+    {29} 'Value',
+    {30} 'Weight',
+    {31} 'Keywords',
+    {32} 'AimModel',
+    {33} 'AimModelMinConeDegrees',
+    {34} 'AimModelMaxConeDegrees',
+    {35} 'AimModelConeIncreasePerShot',
+    {36} 'AimModelConeDecreasePerSec',
+    {37} 'AimModelConeDecreaseDelayMs',
+    {38} 'AimModelConeSneakMultiplier',
+    {39} 'AimModelRecoilDiminishSpringForce',
+    {40} 'AimModelRecoilDiminishSightsMult',
+    {41} 'AimModelRecoilMaxDegPerShot',
+    {42} 'AimModelRecoilMinDegPerShot',
+    {43} 'AimModelRecoilHipMult',
+    {44} 'AimModelRecoilShotsForRunaway',
+    {45} 'AimModelRecoilArcDeg',
+    {46} 'AimModelRecoilArcRotateDeg',
+    {47} 'AimModelConeIronSightsMultiplier',
+    {48} 'HasScope',
+    {49} 'ZoomDataFOVMult',
+    {50} 'FireSeconds',
+    {51} 'NumProjectiles',
+    {52} 'AttackSound',
+    {53} 'AttackSound2D',
+    {54} 'AttackLoop',
+    {55} 'AttackFailSound',
+    {56} 'IdleSound',
+    {57} 'EquipSound',
+    {58} 'UnEquipSound',
+    {59} 'SoundLevel',
+    {50} 'ImpactDataSet',
+    {61} 'Ammo',
+    {62} 'CritEffect',
+    {63} 'BashImpactDataSet',
+    {64} 'BlockMaterial',
+    {65} 'Enchantments',
+    {66} 'AimModelBaseStability',
+    {67} 'ZoomData',
+    {68} 'ZoomDataOverlay',
+    {69} 'ZoomDataImageSpace',
+    {70} 'ZoomDataCameraOffsetX',
+    {71} 'ZoomDataCameraOffsetY',
+    {72} 'ZoomDataCameraOffsetZ',
+    {73} 'EquipSlot',
+    {74} 'SoundLevelMult',
+    {75} 'NPCAmmoList',
+    {76} 'ReloadSpeed',
+    {77} 'DamageTypeValues',
+    {78} 'AccuracyBonus',
+    {79} 'AttackActionPointCost',
+    {80} 'OverrideProjectile',
+    {81} 'HasBoltAction',
+    {82} 'StaggerValue',
+    {83} 'SightedTransitionSeconds',
+    {84} 'FullPowerSeconds',
+    {85} 'HoldInputToPower',
+    {86} 'HasRepeatableSingleFire',
+    {87} 'MinPowerPerShot',
+    {88} 'ColorRemappingIndex',
+    {89} 'MaterialSwaps',
+    {90} 'CriticalDamageMult',
+    {91} 'FastEquipSound',
+    {92} 'DisableShells',
+    {93} 'HasChargingAttack',
+    {94} 'ActorValues'
+  ]);
+
+  wbRecord(OMOD, 'Object Modification', [
+    wbEDID,
+    wbFULL,
+    wbLString(DESC, 'Description', 0, cpTranslate),
+    wbMODL,
+    wbStruct(DATA, 'Data', [
+      wbInteger('Include Count', itU32),
+      wbInteger('Property Count', itU32),
+      wbByteArray('Unused', 2, cpIgnore),
+      wbInteger('Form Type', itU32, wbEnum([], [
+        Sig2Int(ARMO), 'Armor',
+        Sig2Int(NPC_), 'Non-player character',
+        Sig2Int(WEAP), 'Weapon',
+        Sig2Int(NONE), 'None'
+      ])),
+      wbByteArray('Unused', 2, cpIgnore),
+      wbFormIDCk('Keyword', [KYWD, NULL]),
+      wbArray('Keywords', wbFormIDCk('Keyword', [KYWD, NULL]), -1),
+      wbArray('Items', wbStruct('Item', [
+        wbByteArray('Value 1', 4),
+        wbByteArray('Value 2', 4)
+      ]), -1),
+      wbArrayS('Includes', wbStruct('Include', [
+        wbFormIDCk('Mod', [OMOD]),
+        wbInteger('Unknown', itU8),
+        wbByteArray('Unknown', 2)
+      ]), wbOMODDataIncludeCounter, cpNormal, False, nil, wbOMODincludeAfterSet),
+      wbArrayS('Properties', wbStructSK([4], 'Property', [
+        wbInteger('Value Type', itU8, wbEnum([
+          {0} 'Int',
+          {1} 'Float',
+          {2} 'Bool',
+          {3} 'Unknown 3',
+          {4} 'FormID,Int',
+          {5} 'Enum',
+          {6} 'FormID,Float'
+        ])),
+        wbByteArray('Unused', 3, cpIgnore),
+        wbInteger('Function Type', itU8, wbEnum([
+          {0} 'Set',
+          {1} 'Multiply',
+          {2} 'Add'
+        ])),
+        wbByteArray('Unused', 3, cpIgnore),
+        wbUnion('Property', wbOMODDataPropertyDecider, [
+          wbInteger('Index', itU16),
+          wbInteger('Armor Property', itU16, wbArmorPropertyEnum),
+          wbInteger('Actor Property', itU16, wbActorPropertyEnum),
+          wbInteger('Weapon Property', itU16, wbWeaponPropertyEnum)
+        ]),
+        wbByteArray('Unused', 2, cpIgnore),
+        wbUnion('Value 1', wbOMODDataPropertyValue1Decider, [
+          wbByteArray('Value 1 - Unknown', 4),
+          wbInteger('Value 1 - Int', itU32),
+          wbFloat('Value 1 - Float'),
+          wbInteger('Value 1 - Bool', itU32, wbEnum(['False', 'True'])),
+          wbByteArray('Value 1 - Enum', 4),
+          wbFormID('Value 1 - FormID')
+        ]),
+        wbUnion('Value 2', wbOMODDataPropertyValue2Decider, [
+          wbByteArray('Value 2 - Unknown', 4),
+          wbInteger('Value 2 - Int', itU32),
+          wbFloat('Value 2 - Float'),
+          wbInteger('Value 2 - Bool', itU32, wbEnum(['False', 'True'])),
+          wbByteArray('Value 2 - Enum', 4)
+        ]),
+        wbFloat('Factor')
+      ]), wbOMODDataPropertyCounter, cpNormal, False, nil, wbOMODpropertyAfterSet)
+    ], cpNormal, False, nil, -1, nil, wbOMODdataAfterSet),
+    wbArray(MNAM, 'Keywords', wbFormIDCk('Keyword', [KYWD])),
+    wbArray(FNAM, 'Keywords', wbFormIDCk('Keyword', [KYWD])),
+    wbFormID(LNAM),
+    wbUnknown(NAM1),
+    wbFLTR
+  ]);
+
+  wbRecord(OVIS, 'OVIS', [
+    wbRArray('Unknown',
+      wbRStruct('Unknown', [
+        wbFormIDCk(INDX, 'Object', [STAT]),
+        wbUnknown(DATA)
+      ], [])
+    )
+  ]);
+
+  wbRecord(PKIN, 'Pack In', [
+    wbEDID,
+    wbOBND,
+    wbFLTR,
+    wbFormIDCk(CNAM, 'Cell', [CELL]),
+    wbUnknown(VNAM)
+  ]);
+
+  wbRecord(RFGP, 'Reference Group', [
+    wbEDID,
+    wbString(NNAM, 'Name'),
+    wbFormIDCk(RNAM, 'Reference', [REFR])
+  ]);
+
+  wbRecord(RGDL, 'RGDL', [
+    wbEDID
+  ]);
+
+  wbRecord(SCCO, 'Scene Complex Object', [
+    wbEDID,
+    wbFormIDCk(QNAM, 'Quest', [QUST]),
+    wbRArray('Unknown',
+      wbRStruct('Unknown', [
+        wbFormIDCk(SNAM, 'Scene', [SCEN]),
+        wbStruct(XNAM, 'Unknown', [
+          wbInteger('Unknown', itS32),
+          wbInteger('Unknown', itS32)
+        ])
+      ], [])
+    ),
+    wbUnknown(VNAM, cpNormal, True),
+    wbRArray('Unknown', wbStruct(XNAM, 'Unknown', [
+      wbInteger('Unknown', itS32),
+      wbInteger('Unknown', itS32)
+    ])),
+    wbUnknown(VNAM, cpNormal, True)
+  ]);
+
+  wbRecord(SCOL, 'Static Collection', [
+    wbEDID,
+    wbOBNDReq,
+    wbPTRN,
+    wbMODL,
+    wbFULL,
+    wbFLTR,
+    wbRStructsSK('Parts', 'Part', [0], [
+      wbFormIDCk(ONAM, 'Static', [ACTI, ALCH, AMMO, BOOK, CONT, DOOR, FURN, MISC, MSTT, STAT, TERM, WEAP]),
+      wbArrayS(DATA, 'Placements', wbStruct('Placement', [
+        wbStruct('Position', [
+          wbFloat('X'),
+          wbFloat('Y'),
+          wbFloat('Z')
+        ]),
+        wbStruct('Rotation', [
+          wbFloat('X', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize),
+          wbFloat('Y', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize),
+          wbFloat('Z', cpNormal, True, wbRotationFactor, wbRotationScale, nil, RadiansNormalize)
+        ]),
+        wbFloat('Scale')
+      ]), 0, cpNormal, True)
+    ], [], cpNormal, True)
+  ]);
+
+  wbRecord(SCSN, 'Scene Sound', [
+    wbEDID,
+    wbInteger(PNAM, 'Index?', itU16),
+    wbRArray('Sounds', wbStruct(CNAM, 'Sound', [
+      wbFormIDCk('Sound Categoty', [SNCT]),
+      wbFloat('Unknown')
+    ]))
+  ]);
+
+end;
+
+procedure DefineFO4t;
+begin
+  wbRecord(SKIL, 'SKIL', [
+    wbEDID
+  ]);
+
+  wbRecord(STAG, 'Attack Sound', [
+    wbEDID,
+    wbRArray('Sounds', wbStruct(TNAM, 'Sound', [
+      wbFormIDCk('Sound', [SNDR]),
+      wbString('Action')
+    ]))
+  ]);
+
+  wbRecord(TERM, 'Terminal', [
+    wbEDID,
+    wbVMAD,
+    wbOBNDReq,
+    wbPTRN,
+    wbLString(NAM0, 'Network'),
+    wbLString(WNAM, 'Owner'),
+    wbFULL,
+    wbMODL,
+    wbKSIZ,
+    wbKWDAs,
+    wbPRPS,
+    wbUnknown(PNAM),
+    wbUnknown(FNAM),
+    wbCOCT,
+    wbCNTOs,
+    wbUnknown(MNAM),
+    wbUnknown(WBDT),
+    wbString(XMRK, 'Marker Model'),
+    wbUnknown(SNAM),
+    wbInteger(BSIZ, 'Count', itU32, nil, cpBenign),
+    wbRArray('Display Items',
+      wbRStruct('Display Item', [
+        wbLString(BTXT, 'Text', 0, cpTranslate),
+        wbCTDAs
+      ], [])
+    ),
+    wbInteger(ISIZ, 'Count', itU32, nil, cpBenign),
+    wbRArray('Menu Items',
+      wbRStruct('Menu Item', [
+        wbLString(ITXT, 'Item Text', 0, cpTranslate),
+        wbLString(RNAM, 'Error Text', 0, cpTranslate),
+        wbInteger(ANAM, 'Flags', itU8, wbFlags([
+          'Add Note',
+          'Force Redraw',
+          'Unknown 2'
+        ]), cpNormal, True),
+        wbInteger(ITID, 'Item ID', itU16),
+        wbLString(UNAM, 'Response Text', 0, cpTranslate),
+        wbFormIDCk(TNAM, 'Terminal', [TERM]),
+        wbCTDAs
+      ], [])
+    )
+  ]);
+
+  wbRecord(TLOD, 'TLOD', [
+    wbEDID
+  ]);
+
+  wbRecord(TOFT, 'TOFT', [
+    wbEDID
+  ]);
+
+  wbRecord(TRNS, 'Transform', [
+    wbEDID,
+    wbStruct(DATA, 'Data', [
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
+    ], cpNormal, True, nil, 7)
+  ]);
+
+  wbRecord(ZOOM, 'Zoom', [
+    wbEDID,
+    wbStruct(GNAM, '', [
+      wbFloat('Unknown'),
+      wbByteArray('Unknown', 4),
+      wbFormIDCk('Unknown', [IMAD, NULL]),
+      wbByteArray('Unknown', 4),
+      wbFloat('Unknown'),
+      wbFloat('Unknown')
+    ])
+  ]);
+
+end;
+
+procedure DefineFO4u;
 begin
    wbAddGroupOrder(GMST);
    wbAddGroupOrder(KYWD);
    wbAddGroupOrder(LCRT);
    wbAddGroupOrder(AACT);
+   wbAddGroupOrder(TRNS);
+   wbAddGroupOrder(CMPO);
    wbAddGroupOrder(TXST);
+   //wbAddGroupOrder(MICN);
    wbAddGroupOrder(GLOB);
+   wbAddGroupOrder(DMGT);
    wbAddGroupOrder(CLAS);
    wbAddGroupOrder(FACT);
    wbAddGroupOrder(HDPT);
-   wbAddGroupOrder(HAIR);{>>> Unused in Skyrim, but contained in Skyrim.esm <<<}
-   wbAddGroupOrder(EYES);
+   //wbAddGroupOrder(EYES);
    wbAddGroupOrder(RACE);
    wbAddGroupOrder(SOUN);
    wbAddGroupOrder(ASPC);
+   //wbAddGroupOrder(SKIL);
    wbAddGroupOrder(MGEF);
-   wbAddGroupOrder(SCPT);{>>> Unused in Skyrim, but contained in Skyrim.esm <<<}
+   //wbAddGroupOrder(SCPT);{>>> Unused in Skyrim, but contained in Skyrim.esm <<<}
    wbAddGroupOrder(LTEX);
    wbAddGroupOrder(ENCH);
    wbAddGroupOrder(SPEL);
-   wbAddGroupOrder(SCRL);
+   //wbAddGroupOrder(SCRL);
    wbAddGroupOrder(ACTI);
    wbAddGroupOrder(TACT);
    wbAddGroupOrder(ARMO);
@@ -13380,14 +14811,11 @@ begin
    wbAddGroupOrder(INGR);
    wbAddGroupOrder(LIGH);
    wbAddGroupOrder(MISC);
-   wbAddGroupOrder(APPA);
    wbAddGroupOrder(STAT);
-   wbAddGroupOrder(SCOL);{>>> Unused in Skyrim, but contained in Skyrim.esm <<<}
+   wbAddGroupOrder(SCOL);
    wbAddGroupOrder(MSTT);
-   wbAddGroupOrder(PWAT);{>>> Unused in Skyrim, but contained in Skyrim.esm <<<}
    wbAddGroupOrder(GRAS);
    wbAddGroupOrder(TREE);
-   wbAddGroupOrder(CLDC);{>>> Unused in Skyrim, but contained in Skyrim.esm <<<}
    wbAddGroupOrder(FLOR);
    wbAddGroupOrder(FURN);
    wbAddGroupOrder(WEAP);
@@ -13397,10 +14825,12 @@ begin
    wbAddGroupOrder(KEYM);
    wbAddGroupOrder(ALCH);
    wbAddGroupOrder(IDLM);
-   wbAddGroupOrder(COBJ);
+   wbAddGroupOrder(NOTE);
    wbAddGroupOrder(PROJ);
    wbAddGroupOrder(HAZD);
-   wbAddGroupOrder(SLGM);
+   wbAddGroupOrder(BNDS);
+   //wbAddGroupOrder(SLGM);
+   wbAddGroupOrder(TERM);
    wbAddGroupOrder(LVLI);
    wbAddGroupOrder(WTHR);
    wbAddGroupOrder(CLMT);
@@ -13409,8 +14839,22 @@ begin
    wbAddGroupOrder(REGN);
    wbAddGroupOrder(NAVI);
    wbAddGroupOrder(CELL);
+   //wbAddGroupOrder(REFR);
+   //wbAddGroupOrder(ACHR);
+   //wbAddGroupOrder(PMIS);
+   //wbAddGroupOrder(PARW);
+   //wbAddGroupOrder(PGRE);
+   //wbAddGroupOrder(PBEA);
+   //wbAddGroupOrder(PFLA);
+   //wbAddGroupOrder(PCON);
+   //wbAddGroupOrder(PBAR);
+   //wbAddGroupOrder(PHZD);
    wbAddGroupOrder(WRLD);
-   wbAddGroupOrder(DIAL);
+   //wbAddGroupOrder(LAND);
+   //wbAddGroupOrder(NAVM);
+   //wbAddGroupOrder(TLOD);
+   //wbAddGroupOrder(DIAL);
+   //wbAddGroupOrder(INFO);
    wbAddGroupOrder(QUST);
    wbAddGroupOrder(IDLE);
    wbAddGroupOrder(PACK);
@@ -13420,6 +14864,7 @@ begin
    wbAddGroupOrder(ANIO);
    wbAddGroupOrder(WATR);
    wbAddGroupOrder(EFSH);
+   //wbAddGroupOrder(TOFT);
    wbAddGroupOrder(EXPL);
    wbAddGroupOrder(DEBR);
    wbAddGroupOrder(IMGS);
@@ -13439,8 +14884,9 @@ begin
    wbAddGroupOrder(ECZN);
    wbAddGroupOrder(LCTN);
    wbAddGroupOrder(MESG);
-   wbAddGroupOrder(RGDL);{>>> Unused in Skyrim, but contained in Skyrim.esm <<<}
+   //wbAddGroupOrder(RGDL);{>>> Unused in Skyrim, but contained in Skyrim.esm <<<}
    wbAddGroupOrder(DOBJ);
+   wbAddGroupOrder(DFOB);
    wbAddGroupOrder(LGTM);
    wbAddGroupOrder(MUSC);
    wbAddGroupOrder(FSTP);
@@ -13451,8 +14897,8 @@ begin
    wbAddGroupOrder(DLBR);
    wbAddGroupOrder(MUST);
    wbAddGroupOrder(DLVW);
-   wbAddGroupOrder(WOOP);
-   wbAddGroupOrder(SHOU);
+   //wbAddGroupOrder(WOOP);
+   //wbAddGroupOrder(SHOU);
    wbAddGroupOrder(EQUP);
    wbAddGroupOrder(RELA);
    wbAddGroupOrder(SCEN);
@@ -13462,33 +14908,57 @@ begin
    wbAddGroupOrder(MATO);
    wbAddGroupOrder(MOVT);
    wbAddGroupOrder(SNDR);
-   wbAddGroupOrder(DUAL);
+   //wbAddGroupOrder(DUAL);
    wbAddGroupOrder(SNCT);
    wbAddGroupOrder(SOPM);
    wbAddGroupOrder(COLL);
    wbAddGroupOrder(CLFM);
    wbAddGroupOrder(REVB);
+   wbAddGroupOrder(PKIN);
+   wbAddGroupOrder(RFGP);
+   wbAddGroupOrder(AMDL);
+   wbAddGroupOrder(LAYR);
+   wbAddGroupOrder(COBJ);
+   wbAddGroupOrder(OMOD);
+   wbAddGroupOrder(MSWP);
+   wbAddGroupOrder(ZOOM);
+   wbAddGroupOrder(INNR);
+   wbAddGroupOrder(KSSM);
+   wbAddGroupOrder(AECH);
+   wbAddGroupOrder(SCCO);
+   wbAddGroupOrder(AORU);
+   wbAddGroupOrder(SCSN);
+   wbAddGroupOrder(STAG);
+   wbAddGroupOrder(NOCM);
+   wbAddGroupOrder(LENS);
+   wbAddGroupOrder(LSPR);
+   wbAddGroupOrder(GDRY);
+   wbAddGroupOrder(OVIS);
 end;
 
-procedure DefineTES5;
+procedure DefineFO4;
 begin
-  DefineTES5a;
-  DefineTES5b;
-  DefineTES5c;
-  DefineTES5d;
-  DefineTES5e;
-  DefineTES5f;
-  DefineTES5g;
-  DefineTES5h;
-  DefineTES5i;
-  DefineTES5j;
-  DefineTES5k;
-  DefineTES5l;
-  DefineTES5m;
-  DefineTES5n;
-  DefineTES5o;
-  DefineTES5p;
-  DefineTES5q;
+  DefineFO4a;
+  DefineFO4b;
+  DefineFO4c;
+  DefineFO4d;
+  DefineFO4e;
+  DefineFO4f;
+  DefineFO4g;
+  DefineFO4h;
+  DefineFO4i;
+  DefineFO4j;
+  DefineFO4k;
+  DefineFO4l;
+  DefineFO4m;
+  DefineFO4n;
+  DefineFO4o;
+  DefineFO4p;
+  DefineFO4q;
+  DefineFO4r;
+  DefineFO4s;
+  DefineFO4t;
+  DefineFO4u;
 end;
 
 initialization

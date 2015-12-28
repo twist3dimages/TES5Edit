@@ -24,14 +24,18 @@ uses
   SysUtils,
   Graphics,
   ShellAPI,
+  ShlObj,
   IniFiles,
+  Registry,
   wbInterface,
   Imaging,
   ImagingTypes;
 
 function wbDistance(const a, b: TwbVector): Single; overload
 function wbDistance(const a, b: IwbMainRecord): Single; overload;
+function wbStringToSignatures(aSignatures: string): TwbSignatures;
 function wbGetSiblingREFRsWithin(const aMainRecord: IwbMainRecord; aDistance: Single): TDynMainRecords;
+function wbGetSiblingRecords(const aElement: IwbElement; aSignatures: TwbSignatures; aOverrides: Boolean): TDynMainRecords;
 function FindMatchText(Strings: TStrings; const Str: string): Integer;
 function IsFileESM(const aFileName: string): Boolean;
 function IsFileESP(const aFileName: string): Boolean;
@@ -44,18 +48,15 @@ procedure SaveFont(aIni: TMemIniFile; aSection, aName: string; aFont: TFont);
 procedure LoadFont(aIni: TMemIniFile; aSection, aName: string; aFont: TFont);
 function wbDDSDataToBitmap(aData: TBytes; Bitmap: TBitmap): Boolean;
 function wbDDSStreamToBitmap(aStream: TStream; Bitmap: TBitmap): Boolean;
-
 function wbCRC32Data(aData: TBytes): Cardinal;
 function wbCRC32File(aFileName: string): Cardinal;
-
 function wbDecodeCRCList(const aList: string): TDynCardinalArray;
-
-
 function wbSHA1Data(aData: TBytes): string;
 function wbSHA1File(aFileName: string): string;
-
 function wbMD5Data(aData: TBytes): string;
 function wbMD5File(aFileName: string): string;
+function wbIsAssociatedWithExtension(aExt: string): Boolean;
+function wbAssociateWithExtension(aExt, aName, aDescr: string): Boolean;
 
 type
   PnxLeveledListCheckCircularStack = ^TnxLeveledListCheckCircularStack;
@@ -188,6 +189,27 @@ begin
   Result := wbDistance(PosA, PosB);
 end;
 
+function wbStringToSignatures(aSignatures: string): TwbSignatures;
+var
+  i: integer;
+  s: AnsiString;
+begin
+  with TStringList.Create do try
+    if Pos(',', aSignatures) <> 0 then Delimiter := ',' else Delimiter := ' ';
+    StrictDelimiter := True;
+    DelimitedText := aSignatures;
+    for i := 0 to Pred(Count) do begin
+      s := AnsiString(Strings[i]);
+      if Length(s) >= SizeOf(TwbSignature) then begin
+        SetLength(Result, Succ(Length(Result)));
+        System.Move(s[1], Result[Pred(Length(Result))][0], SizeOf(TwbSignature));
+      end;
+    end;
+  finally
+    Free;
+  end;
+end;
+
 function wbGetSiblingREFRsWithin(const aMainRecord: IwbMainRecord; aDistance: Single): TDynMainRecords;
 var
   Count       : Integer;
@@ -261,6 +283,62 @@ begin
   end;
 end;
 
+function wbGetSiblingRecords(const aElement: IwbElement; aSignatures: TwbSignatures; aOverrides: Boolean): TDynMainRecords;
+
+  procedure FindRecords(const aElement: IwbElement; var aSignatures: TwbSignatures; var Records: TDynMainRecords; var Count: Integer);
+  var
+    MainRecord : IwbMainRecord;
+    Container  : IwbContainerElementRef;
+    i          : Integer;
+  begin
+    if Supports(aElement, IwbMainRecord, MainRecord) then begin
+      for i := Low(aSignatures) to High(aSignatures) do
+        if MainRecord.Signature = aSignatures[i] then begin
+          if High(Records) < Count then
+            SetLength(Records, Length(Records) * 2);
+          Records[Count] := MainRecord;
+          Inc(Count);
+          Break;
+        end;
+    end else if Supports(aElement, IwbContainerElementRef, Container) then
+      for i := 0 to Pred(Container.ElementCount) do
+        FindRecords(Container.Elements[i], aSignatures, Records, Count);
+  end;
+
+var
+  MainRecord, Master  : IwbMainRecord;
+  i, j, Count         : Integer;
+begin
+  Count := 0;
+  SetLength(Result, 4096);
+  if Supports(aElement, IwbMainRecord, MainRecord) then begin
+    FindRecords(MainRecord.ChildGroup, aSignatures, Result, Count);
+    // include overrides from plugins loaded later for that record
+    if aOverrides then begin
+      Master := MainRecord.MasterOrSelf;
+      for i := 0 to Pred(Master.OverrideCount) do
+        if Master.Overrides[i]._File.LoadOrder > MainRecord._File.LoadOrder then
+          FindRecords(Master.Overrides[i].ChildGroup, aSignatures, Result, Count);
+    end;
+  end else
+    // if Group or File object is passed, no overrides
+    FindRecords(aElement, aSignatures, Result, Count);
+
+  SetLength(Result, Count);
+  // removing duplicates (overridden records)
+  if aOverrides and (Length(Result) > 1) then begin
+    wbMergeSort(@Result[0], Length(Result), CompareElementsFormIDAndLoadOrder);
+    j := 0;
+    for i := Succ(Low(Result)) to High(Result) do begin
+      if Result[j].LoadOrderFormID <> Result[i].LoadOrderFormID then
+        Inc(j);
+      if j <> i then
+        Result[j] := Result[i];
+    end;
+    SetLength(Result, Succ(j));
+  end;
+end;
+
 function FindMatchText(Strings: TStrings; const Str: string): Integer;
 begin
   for Result := 0 to Strings.Count-1 do
@@ -306,12 +384,16 @@ begin
     if Copy(s, i, 3) = ' \ ' then begin
       Delete(s, i, 1);
       Delete(s, i+1, 1);
+    end else if Copy(s, i, 2) = ' \' then begin
+      Delete(s, i, 1);
   	end else if s[i] = '"' then
       s[i] := ''''
   	else if s[i] = ':' then
       s[i] := '-'
   	else if s[i] = '/' then
       s[i] := ' ';
+  while (Length(s)>0) and (s[Length(s)]=' ') do
+    Delete(s, Length(s), 1);
   Result := s;
 end;
 
@@ -820,7 +902,8 @@ end;
 
 function MakeDataFileName(FileName, DataPath: String): String;
 begin
-  if Length(FileName) < 5 then
+  // MO uses 3 chars aliases
+  if Length(FileName) < 3 then
     Result := ''
   else if not ((FileName[1] = '\') or (FileName[2] = ':')) then
     Result := DataPath + FileName
@@ -843,13 +926,24 @@ begin
     j := j + bsaMissing.Count;
 
   if Assigned(bsaNames) then
-    with TMemIniFile.Create(iniName) do try
+    // TIniFile uses GetPrivateProfileString() to read data, it is virtualized by MO
+    // TMemIniFile reads from string list directly, not supported by MO
+    with TIniFile.Create(iniName) do try
       with TStringList.Create do try
         if wbGameMode in [gmTES4, gmFO3, gmFNV] then
           Text := StringReplace(ReadString('Archive', 'sArchiveList', ''), ',' ,#10, [rfReplaceAll])
-        else
+        else if wbGameMode = gmTES5 then
           Text := StringReplace(
-            ReadString('Archive', 'sResourceArchiveList', '') + ',' + ReadString('Archive', 'sResourceArchiveList2', ''),
+            ReadString('Archive', 'sResourceArchiveList', '') + ',' +
+            ReadString('Archive', 'sResourceArchiveList2', ''),
+            ',', #10, [rfReplaceAll]
+          )
+        else if wbGameMode = gmFO4 then
+          Text := StringReplace(
+            ReadString('Archive', 'sResourceIndexFileList', '') + ',' +
+            ReadString('Archive', 'sResourceStartUpArchiveList', '') + ',' +
+            ReadString('Archive', 'sResourceArchiveList', '') + ',' +
+            ReadString('Archive', 'sResourceArchiveList2', ''),
             ',', #10, [rfReplaceAll]
           );
         for i := 0 to Pred(Count) do begin
@@ -885,12 +979,11 @@ begin
     j := bsaNames.Count;
   if Assigned(bsaMissing) then
     j := j + bsaMissing.Count;
-
   // All games prior to Skyrim load BSA files with partial matching, Skyrim requires exact name match and
   //   can use a private ini to specify the bsa to use.
   if not exact then
     ModName := ModName + '*';
-  if FindFirst(DataPath + ModName + '.bsa', faAnyFile, F) = 0 then try
+  if FindFirst(DataPath + ModName + wbArchiveExtension, faAnyFile, F) = 0 then try
     repeat
       if wbContainerHandler.ContainerExists(DataPath + F.Name) then
         Continue;
@@ -952,6 +1045,61 @@ begin
     FreeImage(img);
     ms.Free;
   end;
+end;
+
+function wbIsAssociatedWithExtension(aExt: string): Boolean;
+var
+  Name: string;
+begin
+  Result := False;
+  with TRegistry.Create do try
+    RootKey := HKEY_CURRENT_USER;
+    if OpenKey('\Software\Classes\' + LowerCase(aExt), False) then begin
+      Name := ReadString('');
+      if OpenKey('\Software\Classes\' + Name + '\DefaultIcon', False) then
+        if SameText(ReadString(''), ParamStr(0)) then
+          Result := True;
+    end;
+  finally
+    Free;
+  end;
+end;
+
+function wbAssociateWithExtension(aExt, aName, aDescr: string): Boolean;
+begin
+  Result := False;
+
+  if aExt = '' then
+    Exit
+  else
+    aExt := LowerCase(aExt);
+
+  if aExt[1] <> '.' then
+    aExt := '.' + aExt;
+
+  with TRegistry.Create do try
+    RootKey := HKEY_CURRENT_USER;
+
+    if OpenKey('\Software\Classes\' + aExt, True) then
+      WriteString('', aName)
+    else
+      raise Exception.Create('Not enough rights to modify the registry');
+
+    if OpenKey('\Software\Classes\' + aName, True) then
+      WriteString('', aDescr);
+
+    if OpenKey('\Software\Classes\' + aName + '\DefaultIcon', True) then
+      WriteString('', ParamStr(0));
+
+    if OpenKey('\Software\Classes\' + aName + '\shell\open\command', True) then
+      WriteString('', ParamStr(0) + ' "%1"');
+
+    Result := True;
+  finally
+    Free;
+  end;
+
+  SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nil, nil);
 end;
 
 initialization

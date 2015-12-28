@@ -110,7 +110,7 @@ end;
 //    Result := SaveFormVersionDecider(73, aBasePtr, aEndPtr, aElement);
 //end;
 
-function ScreenShotDataCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+function ScreenShotDataCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 var
   Element : IwbElement;
   Container: IwbDataContainer;
@@ -133,7 +133,7 @@ begin
   end;
 end;
 
-function FileLocationTableCountCounter(aName: String; aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+function FileLocationTableCountCounter(aName: String; aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 var
   Element : IwbElement;
   Container: IwbDataContainer;
@@ -152,32 +152,32 @@ begin
   end;
 end;
 
-function GlobalDataCounter(aIndex: Integer; aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+function GlobalDataCounter(aIndex: Integer; aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 begin
   Result := FileLocationTableCountCounter('Global Data Table '+IntToStr(aIndex), aBasePtr, aEndPtr, aElement);
 end;
 
-function GlobalData1Counter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+function GlobalData1Counter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 begin
   Result := GlobalDataCounter(1, aBasePtr, aEndPtr, aElement);
 end;
 
-function GlobalData2Counter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+function GlobalData2Counter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 begin
   Result := GlobalDataCounter(2, aBasePtr, aEndPtr, aElement);
 end;
 
-function GlobalData3Counter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+function GlobalData3Counter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 begin
   Result := GlobalDataCounter(3, aBasePtr, aEndPtr, aElement) + 1;  // +1 due to the bug as seen on UESP
 end;
 
-function ChangedFormsCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+function ChangedFormsCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 begin
   Result := FileLocationTableCountCounter('Changed Forms', aBasePtr, aEndPtr, aElement);
 end;
 
-//function GlobalData2TableSizeCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function GlobalData2TableSizeCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //var
 //  Element    : IwbElement;
 //  Container  : IwbDataContainer;
@@ -333,7 +333,7 @@ end;
 //  end;
 //end;
 //
-//function ChangedFormHavokMovedSubBufferCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function ChangedFormHavokMovedSubBufferCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //var
 //  Element    : IwbElement;
 //  Container  : IwbDataContainer;
@@ -349,7 +349,7 @@ end;
 //  end;
 //end;
 //
-//function ChangedFormHighProcessSubBufferCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function ChangedFormHighProcessSubBufferCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //var
 //  Element    : IwbElement;
 //  Container  : IwbDataContainer;
@@ -419,7 +419,7 @@ end;
 //  end;
 //end;
 //
-//function ChangedFormAnimationSubBufferCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function ChangedFormAnimationSubBufferCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //var
 //  Element    : IwbElement;
 //  Container  : IwbDataContainer;
@@ -435,7 +435,7 @@ end;
 //  end;
 //end;
 //
-//function ChangedFormDataSizer(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement; var CompressedSize: Integer): Cardinal;
+//function ChangedFormDataSizer(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement; var CompressedSize: Cardinal): Cardinal;
 //const
 //  OffsetLength = 9;
 //var
@@ -467,7 +467,7 @@ end;
 //    CompressedSize := 0;
 //end;
 //
-//function ChangedFormSizer(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement; var CompressedSize: Integer): Cardinal;
+//function ChangedFormSizer(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement; var CompressedSize: Cardinal): Cardinal;
 //var
 //  Struct : IwbStructCDef;
 //  i      : Integer;
@@ -920,7 +920,7 @@ end;
 //  end;
 //end;
 //
-//function ChangedFormExtraNonMagicTargetSubCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function ChangedFormExtraNonMagicTargetSubCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //var
 //  Element    : IwbElement;
 //  Container  : IwbDataContainer;
@@ -1626,7 +1626,7 @@ end;
 //    Result := 1 + Result;
 //end;
 //
-//function ChangedFormRemainingDataCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function ChangedFormRemainingDataCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //var
 //  Element   : IwbElement;
 //  Container : IwbDataContainer;
@@ -1662,12 +1662,12 @@ end;
 //  end;
 //end;
 //
-//function SkipCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function SkipCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //begin
 //  Result := wbBytesToSkip;
 //end;
 //
-//function DumpCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function DumpCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //begin
 //  if wbBytesToDump = $FFFFFFFF then
 //    Result := ( Cardinal(aEndPtr) - Cardinal(aBasePtr) ) div wbBytesToGroup + 1
@@ -1675,7 +1675,7 @@ end;
 //    Result := wbBytesToDump div wbBytesToGroup + 1;
 //end;
 //
-//function DataLengthCounter(aName: String; aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement; aModifier: Integer = 0): Integer;
+//function DataLengthCounter(aName: String; aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement; aModifier: Integer = 0): Cardinal;
 //var
 //  Element   : IwbElement;
 //  Container : IwbDataContainer;
@@ -1698,7 +1698,7 @@ end;
 //  end;
 //end;
 //
-//function DataLengthRemainderCounter(aName: String; aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement; aModifier: Integer = 0): Integer;
+//function DataLengthRemainderCounter(aName: String; aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement; aModifier: Integer = 0): Cardinal;
 //var
 //  Element   : IwbElement;
 //  Container : IwbDataContainer;
@@ -1729,23 +1729,23 @@ end;
 //  end;
 //end;
 //
-//function DataCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function DataCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //begin
 //  Result := DataLengthCounter('Global Data', aBasePtr, aEndPtr, aElement, 0);
 //end;
 //
-//function DataQuartetCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function DataQuartetCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //begin
 //  Result := DataLengthRemainderCounter('Global Data', aBasePtr, aEndPtr, aElement, 1);
 //end;
 //
-//function DataQuartetRemainderCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function DataQuartetRemainderCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //begin
 //  Result := DataLengthRemainderCounter('Global Data', aBasePtr, aEndPtr, aElement, 2);
 //end;
 //
 //
-//function CounterCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function CounterCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //var
 //  Element : IwbElement;
 //  Container: IwbDataContainer;
@@ -1762,7 +1762,7 @@ end;
 //  end;
 //end;
 //
-//function DivByteBy4Counter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function DivByteBy4Counter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 //var
 //  Element : IwbElement;
 //  Container: IwbDataContainer;
@@ -1806,7 +1806,7 @@ begin
   end;
 end;
 
-function OBSEChapterGlobalCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+function OBSEChapterGlobalCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 var
   Element : IwbElement;
   Container: IwbDataContainer;
@@ -1938,21 +1938,36 @@ var
 //  wbPathingRequest        : IwbStructDef;
 //  wbPathingRequestSubStruct : IwbStructDef;
 //
-//  wbUnionCHANGE_FORM_FLAGS : IwbUnionDef;
+  wbUnionCHANGE_FORM_FLAGS : IwbUnionDef;
+  wbUnionCHANGE_CREATED_NEW_REFERENCE : IwbUnionDef;
 //// no actual data    wbUnionCHANGE_REFR_MOVE : IwbUnionDef;
-//  wbUnionCHANGE_REFR_HAVOK_MOVE : IwbUnionDef;
+  wbUnionCHANGE_REFR_HAVOK_MOVE : IwbUnionDef;
 //// no actual data    wbUnionCHANGE_REFR_CELL_CHANGED : IwbUnionDef;
-//  wbUnionCHANGE_REFR_SCALE : IwbUnionDef;
-//  wbUnionCHANGE_REFR_INVENTORY : IwbUnionDef;
+  wbUnionCHANGEFLAG_REFR_HAD_HAVOK_MOVE_FLAG : IwbUnionDef;
+  wbUnionCHANGEFLAG_REFR_CELL_CHANGED : IwbUnionDef;
+  wbUnionCHANGE_REFR_SCALE : IwbUnionDef;
+  wbUnionCHANGE_REFR_ALL_EXTRA : IwbUnionDef;
+  wbUnionCHANGE_REFR_EXTRA_LEVELLED_CREATURE : IwbUnionDef;
+  wbUnionCHANGE_REFR_INVENTORY : IwbUnionDef;
+  wbUnionCHANGE_REFR_EXTRA_SCRIPT : IwbUnionDef;
 //// included in Extra...      wbUnionCHANGE_REFR_EXTRA_OWNERSHIP : IwbUnionDef;
 //// included in Extra...      wbUnionCHANGE_OBJECT_EXTRA_ITEM_DATA : IwbUnionDef;
 //// included in Extra...      wbUnionCHANGE_OBJECT_EXTRA_AMMO : IwbUnionDef;
 //// no actual data    wbUnionCHANGE_OBJECT_EXTRA_LOCK : IwbUnionDef;
+  wbUnionCHANGE_REFR_EXTRA_SAVEDMOVEMENTDATA : IwbUnionDef;
+  wbUnionCHANGE_MAPMARKEREXTRAFLAG : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_EXTRA_FURNITURE_MARKER : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_EXTRA_MAGIC : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_EXTRA_LOCK : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_EXTRA_OWNER : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_EXTRA_GLOBAL : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_EXTRA_RANK : IwbUnionDef;
+  wbUnionCHANGEFLAG_OBJECT_DROPPED_NON_QUEST_ITEM : IwbUnionDef;
 //  wbUnionCHANGE_OBJECT_OPEN_DEFAULT_STATE : IwbUnionDef;
 //// no actual data    wbUnionCHANGE_OBJECT_OPEN_STATE : IwbUnionDef;
 //// included in Extra...      wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN : IwbUnionDef;
 //// identical to wbUnionCHANGE_REFR_INVENTORY  wbUnionCHANGE_REFR_LEVELED_INVENTORY : IwbUnionDef;
-//  wbUnionCHANGE_REFR_ANIMATION : IwbUnionDef;
+  wbUnionCHANGE_REFR_ANIMATION : IwbUnionDef;
 //  wbUnionCHANGE_REFR_ANIMATION_Actor : IwbUnionDef;
 //// included in Extra...      wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE : IwbUnionDef;
 //  wbUnionCHANGE_REFR_EXTRA_CREATED_ONLY : IwbUnionDef;
@@ -1967,40 +1982,49 @@ var
 //  wbUnionCHANGE_ACTOR_DAMAGE_MODIFIERS : IwbUnionDef;
 //  wbUnionCHANGE_ACTOR_OVERRIDE_MODIFIERS : IwbUnionDef;
 //  wbUnionCHANGE_ACTOR_PERMANENT_MODIFIERS : IwbUnionDef;
-//  wbUnionCHANGE_CELL_FLAGS : IwbUnionDef;
-//  wbUnionCHANGE_CELL_FULLNAME : IwbUnionDef;
-//  wbUnionCHANGE_CELL_OWNERSHIP : IwbUnionDef;
+  wbUnionCHANGE_CELL_FLAGS : IwbUnionDef;
+  wbUnionCHANGE_CELL_FULLNAME : IwbUnionDef;
+  wbUnionCHANGE_CELL_OWNERSHIP : IwbUnionDef;
 //  wbUnionCHANGE_CELL_EXTERIOR_SHORT : IwbUnionDef;
 //  wbUnionCHANGE_CELL_EXTERIOR_CHAR : IwbUnionDef;
-//  wbUnionCHANGE_CELL_DETACHTIME : IwbUnionDef;
-//  wbUnionCHANGE_CELL_SEENDATA : IwbUnionDef;
+  wbUnionCHANGE_CELL_DETACHTIME : IwbUnionDef;
+  wbUnionCHANGE_CELL_SEENDATA : IwbUnionDef;
+  wbUnionCHANGE_CELL_CREATED : IwbUnionDef;
+  wbUnionCHANGE_CELL_PATHGRID_CREATED : IwbUnionDef;
 //// no actual data    wbUnionCHANGE_TOPIC_SAIDONCE : IwbUnionDef;
 //  wbUnionCHANGE_QUEST_FLAGS : IwbUnionDef;
 //  wbUnionCHANGE_QUEST_SCRIPT_DELAY : IwbUnionDef;
 //  wbUnionCHANGE_QUEST_OBJECTIVES : IwbUnionDef;
 //  wbUnionCHANGE_QUEST_SCRIPT : IwbUnionDef;
 //  wbUnionCHANGE_QUEST_STAGES : IwbUnionDef;
-//  wbUnionCHANGE_ACTOR_BASE_DATA : IwbUnionDef;
-//  wbUnionCHANGE_ACTOR_BASE_ATTRIBUTES : IwbUnionDef;
-//  wbUnionCHANGE_ACTOR_BASE_AIDATA : IwbUnionDef;
-//  wbUnionCHANGE_ACTOR_BASE_SPELLLIST : IwbUnionDef;
-//  wbUnionCHANGE_ACTOR_BASE_FULLNAME : IwbUnionDef;
-//  wbUnionCHANGE_NPC_SKILLS : IwbUnionDef;
+  wbUnionCHANGE_ACTOR_BASE_DATA : IwbUnionDef;
+  wbUnionCHANGE_ACTOR_BASE_ATTRIBUTES : IwbUnionDef;
+  wbUnionCHANGE_ACTOR_BASE_AIDATA : IwbUnionDef;
+  wbUnionCHANGE_ACTOR_BASE_SPELLLIST : IwbUnionDef;
+  wbUnionCHANGE_ACTOR_BASE_FULLNAME : IwbUnionDef;
+  wbUnionCHANGE_ACTOR_BASE_HEALTH : IwbUnionDef;
+  wbUnionCHANGE_ACTOR_BASE_FACTIONS : IwbUnionDef;
+  wbUnionCHANGE_ACTOR_BASE_MODIFIERS : IwbUnionDef;
+
+  wbUnionCHANGE_NPC_SKILLS : IwbUnionDef;
+  wbUnionCHANGE_NPC_COMBATSTYLE : IwbUnionDef;
+  wbUnionCHANGE_NPC_FAME : IwbUnionDef;
 //  wbUnionCHANGE_NPC_CLASS : IwbUnionDef;
 //  wbUnionCHANGE_NPC_FACE : IwbUnionDef;
 //  wbUnionCHANGE_NPC_GENDER : IwbUnionDef;
 //  wbUnionCHANGE_NPC_RACE : IwbUnionDef;
-//  wbUnionCHANGE_CREATURE_SKILLS : IwbUnionDef;
+  wbUnionCHANGE_CREATURE_SKILLS : IwbUnionDef;
+  wbUnionCHANGE_CREATURE_COMBATSTYLE : IwbUnionDef;
 //  wbUnionCHANGE_BASE_OBJECT_VALUE : IwbUnionDef;
 //  wbUnionCHANGE_BASE_OBJECT_FULLNAME : IwbUnionDef;
 //  wbUnionCHANGE_TALKING_ACTIVATOR_SPEAKER : IwbUnionDef;
-//  wbUnionCHANGE_BOOK_TEACHES_SKILL : IwbUnionDef;
+  wbUnionCHANGE_BOOK_TEACHES_SKILL : IwbUnionDef;
 //// no actual data    wbUnionCHANGE_NOTE_READ : IwbUnionDef;
 //  wbUnionCHANGE_ENCOUNTER_ZONE_FLAGS : IwbUnionDef;
 //  wbUnionCHANGE_ENCOUNTER_ZONE_GAME_DATA : IwbUnionDef;
 //  wbUnionCHANGE_CLASS_TAG_SKILLS : IwbUnionDef;
-//  wbUnionCHANGE_FACTION_FLAGS : IwbUnionDef;
-//  wbUnionCHANGE_FACTION_REACTIONS : IwbUnionDef;
+  wbUnionCHANGE_FACTION_FLAGS : IwbUnionDef;
+  wbUnionCHANGE_FACTION_REACTIONS : IwbUnionDef;
 //  wbUnionCHANGE_FACTION_CRIME_COUNTS : IwbUnionDef;
 //// no actual data  wbUnionCHANGE_PACKAGE_WAITING : IwbUnionDef;
 //// no actual data  wbUnionCHANGE_PACKAGE_NEVER_RUN : IwbUnionDef;
@@ -2009,6 +2033,13 @@ var
 //  wbUnionCHANGE_FORM_LIST_ADDED_FORM : IwbUnionDef;
 //
 //  wbUnionCHANGE_PACKAGE_CREATED : IwbUnionDef;
+  wbUnionCHANGE_DOOR_OPEN_DEFAULT_STATE : IwbUnionDef;
+//// no actual data  wbUnionCHANGE_DOOR_OPEN_STATE : IwbUnionDef;
+  wbUnionCHANGE_DOOR_EXTRA_TELEPORT : IwbUnionDef;
+//// no actual data  wbUnionCHANGE_OBJECT_EMPTY : IwbUnionDef;
+  wbUnionCHANGE_TOPIC_SAIDONCE : IwbUnionDef;
+  wbUnionCHANGE_PACKAGE_NEVER_RUN : IwbUnionDef;
+  wbUnionCHANGE_PACKAGE_WAITING : IwbUnionDef;
 
 begin
   wbNull := wbByteArray('Unused', -255);
