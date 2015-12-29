@@ -871,6 +871,16 @@ begin
     Result := False;
 end;
 
+procedure SwitchToCoSave;
+begin
+  case wbGameMode of
+    gmFNV:  SwitchToFNVCoSave;
+    gmFO3:  SwitchToFO3CoSave;
+    gmTES4: SwitchToTES4CoSave;
+    gmTES5: SwitchToTES5CoSave;
+  end;
+end;
+
 var
   NeedsSyntaxInfo : Boolean;
   s, s2           : string;
@@ -962,7 +972,9 @@ begin
         WriteLn(ErrOutput, 'Application '+wbGameName+' does not currently supports '+wbSourceName);
         Exit;
       end;
-      DefineFO4;
+      case wbToolSource of
+        tsPlugins: DefineFO4;
+      end;
     end else if isMode('TES3') then begin
       WriteLn(ErrOutput, 'TES3 - Morrowind is not supported yet.');
       Exit;
@@ -1168,14 +1180,14 @@ begin
     end;
     if wbToolSource = tsSaves then
       case wbGameMode of
-        gmFNV:  if SameText(ExtractFileExt(s), '.nvse') then SwitchToFNVCoSave;
-        gmFO3:  if SameText(ExtractFileExt(s), '.fose') then SwitchToFO3CoSave
+        gmFNV:  if SameText(ExtractFileExt(s), '.nvse') then SwitchToCoSave;
+        gmFO3:  if SameText(ExtractFileExt(s), '.fose') then SwitchToCoSave
           else
             WriteLn(ErrOutput, 'Save are not supported yet "',s,'". Please check the command line parameters.');
-        gmTES4: if SameText(ExtractFileExt(s), '.obse') then SwitchToTES4CoSave
+        gmTES4: if SameText(ExtractFileExt(s), '.obse') then SwitchToCoSave
           else
             WriteLn(ErrOutput, 'Save are not supported yet "',s,'". Please check the command line parameters.');
-        gmTES5: if SameText(ExtractFileExt(s), '.skse') then SwitchToTES5CoSave;
+        gmTES5: if SameText(ExtractFileExt(s), '.skse') then SwitchToCoSave;
       else
           WriteLn(ErrOutput, 'CoSave are not supported yet "',s,'". Please check the command line parameters.');
       end;

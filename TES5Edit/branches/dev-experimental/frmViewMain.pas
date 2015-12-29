@@ -904,18 +904,28 @@ end;
 
 function GetFormIDCallback(const aElement: IwbElement): Cardinal;
 var
-  s                           : string;
+  s        : string;
+  ObjectID : Cardinal;
 begin
-  if Assigned(aElement) then
-    s := IntToHex64(aElement._File.FileFormIDtoLoadOrderFormID(aElement._File.NewFormID), 8);
-
   Result := 0;
+  ObjectID := 0;
 
-  if InputQuery('New FormID', 'Please enter the new FormID in hex. e.g. 0404CC43. The FormID needs to be a load order corrected form ID.', s) then try
-    Result := StrToInt64('$' + s);
-  except
-    on E: Exception do
-      Application.HandleException(E);
+  if Assigned(aElement) then begin
+    ObjectID := aElement._File.NextObjectID; // remember ID
+    s := IntToHex64(aElement._File.FileFormIDtoLoadOrderFormID(aElement._File.NewFormID), 8);
+  end;
+
+  try
+    if InputQuery('New FormID', 'Please enter the new FormID in hex. e.g. 0404CC43. The FormID needs to be a load order corrected form ID.', s) then try
+      Result := StrToInt64('$' + s);
+    except
+      on E: Exception do
+        Application.HandleException(E);
+    end;
+  finally
+    // restore Next Object ID if failed
+    if (Result = 0) and (ObjectID <> 0) then
+      aElement._File.NextObjectID := ObjectID;
   end;
 end;
 
@@ -2873,7 +2883,7 @@ begin
           Clear;
           with Add do begin
             Text := '';
-            Width := wbColumnWidth;
+            Width := ColumnWidth;
             Options := Options - [coDraggable];
             Options := Options + [coFixed];
           end;
@@ -7389,10 +7399,12 @@ begin
   with TfrmScript.Create(Self) do try
     Path := wbScriptsPath;
     LastUsedScript := Settings.ReadString('View', 'LastUsedScript', '');
+    chkScriptsSubDir.Checked := Settings.ReadBool('View', 'IncludeScriptsFromSubDir', False);
     if ShowModal <> mrOK then
       Exit;
     Scr := Script;
     Settings.WriteString('View', 'LastUsedScript', LastUsedScript);
+    Settings.WriteBool('View', 'IncludeScriptsFromSubDir', chkScriptsSubDir.Checked);
     Settings.UpdateFile;
     CreateActionsForScripts;
   finally
@@ -12418,7 +12430,7 @@ begin
             Clear;
             with Add do begin
               Text := '';
-              Width := wbColumnWidth;
+              Width := ColumnWidth;
               Options := Options - [coDraggable];
               Options := Options + [coFixed];
             end;
@@ -12426,7 +12438,7 @@ begin
               with Add do begin
                 Text := ActiveRecords[i].Element._File.Name;
                 Style := vsOwnerDraw;
-                Width := wbColumnWidth;
+                Width := ColumnWidth;
                 MinWidth := 5;
                 MaxWidth := 3000;
                 Options := Options - [coAllowclick, coDraggable];
@@ -12464,7 +12476,7 @@ begin
             Clear;
             with Add do begin
               Text := '';
-              Width := wbColumnWidth;
+              Width := ColumnWidth;
             end;
           finally
             EndUpdate;

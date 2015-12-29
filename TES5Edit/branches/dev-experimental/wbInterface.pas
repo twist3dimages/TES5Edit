@@ -809,6 +809,9 @@ type
     function GetIsLocalized: Boolean;
     procedure SetIsLocalized(Value: Boolean);
 
+    function GetNextObjectID: Cardinal;
+    procedure SetNextObjectID(aObjectID: Cardinal);
+
     function GetIsTemporary: Boolean;
     procedure SetIsTemporary(Value: Boolean);
     function GetIsNotPlugin: Boolean;
@@ -856,6 +859,10 @@ type
     property IsLocalized: Boolean
       read GetIsLocalized
       write SetIsLocalized;
+
+    property NextObjectID: Cardinal
+      read GetNextObjectID
+      write SetNextObjectID;
 
     property IsTemporary: Boolean   // Deleted on close
       read GetIsTemporary
@@ -3067,7 +3074,6 @@ var
   wbContainerHandler : IwbContainerHandler;
   wbLoaderDone       : Boolean;
   wbLoaderError      : Boolean;
-  wbColumnWidth      : Integer = 200;
 
 procedure wbAddGroupOrder(const aSignature: TwbSignature);
 function wbGetGroupOrder(const aSignature: TwbSignature): Integer;
@@ -3210,7 +3216,7 @@ var
   wbHeaderSignature   : TwbSignature = 'TES4';
   wbFileMagic         : TwbFileMagic;
   wbFilePlugins       : String = 'Master Files';
-  wbUseFalsePlugins   : Boolean = True;
+  wbUseFalsePlugins   : Boolean = False;
   wbFileHeader        : IwbStructDef;
   wbFileChapters      : IwbStructDef;
   wbBytesToSkip       : Cardinal = 0;
@@ -10260,7 +10266,7 @@ end;
 
 procedure TwbStringDef.FromStringTransform(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement; const aValue: string; aTransformType: TwbStringTransformType);
 begin
-  FromStringNative(aBasePtr, aEndPtr, aElement, TransformString(AnsiString(aValue), aTransformType, aElement));
+  FromStringNative(aBasePtr, aEndPtr, aElement, TransformString(wbStringToAnsi(aValue, aElement), aTransformType, aElement));
 end;
 
 function TwbStringDef.GetDefType: TwbDefType;
@@ -12912,7 +12918,7 @@ end;
 function TwbIntegerDefFormater.ToEditValue(aInt: Int64;
   const aElement: IwbElement): string;
 begin
-  ToEditValueInternal(aInt, aElement, False);
+  Result := ToEditValueInternal(aInt, aElement, False);
 end;
 
 function TwbIntegerDefFormater.ToEditValueInternal(aInt: Int64;
@@ -12924,7 +12930,7 @@ end;
 function TwbIntegerDefFormater.ToPersistentEditValue(aInt: Int64;
   const aElement: IwbElement): string;
 begin
-  ToEditValueInternal(aInt, aElement, True);
+  Result := ToEditValueInternal(aInt, aElement, True);
 end;
 
 { TwbUnionDef }
