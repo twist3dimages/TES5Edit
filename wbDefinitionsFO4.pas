@@ -964,6 +964,11 @@ var
   wbLLCT: IwbSubRecordDef;
   wbLVLD: IwbSubRecordDef;
   wbVMAD: IwbSubRecordDef;
+  wbVMADFragmentedPERK: IwbSubRecordDef;
+  wbVMADFragmentedPACK: IwbSubRecordDef;
+  wbVMADFragmentedQUST: IwbSubRecordDef;
+  wbVMADFragmentedSCEN: IwbSubRecordDef;
+  wbVMADFragmentedINFO: IwbSubRecordDef;
   wbCOCT: IwbSubRecordDef;
   wbKSIZ: IwbSubRecordDef;
   wbKWDAs: IwbSubRecordDef;
@@ -2020,31 +2025,6 @@ begin
     Result := IntToStr(aInt) + ' -> ' + IntToStr(aInt div 17) + ':' + IntToStr(aInt mod 17);
 end;
 
-function wbGLOBFNAM(aInt: Int64; const aElement: IwbElement; aType: TwbCallbackType): string;
-begin
-  Result := '';
-  case aType of
-    ctToStr: begin
-      case aInt of
-        Ord('s'): Result := 'Short';
-        Ord('l'): Result := 'Long';
-        Ord('f'): Result := 'Float';
-        Ord('b'): Result := 'Boolean';
-      else
-        Result := '<Unknown: '+IntToStr(aInt)+'>';
-      end;
-    end;
-    ctToSortKey: Result := Chr(aInt);
-    ctCheck: begin
-      case aInt of
-        Ord('s'), Ord('l'), Ord('f'), Ord('b'): Result := '';
-      else
-        Result := '<Unknown: '+IntToStr(aInt)+'>';
-      end;
-    end;
-  end;
-end;
-
 function wbPlacedAddInfo(const aMainRecord: IwbMainRecord): string;
 var
   Rec: IwbRecord;
@@ -2350,7 +2330,7 @@ begin
   Result := 0;
 
   Container := aElement.Container;
-  while Assigned(Container) and (Container.ElementType <> etsubRecord) do
+  while Assigned(Container) and (Container.ElementType <> etSubRecord) do
     Container := Container.Container;
 
   if not Supports(Container, IwbSubRecord, SubRecord) then
@@ -2541,6 +2521,19 @@ begin
     end;
 end;
 
+function wbSceneActionSoundDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Container: IwbContainerElementRef;
+begin
+  Result := 0;
+  if not Assigned(aElement) then
+    Exit;
+  if not Supports(aElement.Container, IwbContainerElementRef, Container) then
+    Exit;
+  if Container.ElementNativeValues['ANAM'] <> 4 then
+    Result := 1;
+end;
+
 function wbEFSHFormatDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
 var
   MainRecord: IwbMainRecord;
@@ -2557,6 +2550,11 @@ end;
 function wbDeciderFormVersion99(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
 begin
   Result := wbFormVerDecider(aBasePtr, aEndPtr, aElement, 99);
+end;
+
+function wbDeciderFormVersion119(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+begin
+  Result := wbFormVerDecider(aBasePtr, aEndPtr, aElement, 119);
 end;
 
 
@@ -2596,12 +2594,13 @@ begin
      3: Result := 3;
      4: Result := 4;
      5: Result := 5;
-    11: Result := 6;
-    12: Result := 7;
-    13: Result := 8;
-    14: Result := 9;
-    15: Result := 10;
-    17: Result := 11;
+     6: Result := 6;
+    11: Result := 7;
+    12: Result := 8;
+    13: Result := 9;
+    14: Result := 10;
+    15: Result := 11;
+    17: Result := 12;
   end;
 end;
 
@@ -2638,7 +2637,8 @@ begin
 end;
 
 {>>> For VMAD <<<}
-function wbScriptFragmentExistsDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+function wbScriptFragmentsDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+//function wbScriptFragmentExistsDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
 var
   Container  : IwbContainer;
   MainRecord : IwbMainRecord;
@@ -2652,18 +2652,18 @@ begin
   if not Assigned(Container) then Exit;
 
   Supports(Container, IwbMainRecord, MainRecord);
-  if MainRecord.Signature = INFO then
+  if MainRecord.Signature = PERK then
     Result := 1
-  else if MainRecord.Signature = PACK then
+  else if MainRecord.Signature = TERM then
+    Result := 1
+  else if MainRecord.Signature = INFO then
     Result := 2
-  else if MainRecord.Signature = PERK then
+  else if MainRecord.Signature = PACK then
     Result := 3
   else if MainRecord.Signature = QUST then
     Result := 4
   else if MainRecord.Signature = SCEN then
-    Result := 5
-  else if MainRecord.Signature = TERM then
-    Result := 6;
+    Result := 5;
 end;
 
 {>>> For VMAD <<<}
@@ -2671,19 +2671,18 @@ function wbScriptFragmentsDontShow(const aElement: IwbElement): Boolean;
 var
   Container: IwbContainer;
 begin
-  Result := True;
+  Result := False;
   if Assigned(aElement) then
     if Supports(aElement, IwbContainer, Container) then
       if Container.ElementCount > 0 then
-        if Assigned(Container.Elements[0]) then
-          Result := VarIsClear(Container.Elements[0].NativeValue);
+        // wbNull is a value, fragments are unions
+        Result := Container.Elements[0].ElementType = etValue;
 end;
 
 {>>> For VMAD <<<}
 function wbScriptFragmentsQuestCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 var
   Container     : IwbContainer;
-
 begin
   Result := 0;
   if aElement.ElementType = etValue then
@@ -2691,7 +2690,7 @@ begin
   else
     Container := aElement as IwbContainer;
   if not Assigned(Container) then Exit;
-  while Assigned(Container) and (Pos('Script Fragments Quest', Container.Name) <> 1) do
+  while Assigned(Container) and (Container.Name <> 'Script Fragments') do
     Container := Container.Container;
   if not Assigned(Container) then Exit;
 
@@ -2711,11 +2710,11 @@ begin
   else
     Container := aElement as IwbContainer;
   if not Assigned(Container) then Exit;
-  while Assigned(Container) and (Pos('Script Fragments Info', Container.Name) <> 1) do
+  while Assigned(Container) and (Container.Name <> 'Script Fragments') do
     Container := Container.Container;
   if not Assigned(Container) then Exit;
 
-  F := Container.ElementByName['Info Fragments Flags'].NativeValue;
+  F := Container.ElementByName['Flags'].NativeValue;
   for i := 0 to 2 do begin
     if (F and 1) = 1 then
       Inc(Result);
@@ -2744,11 +2743,11 @@ begin
   else
     Container := aElement as IwbContainer;
   if not Assigned(Container) then Exit;
-  while Assigned(Container) and (Pos('Script Fragments Scene', Container.Name) <> 1) do
+  while Assigned(Container) and (Container.Name <> 'Script Fragments') do
     Container := Container.Container;
   if not Assigned(Container) then Exit;
 
-  F := Container.ElementByName['Scene Fragments Flags'].NativeValue;
+  F := Container.ElementByName['Flags'].NativeValue;
   for i := 0 to 2 do begin
     if (F and 1) = 1 then
       Inc(Result);
@@ -2777,11 +2776,11 @@ begin
   else
     Container := aElement as IwbContainer;
   if not Assigned(Container) then Exit;
-  while Assigned(Container) and (Pos('Script Fragments Pack', Container.Name) <> 1) do
+  while Assigned(Container) and (Container.Name <> 'Script Fragments') do
     Container := Container.Container;
   if not Assigned(Container) then Exit;
 
-  F := Container.ElementByName['Package Fragments Flags'].NativeValue;
+  F := Container.ElementByName['Flags'].NativeValue;
   for i := 0 to 7 do begin
     if (F and 1) = 1 then
       Inc(Result);
@@ -3972,6 +3971,149 @@ begin
   end;
 end;
 
+function wbActorTemplatesUseTemplate0(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 0 and 1) = 0
+  else
+    Result := False;
+end;
+
+function wbActorTemplatesUseTemplate1(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 1 and 1) = 0
+  else
+    Result := False;
+end;
+
+function wbActorTemplatesUseTemplate2(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 2 and 1) = 0
+  else
+    Result := False;
+end;
+
+function wbActorTemplatesUseTemplate3(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 3 and 1) = 0
+  else
+    Result := False;
+end;
+
+function wbActorTemplatesUseTemplate4(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 4 and 1) = 0
+  else
+    Result := False;
+end;
+
+function wbActorTemplatesUseTemplate5(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 5 and 1) = 0
+  else
+    Result := False;
+end;
+
+function wbActorTemplatesUseTemplate6(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 6 and 1) = 0
+  else
+    Result := False;
+end;
+
+function wbActorTemplatesUseTemplate7(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 7 and 1) = 0
+  else
+    Result := False;
+end;
+
+function wbActorTemplatesUseTemplate8(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 8 and 1) = 0
+  else
+    Result := False;
+end;
+
+function wbActorTemplatesUseTemplate9(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 9 and 1) = 0
+  else
+    Result := False;
+end;
+
+function wbActorTemplatesUseTemplate10(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 10 and 1) = 0
+  else
+    Result := False;
+end;
+
+function wbActorTemplatesUseTemplate11(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 11 and 1) = 0
+  else
+    Result := False;
+end;
+
+function wbActorTemplatesUseTemplate12(const aElement: IwbElement): Boolean;
+var
+  MainRecord : IwbMainRecord;
+begin
+  MainRecord := aElement.ContainingMainRecord;
+  if Assigned(MainRecord) then
+    Result := (Cardinal(MainRecord.ElementNativeValues['ACBS\Use Template Actors']) shr 12 and 1) = 0
+  else
+    Result := False;
+end;
+
 procedure wbRemoveEmptyKWDA(const aElement: IwbElement);
 var
   Container  : IwbContainerElementRef;
@@ -4521,6 +4663,16 @@ begin
   wbCounterContainerByPathAfterSet('Magic Effect Data\DATA - Data\Counter effect count', 'Counter Effects', aElement);
 end;
 
+procedure wbTERMDisplayItemsAfterSet(const aElement: IwbElement; const aOldValue, aNewValue: Variant);
+begin
+  wbCounterAfterSet('BSIZ - Count', aElement);
+end;
+
+procedure wbTERMMenuItemsAfterSet(const aElement: IwbElement; const aOldValue, aNewValue: Variant);
+begin
+  wbCounterAfterSet('ISIZ - Count', aElement);
+end;
+
 procedure wbIDLAsAfterSet(const aElement: IwbElement; const aOldValue, aNewValue: Variant);
 var
   Element         : IwbElement;
@@ -4791,7 +4943,7 @@ begin
 
   case aType of
     ctToStr, ctToEditValue: begin
-      Result := 'Meshes\Precombined\' + IntToHex(Cell.FormID and $00FFFFFF, 8) + '_' + Result + '_oc.nif';
+      Result := 'Meshes\Precombined\' + IntToHex(Cell.FormID and $00FFFFFF, 8) + '_' + Result + '_OC.nif';
     end;
     ctCheck: Result := '';
   end;
@@ -5545,6 +5697,7 @@ begin
        {03} wbInteger('Int32', itS32),
        {04} wbFloat('Float'),
        {05} wbInteger('Bool', itU8, wbEnum(['False', 'True'])),
+       {06} wbScriptPropertyStruct, // or is this 7?
        {11} wbArray('Array of Object', wbScriptPropertyObject, -1),
        {12} wbArray('Array of String', wbLenString('Element', 2), -1),
        {13} wbArray('Array of Int32', wbInteger('Element', itS32), -1),
@@ -5560,45 +5713,44 @@ begin
     wbScriptProperties
   ]);
 
-  wbScriptFragmentsInfo := wbStruct('Script Fragments Info', [
+  wbScriptFragmentsInfo := wbStruct('Script Fragments', [
     wbInteger('Unknown', itS8),
-    wbInteger('Info Fragments Flags', itU8, wbFlags([
+    wbInteger('Flags', itU8, wbFlags([
       {1} 'OnBegin',
       {2} 'OnEnd'
     ])),
     wbScriptEntry,
-    wbArray('Info Fragments',  // Do NOT sort, ordered OnBegin, OnEnd
-      wbStruct('Info Fragment', [
+    wbArray('Fragments',  // Do NOT sort, ordered OnBegin, OnEnd
+      wbStruct('Fragment', [
         wbInteger('Unknown', itS8),
         wbLenString('scriptName', 2),
         wbLenString('fragmentName', 2)
       ]), [], wbScriptFragmentsInfoCounter)
-  ], cpNormal, false, wbScriptFragmentsDontShow);
+  ]);
 
-  wbScriptFragmentsPack := wbStruct('Script Fragments Package', [
+  wbScriptFragmentsPack := wbStruct('Script Fragments', [
     wbInteger('Unknown', itS8),
-    wbInteger('Package Fragments Flags', itU8, wbFlags([
+    wbInteger('Flags', itU8, wbFlags([
       {1} 'OnBegin',
       {2} 'OnEnd',
       {4} 'OnChange'
     ])),
-    //wbLenString('fileName', 2),
     wbScriptEntry,
-    wbArray('Package Fragments',  // Do NOT sort, ordered OnBegin, OnEnd, OnChange
-      wbStruct('Package Fragment', [
+    wbArray('Fragments',  // Do NOT sort, ordered OnBegin, OnEnd, OnChange
+      wbStruct('Fragment', [
         wbInteger('Unknown', itS8),
         wbLenString('scriptName', 2),
         wbLenString('fragmentName', 2)
       ]), [], wbScriptFragmentsPackCounter)
-  ], cpNormal, false, wbScriptFragmentsDontShow);
+  ]);
 
-  wbScriptFragmentsQuest := wbStruct('Script Fragments Quest', [
+  wbScriptFragmentsQuest := wbStruct('Script Fragments', [
     wbInteger('Unknown', itS8),
     wbInteger('fragmentCount', itU16),
     wbLenString('scriptName', 2),
     // if scriptName = "" then no Flags and Properties
     wbUnion('Script', wbScriptFragmentsQuestScriptDecider, [
-      wbStruct('Script', [
+      wbStruct('Script Data', [
         wbScriptFlags,
         wbScriptProperties
       ]),
@@ -5610,8 +5762,8 @@ begin
 //       BoSIdleHandlerQuest [QUST:00157460]
       wbNull
     ]),
-    wbArrayS('Quest Fragments',
-      wbStructSK([0, 2], 'Quest Fragment', [
+    wbArrayS('Fragments',
+      wbStructSK([0, 2], 'Fragment', [
         wbInteger('Quest Stage', itU16),
         wbInteger('Unknown', itS16),
         wbInteger('Quest Stage Index', itS32),
@@ -5619,24 +5771,18 @@ begin
         wbLenString('scriptName', 2),
         wbLenString('fragmentName', 2)
       ]),
-      wbScriptFragmentsQuestCounter),
-    wbArrayS('Aliases', wbStructSK([0], 'Alias', [
-      wbScriptPropertyObject,
-      wbInteger('Version', itS16, nil, cpIgnore),
-      wbInteger('Object Format', itS16, nil, cpIgnore),
-      wbArrayS('Alias Scripts', wbScriptEntry, -2)
-    ]), -2)
-  ], cpNormal, false, wbScriptFragmentsDontShow);
+      wbScriptFragmentsQuestCounter)
+  ]);
 
-  wbScriptFragmentsScen := wbStruct('Script Fragments Scene', [
+  wbScriptFragmentsScen := wbStruct('Script Fragments', [
     wbInteger('Unknown', itS8),
-    wbInteger('Scene Fragments Flags', itU8, wbFlags([
+    wbInteger('Flags', itU8, wbFlags([
       {1} 'OnBegin',
       {2} 'OnEnd'
     ])),
     wbScriptEntry,
-    wbArray('Scene Fragments',  // Do NOT sort, ordered OnBegin, OnEnd
-      wbStruct('Scene Fragment', [
+    wbArray('Fragments',  // Do NOT sort, ordered OnBegin, OnEnd
+      wbStruct('Fragment', [
         wbInteger('Unknown', itS8),
         wbLenString('scriptName', 2),
         wbLenString('fragmentName', 2)
@@ -5654,7 +5800,7 @@ begin
         wbLenString('scriptName', 2),
         wbLenString('fragmentName', 2)
       ]), -2)
-  ], cpNormal, false, wbScriptFragmentsDontShow);
+  ]);
 
   wbScriptFragments := wbStruct('Script Fragments', [
     wbInteger('Unknown', itS8),
@@ -5667,41 +5813,81 @@ begin
         wbLenString('scriptName', 2),
         wbLenString('fragmentName', 2)
       ]), -2)
-  ], cpNormal, false, wbScriptFragmentsDontShow);
+  ]);
 
   {>>> http://www.uesp.net/wiki/Tes5Mod:Mod_File_Format/VMAD_Field <<<}
+
+  {wbVMAD := wbStruct(VMAD, 'Virtual Machine Adapter', [
+    wbInteger('Version', itS16, nil, cpIgnore),
+    wbInteger('Object Format', itS16, nil, cpIgnore),
+    wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
+    // wrap in struct with optional element since fragments may be missing and hide them
+    // in this case (wbNull)
+    wbStruct('Fragments', [
+      wbUnion('Fragments Union', wbScriptFragmentsDecider, [
+        // 0 No fragments
+        wbNull,
+        // 1 PERK, TERM
+        wbScriptFragments,
+        // 2 INFO
+        wbScriptFragmentsInfo,
+        // 3 PACK
+        wbScriptFragmentsPack,
+        // 4 QUST
+        wbScriptFragmentsQuest,
+        // 5 SCEN
+        wbScriptFragmentsScen
+      ])
+    ], cpNormal, False, wbScriptFragmentsDontShow, 0)
+  ], cpNormal, false, nil, -1);
+  }
 
   wbVMAD := wbStruct(VMAD, 'Virtual Machine Adapter', [
     wbInteger('Version', itS16, nil, cpIgnore),
     wbInteger('Object Format', itS16, nil, cpIgnore),
-    wbUnion('Data', wbScriptFragmentExistsDecider, [
-      wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
-      wbStruct('Info VMAD', [
-        wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
-        wbScriptFragmentsInfo
-      ], cpNormal, False, nil, 0),
-      wbStruct('Pack VMAD', [
-        wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
-        wbScriptFragmentsPack
-      ], cpNormal, False, nil, 0),
-      wbStruct('Perk VMAD', [
-        wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
-        wbScriptFragments
-      ], cpNormal, False, nil, 0),
-      wbStruct('Quest VMAD', [
-        wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
-        wbScriptFragmentsQuest
-      ], cpNormal, False, nil, 0),
-      wbStruct('Scene VMAD', [
-        wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
-        wbScriptFragmentsScen
-      ], cpNormal, False, nil, 0),
-      wbStruct('Terminal VMAD', [
-        wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
-        wbScriptFragments
-      ], cpNormal, False, nil, 0)
-    ])
-  ], cpNormal, false, nil, -1);
+    wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False)
+  ]);
+
+  wbVMADFragmentedPERK := wbStruct(VMAD, 'Virtual Machine Adapter', [
+    wbInteger('Version', itS16, nil, cpIgnore),
+    wbInteger('Object Format', itS16, nil, cpIgnore),
+    wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
+    wbScriptFragments
+  ], cpNormal, False, nil, 3);
+
+  wbVMADFragmentedPACK := wbStruct(VMAD, 'Virtual Machine Adapter', [
+    wbInteger('Version', itS16, nil, cpIgnore),
+    wbInteger('Object Format', itS16, nil, cpIgnore),
+    wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
+    wbScriptFragmentsPack
+  ], cpNormal, False, nil, 3);
+
+  wbVMADFragmentedQUST := wbStruct(VMAD, 'Virtual Machine Adapter', [
+    wbInteger('Version', itS16, nil, cpIgnore),
+    wbInteger('Object Format', itS16, nil, cpIgnore),
+    wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
+    wbScriptFragmentsQuest,
+    wbArrayS('Aliases', wbStructSK([0], 'Alias', [
+      wbScriptPropertyObject,
+      wbInteger('Version', itS16, nil, cpIgnore),
+      wbInteger('Object Format', itS16, nil, cpIgnore),
+      wbArrayS('Alias Scripts', wbScriptEntry, -2)
+    ]), -2)
+  ], cpNormal, False, nil, 3);
+
+  wbVMADFragmentedSCEN := wbStruct(VMAD, 'Virtual Machine Adapter', [
+    wbInteger('Version', itS16, nil, cpIgnore),
+    wbInteger('Object Format', itS16, nil, cpIgnore),
+    wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
+    wbScriptFragmentsScen
+  ], cpNormal, False, nil, 3);
+
+  wbVMADFragmentedINFO := wbStruct(VMAD, 'Virtual Machine Adapter', [
+    wbInteger('Version', itS16, nil, cpIgnore),
+    wbInteger('Object Format', itS16, nil, cpIgnore),
+    wbArrayS('Scripts', wbScriptEntry, -2, cpNormal, False, nil, nil, nil, False),
+    wbScriptFragmentsInfo
+  ]);
 
   wbAttackData := wbRStructSK([1], 'Attack', [
     wbStruct(ATKD, 'Attack Data', [
@@ -7509,7 +7695,6 @@ procedure DefineFO4c;
       wbFormIDCk(XLYR, 'Layer', [LAYR]),
       wbFormIDCk(XMSP, 'Material Swap', [MSWP]),
       wbFormIDCk(XRFG, 'Reference Group', [RFGP]),
-      wbUnknown(XRDO),
       wbUnknown(XBSD),
       wbUnknown(XPDD),
       wbUnknown(XCVR),
@@ -7669,12 +7854,12 @@ begin
     wbFormIDCk(XCIM, 'Image Space', [IMGS]),
 
     wbUnknown(XGDR),
-    wbArrayS(XPRI, 'Physics References', wbFormIDCk('Unknown', [REFR])),
+    wbArrayS(XPRI, 'Physics References', wbFormIDCk('Reference', [REFR])),
     wbStruct(XCRI, 'Combined References', [
       wbInteger('Meshes Count', itU32),
       wbInteger('References Count', itU32),
       wbArrayS('Meshes', wbInteger('Combined Mesh', itU32, wbCombinedMeshIDToStr, wbCombinedMeshIDToInt), wbCELLCombinedMeshesCounter, cpNormal, False, nil, wbCELLCombinedMeshesAfterSet),
-      wbArrayS('References',  wbStructSK([0], 'Reference', [
+      wbArrayS('References',  wbStructSK([1, 0], 'Reference', [
         wbFormIDCk('Reference', [REFR, PGRE, PHZD, PMIS, PARW, PBAR, PBEA, PCON, PFLA]),
         wbInteger('Combined Mesh', itU32, wbCombinedMeshIDToStr, wbCombinedMeshIDToInt)
       ]), wbCELLCombinedRefsCounter, cpNormal, False, nil, wbCELLCombinedRefsAfterSet)
@@ -8656,7 +8841,13 @@ begin
       {0x00000040}  6, 'Constant'
     ])), [
     wbEDID,
-    wbInteger(FNAM, 'Type', itU8, wbGLOBFNAM, nil, cpNormal, True),
+    wbInteger(FNAM, 'Type', itU8, wbEnum([], [
+             0, 'Unknown 0',
+      Ord('s'), 'Short',
+      Ord('l'), 'Long',
+      Ord('f'), 'Float',
+      Ord('b'), 'Boolean'
+    ]), cpNormal, True),
     wbFloat(FLTV, 'Value', cpNormal, True)
   ]);
 
@@ -8674,7 +8865,6 @@ begin
     wbEDID,
     wbCNAM,
     wbString(DNAM, 'Unknown'),
-    //wbUnknown(TNAM),
     wbInteger(TNAM, 'Type', itU32, wbEnum([
       {00} 'None',
       {01} 'Unknown 1',
@@ -9497,7 +9687,7 @@ begin
       {0x00000004}  2, 'Non-Playable'
     ])), [
     wbEDID,
-    wbVMAD,
+    wbVMADFragmentedPERK,
     wbFULL,
     wbDESCReq,
     wbCTDAs,
@@ -10692,7 +10882,7 @@ begin
 
   wbRecord(SCEN, 'Scene', [
     wbEDID,
-    wbVMAD,
+    wbVMADFragmentedSCEN,
     wbInteger(FNAM, 'Flags', itU32, wbFlags([
       'Begin on Quest Start',
       'Stop on Quest End',
@@ -10790,7 +10980,10 @@ begin
       wbUnknown(DTGT),
       wbRArray('Packages', wbFormIDCk(PNAM, 'Package', [PACK])),
       wbFormIDCk(DATA, 'Topic', [DIAL, NULL]),
-      wbArray(HTID, 'Headtrack', wbInteger('Actor ID', itS32)), // very rare in this place, Scene [001D2863] <MQ302RadioEvacScene>
+      wbUnion(HTID, 'Sound', wbSceneActionSoundDecider, [
+        wbByteArray('Unknown', 0),
+        wbFormIDCk('Play Sound', [SNDR, NULL])
+      ]),
       wbFloat(DMAX, 'Looping - Max'),
       wbFloat(DMIN, 'Looping - Min'),
       wbUnknown(CRIS),
@@ -11147,7 +11340,7 @@ begin
       {0x00002000} 13, 'Actor Changed'
     ])), [
     wbEDID,
-    wbVMAD,
+    wbVMADFragmentedINFO,
     //wbUnknown(DATA),
     wbStruct(ENAM, 'Response flags', [
       wbInteger('Flags', itU16, wbFlags([
@@ -11761,7 +11954,7 @@ begin
     wbStruct(INTV, '', [
       wbInteger('Created Object Count', itU16),
       wbInteger('Priority', itU16)
-    ])
+    ], cpNormal, False, nil, 1)
   ]);
 
   wbRecord(NPC_, 'Non-Player Character (Actor)',
@@ -11812,14 +12005,28 @@ begin
         {0x80000000} 'Invulnerable'
       ])),
       wbInteger('Health Offset', itS16, nil, cpNormal, True, nil{wbActorTemplateUseStats}),
-      wbInteger('Stamina Offset', itS16, nil, cpNormal, False, nil{wbActorTemplateUseAIData}),
       wbUnion('Level', wbNPCLevelDecider, [
         wbInteger('Level', itS16, nil, cpNormal, True, nil{wbActorTemplateUseStats}),
         wbInteger('Level Mult', itS16, wbDiv(1000), cpNormal, True, nil{wbActorTemplateUseStats})
       ], cpNormal, True, nil{wbActorTemplateUseStats}),
+      wbInteger('Unknown', itS16, nil, cpNormal, False, nil{wbActorTemplateUseAIData}),
       wbInteger('Calc min level', itU16, nil, cpNormal, True, nil{wbActorTemplateUseStats}),
       wbInteger('Calc max level', itU16, nil, cpNormal, True, nil{wbActorTemplateUseStats}),
-      wbByteArray('Unknown', 4),
+      wbInteger('Use Template Actors', itU32, wbFlags([
+        {0x0001} 'Traits',
+        {0x0002} 'Stats',
+        {0x0004} 'Factions',
+        {0x0008} 'Spell List',
+        {0x0010} 'AI Data',
+        {0x0020} 'AI Packages',
+        {0x0040} 'Model/Animation',
+        {0x0080} 'Base Data',
+        {0x0100} 'Inventory',
+        {0x0200} 'Script',
+        {0x0400} 'Def Pack List',
+        {0x0800} 'Attack Data',
+        {0x1000} 'Keywords'
+      ])),
       wbInteger('Template Flags', itU16, wbFlags([
         {0x0001} 'Use Traits',
         {0x0002} 'Use Stats',
@@ -11847,7 +12054,21 @@ begin
     wbFormIDCk(TPLT, 'Template', [LVLN, NPC_]),
     wbFormIDCk(LTPT, 'Legendary Template', [LVLN, NPC_]),
     wbFormIDCk(LTPC, 'Legendary Chance', [GLOB]),
-    wbArray(TPTA, 'Unknown', wbFormIDCk('Unknown', [LVLN, NPC_, NULL])),
+    wbStruct(TPTA, 'Template Actors', [
+      wbFormIDCk('Traits', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate0),
+      wbFormIDCk('Stats', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate1),
+      wbFormIDCk('Factions', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate2),
+      wbFormIDCk('Spell List', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate3),
+      wbFormIDCk('AI Data', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate4),
+      wbFormIDCk('AI Packages', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate5),
+      wbFormIDCk('Model/Animation', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate6),
+      wbFormIDCk('Base Data', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate7),
+      wbFormIDCk('Inventory', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate8),
+      wbFormIDCk('Script', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate9),
+      wbFormIDCk('Def Pack List', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate10),
+      wbFormIDCk('Attack Data', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate11),
+      wbFormIDCk('Keywords', [LVLN, NPC_, NULL], False, cpNormal, False, wbActorTemplatesUseTemplate12)
+    ]),
     wbFormIDCk(RNAM, 'Race', [RACE], False, cpNormal, True, nil{wbActorTemplateUseTraits}),
     wbSPCT,
     wbSPLOs,
@@ -12042,7 +12263,7 @@ begin
 
   wbRecord(PACK, 'Package', [
     wbEDID,
-    wbVMAD,
+    wbVMADFragmentedPACK,
 
     wbStruct(PKDT, 'Pack Data', [
       wbInteger('General Flags', itU32, wbPKDTFlags),
@@ -12218,7 +12439,7 @@ begin
 
   wbRecord(QUST, 'Quest', [
     wbEDID,
-    wbVMAD,
+    wbVMADFragmentedQUST,
     wbFULL,
     wbStruct(DNAM, 'General', [
       wbInteger('Flags', itU16, wbFlags([
@@ -12680,6 +12901,7 @@ begin
     wbKSIZ,
     wbKWDAs,
     wbPRPS,
+    wbAPPR,
     wbStruct(DATA, '', [
       wbUnknown
 //      wbArrayS('Skill Boosts', wbStructSK([0], 'Skill Boost', [
@@ -13205,7 +13427,7 @@ begin
     wbFormIDCk(XLYR, 'Layer', [LAYR]),
     wbFormIDCk(XMSP, 'Material Swap', [MSWP]),
     wbFormIDCk(XRFG, 'Reference Group', [RFGP]),
-    wbUnknown(XRDO),
+    wbByteArray(XRDO, 'Radio', 0),
     wbUnknown(XBSD),
     wbUnknown(XPDD),
     wbUnknown(XCVR),
@@ -13737,9 +13959,7 @@ begin
       wbFormIDCk('Form', [ACHR, LAND, NAVM, REFR, PGRE, PHZD, PMIS, PARW, PBAR, PBEA, PCON, PFLA]),
       0, nil, nil, cpNormal, False, wbTES4ONAMDontShow),  // If possible then ignored by the runtime
     wbByteArray(SCRN, 'Screenshot'),                      // If possible then ignored by the runtime
-    wbRArray('TNAM Array', wbRStruct('Array', [
-      wbUnknown(TNAM)                                     // Ignored by the runtime
-    ], [])),
+    wbRArray('TNAMs (Unused)', wbUnknown(TNAM)),          // Ignored by the runtime
     wbUnknown(INTV),                                      // Ignored by the runtime
     wbInteger(INCC, 'Unknown', itU32)                     // Size of some array of 12 bytes elements
   ], True, nil, cpNormal, True, wbRemoveOFST);
@@ -14474,11 +14694,13 @@ begin
     wbRArray('Naming Rules',
       wbRStruct('Naming Rule', [
         wbInteger(VNAM, 'Count', itU32),
-        wbRArrayS('Names',
-          wbRStructSK([0], 'Name', [
+        // should not be sorted
+        wbRArray('Names',
+          wbRStruct('Name', [
             wbLString(WNAM, 'Label', 0, cpTranslate),
             wbKSIZ,
-            wbKWDAs
+            wbKWDAs,
+            wbUnknown(YNAM)
           ], []),
           cpNormal, False, nil, wbINNRAfterSet
         )
@@ -14893,7 +15115,7 @@ begin
 
   wbRecord(TERM, 'Terminal', [
     wbEDID,
-    wbVMAD,
+    wbVMADFragmentedPERK, // same fragments format as in PERK
     wbOBNDReq,
     wbPTRN,
     wbLString(NAM0, 'Network'),
@@ -14916,7 +15138,8 @@ begin
       wbRStruct('Display Item', [
         wbLString(BTXT, 'Text', 0, cpTranslate),
         wbCTDAs
-      ], [])
+      ], []),
+      cpNormal, False, nil, wbTERMDisplayItemsAfterSet
     ),
     wbInteger(ISIZ, 'Count', itU32, nil, cpBenign),
     wbRArray('Menu Items',
@@ -14932,7 +15155,8 @@ begin
         wbLString(UNAM, 'Response Text', 0, cpTranslate),
         wbFormIDCk(TNAM, 'Terminal', [TERM]),
         wbCTDAs
-      ], [])
+      ], []),
+      cpNormal, False, nil, wbTERMMenuItemsAfterSet
     )
   ]);
 
