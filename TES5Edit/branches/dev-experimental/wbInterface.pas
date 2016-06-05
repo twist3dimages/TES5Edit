@@ -71,12 +71,15 @@ var
   wbRequireLoadOrder       : Boolean  = False;
   wbCreateContainedIn      : Boolean  = True;
   wbVWDInTemporary         : Boolean  = False;
-  wbVWDAsQuestChildren     : Boolean   = False;
+  wbVWDAsQuestChildren     : Boolean  = False;
   wbResolveAlias           : Boolean  = True;
   wbActorTemplateHide      : Boolean  = True;
   wbClampFormID            : Boolean  = True;
   wbShowForceTime          : Boolean  = True;
   wbDoNotBuildRefsFor      : TStringList;
+  wbCopyIsRunning          : Integer  = 0;
+  wbHideKnownErrors        : Boolean  = False;  // easy way to hide some errors we know will happen until games are fully decoded.
+                                                // Helps isolate real decoding errors. Internal use only :).
 
   wbUDRSetXESP       : Boolean = True;
   wbUDRSetScale      : Boolean = False;
@@ -1006,6 +1009,8 @@ type
     procedure SetIsVisibleWhenDistant(aValue: Boolean);
     function GetHasVisibleWhenDistantMesh: Boolean;
     function GetHasMesh: Boolean;
+    function GetHasPrecombinedMesh: Boolean;
+    function GetPrecombinedMesh: string;
     function GetIsInitiallyDisabled: Boolean;
     procedure SetIsInitiallyDisabled(aValue: Boolean);
 
@@ -1105,6 +1110,10 @@ type
       read GetHasVisibleWhenDistantMesh;
     property HasMesh: Boolean
       read GetHasMesh;
+    property HasPrecombinedMesh: Boolean
+      read GetHasPrecombinedMesh;
+    property PrecombinedMesh: string
+      read GetPrecombinedMesh;
     property IsInitiallyDisabled: Boolean
       read GetIsInitiallyDisabled
       write SetIsInitiallyDisabled;
@@ -3071,6 +3080,7 @@ var
   wbLoadAllBSAs      : Boolean{} = False{};
   wbArchiveExtension : string = '.bsa';
   wbBuildRefs        : Boolean{} = True{};
+  wbForceBuildRefs   : Boolean{} = False{};
   wbContainerHandler : IwbContainerHandler;
   wbLoaderDone       : Boolean;
   wbLoaderError      : Boolean;
@@ -3226,6 +3236,7 @@ var
   wbTerminator        : Byte = Ord('|');
   wbPlayerRefID       : Cardinal = $14;
   wbChangedFormOffset : Integer = 10000;
+  wbOfficialDLC       : array of string;
 
 type
   TwbRefIDArray = array of Cardinal;
@@ -7171,7 +7182,7 @@ end;
 
 function TwbRecordDef.AdditionalInfoFor(const aMainRecord: IwbMainRecord): string;
 begin
-  if Assigned(recAddInfoCallback) then
+  if (wbCopyIsRunning = 0) and Assigned(recAddInfoCallback) then
     Result := recAddInfoCallback(aMainRecord)
   else
     Result := '';
@@ -8925,12 +8936,22 @@ begin
 end;
 
 function TwbArrayDef.GetPrefixCount(aBasePtr: Pointer): Cardinal;
+var
+  Count : int64;
 begin
   Result := 0;
   if arCount = -255 then
     Result := 0
   else if arCount = -254 then
     Result := ReadIntegerCounter(aBasePtr)
+  else if arCount = -253 then begin  // Matrix of count * count
+    Count := ReadIntegerCounter(aBasePtr);
+    Result := Count * Count;
+  end
+  else if arCount = -241 then begin  // Matrix of cardinal * cardinal
+    Count := PCardinal(aBasePtr)^;
+    Result := Count * Count;
+  end
   else if Assigned(aBasePtr) then
     case GetPrefixlength(aBasePtr) of
       1: Result := PByte(aBasePtr)^;
@@ -8949,6 +8970,10 @@ begin
       Result := 2
     else if arCount = -4 then
       Result := 1
+    else if arCount = -241 then
+      Result := 4
+    else if arCount = -253 then
+      Result := ReadIntegerCounterSize(aBasePtr)
     else if arCount = -254 then
       Result := ReadIntegerCounterSize(aBasePtr);
 end;
@@ -10548,15 +10573,16 @@ function TwbFloatDef.GetSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElem
 begin
   if Assigned(aBasePtr) and Assigned(aEndPtr) and (Cardinal(aBasePtr) >= Cardinal(aEndPtr)) then
     Result := Ord(noTerminator)
-  else if fdDouble then
-    Result := SizeOf(Double) + Ord(noTerminator)
   else
-    Result := SizeOf(Single) + Ord(noTerminator);
+    Result := GetDefaultSize(aBasePtr, aEndPtr, aElement)
 end;
 
 function TwbFloatDef.GetDefaultSize(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Integer;
 begin
-  Result := GetSize(aBasePtr, aEndPtr, aElement);
+  if fdDouble then
+    Result := SizeOf(Double) + Ord(noTerminator)
+  else
+    Result := SizeOf(Single) + Ord(noTerminator);
 end;
 
 function TwbFloatDef.SetToDefault(aBasePtr, aEndPtr: Pointer; const aElement: IwbElement): Boolean;
@@ -11143,6 +11169,9 @@ begin
     Exit;
 
   if Result < $800 then
+    Exit;
+
+  if Result = $FFFFFFFF then
     Exit;
 
   if Assigned(aElement) then begin

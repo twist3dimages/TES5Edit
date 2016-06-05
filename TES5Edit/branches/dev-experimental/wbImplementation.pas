@@ -143,24 +143,29 @@ var
   Container   : IwbContainer;
   Target      : IwbElement;
 begin
-  if (wbCurrentTick>0) and (wbCurrentTick+500<GetTickCount) then begin
-    wbProgressCallback('');
-    wbCurrentTick := GetTickCount;
-  end;
-  Container := aSource.Container;
-  if Assigned(Container) then begin
-    if Supports(Container, IwbMainRecord, MainRecord) then
-      Container := MainRecord.HighestOverrideOrSelf[aFile.LoadOrder];
-    Target := wbCopyElementToFile(Container, aFile, False, False, aPrefixRemove, aPrefix, aSuffix)
-  end else begin
-    Result := aFile;
-    Exit;
-  end;
+  Inc(wbCopyIsRunning);
+  try
+    if (wbCurrentTick>0) and (wbCurrentTick+500<GetTickCount) then begin
+      wbProgressCallback('');
+      wbCurrentTick := GetTickCount;
+    end;
+    Container := aSource.Container;
+    if Assigned(Container) then begin
+      if Supports(Container, IwbMainRecord, MainRecord) then
+        Container := MainRecord.HighestOverrideOrSelf[aFile.LoadOrder];
+      Target := wbCopyElementToFile(Container, aFile, False, False, aPrefixRemove, aPrefix, aSuffix)
+    end else begin
+      Result := aFile;
+      Exit;
+    end;
 
-  if Assigned(Target) then
-    Result := Target.AddIfMissing(aSource, aAsNew, aDeepCopy, aPrefixRemove, aPrefix, aSuffix)
-  else
-    Result := nil;
+    if Assigned(Target) then
+      Result := Target.AddIfMissing(aSource, aAsNew, aDeepCopy, aPrefixRemove, aPrefix, aSuffix)
+    else
+      Result := nil;
+  finally
+    Dec(wbCopyIsRunning);
+  end;
 end;
 
 function wbCopyElementToRecord(const aSource: IwbElement; aMainRecord: IwbMainRecord; aAsNew, aDeepCopy: Boolean): IwbElement;
@@ -849,6 +854,8 @@ type
     mrsSearchedChildGroup,
     mrsHasVWDMeshChecked,
     mrsHasVWDMesh,
+    mrsHasPrecombinedMeshChecked,
+    mrsHasPrecombinedMesh,
     mrsBaseRecordChecked,
     mrsQuickInit,
     mrsQuickInitDone,
@@ -877,6 +884,8 @@ type
     mrFullName         : string;
     mrStates           : TwbMainRecordStates;
     mrBaseRecordID     : Cardinal;
+    mrPrecombinedCellID: Cardinal;
+    mrPrecombinedID    : Cardinal;
     mrConflictAll      : TConflictAll;
     mrConflictThis     : TConflictThis;
     mrDataStorage      : TBytes;
@@ -1016,6 +1025,8 @@ type
     procedure SetIsVisibleWhenDistant(aValue: Boolean);
     function GetHasVisibleWhenDistantMesh: Boolean;
     function GetHasMesh: Boolean;
+    function GetHasPrecombinedMesh: Boolean;
+    function GetPrecombinedMesh: string;
     function GetIsInitiallyDisabled: Boolean;
     procedure SetIsInitiallyDisabled(aValue: Boolean);
 
@@ -3043,15 +3054,15 @@ begin
 
     j := 0;
     ONAMs := nil;
-    if wbGameMode in [gmFO3, gmFNV, gmTES5] then begin
+    if wbGameMode in [gmFO3, gmFNV, gmTES5, gmFO4] then begin
       Include(TwbMainRecord(FileHeader).mrStates, mrsNoUpdateRefs);
       while FileHeader.RemoveElement('ONAM') <> nil do
         ;
       if Supports(FileHeader.ElementByName['Master Files'], IwbContainerElementRef, MasterFiles) then
         for i := 0 to Pred(MasterFiles.ElementCount) do begin
           if Supports(MasterFiles.Elements[i], IwbContainerElementRef, MasterFile) then begin
-
-            if FileHeader.IsESM then
+            // Fallout 4 CK creates ONAMs in ESP too
+            if FileHeader.IsESM or (wbGameMode = gmFO4) then
               while j <= High(flRecords) do begin
                 Current := flRecords[j];
                 FormID := Current.FixedFormID;
@@ -3075,10 +3086,21 @@ begin
                    (Signature = 'PFLA') or {>>> Skyrim <<<}
                    (Signature = 'PCON') or {>>> Skyrim <<<}
                    (Signature = 'PBAR') or {>>> Skyrim <<<}
-                   (Signature = 'PHZD')    {>>> Skyrim <<<}
+                   (Signature = 'PHZD') or {>>> Skyrim <<<}
+                   // Fallout 4 (and later games?)
+                   ((wbGameMode >= gmFO4) and (
+                     (Signature = 'SCEN') or
+                     (Signature = 'DLBR') or
+                     (Signature = 'DIAL') or
+                     (Signature = 'INFO')
+                   ))
                 then begin
 
                   if (not wbMasterUpdateFilterONAM) or Current.IsWinningOverride then begin
+                    // ONAMs are for overridden temporary refs only
+                    if Current.IsPersistent then
+                      Continue;
+
                     if not Assigned(ONAMs) then begin
                       if not Supports(FileHeader.Add('ONAM', True), IwbContainerElementRef, ONAMs) then
                         Assert(False);
@@ -3087,10 +3109,7 @@ begin
                     end else
                       NewONAM := ONAMs.Assign(High(Integer), nil, True);
 
-                    {if wbDisplayLoadOrderFormID then
-                      NewONAM.NativeValue := Current.LoadOrderFormID
-                    else}
-                      NewONAM.NativeValue := FormID;
+                    NewONAM.NativeValue := FormID;
 
                     if wbMasterUpdateFixPersistence and not Current.IsPersistent and not Current.IsMaster then begin
                       Master := Current.Master;
@@ -4656,7 +4675,7 @@ begin
     Exit;
   if Supports(aElement.Container, IwbContainer, Container) then begin
     for i := 0 to Pred(RecordDef.MemberCount) do
-      if RecordDef.Members[i].Name = aElement.Name then
+      if RecordDef.Members[i].Equals(aElement.Def) then
         break;
     if i < RecordDef.MemberCount then begin
       RemoveElement(aElement);
@@ -4736,7 +4755,7 @@ begin
     Exit;
   if Supports(aElement.Container, IwbContainer, Container) then begin
     for i := 0 to Pred(RecordDef.MemberCount) do
-      if RecordDef.Members[i].Name = aElement.Name then
+      if RecordDef.Members[i].Equals(aElement.Def) then
         break;
     if i < RecordDef.MemberCount then begin
       RemoveElement(aElement);
@@ -5259,6 +5278,22 @@ begin
     Result := Group.Add(aName, aSilent);
 
     Exit;
+  end else if wbVWDAsQuestChildren and (GetSignature = 'QUST') and
+     (
+        SameText(s, 'DLBR') or
+        SameText(s, 'DIAL') or
+        SameText(s, 'SCEN')
+     ) then begin
+
+    Group := GetChildGroup;
+    if not Assigned(Group) then begin
+      Group := TwbGroupRecord.Create(GetContainer, 10, Self);
+      mrGroup := Group;
+    end;
+
+    Result := Group.Add(aName, aSilent);
+
+    Exit;
   end;
 
   if Assigned(mrDef) then begin
@@ -5675,7 +5710,10 @@ begin
       CELL: SearchForGroup := 6;
       DIAL: SearchForGroup := 7;
     else
-      SearchForGroup := 0;
+      if wbVWDAsQuestChildren and (GetSignature = 'QUST') then
+        SearchForGroup := 10
+      else
+        SearchForGroup := 0;
     end;
     if (SearchForGroup > 0) and Supports(GetContainer, IwbGroupRecord, ContainingGroup) then begin
       mrGroup := ContainingGroup.FindChildGroup(SearchForGroup, Self);
@@ -5845,6 +5883,7 @@ var
   i            : Integer;
   SelfRef      : IwbContainerElementRef;
   Group        : IwbGroupRecordInternal;
+  Group2       : IwbGroupRecordInternal;
   ContainerRef : IwbContainerElementRef;
   s            : string;
   Block        : Cardinal;
@@ -5874,7 +5913,8 @@ begin
   if Supports(lContainer, IwbGroupRecordInternal, Group) then
     if Group.GroupType = 8 then
       BasePtr.mrsFlags.SetPersistent(True)
-    else if Group.GroupType = 10 then
+    else if (Group.GroupType = 10) and not (wbVWDAsQuestChildren
+               and Supports(Group.Container, IwbGroupRecord, Group2) and (TwbSignature(Group2.GroupLabel) = 'QUST')) then
       BasePtr.mrsFlags.SetVisibleWhenDistant(True);
 
   if Assigned(Group) then
@@ -6378,6 +6418,11 @@ begin
     Result[9] := 'PBAR'; {>>> Skyrim <<<}
     Result[10] := 'PHZD'; {>>> Skyrim <<<}
   end else if GetSignature = 'WRLD' then begin
+  end else if wbVWDAsQuestChildren and (GetSignature = 'QUST') then begin
+    SetLength(Result, 3);
+    Result[0] := 'DIAL';
+    Result[1] := 'DLBR';
+    Result[2] := 'SCEN';
   end;
 
   j := 0;
@@ -6516,18 +6561,24 @@ var
 begin
   Result := mrGroup;
   if not Assigned(Result) and not (mrsSearchedChildGroup in mrStates) then begin
-    Include(mrStates, mrsSearchedChildGroup);
-    SearchForGroup := 0;
-    if GetSignature = 'WRLD' then
-      SearchForGroup := 1
-    else if GetSignature = 'CELL' then
-      SearchForGroup := 6
-    else if GetSignature = 'DIAL' then
-      SearchForGroup := 7;
+    try
+      Include(mrStates, mrsSearchedChildGroup);
+      SearchForGroup := 0;
+      if GetSignature = 'WRLD' then
+        SearchForGroup := 1
+      else if GetSignature = 'CELL' then
+        SearchForGroup := 6
+      else if GetSignature = 'DIAL' then
+        SearchForGroup := 7
+      else if wbVWDAsQuestChildren and (GetSignature = 'QUST') then
+        SearchForGroup := 10;
 
-    if (SearchForGroup > 0) and Supports(GetContainer, IwbGroupRecord, ContainingGroup) then
-      mrGroup := ContainingGroup.FindChildGroup(SearchForGroup, Self);
-    Result := mrGroup;
+      if (SearchForGroup > 0) and Supports(GetContainer, IwbGroupRecord, ContainingGroup) then
+        mrGroup := ContainingGroup.FindChildGroup(SearchForGroup, Self);
+      Result := mrGroup;
+    finally
+      Exclude(mrStates, mrsSearchedChildGroup);
+    end;
   end;
 end;
 
@@ -6832,6 +6883,110 @@ begin
     end;
   end;
   Result := mrsHasMesh in mrStates;
+end;
+
+function TwbMainRecord.GetHasPrecombinedMesh: Boolean;
+begin
+  if not (mrsHasPrecombinedMeshChecked in mrStates) then
+    Self.GetPrecombinedMesh;
+
+  Result := mrsHasPrecombinedMesh in mrStates;
+end;
+
+type
+  TwbPrecombinedInfo = record
+    Ref, ID: Cardinal;
+  end;
+
+var
+  PrecombinedCacheFileName: string;
+  PrecombinedCacheCellFormID: Cardinal;
+  PrecombinedCache: array of TwbPrecombinedInfo;
+
+function TwbMainRecord.GetPrecombinedMesh: string;
+var
+  Signature   : TwbSignature;
+  SelfRef     : IwbContainerElementRef;
+  Group       : IwbGroupRecord;
+  Cell        : IwbMainRecord;
+  CombinedRefs, CombinedRef: IwbContainerElementRef;
+  cnt, i      : Cardinal;
+  s: string;
+begin
+  Result := '';
+
+  if not (mrsHasPrecombinedMeshChecked in mrStates) then begin
+
+    // we need file for cache checking
+    if not Assigned(IwbElement(Self)._File) then
+      Exit;
+
+    Include(mrStates, mrsHasPrecombinedMeshChecked);
+    Self.mrPrecombinedCellID := 0;
+    Self.mrPrecombinedID := 0;
+
+    if wbGameMode <> gmFO4 then
+      Exit;
+
+    Signature := Self.GetSignature;
+
+    if (Signature <> 'REFR') and
+       (Signature <> 'PGRE') and
+       (Signature <> 'PMIS') and
+       (Signature <> 'PARW') and
+       (Signature <> 'PBEA') and
+       (Signature <> 'PFLA') and
+       (Signature <> 'PCON') and
+       (Signature <> 'PBAR') and
+       (Signature <> 'PHZD')
+    then
+      Exit;
+
+    SelfRef := Self as IwbContainerElementRef;
+
+    // markers can't be precombined
+    if Cardinal(SelfRef.ElementNativeValues['NAME']) < $800 then
+      Exit;
+
+    if Supports(SelfRef.Container, IwbGroupRecord, Group) then
+      Cell := Group.ChildrenOf;
+
+    if not Assigned(Cell) then
+      Exit;
+
+    s := IwbElement(Self)._File.Name;
+    i := Cell.FormID;
+
+    // store cell's precombined index in cache
+    if (i <> PrecombinedCacheCellFormID) or (s <> PrecombinedCacheFileName) then begin
+      PrecombinedCacheCellFormID := i;
+      PrecombinedCacheFileName := s;
+      SetLength(PrecombinedCache, 0);
+
+      if Supports(Cell.ElementByPath['XCRI\References'], IwbContainerElementRef, CombinedRefs) then begin
+        cnt := CombinedRefs.ElementCount;
+        SetLength(PrecombinedCache, cnt);
+        for i := 0 to Pred(cnt) do
+          if Supports(CombinedRefs[i], IwbContainerElementRef, CombinedRef) and (CombinedRef.ElementCount = 2) then begin
+            PrecombinedCache[i].Ref := CombinedRef.Elements[0].NativeValue;
+            PrecombinedCache[i].ID := CombinedRef.Elements[1].NativeValue;
+          end;
+      end;
+    end;
+
+    // search for ref in precombined index cache
+    if Length(PrecombinedCache) > 0 then
+      for i := Low(PrecombinedCache) to High(PrecombinedCache) do
+        if PrecombinedCache[i].Ref = Self.GetFormID then begin
+          Self.mrPrecombinedCellID := Cell.FormID and $00FFFFFF;
+          Self.mrPrecombinedID := PrecombinedCache[i].ID;
+          Include(mrStates, mrsHasPrecombinedMesh);
+          Break;
+        end;
+  end;
+
+  if mrsHasPrecombinedMesh in mrStates then
+    Result := 'Precombined\' + IntToHex(Self.mrPrecombinedCellID, 8) + '_' + IntToHex(Self.mrPrecombinedID, 8) + '_OC.nif';
 end;
 
 function TwbMainRecord.GetHasVisibleWhenDistantMesh: Boolean;
@@ -7614,7 +7769,8 @@ begin
       (Signature = 'PHZD') or {>>> Skyrim <<<}
       (Signature = 'NAVM') or
       (Signature = 'ROAD') or
-      (Signature = 'LAND');
+      (Signature = 'LAND') or
+      (wbVWDAsQuestChildren and ((Signature = 'DLBR') or (Signature = 'DIAL') or (Signature = 'SCEN')));
 end;
 
 procedure TwbMainRecord.MakeHeaderWriteable;
@@ -7866,7 +8022,7 @@ begin
         if (GetSignature <> 'INFO') then
           raise Exception.Create('Record ' + GetName + ' can not be contained in ' + GroupRecord.Name);
       end;
-      8, 10: begin {Persistent and Visible when Distant}
+      8, 10: begin {Persistent and Visible when Distant/Quest Children}
         if (GetSignature <> 'REFR') and
            (GetSignature <> 'ACHR') and
            (GetSignature <> 'ACRE') and
@@ -7879,14 +8035,15 @@ begin
            (GetSignature <> 'PBAR') and {>>> Skyrim <<<}
            (GetSignature <> 'PHZD')     {>>> Skyrim <<<}
         then
-          raise Exception.Create('Record ' + GetName + ' can not be contained in ' + GroupRecord.Name);
+          if not (wbVWDAsQuestChildren and ((GetSignature = 'DLBR') or (GetSignature = 'DIAL') or (GetSignature = 'SCEN'))) then
+            raise Exception.Create('Record ' + GetName + ' can not be contained in ' + GroupRecord.Name);
 
         case GroupRecord.GroupType of
           8:begin
             if not mrStruct.mrsFlags.IsPersistent then
               raise Exception.Create('Record ' + GetName + ' needs to have it''s Persistent flag set to be contained in ' + GroupRecord.Name);
           end;
-          10: begin
+          10: if not wbVWDAsQuestChildren then begin
             if not mrStruct.mrsFlags.IsVisibleWhenDistant then
               raise Exception.Create('Record ' + GetName + ' needs to have it''s Visible when Distant flag set to be contained in ' + GroupRecord.Name);
             if mrStruct.mrsFlags.IsPersistent then
@@ -10315,7 +10472,10 @@ begin
           (Signature <> 'ACRE') and
           (Signature <> 'ACHR') then
          Exit;
-   10: if (Signature <> 'REFR') then
+   10: if (not wbVWDAsQuestChildren and (Signature <> 'REFR')) or
+          (wbVWDAsQuestChildren and
+             not ((Signature = 'REFR') or (Signature = 'DLBR') or (Signature = 'DIAL') or (Signature = 'SCEN')))
+       then
          Exit;
   else
     Exit;
@@ -10367,9 +10527,9 @@ var
   i         : Integer;
 begin
   if esUnsaved in aElement.ElementStates then  // Let's not penalised too much loading time.
-    if TwbSignature(grStruct.grsLabel) = 'DIAL' then  // Issue 86: https://code.google.com/p/skyrim-plugin-decoding-project/issues/detail?id=86
+    if ((TwbSignature(grStruct.grsLabel) = 'DIAL') or wbVWDAsQuestChildren) then  // Issue 86: https://code.google.com/p/skyrim-plugin-decoding-project/issues/detail?id=86
       if Supports(aElement, IwbGroupRecord, DialGroup) then // The DIAL GRUP must immediatly follow corresponding DIAL MainRecord.
-        if DialGroup.GroupType = 7 then
+        if DialGroup.GroupType = 7 then // Let's hope nobody messes up the groupType
           if Supports(Self, IwbContainer, Container) then
             if Container.ElementCount > 0 then
               for i := 0 to Pred(Container.ElementCount) - 1 do  // If we are reading the plugins and at the end don't bother moving data around.
@@ -10454,6 +10614,27 @@ begin
           Result := MainRecord.ChildGroup;
           if not Assigned(Result) then
             Result := TwbGroupRecord.Create(Self, 1, MainRecord);
+
+          GroupRecord2 := Result as IwbGroupRecord;
+          if aDeepCopy then
+            for i := 0 to Pred(GroupRecord.ElementCount) do
+              GroupRecord2.AddIfMissing(GroupRecord.Elements[i], aAsNew, aDeepCopy, aPrefixRemove, aPrefix, aSuffix);
+
+          Exit;
+        end;
+      end else if wbVWDAsQuestChildren and (TwbSignature(grStruct.grsLabel) = 'QUST') then begin
+        if Supports(aElement, IwbGroupRecord, GroupRecord) then begin
+          if GroupRecord.GroupType <> 10 then
+            raise Exception.Create('Can''t add '+GroupRecord.Name+' to top level group with signature ' + TwbSignature(grStruct.grsLabel));
+          MainRecord := GroupRecord.ChildrenOf;
+          if not Assigned(MainRecord) then
+            raise Exception.Create('Can''t find record for '+ GroupRecord.Name);
+          MainRecord := MainRecord.HighestOverrideOrSelf[GetFile.LoadOrder];
+          MainRecord := AddIfMissingInternal(MainRecord, aAsNew, True, aPrefixRemove, aPrefix, aSuffix) as IwbMainRecord;
+          Assert(Assigned(MainRecord));
+          Result := MainRecord.ChildGroup;
+          if not Assigned(Result) then
+            Result := TwbGroupRecord.Create(Self, 10, MainRecord);
 
           GroupRecord2 := Result as IwbGroupRecord;
           if aDeepCopy then
@@ -10706,6 +10887,26 @@ begin
         Result.BuildRef;
     end;
     8, 9, 10: begin
+      if wbVWDAsQuestChildren and Supports(aElement, IwbGroupRecord, GroupRecord) then begin
+        if GroupRecord.GroupType <> 7 then
+          raise Exception.Create('Can''t add '+GroupRecord.Name+' to top level group with signature ' + TwbSignature(grStruct.grsLabel));
+        MainRecord := GroupRecord.ChildrenOf;
+        if not Assigned(MainRecord) then
+          raise Exception.Create('Can''t find record for '+ GroupRecord.Name);
+        MainRecord := MainRecord.HighestOverrideOrSelf[GetFile.LoadOrder];
+        MainRecord := AddIfMissingInternal(MainRecord, aAsNew, True, aPrefixRemove, aPrefix, aSuffix) as IwbMainRecord;
+        Assert(Assigned(MainRecord));
+        Result := MainRecord.ChildGroup;
+        if not Assigned(Result) then
+          Result := TwbGroupRecord.Create(Self, 7, MainRecord);
+
+        GroupRecord2 := Result as IwbGroupRecord;
+        if aDeepCopy then
+          for i := 0 to Pred(GroupRecord.ElementCount) do
+            GroupRecord2.AddIfMissing(GroupRecord.Elements[i], aAsNew, aDeepCopy, aPrefixRemove, aPrefix, aSuffix);
+
+        Exit;
+      end;
       if not Supports(aElement, IwbMainRecord, MainRecord) then
         raise Exception.Create('Only main records can be added to ' + GetName);
       if (MainRecord.Signature <> 'REFR') and
@@ -10720,8 +10921,16 @@ begin
          (MainRecord.Signature <> 'PBAR') and {>>> Skyrim <<<}
          (MainRecord.Signature <> 'PHZD')     {>>> Skyrim <<<}
       then
-        if (grStruct.grsGroupType <> 9) or ((MainRecord.Signature <> 'PGRD') and (MainRecord.Signature <> 'LAND') and (MainRecord.Signature <> 'NAVM')) then
+        // check any non reference record
+        if not (
+          // DIAL, DLBR and SCEN can be added to child group 10 (quest children)
+          (wbVWDAsQuestChildren and (grStruct.grsGroupType = 10) and ((MainRecord.Signature = 'DLBR') or (MainRecord.Signature = 'DIAL') or (MainRecord.Signature = 'SCEN')))
+          or
+          // PGRD, LAND and NAVM can be added to child group 9 (temporary)
+          (grStruct.grsGroupType = 9) and ((MainRecord.Signature = 'PGRD') or (MainRecord.Signature = 'LAND') or (MainRecord.Signature = 'NAVM'))
+        ) then
           raise Exception.Create('Can''t add main record with signature '+MainRecord.Signature+' to ' + GetName);
+
       if aAsNew then
         FormID := GetFile.NewFormID
       else begin
@@ -10788,7 +10997,11 @@ begin
 
   case aType of
     1: Assert(aMainRecord.Signature = 'WRLD');
-    6, 8, 9, 10: Assert(aMainRecord.Signature = 'CELL');
+    6, 8, 9: Assert(aMainRecord.Signature = 'CELL');
+    10: Assert(
+      (aMainRecord.Signature = 'CELL') or
+      (wbVWDAsQuestChildren and (aMainRecord.Signature = 'QUST'))
+    );
     7: Assert(aMainRecord.Signature = 'DIAL');
   end;
 
@@ -10929,7 +11142,13 @@ begin
          Result[9] := 'PBAR'; {>>> Skyrim <<<}
          Result[10] := 'PHZD'; {>>> Skyrim <<<}
        end;
-    10: begin
+    10: if wbVWDAsQuestChildren then begin
+         SetLength(Result, 3);
+         Result[0] := 'DIAL';
+         Result[1] := 'DLBR';
+         Result[2] := 'SCEN';
+      end
+      else begin
          SetLength(Result, 1);
          Result[0] := 'REFR';
        end;
@@ -11027,7 +11246,10 @@ begin
     7: Result := Result + ' Topic Children of ';
     8: Result := Result + ' Cell Persistent Children of ';
     9: Result := Result + ' Cell Temporary Children of ';
-    10: Result := Result + ' Cell Visible Distant Children of ';
+    10: if wbVWDAsQuestChildren then
+      Result := Result + ' Quest Children of '
+    else
+      Result := Result + ' Cell Visible Distant Children of ';
   else
     Result := Result + ' Unknown type: ' + IntToStr(grStruct.grsGroupType);
     Exit;
@@ -11089,7 +11311,10 @@ begin
     7: Result := 'Children of ' + IntToHex(grStruct.grsLabel, 8);
     8: Result := 'Persistent';
     9: Result := 'Temporary';
-    10: Result := 'Visible when Distant';
+    10: if wbVWDAsQuestChildren then
+      Result := 'Children of ' + IntToHex(grStruct.grsLabel, 8)
+    else
+      Result := 'Visible when Distant';
   else
     Result := Result + ' Unknown type: ' + IntToStr(grStruct.grsGroupType);
   end;
@@ -11696,6 +11921,7 @@ function TwbElement.AddIfMissing(const aElement: IwbElement; aAsNew, aDeepCopy :
 {$IFDEF USE_CODESITE}
 var
   Log: Boolean;
+  Group : IwbGroupRecord;
 {$ENDIF}
 begin
   if (wbCurrentTick>0) and (wbCurrentTick+500<GetTickCount) then begin
@@ -11714,6 +11940,8 @@ begin
       CodeSite.Send('aElement.Name', aElement.Name);
       CodeSite.Send('aElement.Path', aElement.Path);
       CodeSite.Send('aElement.Value', aElement.Value);
+      if Supports(aElement, IwbGrouprecord, Group) then
+        CodeSite.Send('aGroup.Type', Group.GroupType);
     end else
         CodeSite.Send('aElement', 'nil');
   end;
@@ -11830,7 +12058,8 @@ end;
 procedure TwbElement.BeforeDestruction;
 begin
   Assert(eExternalRefs = 0);
-  Assert(FRefCount = 0);
+  if (FRefCount and $7FFFFFFF) <> 0 then
+    Assert(FRefCount = 0);
   Include(eStates, esDestroying);
   inherited BeforeDestruction;
   //LockedInc(eExternalRefs);
@@ -12078,7 +12307,7 @@ end;
 
 procedure TwbElement.FreeInstance;
 begin
-  if FRefCount <> 1 then
+  if (FRefCount and $7FFFFFFF) <> 1 then
     Assert(FRefCount = 1);
   Assert(eExternalRefs = 1);
   inherited;
@@ -13254,6 +13483,9 @@ begin
         SubRecord.SetDef(ElementDef as IwbSubRecordDef);
         AddElement(SubRecord);
       end;
+      dtSubRecordArray: begin
+        Element := TwbSubRecordArray.Create(Self, aContainer, aPos, ElementDef as IwbSubRecordArrayDef);
+      end;
       dtSubRecordStruct:
         Element := TwbSubRecordStruct.Create(Self, aContainer, aPos, ElementDef as IwbSubRecordStructDef);
     else
@@ -14093,7 +14325,7 @@ end;
 
 function TwbArray.IsElementRemoveable(const aElement: IwbElement): Boolean;
 begin
-  Result := IsElementEditable(aElement) and ((vbValueDef as IwbArrayDef).ElementCount <= 0) and (Length(cntElements)>1);
+  Result := IsElementEditable(aElement) and ((vbValueDef as IwbArrayDef).ElementCount <= 0) { and (Length(cntElements)>1)};
 end;
 
 procedure TwbArray.PrepareSave;
@@ -16023,6 +16255,7 @@ procedure TwbContainedInElement.ContainerChanged;
 var
   MainRecord     : IwbMainRecord;
   GroupRecord    : IwbGroupRecord;
+  Grp            : TwbGroupTypes;
 begin
   if cieLockCount > 0 then
     Exit;
@@ -16037,11 +16270,14 @@ begin
   if GroupRecord.GroupType = 4 then
     if not Supports(GroupRecord.Container, IwbGroupRecord, GroupRecord) then
       Exit;
-  if GroupRecord.GroupType in [8..10] then
+
+  if wbVWDAsQuestChildren then Grp := [8..9] else Grp := [8..10];
+  if GroupRecord.GroupType in Grp then
     if not Supports(GroupRecord.Container, IwbGroupRecord, GroupRecord) then
       Exit;
 
-  if not (GroupRecord.GroupType in [1, 6, 7]) then
+  if wbVWDAsQuestChildren then Grp := [1, 6, 7, 10] else Grp := [1, 6, 7];
+  if not (GroupRecord.GroupType in Grp) then
     Exit;
 
   PCardinal(GetDataBasePtr)^ := GroupRecord.GroupLabel;

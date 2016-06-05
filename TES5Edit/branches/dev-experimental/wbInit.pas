@@ -78,6 +78,7 @@ uses
   wbDefinitionsFO3,
   wbDefinitionsFO3Saves,
   wbDefinitionsFO4,
+  wbDefinitionsFO4Saves,
   wbDefinitionsTES3,
   wbDefinitionsTES4,
   wbDefinitionsTES4Saves,
@@ -187,7 +188,7 @@ begin
     Result := wbFindNextValidCmdLineFileName(startingIndex, aValue, defaultPath);
   until not Result or wbCheckForPluginExtension(aValue);
   if Result  then
-    if (AnsiCompareText(ExpandFileName(ExtractFilePath(aValue)), ExpandFileName(defaultPath)) = 0) then begin
+    if (AnsiCompareText(ExtractFilePath(ExpandFileName(aValue)), ExpandFileName(defaultPath)) = 0) then begin
       aValue := ExtractFileName(aValue);
       if not Assigned(wbPluginsToUse) then wbPluginsToUse := TStringList.Create;
       wbPluginsToUse.Add(aValue);
@@ -471,7 +472,7 @@ begin
       end;
   // if still nothing, then default value
   if AppGameMode = '' then
-    AppGameMode := 'tes5';
+    AppGameMode := 'fo4';
 
   // the same for tool mode
   for s in ToolModes do
@@ -655,7 +656,7 @@ begin
       ShowMessage('Application '+wbGameName+' does not currently support '+wbToolName);
       Exit;
     end;
-    if not (wbToolSource in [tsPlugins]) then begin
+    if not (wbToolSource in [tsPlugins, tsSaves]) then begin
       ShowMessage('Application '+wbGameName+' does not currently support '+wbSourceName);
       Exit;
     end;
@@ -663,10 +664,10 @@ begin
     ShowMessage('Application name must contain FNV, FO3, FO4, TES4 or TES5 to select game.');
     Exit;
   end;
-  if (wbToolSource = tsSaves) and (wbToolMode = tmEdit) then begin
-    ShowMessage('Application '+wbGameName+' does not currently support '+wbSourceName+' in '+wbToolName+' mode.');
-    Exit;
-  end;
+  // if (wbToolSource = tsSaves) and (wbToolMode = tmEdit) then begin
+  //   ShowMessage('Application '+wbGameName+' does not currently support '+wbSourceName+' in '+wbToolName+' mode.');
+  //   Exit;
+  // end;
 
   DoInitPath(wbParamIndex);
 
@@ -711,6 +712,7 @@ begin
       tsPlugins: DefineFO3;
     end;
     gmFO4:  case wbToolSource of
+      tsSaves:   DefineFO4Saves;
       tsPlugins: DefineFO4;
     end;
     gmTES3: case wbToolSource of
@@ -725,7 +727,7 @@ begin
       tsPlugins: DefineTES5;
     end
   else
-    ShowMessage('Application name must contain FNV, FO3, TES4, TES5 or FO4 to select game.');
+    ShowMessage('Application name must contain FNV, FO3, FO4, TES4 or TES5 to select game.');
     Exit;
   end;
 
@@ -781,6 +783,9 @@ begin
 
   if FindCmdLineSwitch('quickclean') and (wbToolSource in [tsPlugins]) then
     wbQuickClean := wbIKnowWhatImDoing;
+
+  if FindCmdLineSwitch('forcebuildrefs') then
+    wbForceBuildRefs := True;
 
   if FindCmdLineSwitch('TrackAllEditorID') then
     wbTrackAllEditorID := True;
