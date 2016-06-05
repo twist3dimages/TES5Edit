@@ -34,9 +34,8 @@ uses
   wbDefinitionsFO4;
 
 var
-  wbSexEnum          : IwbEnumDef;
-  wbPropTypeEnum     : IwbEnumDef;
   wbExtraTypeEnum    : IwbEnumDef;
+  wbCodeTypeEnum     : IwbEnumDef;
   wbRecordFlagsFlags : IwbFlagsDef;
 
 var // forward type directives
@@ -49,27 +48,6 @@ var // forward type directives
 
 procedure DefineFO4SavesA;
 begin
-  wbPropTypeEnum := wbEnum([
-    {00} 'None',
-    {01} 'Object',
-    {02} 'String',
-    {03} 'Int32',
-    {04} 'Float',
-    {05} 'Bool',
-    {06} '',
-    {07} '',
-    {08} '',
-    {09} '',
-    {10} '',
-    {11} 'Array of Object',
-    {12} 'Array of String',
-    {13} 'Array of Int32',
-    {14} 'Array of Float',
-    {15} 'Array of Bool'
-  ]);
-
-  wbSexEnum := wbEnum(['Male','Female']);
-
   wbRecordFlagsFlags := wbFlags([
     {>>> 0x00000000 ACTI: Collision Geometry (default) <<<}
     {0x00000001}'ESM',
@@ -403,6 +381,186 @@ begin
     Result := SaveFormVersionDecider(73, aBasePtr, aEndPtr, aElement);
 end;
 
+function GlobalData6FlagsBit0Decider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('Weather', aElement);
+  Assert(Element.BaseName = 'Weather');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Flags'];
+    Assert(Assigned(Element));
+    if Assigned(Element) then begin
+      if (Element.NativeValue and $1) = $1 then
+        Result := 1;
+    end;
+  end;
+end;
+
+function GlobalData6FlagsBit1Decider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('Weather', aElement);
+  Assert(Element.BaseName = 'Weather');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Flags'];
+    Assert(Assigned(Element));
+    if Assigned(Element) then begin
+      if (Element.NativeValue and $2) = $2 then
+        Result := 1;
+    end;
+  end;
+end;
+
+function wbGlobalData6OwnedControllerDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('Reference Effect', aElement);
+  Assert(Element.BaseName = 'Reference Effect');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Owned Controller Type'];
+    Assert(Assigned(Element));
+    if Assigned(Element) then begin
+      case Element.NativeValue of
+        1: Result := 1;
+        2: Result := 2;
+      end;
+    end;
+  end;
+end;
+
+function wbBSTempEffectScreenSpaceDecalSixDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('Temp Effect Screen Space Decal', aElement);
+  Assert(Element.BaseName = 'Temp Effect Screen Space Decal');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Flag'];
+    Assert(Assigned(Element));
+    if Assigned(Element) then begin
+      if Element.NativeValue <> 0 then
+        Result := 1;
+    end;
+  end;
+end;
+
+function wbBSTempEffectScreenSpaceDecalRemainDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('Reference Effect', aElement);
+  Assert(Element.BaseName = 'Reference Effect');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Flag2'];
+    Assert(Assigned(Element));
+    if Assigned(Element) then begin
+      if Element.NativeValue <> 0 then
+        Result := 1;
+    end;
+  end;
+end;
+
+function wbBSTempEffectScreenSpaceDecalThirdDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('Remain', aElement);
+  Assert(Element.BaseName = 'Remain');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Flag3'];
+    Assert(Assigned(Element));
+    if Assigned(Element) then begin
+      if Element.NativeValue <> 0 then
+        Result := 1;
+    end;
+  end;
+end;
+
+function wbGlobalData1000FlagDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('Unknown 02 struct', aElement);
+  Assert(Element.BaseName = 'Unknown 02 struct');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Flag'];
+    Assert(Assigned(Element));
+    if Assigned(Element) then begin
+      if Element.NativeValue <> 0 then
+        Result := 1;
+    end;
+  end;
+end;
+
+function wbSubBufferCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
+var
+  Element    : IwbElement;
+  Container  : IwbDataContainer;
+begin
+  Result := 0;
+  Element := wbFindSaveElement('SubBuffer', aElement);
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Length'];
+    if Assigned(Element) then begin
+      Result := Element.NativeValue;
+    end;
+  end;
+end;
+
+function wbGlobalData10TypeDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  aType     : Integer;
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('Unknown struct', aElement);
+  Assert(Element.BaseName = 'Unknown struct');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Type'];
+    Assert(Assigned(Element));
+    if Assigned(Element) then begin
+      aType := Element.NativeValue;
+      if aType < 5 then
+        Result := 1 + aType;
+    end;
+  end;
+end;
+
 function ScreenShotDataCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 var
   Element : IwbElement;
@@ -462,7 +620,7 @@ end;
 
 function GlobalData3Counter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 begin
-  Result := GlobalDataCounter(3, aBasePtr, aEndPtr, aElement) + 1;  // +1 due to the bug as seen on UESP
+  Result := GlobalDataCounter(3, aBasePtr, aEndPtr, aElement);
 end;
 
 function ChangedFormsCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
@@ -478,12 +636,6 @@ var
 begin
   Result := 0;
 
-///////////////////////
-///
-Exit;
-///
-///////////////////////
-
   if not Assigned(aElement) then Exit;
   Element := aElement;
   while (Pos('Global Data ', Element.Name)=0) and Assigned(Element.Container) do
@@ -493,14 +645,14 @@ Exit;
     Element := Container.ElementByName['Type'];
     if Assigned(Element) then begin
       aType := Element.NativeValue;
-      if (aType >= 0) and (aType <= 8) then // 0 to 8 = 9
+      if (aType >= 0) and (aType <= 11) then // 0 to 11 = 12
         Result := aType + 1
-      else if (aType >= 100) and (aType <= 114) then  // 100 to 114 = 15
-        Result := aType - 100 + 9 + 1
-      else  if (aType >= 1000) and (aType <= 1005) then // 1000 to 1005 = 6
-        Result := aType - 1000 + 9 + 15 + 1;
+      else if (aType >= 100) and (aType <= 117) then  // 100 to 117 = 18
+        Result := aType - 100 + 12 + 1
+      else  if (aType >= 1000) and (aType <= 1007) then // 1000 to 1007 = 8
+        Result := aType - 1000 + 12 + 18 + 1;
     end;
-    if (Result < (1001-1000+9+15+1)) and (Result > 2) then Result := 0; //Others are not decoded yet
+//    if (aType > 100) and (aType < 1000) then Result := 0; //Others are not decoded yet
     if Assigned(ChaptersToSkip) and ChaptersToSkip.Find(IntToStr(aType), aType)  then // "Required" time optimisation (can save "hours" if used on 1001)
       Result := 0;
   end;
@@ -523,7 +675,7 @@ begin
     if Assigned(Element) then begin
       aType := Element.NativeValue;
       case aType of
-        1: Result := 2;
+        1, 7: Result := 2;
       else
         Result := 1;
       end;
@@ -565,14 +717,25 @@ begin
 end;
 
 var
-  VMObjectArrayCount         : Integer = -1;
-  VMObjectDetachedArrayCount : Integer = -1;
+  VMObjectArrayCount           : Integer = -1;
+  VMSupplementObjectArrayCount : Integer = -1;
+  VMObjectDetachedArrayCount   : Integer = -1;
 
 procedure ObjectTableAfterLoad(const aElement: IwbElement);
 begin
   if VMObjectArrayCount < 0 then begin
     VMObjectArrayCount := (aElement as IwbContainer).ElementCount;
     InitializeVMObjectArray(aElement as IwbContainer);
+  end;
+end;
+
+procedure SupplementObjectTableAfterLoad(const aElement: IwbElement);
+begin
+  if VMSupplementObjectArrayCount < 0 then begin
+    VMSupplementObjectArrayCount := (aElement as IwbContainer).ElementCount;
+    InitializeVMObjectArray(aElement as IwbContainer);
+    if VMObjectArrayCount >= 0 then
+      VMObjectArrayCount := VMObjectArrayCount + VMSupplementObjectArrayCount;
   end;
 end;
 
@@ -617,11 +780,15 @@ begin
          3: Result := 3;
          4: Result := 4;
          5: Result := 5;
-        11: Result := 6;
-        12: Result := 7;
-        13: Result := 8;
-        14: Result := 9;
-        15: Result := 10;
+         6: Result := 6;
+         7: Result := 7;
+        11: Result := 8;
+        12: Result := 9;
+        13: Result := 10;
+        14: Result := 11;
+        15: Result := 12;
+        16: Result := 13;
+        17: Result := 14;
       end;
     end;
   end;
@@ -701,7 +868,45 @@ begin
   end;
 end;
 
-function ObjectDataTableCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
+function TypeTable2Counter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
+var
+  sElement  : IwbElement;
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  sElement := wbFindSaveElement('Type tables for internal VM save data', aElement);
+  Assert(sElement.BaseName='Type tables for internal VM save data');
+
+  if Supports(sElement, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Type table 2 Count'];
+    if Assigned(Element) then
+      Result := Element.NativeValue;
+  end;
+end;
+
+function TypeTable1Counter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
+var
+  sElement  : IwbElement;
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  sElement := wbFindSaveElement('Type tables for internal VM save data', aElement);
+  Assert(sElement.BaseName='Type tables for internal VM save data');
+
+  if Supports(sElement, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Type table 1 Count'];
+    if Assigned(Element) then
+      Result := Element.NativeValue;
+  end;
+end;
+
+function ObjectTableDataCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
 var
   sElement  : IwbElement;
   Element   : IwbElement;
@@ -719,13 +924,30 @@ begin
       if Supports(Element, IwbDataContainer, Container) then
         Result := Container.ElementCount;
     end;
+  end else
+    Result := VMObjectArrayCount;
+end;
+
+function DetachedObjectTableDataCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
+var
+  sElement  : IwbElement;
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+
+begin
+  if VMObjectDetachedArrayCount<0 then begin
+    Result := 0;
+    if not Assigned(aElement) then Exit;
+    sElement := wbFindSaveElement('Papyrus Struct', aElement);
+    Assert(sElement.BaseName='Papyrus Struct');
+
     if Supports(sElement, IwbDataContainer, Container) then begin
       Element := Container.ElementByName['Detached Object Table'];
       if Supports(Element, IwbDataContainer, Container) then
-        Inc(Result, Container.ElementCount);
+        Result := Container.ElementCount;
     end;
   end else
-    Result := VMObjectArrayCount+VMObjectDetachedArrayCount;
+    Result := VMObjectDetachedArrayCount;
 end;
 
 function ArrayContentTableCounter(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Cardinal;
@@ -778,7 +1000,7 @@ var
   Element       : IwbElement;
   Container     : IwbDataContainer;
   DataContainer : IwbDataContainer;
-  Handle        : Cardinal;
+  Handle        : Int64;
   i             : Integer;
 begin
   Result := 0;
@@ -834,6 +1056,25 @@ begin
       else
         Result := 0;
       end;
+    end;
+  end;
+end;
+
+function GroupedDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('Grouped', aElement);
+  Assert(Element.BaseName='Grouped');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Flag2bits'];
+    if Assigned(Element) then begin
+      if Element.NativeValue = 3 then
+        Result := 1;
     end;
   end;
 end;
@@ -910,6 +1151,11 @@ begin
         031: Result := 2;
         034,
         035: Result := 4;
+        037: Result := 1;
+        040,
+        041: Result := 5;
+        044,
+        046: Result := 1;
       else
         Result := 3;
       end;
@@ -999,8 +1245,8 @@ var
 begin
   Result := 0;
   if not Assigned(aElement) then Exit;
-  Element := wbFindSaveElement('Stack', aElement);
-  Assert(Element.BaseName='Stack');
+  Element := wbFindSaveElement('CallBacks', aElement);
+  Assert(Element.BaseName='CallBacks');
 
   if Supports(Element, IwbDataContainer, Container) then begin
     Element := Container.ElementByName['Type'];
@@ -1009,10 +1255,40 @@ begin
       case aType of
         1: Result := 1;
         2: Result := 2;
-        3: Result := 3;
+//        3: Result := 3;
       else
         Result := 0;
       end;
+    end;
+  end;
+end;
+
+function wbCallbackTypeDataDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  aTypeName : String;
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('CallBack', aElement);
+//  Assert(Element.BaseName='CallBack');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Type'];
+    if Assigned(Element) then begin
+      aTypeName := Element.NativeValue;
+      if SameStr(aTypeName, 'QuestStage') then
+        Result := 1
+      else
+      if SameStr(aTypeName, 'SceneResults') then
+        Result := 2
+      else
+      if SameStr(aTypeName, 'SceneActionResults') then
+        Result := 3
+      else
+      if SameStr(aTypeName, 'ScenePhaseResults') then
+        Result := 4;
     end;
   end;
 end;
@@ -1029,17 +1305,72 @@ begin
   Assert(Element.BaseName='Papyrus Struct');
 
   if Supports(Element, IwbDataContainer, Container) then begin
-    Element := Container.ElementByName['SkyrimVM_version'];
+    Element := Container.ElementByName['VM_version'];
     if Assigned(Element) then begin
       aVersion := Element.NativeValue;
       case aVersion of
         1: Result := 1;
         2: Result := 2;
-        3: Result := 3;
-        4: Result := 4;
       else
         Result := 0;
       end;
+    end;
+  end;
+end;
+
+function VMVersionGreaterThan1Decider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+begin
+  Result := 0;
+  if VMVersionDecider(aBasePtr, aEndPtr, aElement) > 1 then
+    Result := 1;
+end;
+
+function SaveFileVersionDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('Papyrus Struct', aElement);
+  Assert(Element.BaseName='Papyrus Struct');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Save File Version'];
+    if Assigned(Element) then
+      Result := Element.NativeValue;
+  end;
+end;
+
+function SaveFileVersionGreaterThanDDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+begin
+  Result := 0;
+  if SaveFileVersionDecider(aBasePtr, aEndPtr, aElement) > $D then
+    Result := 1;
+end;
+
+function SaveFileVersionGreaterThanBDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+begin
+  Result := 0;
+  if SaveFileVersionDecider(aBasePtr, aEndPtr, aElement) > $B then
+    Result := 1;
+end;
+
+function wbGlobalData1002BooleanDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('Anim Object', aElement);
+  Assert(Element.BaseName='Anim Object');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Boolean'];
+    if Assigned(Element) then begin
+      if Element.NativeValue <> 0 then
+        Result := 1;
     end;
   end;
 end;
@@ -1058,8 +1389,8 @@ begin
   if Supports(Element, IwbDataContainer, Container) then begin
     Element := Container.ElementByName['Save File Version'];
     if Assigned(Element) then begin
-      aVersion :=Element.NativeValue;
-      if (0 <= aVersion) and (aVersion <=5) then
+      aVersion := Element.NativeValue;
+      if (0 <= aVersion) and (aVersion <= $E) then
         Result := 1;
     end;
   end;
@@ -1146,7 +1477,7 @@ begin
       if Assigned(Element) then begin
         aValue := Element.NativeValue;
         if (aValue and $1) = 0 then begin
-          Element := Container.ElementByPath['Function Type'];
+          Element := Container.ElementByName['Function Type'];
           if Assigned(Element) then begin
             aValue := Element.NativeValue;
             if aValue = 0 then
@@ -1161,22 +1492,18 @@ end;
 
 function HasUnknownS1Decider(aName: String; aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
 var
-  aValue    : Integer;
   Element   : IwbElement;
   Container : IwbDataContainer;
 begin
   Result := 0;
   if not Assigned(aElement) then Exit;
-  aValue := VMversionDecider(aBasePtr, aEndPtr, aElement);
-  if aValue >1 then begin
-    Element := wbFindSaveElement(aName, aElement);
-    Assert(Element.BaseName=aName);
+  Element := wbFindSaveElement(aName, aElement);
+  Assert(Element.BaseName=aName);
 
-    if Supports(Element, IwbDataContainer, Container) then begin
-      Element := Container.ElementByName['Has UnknownS1'];
-      if Assigned(Element) then
-        Result := Element.NativeValue;
-    end;
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Has UnknownS1'];
+    if Assigned(Element) then
+      Result := Element.NativeValue;
   end;
 end;
 
@@ -1192,23 +1519,39 @@ end;
 
 function PreviousUnknownDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
 var
-  aValue    : Integer;
   Element   : IwbElement;
   Container : IwbDataContainer;
 begin
   Result := 0;
   if not Assigned(aElement) then Exit;
-  aValue := VMversionDecider(aBasePtr, aEndPtr, aElement);
-  if aValue >1 then begin
-    Element := wbFindSaveElement('Papyrus Struct', aElement);
-    Assert(Element.BaseName='Papyrus Struct');
+  Element := wbFindSaveElement('Tables', aElement);
+  Assert(Element.BaseName='Tables');
 
-    if Supports(Element, IwbDataContainer, Container) then begin
-      Element := Container.ElementByName['Previous Unknown'];
-      if Assigned(Element) then
-        if Element.NativeValue > 0 then
-          Result := 1;
-    end;
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Previous Unknown'];
+    if Assigned(Element) then
+      if Element.NativeValue > 0 then
+        Result := 1;
+  end;
+end;
+
+function wbLOSEventDataDecider(aBasePtr: Pointer; aEndPtr: Pointer; const aElement: IwbElement): Integer;
+var
+  Element   : IwbElement;
+  Container : IwbDataContainer;
+begin
+  Result := 0;
+  if not Assigned(aElement) then Exit;
+  Element := wbFindSaveElement('LOS event', aElement);
+  Assert(Element.BaseName='LOS event');
+
+  if Supports(Element, IwbDataContainer, Container) then begin
+    Element := Container.ElementByName['Type'];
+    if Assigned(Element) then
+      if Element.NativeValue = 0 then
+        Result := 1
+      else if Element.NativeValue = 1 then
+        Result := 2
   end;
 end;
 
@@ -1490,14 +1833,6 @@ var
 begin
   Element := aElement;
   Result := ChangedFormGetRawType(Element);
-
-///////////////////////
-///
-Result := 0;
-Exit;
-///
-///////////////////////
-
 
   if (Result>=0) and Supports(Element, IwbDataContainer, Container) then begin
     Result := 1 + (Result and $3F);
@@ -2324,43 +2659,54 @@ end;
 
 procedure DefineFO4SavesS;  // This is all based on current UESP, and HexDump, Triria TESSaveLib and the Runtime
 var
-  wbHeader                   : IwbStructDef;
-  wbFileLocationTable        : IwbStructDef;
-  wbGlobalData               : IwbStructDef;
-  wbChangedForm              : IwbStructDef;
-  wbChangedFormData          : IwbStructDef;
-  wbNull                     : IwbValueDef;
-  wbChangeFlags              : IwbUnionDef;
-  wbTypeData                 : IwbStructDef;
-  wbVariable                 : IwbStructDef;
-  wbCodeOpcodes              : IwbEnumDef;
-  wbCodeParameter            : IwbStructDef;
-  wbCode                     : IwbStructDef;
-  wbFunction                 : IwbStructDef;
-  wbObjectTableEntry         : IwbStructDef;
-  wbObjectDetachedTableEntry : IwbStructDef;
-  wbArrayTableEntry          : IwbStructDef;
-  wbStackTableEntry          : IwbStructDef;
-  wbObjectDataTableEntry     : IwbStructDef;
-  wbArrayElementsTableEntry  : IwbStructDef;
-  wbCallbackParameters       : IwbUnionDef;
-  wbStackTableDataEntry      : IwbStructDef;
-  wbUnknownS1                : IwbStructDef;
-  wbFunctionMessageDataEntry : IwbStructDef;
-  wbSuspendedStackDataEntry  : IwbStructDef;
-  wbQueuedUnbindDataEntry    : IwbStructDef;
-  wbStackTimeUpdateOffset    : IwbStructDef;
-  wbObjectTimeUpdateOffset   : IwbStructDef;
-  wbFunctor                  : IwbStructDef;
-  wbFunctors                 : IwbStructDef;
-  wbUnknown0900              : IwbArrayDef;
-  wbInitialDataType01        : IwbStructDef;
-  wbInitialDataType02        : IwbStructDef;
-  wbInitialDataType03        : IwbStructDef;
-  wbInitialDataType04        : IwbStructDef;
-  wbInitialDataType05        : IwbStructDef;
-  wbInitialDataType06        : IwbStructDef;
-  wbInitialDataType          : IwbUnionDef;
+  wbHeader                       : IwbStructDef;
+  wbFileLocationTable            : IwbStructDef;
+  wbGlobalData                   : IwbStructDef;
+  wbChangedForm                  : IwbStructDef;
+  wbChangedFormData              : IwbStructDef;
+  wbNull                         : IwbValueDef;
+  wbChangeFlags                  : IwbUnionDef;
+  wbTypeData1                    : IwbStructDef;
+  wbTypeData2                    : IwbStructDef;
+  wbVMGroup                      : IwbStructDef;
+  wbNonRecursiveVariable         : IwbStructDef;
+  wbVariable                     : IwbStructDef;
+  wbCodeOpcodes                  : IwbEnumDef;
+  wbCodeParameter                : IwbStructDef;
+  wbCode                         : IwbStructDef;
+  wbFunction                     : IwbStructDef;
+  wbObjectTableEntry             : IwbStructDef;
+  wbObjectDetachedTableEntry     : IwbStructDef;
+  wbArrayTableEntry              : IwbStructDef;
+  wbStackTableEntry              : IwbStructDef;
+  wbObjectDataTableEntry         : IwbStructDef;
+  wbDetachedObjectDataTableEntry : IwbStructDef;
+  wbArrayElementsTableEntry      : IwbStructDef;
+  wbCallbackParameters           : IwbUnionDef;
+  wbStackTableDataEntry          : IwbStructDef;
+  wbUnknownS1                    : IwbStructDef;
+  wbFunctionMessageDataEntry     : IwbStructDef;
+  wbSuspendedStackDataEntry      : IwbStructDef;
+  wbQueuedUnbindDataEntry        : IwbStructDef;
+  wbStackTimeUpdateOffset        : IwbStructDef;
+  wbObjectTimeUpdateOffset       : IwbStructDef;
+  wbFunctor                      : IwbStructDef;
+  wbFunctors                     : IwbStructDef;
+  wbUnknown0900                  : IwbArrayDef;
+  wbInitialDataType01            : IwbStructDef;
+  wbInitialDataType02            : IwbStructDef;
+  wbInitialDataType03            : IwbStructDef;
+  wbInitialDataType04            : IwbStructDef;
+  wbInitialDataType05            : IwbStructDef;
+  wbInitialDataType06            : IwbStructDef;
+  wbInitialDataType              : IwbUnionDef;
+  wbCreatedObject                : IwbStructDef;
+  wbBSTempEffect                 : IwbStructDef;
+  wbReferenceEffect              : IwbStructDef;
+  wbModelReferenceEffect         : IwbStructDef;
+  wbBSTempEffectScreenSpaceDecal : IwbStructDef;
+  wbOwnedController              : IwbStructDef;
+  wbGlobalData10Unknown          : IwbStructDef;
 
   wbChangeDefaultFlags    : IwbIntegerDef;
   wbCoSaveChunk           : IwbStructDef;
@@ -2511,9 +2857,30 @@ var
   wbUnionCHANGE_FORM_LIST_ADDED_FORM : IwbUnionDef;
   wbUnionCHANGE_LEVELED_LIST_ADDED_OBJECT : IwbUnionDef;
 
+  // (re)added until decoding properly
+  wbUnionCHANGE_REFR_EXTRA_OWNERSHIP : IwbUnionDef;
+  wbUnionCHANGE_REFR_EXTRA_LINK_REF : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_EXTRA_WORKSHOP : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_EXTRA_ITEM_DATA : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_EXTRA_AMMO : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_EXTRA_LOCK : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_FORCE_MOVE : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_EMPTY : IwbUnionDef;
+  wbUnionCHANGE_OBJECT_OPEN_DEFAULT_STATE : IwbUnionDef;
+  wbUnionCHANGE_REFR_PROMOTED : IwbUnionDef;
+  wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN : IwbUnionDef;
+  wbUnionCHANGE_REFR_LEVELED_INVENTORY : IwbUnionDef;
+  wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE : IwbUnionDef;
+  wbUnionCHANGE_REFR_EXTRA_GAME_ONLY : IwbUnionDef;
+  wbUnionCHANGE_ACTOR_EXTRA_PACKAGE_DATA : IwbUnionDef;
+  wbUnionCHANGE_ACTOR_EXTRA_MERCHANT_CONTAINER : IwbUnionDef;
+  wbUnionCHANGE_ACTOR_EXTRA_DISMEMBERED_LIMBS : IwbUnionDef;
+  wbUnionCHANGE_ACTOR_LEVELED_ACTOR : IwbUnionDef;
+  wbUnionCHANGE_NPC_BODY_SCALES : IwbUnionDef;
+
 begin
   wbNull := wbByteArray('Unused', -255);
-  wbTypeData := wbStruct('SkyrimVM Type Data', [      // UESP : scriptInstance
+  wbTypeData2 := wbStruct('VM Type Data 2', [      // UESP : scriptInstance
     wbInteger('Script Name', itU16, wbVMType),
     wbInteger('Script Type', itU16, wbVMType),
     wbArray('Script Variables', wbStruct('Variable', [
@@ -2521,21 +2888,63 @@ begin
       wbInteger('Type', itU16, wbVMType)
     ]), -1)
   ]);
+  wbTypeData1 := wbStruct('VM Type Data 1', [      // UESP : scriptInstance
+    wbInteger('Script Name', itU16, wbVMType),
+    wbArray('Script Variables', wbStruct('Variable', [
+      wbInteger('Name', itU16, wbVMType),
+      wbInteger('Type', itU16, wbVMType)
+    ]), -1)
+  ]);
 
-  wbObjectTableEntry := wbStruct('Object Table Entry', [  // UESP : reference
-    wbInteger('Object Handle', itU32),
-    wbInteger('Name', itU16, wbVMType),
-    wbStruct('Grouped', [
+  wbVMGroup := wbStruct('Grouped', [  // Seen repetivly while decoding VM
       wbInteger('Flag2bits', itU16, wbDumpInteger),
       wbInteger('Unknown', itS16, wbDumpInteger),   // returned as Dword = Word or (10000 * Flag2bits)
-      wbRefID('RefID')                              // returned as 0 if unknown is -1/FFFFFFFF
-    ]),
+      wbUnion('', GroupedDecider, [wbRefID('RefID'), wbByteArray('Unknown', 4)]) // if flags is not 3, returned as 0 if unknown is -1/FFFFFFFF
+    ]);
+
+  wbObjectTableEntry := wbStruct('Full Object Table Entry', [  // UESP : reference
+    wbInteger('Object Handle', itU64, wbVMHandle),
+    wbInteger('Name', itU16, wbVMType),
+    wbVMGroup,
     wbInteger('Unknown', itU8, wbDumpInteger)
   ]);
 
-  wbObjectDetachedTableEntry := wbStruct('Object Table Entry', [   // UESP : detachedReference
-    wbInteger('Object Handle', itU32),
+  wbObjectDetachedTableEntry := wbStruct('Simple Object Table Entry', [   // UESP : detachedReference
+    wbInteger('Object Handle', itU64, wbVMHandle),
     wbInteger('Name', itU16, wbVMType)
+  ]);
+
+  wbNonRecursiveVariable := wbStruct('Variable', [
+    wbInteger('Type', itU8, wbPropTypeEnum),
+    wbUnion('Value', VariableDecider, [
+      wbInteger('Int32', itS32),
+      wbStruct('Object', [
+        wbInteger('Object Type', itU16, wbVMType),
+        wbInteger('Object Handle', itU64, wbVMObjectHandle)
+      ]),
+      wbInteger('String', itU16, wbVMType),
+      wbInteger('Int32', itU32),
+      wbFloat('Float'),
+      wbInteger('Bool', itU32, wbEnum(['False', 'True'])),
+      wbNull, // avoid recursive variable
+      wbStruct('Struct', [
+        wbInteger('Struct Type', itU16, wbVMType),
+        wbInteger('Struct Handle', itU64, wbVMObjectHandle)
+      ]),
+      wbStruct('Object Array', [
+        wbInteger('Object Type', itU16, wbVMType),
+        wbInteger('Array Handle', itU64, wbVMArrayHandle)
+      ]),
+      wbInteger('String Array Handle', itU64, wbVMArrayHandle),
+      wbInteger('Int32 Array Handle', itU64, wbVMArrayHandle),
+      wbInteger('Float Array Handle', itU64, wbVMArrayHandle),
+      wbInteger('Bool Array Handle', itU64, wbVMArrayHandle),
+      wbInteger('Variable Array Handle', itU64, wbVMArrayHandle),
+      wbStruct('Struct Array', [
+        wbInteger('Struct Type', itU16, wbVMType),
+        wbInteger('Array Handle', itU64, wbVMArrayHandle)
+      ])
+    ])
   ]);
 
   wbVariable := wbStruct('Variable', [
@@ -2544,71 +2953,118 @@ begin
       wbInteger('Int32', itS32),
       wbStruct('Object', [
         wbInteger('Object Type', itU16, wbVMType),
-        wbInteger('Object Handle', itU32, wbVMObjectHandle)
+        wbInteger('Object Handle', itU64, wbVMObjectHandle)
       ]),
       wbInteger('String', itU16, wbVMType),
       wbInteger('Int32', itU32),
       wbFloat('Float'),
       wbInteger('Bool', itU32, wbEnum(['False', 'True'])),
+      wbNonRecursiveVariable,
+      wbStruct('Struct', [
+        wbInteger('Struct Type', itU16, wbVMType),
+        wbInteger('Struct Handle', itU64, wbVMObjectHandle)
+      ]),
       wbStruct('Object Array', [
         wbInteger('Object Type', itU16, wbVMType),
-        wbInteger('Array Handle', itU32)
+        wbInteger('Array Handle', itU64, wbVMArrayHandle)
       ]),
-      wbInteger('String Array Handle', itU32),
-      wbInteger('Int32 Array Handle', itU32),
-      wbInteger('Float Array Handle', itU32),
-      wbInteger('Bool Array Handle', itU32)
+      wbInteger('String Array Handle', itU64, wbVMArrayHandle),
+      wbInteger('Int32 Array Handle', itU64, wbVMArrayHandle),
+      wbInteger('Float Array Handle', itU64, wbVMArrayHandle),
+      wbInteger('Bool Array Handle', itU64, wbVMArrayHandle),
+      wbInteger('Variable Array Handle', itU64, wbVMArrayHandle),
+      wbStruct('Struct Array', [
+        wbInteger('Struct Type', itU16, wbVMType),
+        wbInteger('Array Handle', itU64, wbVMArrayHandle)
+      ])
     ])
   ]);
 
   wbCodeOpcodes := wbEnum([
     {000} 'Noop()',
-    {001} 'IAdd(String, Integer, Integer)',
-    {002} 'FAdd(String, Float, Float)',
-    {003} 'ISubtract(String, Integer, Integer)',
-    {004} 'FSubtract(String, Float, Float)',
-    {005} 'IMultiply(String, Integer, Integer)',
-    {006} 'FMultiply(String, Float, Float)',
-    {007} 'IDivide(String, Integer, Integer)',
-    {008} 'FDivide(String, Float, Float)',
-    {009} 'IMod(String, Integer, Integer)',
-    {010} 'Not(String, Any)',
-    {011} 'INegate(String, Integer)',
-    {012} 'FNegate(String, Float)',
-    {013} 'Assign(String, Any)',
-    {014} 'Cast(String, Any)',
-    {015} 'CompareEQ(String, Any, Any)',
-    {016} 'CompareLT(String, Any, Any)',
-    {017} 'CompareLTE(String, Any, Any)',
-    {018} 'CompareGT(String, Any, Any)',
-    {019} 'CompareGTE(String, Any, Any)',
+    {001} 'IAdd(Identifier, Integer, Integer)',
+    {002} 'FAdd(Identifier, Float, Float)',
+    {003} 'ISubtract(Identifier, Integer, Integer)',
+    {004} 'FSubtract(Identifier, Float, Float)',
+    {005} 'IMultiply(Identifier, Integer, Integer)',
+    {006} 'FMultiply(Identifier, Float, Float)',
+    {007} 'IDivide(Identifier, Integer, Integer)',
+    {008} 'FDivide(Identifier, Float, Float)',
+    {009} 'IMod(Identifier, Integer, Integer)',
+    {010} 'Not(Identifier, Any)',
+    {011} 'INegate(Identifier, Integer)',
+    {012} 'FNegate(Identifier, Float)',
+    {013} 'Assign(Identifier, Any)',
+    {014} 'Cast(Identifier, Any)',
+    {015} 'CompareEQ(Identifier, Any, Any)',
+    {016} 'CompareLT(Identifier, Any, Any)',
+    {017} 'CompareLTE(Identifier, Any, Any)',
+    {018} 'CompareGT(Identifier, Any, Any)',
+    {019} 'CompareGTE(Identifier, Any, Any)',
     {020} 'Jump(Label)',
     {021} 'JumpT(Any, Label)',
     {022} 'JumpF(Any, Label)',
-    {023} 'CallMethod(N, String, String, *)',
-    {024} 'CallParent(N, String, *)',
-    {025} 'CallStatic(N, N, String, *)',
+    {023} 'CallMethod(Name, Identifier, Identifier, *)',
+    {024} 'CallParent(Name, Identifier, *)',
+    {025} 'CallStatic(Name, Name, Identifier, *)',
     {026} 'Return(Any)',
-    {027} 'StrCat(String, Q, Q)',
-    {028} 'PropGet(N, String, String)',
-    {029} 'PropSet(N, String, Any)',
-    {030} 'ArrayCreate(String, U)',
-    {031} 'ArrayLength(String, String)',
-    {032} 'ArrayGetElement(String, String, Integer)',
-    {033} 'ArraySetElement(String, Integer, Any)',
-    {034} 'ArrayFindElement(String, String, Any, Integer)',
-    {035} 'ArrayRFindElement(String, String, Any, Integer)'
+    {027} 'StrCat(Identifier, String, String)',
+    {028} 'PropGet(N, Identifier, Identifier)',
+    {029} 'PropSet(N, Identifier, Any)',
+    {030} 'ArrayCreate(Identifier, unsigned)',
+    {031} 'ArrayLength(Identifier, Identifier)',
+    {032} 'ArrayGetElement(Identifier, Identifier, Integer)',
+    {033} 'ArraySetElement(Identifier, Integer, Any)',
+    {034} 'ArrayFindElement(Identifier, Identifier, Any, Integer)',
+    {035} 'ArrayRFindElement(Identifier, Identifier, Any, Integer)',
+    {036} 'Is(Identifier, Any, Type)',
+    {037} 'StructCreate(Struct)',
+    {038} 'StructGet(Identifier)',
+    {039} 'StructSet(Identifier, Name, Any',
+    {040} 'ArrayFindStruct(Identifier, Identifier, String, Any, Integer)',
+    {041} 'ArrayRFindStruct(Identifier, Identifier, String, Any, Integer)',
+    {042} 'ArrayAddElements(Identifier, Any, Integer)',
+    {043} 'ArrayInsertElement(Identifier, Any, Integer)',
+    {044} 'ArrayRemoveLastElement(Identifier)',
+    {045} 'ArrayRemoveElements(Identifier, Integer, Integer)',
+    {046} 'ArrayClearElements(Identifier)'
+  ]);
+  // opCode parameter type Encoding:
+  //  S : string    = Identifier
+  //  I : integer   = an integer literal or an identifier
+  //  u : unsigned  = an unsigned integer literal or an identifier
+  //  F : float     = a float literal or an identifier
+  //  Q :           = a string literal or an identifier
+  //  L : label     = a label
+  //  N : name      = a type, property or function name
+  //  T : type      = a type name
+  //  A : any
+  //  * : optional
+
+  wbCodeTypeEnum := wbEnum([
+    {00} 'None',
+    {01} 'Object',
+    {02} 'String',
+    {03} 'Int32',
+    {04} 'Float',
+    {05} 'Bool',
+    {06} 'Unknown',
+    {07} 'Unknown',   // Same format as 0, 3, 5, 6
+    {08} 'Unknown'    // Same format as 1 and 2 wbPropType
   ]);
 
   wbCodeParameter := wbStruct('Parameter', [
-    wbInteger('Type', itU8, wbDumpInteger),  // Lower than 8 and lower than 5
+    wbInteger('Type', itU8, wbCodeTypeEnum),  // Lower than 8 and lower than 5
     wbUnion('Value', CodeParameterTypeValueDecider, [
       wbNull,
       wbInteger('Object Type', itU16, wbVMType),
       wbInteger('String', itU16, wbVMType),
       wbInteger('Unsigned Integer', itU32),
       wbFloat('Float'),
-      wbInteger('Boolean', itU8, wbEnum(['False', 'True']))
+      wbInteger('Boolean', itU8, wbEnum(['False', 'True'])),
+      wbInteger('Unknown 6', itU32),  // Guess and/or placeholder
+      wbInteger('Unknown 7', itU32),  // Guess and/or placeholder
+      wbInteger('Unknown 8', itU16, wbVMType)  // Guess
     ])
   ]);
 
@@ -2628,7 +3084,7 @@ begin
     wbInteger('Return Type', itU16, wbVMType),
     wbInteger('DocString', itU16, wbVMType),
     wbInteger('User Flags', itU32, wbDumpInteger),
-    wbInteger('Flags', itU8, wbDumpInteger),
+    wbInteger('Function Flags', itU8, wbDumpInteger),
     wbArray('Parameters', wbStruct('Parameter', [
       wbInteger('Name', itU16, wbVMType),
       wbInteger('Type', itU16, wbVMType)
@@ -2640,8 +3096,8 @@ begin
     wbArray('Codes', wbCode, -2)
   ]);
 
-  wbObjectDataTableEntry := wbStruct('Object Data Table Entry', [  //  UESP: scriptData
-    wbInteger('Object Handle', itU32, wbVMObjectHandle),
+  wbObjectDataTableEntry := wbStruct('Object Table Data Entry', [  //  UESP: scriptData
+    wbInteger('Object Handle', itU64, wbVMObjectHandle),
     wbStruct('Script', [
       wbInteger('Unknown Flags', itU8),
       wbInteger('Type', itU16, wbVMType),
@@ -2654,9 +3110,17 @@ begin
     ])
   ]);
 
+  wbDetachedObjectDataTableEntry := wbStruct('Detached Object Table Data Entry', [  //  UESP: scriptData
+    wbInteger('Object Handle', itU64, wbVMObjectHandle),
+    wbStruct('Script', [
+      wbInteger('Unknown Flags', itU8),
+      wbArray('Members', wbVariable, -1)
+    ])
+  ]);
+
   wbArrayTableEntry := wbStruct('Array Entry Data', [  // UESP: arrayInfo
-    wbInteger('Array Handle', itU32),
-    wbInteger('Array Type', itU8, wbPropTypeEnum),    // valid values : 0 to 5, 0B to 0F
+    wbInteger('Array Handle', itU64, wbVMHandle),
+    wbInteger('Array Type', itU8, wbPropTypeEnum),    // valid values : 0 to 7, 0B to 11
     wbUnion('Data', ArrayTableEntryOptionalStringDecider, [
       wbNull,
       wbNull,
@@ -2666,7 +3130,7 @@ begin
   ]);
 
   wbArrayElementsTableEntry := wbStruct(ArrayContentEntryData, [   // UESP: arrayData
-    wbInteger('Array Handle', itU32),
+    wbInteger('Array Handle', itU64, wbVMArrayHandle),
     wbArrayS('Elements', wbvariable, ArrayElementsTableElementCounter)
   ]);
 
@@ -2694,8 +3158,8 @@ begin
   wbStackTableDataEntry := wbStruct('Stack Data Entry Data', [ // UESP: activeScriptData
     wbInteger('Stack ID', itU32),
     wbStruct('Stack', [
-      wbInteger('Unknown', itU8),  // Should be lower than 9    UESP: Major version
-      wbInteger('Unknown', itU8),  // Should be lower than 3    UESP: Minor version
+      wbInteger('Unknown', itU8),  // Should be lower than 9  (still in FO4)  UESP: Major version
+      wbInteger('Unknown', itU8),  // Should be lower than 3  (still in FO4)  UESP: Minor version
       wbVariable,
       wbInteger('Extra Flag', itU8),
       wbInteger('Unknown', itU8, wbDumpInteger),  // Should be lower than 3 also
@@ -2704,31 +3168,50 @@ begin
         wbInteger('Unknown', itU32, wbDumpInteger),
         wbNull
       ]),
-      wbInteger('Type', itU8),  // Should be lower than 4
-      wbUnion('Unknown', StackTableDataEntryStackTypeDecider, [
-        wbNull,       // < 1 or > 3
-        wbStruct('Callback', [   // = 1
-          wbLenString('Type', 4),
-          wbCallbackParameters
-        ]),
-        wbVariable,   // = 2
-        wbStruct('Callback', [  // = 3
-          wbLenString('Type', 4),
-          wbCallbackParameters,
-          wbVariable
+      wbStruct('CallBacks', [
+        wbInteger('Type', itU8),  // Lower than 4 (in fact 3 errors out also)
+        wbUnion('Unknown', StackTableDataEntryStackTypeDecider, [
+          wbNull,       // < 1 or > 2
+          wbStruct('Callback', [   // = 1  _anonymous_namespace_::EventCallbackAdapter::Func000A
+            wbLenString('Type', 4),
+            // Default is wbNull (REFREventCallbacks::IEventCallback virtual func 4)
+            // TerminalRunResults is default
+            // QuestStage id RefID (0x010), Word (0x014), Byte (0x016)
+            // SceneResults is RefID (0x010)
+            // SceneActionResults is RefID (0x010), DWord (0x014)
+            // ScenePhaseResults is RefID (0x010), DWord (0x014)
+            wbUnion('Callback Type Data', wbCallbackTypeDataDecider, [
+              wbNull,
+              wbStruct('Data', [
+                wbRefID('RefID'),
+                wbInteger('Unknown', itU16),
+                wbInteger('Unknown', itU8)
+              ]),
+              wbRefID('RefID'),
+              wbStruct('Data', [
+                wbRefID('RefID'),
+                wbInteger('Unknown', itU32)
+              ]),
+              wbStruct('Data', [
+                wbRefID('RefID'),
+                wbInteger('Unknown', itU32)
+              ])
+            ]),
+            wbInteger('Unknown', itU32)
+          ]),
+          wbStruct('Callback', [  // = 2   _anonymous_namespace_::LatentCallback::Func000A
+            wbInteger('Unknown', itU32),
+            wbInteger('Unknown', itU8),
+            wbInteger('Unknown 3', itU32)
+          ])
         ])
       ]),
+      wbInteger('Handle', itU64, wbVMObjectHandle),
       wbArray('Frames', wbStruct('Frame', [
         wbInteger('Extra Variables', itU32),
         wbStruct('Frame Data', [
           wbInteger('Flags', itU8),
-          wbUnion('Type', VMVersionDecider, [ // Should be lower than 3
-            wbNull,
-            wbNull,
-            wbInteger('Function Type', itU8),
-            wbInteger('Function Type', itU8),
-            wbInteger('Function Type', itU8)
-          ]),
+          wbInteger('Function Type', itU8), // Should be lower than 3
           wbInteger('Unknown', itU16, wbVMType),
           wbInteger('Unknown', itU16, wbVMType),
           wbInteger('Unknown', itU16, wbVMType),
@@ -2791,13 +3274,10 @@ begin
     ,wbInteger('Offset', itS32)
   ]);
 
-  wbObjectTimeUpdateOffset := wbStruct('Stack Time Update Offset', [
-    wbInteger('Unknown', itU8)
+  wbObjectTimeUpdateOffset := wbStruct('Object Time Update Offset', [
+     wbInteger('Unknown', itU32)
     ,wbInteger('Unknown', itU32)
-    ,wbInteger('Unknown', itS32)
-    ,wbInteger('Unknown', itU16)
-    ,wbInteger('Unknown', itS16)
-    ,wbRefID('RefID')
+    ,wbInteger('Handle', itU64, wbVMHandle)
   ]);
 
   wbFunctor := wbStruct('Functor', [
@@ -3002,16 +3482,119 @@ begin
     wbInteger('Unknown', itU32)
    ]), -1);
 
+  wbCreatedObject := wbStruct('Created Object', [
+    wbRefID('RefID'),
+    wbInteger('Unknown', itU32),
+    wbArray('Unknwon', wbStruct('Unknown', [
+      wbRefID('RefID'),
+      wbInteger('Unknown', itU32),
+      wbInteger('Unknown', itU32),
+      wbInteger('Unknown', itU32),
+      wbInteger('Unknown', itU32)
+    ]), -254)
+  ]);
+
+  wbOwnedController := wbStruct('Owned Controller', [
+    wbRefID('Reference'),
+    wbRefID('TESEffectShader'),
+    wbRefID('BGSArtObject'),
+    wbRefID('Reference')
+  ]);
+  wbBSTempEffect := wbStruct('Temp Effect', [
+    wbFloat('Unknown'),
+    wbFloat('Unknown'),
+    wbInteger('Unknown', itU8),
+    wbInteger('Unknown', itU32)
+  ]);
+  wbReferenceEffect := wbStruct('Reference Effect', [
+    wbBSTempEffect,
+    wbInteger('Unknown', itU8),
+    wbRefID('Reference'),
+    wbInteger('Owned Controller Type', itU8),
+    wbUnion('Owned Controller', wbGlobalData6OwnedControllerDecider, [wbNull, wbOwnedController, wbStruct('Owned Camera Effect Controller', [
+      wbInteger('Unknown', itU8),
+      wbOwnedController
+    ])])
+  ]);
+  wbModelReferenceEffect := wbStruct('Model Reference Effect', [
+    wbReferenceEffect,
+    wbRefID('BGSArtObject'),
+    wbStruct('SubBuffer', [ // Also used in ActorMagicCaster
+      wbInteger('Unknown', itU8),
+      wbInteger('Length', itU6to30),
+      wbByteArray('Unknown', wbSubBufferCounter)
+    ]),
+    wbInteger('Unknown', itU32)
+  ]);
+  wbBSTempEffectScreenSpaceDecal := wbStruct('Temp Effect Screen Space Decal', [
+    wbBSTempEffect,
+    wbRefID('Cell'),
+    wbInteger('Unknown', itU8),
+    wbInteger('Flag', itU8),
+    wbUnion('Six', wbBSTempEffectScreenSpaceDecalSixDecider, [wbNull,
+      wbStruct('Six struct', [
+        wbInteger('Unknown', itU32),
+        wbInteger('Unknown', itU32),
+        wbInteger('Unknown', itU32),
+        wbInteger('Unknown', itU32),
+        wbInteger('Unknown', itU8),
+        wbInteger('Unknown', itU8)
+      ]),
+      wbInteger('Flag2', itU8), // if null skip the rest
+      wbUnion('Unknown', wbBSTempEffectScreenSpaceDecalRemainDecider, [ wbNull,
+        wbStruct('Remain', [
+          wbArray('Unknown', wbInteger('Unknown', itU64), {48 * constant / 48} 1), // need sample
+          wbArray('Unknown', wbInteger('Unknown', itU64), {16 / 16} 1 ),
+          wbInteger('Flag3', itU8),
+          wbUnion('Unknown', wbBSTempEffectScreenSpaceDecalThirdDecider, [ wbNull,
+            wbRefID('Reference'),
+            wbLenString('Unknown', 2),
+            wbInteger('Unknown', itU32),
+            wbInteger('Unknown', itU32)
+          ]),
+          wbInteger('Unknown', itU32),
+          wbInteger('Unknown', itU32),
+          wbInteger('Unknown', itU32),
+          wbInteger('Unknown', itU8),
+          wbInteger('Unknown', itU16),
+          wbInteger('Unknown', itU32),
+          wbInteger('Unknown', itU8),
+          wbInteger('Unknown', itU8),
+          wbInteger('Unknown', itU8),
+          wbInteger('Unknown', itU8),
+          wbInteger('Unknown', itU8),
+          wbInteger('Unknown', itU32),
+          wbInteger('Unknown', itU8)
+        ])
+      ])
+    ])
+  ]);
+
+  wbGlobalData10Unknown := wbStruct('Unknown struct', [
+    wbInteger('Unknown', itU32),
+    wbInteger('Unknown', itU32),
+    wbInteger('Unknown', itU32),
+    wbInteger('Type', itU32),
+    wbUnion('Unknown', wbGlobalData10TypeDecider, [
+      wbRefID('Keyword'),
+      wbRefID('Reference'),
+      wbRefID('RefID'),
+      wbRefID('Location'),
+      wbInteger('Unknown', itU32),
+      wbNull
+    ])
+  ]);
+
   wbGlobalData := wbStructC('Global Data', GlobalDataSizer, GlobalDataGetChapterType, GlobalDataGetChapterTypeName, nil, [
     wbInteger('Type', itU32),
     wbInteger('DataLength', itU32),
     wbUnion('Data', GlobalDataDecider, [
-      wbByteArray('Unknown', DataCounter),  // Single line
+      wbByteArray('Unknown', DataCounter)  // Single line
       // 0 to 8
-      wbStruct('Misc Stats Struct', [
+     ,wbStruct('Misc Stats Struct', [
         wbArray('Misc Stats', wbStruct('Misc Stat',[
           wbLenString('Misc Stat Name', 2),
-          wbInteger('Category', itU8, wbEnum([
+          wbInteger('Category', itU8 {, wbEnum([
             '0 = General',
             '1 = Quest',
             '2 = Combat',
@@ -3019,232 +3602,532 @@ begin
             '4 = Crafting',
             '5 = Crime',
             '6 = Perks?'
-          ])),
+          ])}),
           wbInteger('Value', itU32)
         ]), -1)
       ]),
       wbStruct('Player Location Struct', [  // Seems to be 30 bytes in version 64 and 31 in version 73 or 74
         wbByteArray('Unknown', 4)
-        ,wbRefID('WorldSpace 1')
+        ,wbRefID('WorldSpace')
         ,wbInteger('Coord X', itS32)
         ,wbInteger('Coord Y', itS32)
-        ,wbRefID('WorldSpace 2')
-        ,wbFloat('Pos X')
+        ,wbRefID('WorldSpace/Cell')
+        ,wbFloat('Pos X')   // To be verified, read as 12 bytes
         ,wbFloat('Pos Y')
         ,wbFloat('Pos Z')
-        ,wbUnion('Added data', SaveFormVersionGreaterThan72Decider, [
-          wbNull
-          ,wbByteArray('Unknown', 1)
-        ])
       ]),
-      wbArray('TES', wbInteger('', itU8), -2),
-      wbArray('Global Variables', wbInteger('', itU8), -2),
-      wbArray('Created Objects', wbInteger('', itU8), -2),
-      wbArray('Effects', wbInteger('', itU8), -2),
-      wbArray('Weather', wbInteger('', itU8), -2),
-      wbArray('Audio', wbInteger('', itU8), -2),
-      wbArray('Sky Cells', wbInteger('', itU8), -2),
+      wbStruct('TES Struct', [
+        wbArray('Unknown0', wbStruct('Unknown00', [
+          wbRefID('Actor Base'),
+          wbInteger('Unknown', itU16)
+        ]), -254),
+        wbArray('Unknown1', wbRefID('Unknown'), -241), // counter * counter elements
+        wbArray('Unknown2', wbRefID('Reference'), -254)
+      ]),
+      wbArray('Global Variables', wbStruct('Global', [
+        wbRefID('Global Name'),
+        wbFloat('Value')
+      ]), -254),
+      wbStruct('Created Objects', [
+        wbArray('Created Objects Array 1', wbCreatedObject, -254),
+        wbArray('Created Objects Array 2', wbCreatedObject, -254),
+        wbArray('Created Objects Array 3', wbCreatedObject, -254),
+        wbArray('Created Objects Array 4', wbCreatedObject, -254)
+      ]),
+      wbStruct('Effects', [
+        wbArray('Effect array', wbStruct('Effect', [
+          wbInteger('Unknown', itU32),
+          wbInteger('Unknown', itU32),
+          wbInteger('Unknown', itU32),
+          wbRefID('Image Space Modifier')
+        ]), -254),
+        wbInteger('Unknown', itU32),
+        wbInteger('Unknown', itU32)
+      ]),
+      wbStruct('Weather', [
+        wbRefID('Climate'),
+        wbRefID('Weather 1'),
+        wbRefID('Weather 2'),
+        wbRefID('Weather 3'),
+        wbRefID('Weather 4'),
+        wbRefID('Region'),
+        wbFloat('Unknown'),
+        wbFloat('Unknown'),
+        wbFloat('Unknown'),
+        wbFloat('Unknown'),
+        wbFloat('Unknown'),
+        wbFloat('Unknown'),
+        wbFloat('Unknown'),
+        wbFloat('Unknown'),
+        wbFloat('Unknown'),
+        wbInteger('Unknown', itU32),
+        wbInteger('Unknown', itU32),
+        wbInteger('Flags', itU8),
+        wbUnion('Flags bit 0', GlobalData6FlagsBit0Decider, [wbNull, wbModelReferenceEffect]),
+        wbUnion('Flags bit 1', GlobalData6FlagsBit1Decider, [wbNull, wbModelReferenceEffect])
+      ]),
+      wbStruct('Audio', [
+        wbRefID('BGSSoundDescriptorForm'),
+        wbArray('Unknown', wbRefID('BGSMusicType'), -254),
+        wbStruct('BGSPlayerMusicChanger', [
+          wbRefID('BGSMusicType')
+        ]),
+        wbStruct('Unknown', [
+          wbArray('Unknown', wbStruct('Unknown', [
+            wbRefID('BGSSoundCategorySnapshot'),
+            wbInteger('Unknown', itU32)
+          ]), -1)
+        ]),
+        wbArray('Unknown', wbRefID('Reference'), -254)
+      ]),
+      wbArray('Sky Cells', wbStruct('Sky Cell', [
+        wbRefID('Worldspace'),
+        wbRefID('RefID')
+      ]), -254),
+      wbStruct('Input Enable Manager', [
+        wbInteger('Unknown', itU16),  // Required 0 or 1
+        wbInteger('Unknown', itU32),
+        wbArray('Unknown', wbStruct('Unknown', [
+          wbInteger('Unknown', itU32),
+          wbInteger('Unknown', itS32),
+          wbInteger('Unknown', itS32),
+          wbLenString('Unknown', 2)
+        ]), -1)
+      ]),
+      wbStruct('StoryTeller', [
+        wbArray('Unknown', wbGlobalData10Unknown, -1),
+        wbArray('Unknown', wbGlobalData10Unknown, -1),
+        wbArray('Quests 1', wbRefID('Quest'), -1),
+        wbArray('Quests 2', wbRefID('Quest'), -1),
+        wbArray('Quests 3', wbRefID('Quest'), -1),
+        wbArray('Unknown', wbStruct('Unknown', [
+          wbRefID('RefID'),
+          wbArray('Unknown', wbStruct('Unknown', [
+            wbInteger('Unknown', itU32),
+            wbInteger('Unknown', itU32)
+          ]), -254)
+        ]), -254),
+        wbInteger('Unknown', itU8)
+      ]),
+      wbArray('ReservedIDs', wbRefID('ReservedID'), -254),
       // 100 to 114
-      wbArray('Process List', wbInteger('', itU8), -2),
-      wbArray('Combat', wbInteger('', itU8), -2),
-      wbArray('Interface', wbInteger('', itU8), -2),
-      wbArray('Actor Causes', wbInteger('', itU8), -2),
-      wbArray('Unknown 104', wbInteger('', itU8), -2),
-      wbArray('Detection Manager', wbInteger('', itU8), -2),
-      wbArray('Location MetaData', wbInteger('', itU8), -2),
-      wbArray('Quest Static Data', wbInteger('', itU8), -2),
-      wbArray('Story Teller', wbInteger('', itU8), -2),
-      wbArray('Magic Favorites', wbInteger('', itU8), -2),
-      wbArray('Player Controls', wbInteger('', itU8), -2),
-      wbArray('Story Event Manager', wbInteger('', itU8), -2),
-      wbArray('Ingredient Shared', wbInteger('', itU8), -2),
-      wbArray('Menu Controls', wbInteger('', itU8), -2),
-      wbArray('Menu Topic Manager', wbInteger('', itU8), -2),
+      wbStruct('Process List', [
+        wbInteger('Unknown', itU32),
+        wbInteger('Unknown', itU32),
+        wbInteger('Unknown', itU32),
+        wbInteger('Unknown', itU32),
+        wbArray('Unknown', wbArray('Unknown', wbStruct('Unknown', [
+          wbInteger('Unknown', itU32),
+          wbInteger('Unknown', itU32),
+          wbInteger('Unknown', itU8),
+          wbInteger('Unknown', itU32),
+          wbInteger('Unknown', itU32),
+          wbInteger('Unknown', itU8),
+          wbInteger('Unknown', itU32),
+          wbFloat('Unknown'),
+          wbRefID('Reference'),
+          wbRefID('Actor'),
+          wbRefID('Bound Object'),
+          wbRefID('RefID'),
+          wbArray('Actors', wbRefID('Actor'), -254),
+          wbInteger('Unknown', itU32),
+          wbRefID('Faction'),
+          wbInteger('Unknown', itU8),
+          wbInteger('Unknown', itU16),
+          wbInteger('Unknown', itU8),   // if form version > 26
+          wbInteger('Unknown', itU32)   // if form version > 33
+        ]), -254))
+      ]),
+      wbStruct('Combat', [
+//        wbInteger('Unknown', itU32),
+//        wbArray('Unknown1', wbStruct('Unknown1 struct', [
+//          wbInteger('Unknown', itU32),
+//          wbInteger('Unknown', itU32),
+//          wbArray('Unknown12', wbStruct('Unknown12 struct' [
+//            wbArray('Unknown120', wbStruct('Unknown120 struct', [
+//              wbRefID('Actor'),
+//              wbInteger('Unknown', itU32),
+//              wbInteger('Unknown', itU32),
+//              wbInteger('Unknown', itU32),  // if version > 17
+//              wbInteger('Unknown', itU32),
+//              wbInteger('Unknown', itU16),
+//              wbInteger('Unknown', itU16),  // if version > 17
+//              wbRefID('Actor'),
+//              wbStruct('Unknown', [
+//                wbInteger('Unknown', itU32),
+//                wbRefID('RefID')
+//              ]),
+//              wbStruct('Unknown', [
+//                wbInteger('Unknown', itU32),
+//                wbRefID('RefID')
+//              ]),
+//              wbStruct('Unknown', [
+//                wbInteger('Unknown', itU32),
+//                wbRefID('RefID')
+//              ]),
+//              wbStruct('Unknown', [
+//                wbInteger('Unknown', itU32),
+//                wbRefID('RefID')
+//              ]),
+//              wbStruct('Unknown', [
+//                wbInteger('Unknown', itU32),
+//                wbRefID('RefID')
+//              ]),
+//              wbStruct('Unknown', [
+//                wbInteger('Unknown', itU32),
+//                wbRefID('RefID')
+//              ]),
+//              wbFloat('Unknown'),
+//              wbFloat('Unknown'),
+//              wbFloat('Unknown'),
+//              wbFloat('Unknown'),
+//              wbFloat('Unknown'),
+//              wbFloat('Unknown'),
+//              wbFloat('Unknown')
+//            ]), -254),
+//            wbArray('Unknown121', wbStruct('Unknown120 struct', [
+//              wbRefID('Actor'),
+//              wbInteger('Unknown', itU32),
+//              wbInteger('Unknown', itU32),
+//              wbInteger('Unknown', itU32),  // if version > 17
+//              wbStruct('Unknown', [
+//                wbInteger('Flags', itU64) // bit 0 used for next union
+//              ])
+//            ]), -254)
+////            wbArray('Unknown122', , -254),
+////            wbInteger('Unknown', itU32),
+////            wbRefID('Actor'),
+//          ]), -254)
+//        ]), -254),
+//        wbArray('Unused', wbInteger('Unused', itU8), -254)
+      ]),
+      wbByteArray('Interface'),
+      wbByteArray('Actor Causes'),
+      wbByteArray('Detection Manager'),
+      wbByteArray('Location MetaData'),
+      wbByteArray('Quest Static Data'),
+      wbByteArray('Attraction Object LOS'),
+      wbByteArray('Animation'),
+      wbByteArray('Player Controls'),
+      wbByteArray('Story Event Manager'),
+      wbByteArray('Ingredient Shared'),
+      wbByteArray('Menu Controls'),
+      wbByteArray('Menu Topic Manager'),
+      wbByteArray('Scene-filler Actors'),
+      wbByteArray('Range Formations'),
+      wbByteArray('Anim Objects'),
+      wbByteArray('Radio Manager'),
       // 1000 to 1005
       wbStruct('Temp Effect', [
-        wbStruct('Unknown1000_00', [
-          wbArray('Unknown1000_000', wbStruct('Unknown1000_0000', [
-            wbInteger('Unknown1000_00000', itU8),
-            wbUnion('Unknown1000_00001', Unknown1000_00001Decider, [
-              wbRefID('REFR'),
-              wbStruct('Unknown1000_000011', [
-                wbRefID('CELL'),
-                wbInteger('Unknown', itU32)
-              ])
-            ]),
-            wbRefID('Texture Set'),
-            wbRefID('Texture Set'),
-            wbArray('Unknown1000_00002', wbInteger('Unknown', itU32), 3),
-            wbArray('Unknown1000_00003', wbInteger('Unknown', itU32), 3),
-            wbInteger('Unknown', itU32),
-            wbInteger('Unknown', itU32),
-            wbInteger('Unknown', itU32),
-            wbArray('Unknown1000_00004', wbInteger('Unknown', itU32), 4), // Check for float
-            wbInteger('Unknown', itU8),
-            wbInteger('Unknown', itU8),
-            wbInteger('Unknown', itU8),
-            wbInteger('Unknown', itU8),
-            wbInteger('Unknown', itU32),
-            wbInteger('Unknown', itU8),
-            wbInteger('Unknown', itU32),
-            wbInteger('Unknown', itU32),
-            wbInteger('Unknown', itU32),
-            wbInteger('Unknown', itU32),
-            wbInteger('Unknown', itU32),
-            wbInteger('Unknown', itU8),
-            wbInteger('Unknown', itU8),
-            wbUnion('Unknown1000_00005', SaveFormVersionGreaterThan35Decider, [
-              wbNull,
+        wbArray('Unknown array 01', wbBSTempEffectScreenSpaceDecal, -254),
+        wbArray('Unknown array 02', wbStruct('Unknown 02 struct', [
+          wbInteger('Unknown', itU8),
+          wbInteger('Flag', itU8),
+          wbUnion('Unknown', wbGlobalData1000FlagDecider, [wbNull,
+            wbStruct('Unknown', [
+              wbRefID('Reference'),
+              wbLenString('Unknown', 2),
+              wbInteger('Unknown', itU32),
               wbInteger('Unknown', itU32)
             ])
-          ]), -254)
-        ]),
-        wbInteger('Next ID', itU32),
-        wbArray('Unknown1000_01', wbStruct('Unknown', [
-          wbInteger('Unknown', itU32),
-          wbStruct('Unknown', []) // Needs sample to continue
+          ]),
+          wbInteger('NiNode count', itU32)
         ]), -254),
-        wbArray('Unknown1000_02', wbStruct('Unknown', [
-          wbInteger('Unknown', itU32),
-          wbStruct('Unknown', []) // Needs sample to continue
+        wbInteger('Unknown', itU32),  // g_7FF7334407C8
+        wbArray('Unknown array 11', wbStruct('Unknown', [
+          wbInteger('Index', itU32), // Less than 12
+          wbModelReferenceEffect
         ]), -254),
-        wbArray('Unknown1000_03', wbStruct('Unknown', [
-          wbInteger('Unknown', itU32),
-          wbStruct('Unknown', []) // Needs sample to continue
+        wbArray('Unknown array 12', wbStruct('Unknown', [
+          wbInteger('Index', itU32), // Less than 12
+          wbModelReferenceEffect
+        ]), -254),
+        wbArray('Unknown array 13', wbStruct('Unknown', [
+          wbInteger('Index', itU32), // Less than 12
+          wbModelReferenceEffect
         ]), -254)
       ]),
       wbStruct('Papyrus Struct', [
-        wbInteger('SkyrimVM_version', itU16)  // FFFF marks an invalid save, 4 seems current max     UESP: header
-        ,wbArray('String Table for Internal VM save data', wbLenString('String', 2), -2, VMTypeAfterLoad)  // UESP strings
-        ,wbArray('Type table for internal VM save data', wbTypeData, -1)  // Type table for internal VM save data  USEP:script
-        ,wbArray('Object Table', wbObjectTableEntry, -1, ObjectTableAfterLoad)  // UESP: scriptInstance
-        ,wbArray('Detached Object Table', wbObjectDetachedTableEntry, -1, ObjectDetachedTableAfterLoad) // UESP: reference
-        ,wbArrayS('Array Table', wbArrayTableEntry, -1, ArrayTableAfterLoad) // UESP: arrayInfo
-        ,wbStruct('Stacks', [
-          wbInteger('Next Active Script ID', itU32, wbDumpInteger)                // Part of Stack table
-         ,wbArrayS('Stack Table', wbStackTableEntry, -1, StackTableAfterLoad) // UESP: activeScript
-        ])
-        ,wbArray('Object Data Table', wbObjectDataTableEntry, ObjectDataTableCounter)     // UESP: scriptData and referenceData
-        ,wbArray('Array Content Table', wbArrayElementsTableEntry, ArrayContentTableCounter) // UESP: arrayData
-        ,wbArray('Stack Content Table', wbStackTableDataEntry, StackContentTableCounter)  // UESP: activeScriptData
-        ,wbArray('Function Message Table', wbFunctionMessageDataEntry, -1)
-        ,wbArray('First Suspended Stack Table', wbSuspendedStackDataEntry, -1)
-        ,wbArray('Second Suspended Stack Table', wbSuspendedStackDataEntry, -1)
-        ,wbInteger('Previous Unknown', itU32)
-        ,wbUnion('Unknown', PreviousUnknownDecider, [
-          wbNull,
-          wbInteger('Unknown', itU32)
-        ])
-        ,wbArray('Unknown0', wbInteger('Unknown', itU32), -1)
-        ,wbUnion('Version >= 4', VMVersionDecider, [
-          wbNull,
-          wbNull,
-          wbNull,
-          wbNull,
-          wbArray('Queued Unbind Table', wbQueuedUnbindDataEntry, -1)
-        ]) // End of .text:00C53760
-        ,wbInteger('Save File Version', itS16)
-        ,wbUnion('', SaveIsValidDecider, [
+        wbInteger('VM_version', itU16),  // FFFF marks an invalid save, 4 seems current max     UESP: header
+        wbStruct('Tables', [
+          wbArray('String Table for Internal VM save data', wbLenString('String', 2), -2, VMTypeAfterLoad),  // UESP strings
+          wbStruct('Type tables for internal VM save data', [
+           wbInteger('Type Table 2 Count', itU32),
+           wbInteger('Type Table 1 Count', itU32),
+           wbArray('Type table 2', wbTypeData2, TypeTable2Counter),  // Type table for internal VM save data  USEP:script
+           wbArray('Type table 1', wbTypeData1, TypeTable1Counter)  // Type table for internal VM save data  USEP:script
+          ]),
+          wbArray('Object Table', wbObjectTableEntry, -1, ObjectTableAfterLoad),  // UESP: scriptInstance
+          wbArray('Supplement Object Table', wbObjectDetachedTableEntry, -1, SupplementObjectTableAfterLoad),  // UESP: scriptInstance
+          wbArray('Detached Object Table', wbObjectDetachedTableEntry, -1, ObjectDetachedTableAfterLoad), // UESP: reference
+          wbArrayS('Array Table', wbArrayTableEntry, -1, ArrayTableAfterLoad), // UESP: arrayInfo
+          wbStruct('Stacks', [
+            wbInteger('Next Active Script ID', itU32),                // Part of Stack table
+            wbArrayS('Stack Table', wbStackTableEntry, -1, StackTableAfterLoad) // UESP: activeScript
+          ]),
+          wbArray('Object Table Data', wbObjectDataTableEntry, ObjectTableDataCounter),     // UESP: scriptData and referenceData
+          wbArray('Detached Object Table Data', wbDetachedObjectDataTableEntry, DetachedObjectTableDataCounter),     // UESP: scriptData and referenceData
+          wbArray('Array Content Table', wbArrayElementsTableEntry, ArrayContentTableCounter), // UESP: arrayData
+          wbArray('Stack Content Table', wbStackTableDataEntry, StackContentTableCounter),  // UESP: activeScriptData
+          wbArray('Function Message Table', wbFunctionMessageDataEntry, -1),
+          wbArray('First Suspended Stack Table', wbSuspendedStackDataEntry, -1),
+          wbArray('Second Suspended Stack Table', wbSuspendedStackDataEntry, -1),
+          wbInteger('Previous Unknown', itU32),
+          wbUnion('Unknown', PreviousUnknownDecider, [
+            wbNull,
+            wbInteger('Unknown', itU32)
+          ])
+        ]),
+        wbUnion('Version >= 2', VMVersionGreaterThan1Decider, [
            wbNull,
-           wbStruct('Save File', [
-             wbArray('First Stack Time Update Table', wbStackTimeUpdateOffset, -1)
-            ,wbArray('Second Stack Time Update Table', wbStackTimeUpdateOffset, -1)
-            ,wbArray('Third Stack Time Update Table', wbStackTimeUpdateOffset, -1)
-            ,wbArray('First Object Time Update Table', wbObjectTimeUpdateOffset, -1)
-            ,wbArray('Second Object Time Update Table', wbObjectTimeUpdateOffset, -1)
-            ,wbArray('Unknown01', wbLenString('Unknown', 4), -1)
-            ,wbFunctors    // Untested, no suitable save found
-            ,wbArray('Unknown02', wbStruct('Unknown', [
-               wbRefID('RefID')
-              ,wbRefID('RefID')
-              ,wbInteger('Unknown', itU8) // Should be less than 3
-              ,wbInteger('Unknown', itU8) // Should also be less than 3, would be skipped if previous greater than 2
-            ]), -1)    // Untested, no suitable save found
-            ,wbArray('Unknown03', wbStruct('Unknown', [
-               wbInteger('Unknown', itU16)  // Check for String Index
-              ,wbInteger('Unknown', itU16)
-              ,wbRefID('RefID')
-            ]), -1)
-            ,wbUnion('Unknown04', VersionGreaterThan3Decider, [
-               wbNull
-              ,wbArray('Unknown040', wbStruct('Unknown', [
-                 wbInteger('Unknown', itU16)  // Check for String Index
-                ,wbInteger('Unknown', itU16)
-                ,wbRefID('RefID')
-              ]), -1)
-            ])
-            ,wbUnion('Unknown', VersionGreaterThan4Decider, [
-               wbNull
-              ,wbArray('Unknown05', wbStruct('Unknown', [
-                 wbInteger('Unknown', itU16)  // Check for String Index
-                ,wbInteger('Unknown', itU16)
-                ,wbRefID('RefID')
-                ,wbStruct('Dual RefID Table', [
-                  wbInteger('First Count', itU32)
-                  ,wbInteger('Second Count', itU32)
-                  ,wbArray('Unknown050', wbRefID('RefID'), FirstCountCounter)
-                  ,wbArray('Unknown051', wbRefID('RefID'), SecondCountCounter)
-                ])
-              ]), -1)
-            ])
-            ,wbArray('Unknown06', wbStruct('Unknown', [
-               wbRefID('RefID')
-              ,wbInteger('Unknown', itU8)
-            ]), -1)
-            ,wbArray('Unknown07', wbStruct('Unknown', [
-               wbRefID('RefID')
-              ,wbArray('Unknown070', wbStruct('Unknown', [
-                 wbLenString('Unknown')
-                ,wbArray('Unknown0700', wbStruct('Unknown', [
-                   wbInteger('Unknown', itU32)
-                  ,wbInteger('Unknown', itU32)
-                 ]), -1)
-                ,wbArray('Unknown0701', wbStruct('Unknown', [
-                   wbInteger('Unknown', itU16)  // Check for String Index
-                  ,wbInteger('Unknown', itU16)
-                  ,wbRefID('RefID')
-                 ]), -1)
-               ]), -1)
-             ]), -1)
-           ,wbArray('Unknown08', wbStruct('Unknown', [
-              wbInteger('Unknown', itU32)
-             ,wbInteger('Unknown', itU32)
-            ]), -1)
-           ,wbStruct('Unknown09', [
-              wbArray('Unknown090', wbStruct('Unknown', [
-                wbRefID('RefID')
-               ,wbUnknown0900
-             ]), -1)
-             ,wbArray('Unknown091', wbStruct('Unknown', [
-                wbRefID('RefID')
-               ,wbArray('Unknown0910', wbStruct('Unknown', [
-                  wbInteger('Unknown', itU32)
-                 ,wbArray('Unknown09100', wbInteger('Unknown', itU32), -1)
-                 ,wbArray('Unknown09101', wbStruct('Unknown', [
-                    wbInteger('Unknown', itU32)
-                   ,wbInteger('Unknown', itU8, wbEnum(['False', 'True']))
-                  ]), -1)
-                 ,wbInteger('Unknown', itU32)
-                ]), -1)
-             ]), -1)
-             ,wbArray('Unknown092', wbStruct('Unknown', [
-                wbRefID('RefID')
-               ,wbUnknown0900
-             ]), -1)
-            ])
-           ,wbArray('Unknown0A', wbStruct('Unknown', [
-              wbInteger('Unknown', itU32)
-             ,wbArray('Unknown0A0', wbInteger('Unknown', itU32), -1)
+           wbArray('Unknown0', wbStruct('Unknown00', [
+             wbInteger('Unknown', itU32),
+             wbVariable
            ]), -1)
+        ]),
+        wbArray('Unknown Handle Table', wbInteger('Unknown Handle', itU64, wbVMHandle), -1),
+        wbArray('Queued Unbind Array', wbStruct('Queued Unbind', [
+          wbInteger('Handle', itU64, wbVMObjectHandle),
+          wbInteger('Unknown', itU32)
+        ]), -1),
+        wbArray('Events', wbStruct('Event', [
+          wbVMGroup,
+          wbArray('Event Target List', wbStruct('Event Target', [
+            wbInteger('Unknown', itU16, wbVMType),
+            wbArray('Targets', wbInteger('Handle', itU64, wbVMObjectHandle), -1)
+          ]), -1)
+        ]), -1),
+        wbInteger('Save File Version', itS16),
+        wbUnion('', SaveIsValidDecider, [
+          wbNull,
+          wbStruct('Save File', [
+            wbStruct('Updates', [
+               wbArray('First Stack Time Update Table', wbStackTimeUpdateOffset, -1)
+              ,wbArray('Second Stack Time Update Table', wbStackTimeUpdateOffset, -1)
+              ,wbArray('Third Stack Time Update Table', wbStackTimeUpdateOffset, -1)
+              ,wbArray('First Object Time Update Table', wbObjectTimeUpdateOffset, -1)
+              ,wbArray('Second Object Time Update Table', wbObjectTimeUpdateOffset, -1)
+            ]),
+            wbArray('Long Strings', wbLenString('Unknown', 4), -1),
+            wbFunctors,    // Still untested, no suitable save found
+            wbArray('LOS events', wbStruct('LOS event', [
+              wbInteger('Type', itU8), // valid if less than 2
+              wbUnion('Data', wbLOSEventDataDecider, [
+                wbNull,
+                wbStruct('Detection event', [
+                  wbInteger('Handle', itU64, wbVMObjectHandle),
+                  wbUnion('VM Version > D', SaveFileVersionGreaterThanDDecider, [
+                    wbStruct('Old version', [
+                      wbRefID('Unknown'),
+                      wbRefID('Unknown')
+                    ]),
+                    wbStruct('New Version', [
+                      wbVMGroup,
+                      wbVMGroup
+                    ])
+                  ]),
+                  wbInteger('Unknown', itU8)  // valid if less than 3
+                ]),  // Type = 0
+                wbStruct('Direct event', [
+                  wbInteger('Handle', itU64, wbVMObjectHandle),
+                  wbUnion('VM Version > D', SaveFileVersionGreaterThanDDecider, [
+                    wbStruct('Old version', [
+                      wbRefID('Unknown'),
+                      wbRefID('Unknown')
+                    ]),
+                    wbStruct('New Version', [
+                      wbVMGroup,
+                      wbVMGroup
+                    ])
+                  ]),
+                  wbInteger('Unknown', itU8),  // valid if less than 3
+                  wbInteger('String', itU16, wbVMType),
+                  wbInteger('String', itU16, wbVMType)
+                ])      // Type = 1
+              ])
+            ]), -1),
+            wbArray('Sleep Event Handler', wbInteger('Handle', itU64, wbVMHandle), -1),
+            wbArray('Tracked Stats Event Handler',
+                wbUnion('VM Version > B', SaveFileVersionGreaterThanBDecider, [
+                  wbArray('Handles', wbInteger('Handle', itU64, wbVMObjectHandle), -1),
+                  wbStruct('Tracked Stat Event Handler', [
+                    wbLenString('Stat', 4),
+                    wbArray('Values', wbStruct('Value struct', [
+                      wbInteger('Handle', itU64, wbVMObjectHandle),
+                      wbInteger('Value', itU32)
+                    ]), -1)
+                  ])
+              ]), -1),
+            wbArray('Inventory Event Handler', wbStruct('Inventory Event', [
+              wbInteger('Handle', itU64, wbVMObjectHandle),
+              wbArray('Inventory Event Data', wbRefID('RefID'), -1) // Simplified version assuming vmVersion > 2, otherwize 2 counters then 2 arrays of refID
+            ]), -1),
+            wbArray('Custom Event Handler', wbStruct('Custom Event', [
+              wbInteger('Handle', itU64, wbVMObjectHandle),
+              wbArray('Custom Event Data', wbStruct('Data', [
+                wbInteger('Unknown', itU16, wbVMType),
+                wbArray('Unknown', wbInteger('Handle', itU64, wbVMObjectHandle), -1)
+              ]), -1)
+            ]), -1),
+            wbStruct('Combat Event Handler', [ // Need version greater than 1
+              wbArray('Unknown0', wbStruct('Unknwon00', [
+                wbVMGroup,
+                wbArray('Unknown000', wbStruct('Unknwon000 struct', [
+                  wbInteger('Handle', itU64, wbVMObjectHandle),
+                  wbArray('Unknown0000', wbStruct('Unknwon0000 struct', [
+                    wbVMGroup,
+                    wbRefID('RefID'),
+                    wbRefID('RefID'),
+                    wbInteger('Unknown', itU8),  // less than 3
+                    wbInteger('Unknown', itU8),  // less than 3 also
+                    wbInteger('Unknown', itU8),  // less than 3 still
+                    wbInteger('Unknown', itU8),  // less than 3 again
+                    wbInteger('Unknown', itU8)   // less than 3 final
+                  ]), -1)
+                ]), -1)
+              ]), -1),
+              wbArray('Unknown1', wbStruct('Unknown1 struct', [
+                wbVMGroup,
+                wbArray('Unknown10', wbStruct('Unknown10 struct',[
+                  wbInteger('Handle', itU64, wbVMObjectHandle),
+                  wbArray('Unknown100', wbStruct('Unknown100 struct',[
+                    wbVMGroup,
+                    wbRefID('RefID'),
+                    wbInteger('Unknown', itU8)
+                  ]), -1)
+                ]), -1)
+              ]), -1)
+             ,wbArray('Unknown2', wbStruct('Unkwnon2 struct', [
+                wbVMGroup,
+                wbArray('Unknown20', wbInteger('Handle', itU64, wbVMObjectHandle), -1)
+              ]), -1)
+            ]),
+            wbArray('Distance Event Handler', wbStruct('Distance Event struct', [ // Need version greater than 2
+              wbInteger('Handle', itU64, wbVMObjectHandle),
+              wbVMGroup,
+              wbVMGroup,
+              wbInteger('Unknown', itU8),  // should be less than 2
+              wbFloat('Unknown')
+            ]), -1),
+            wbStruct('Menu Event Handler', [ // Need version greater than 4
+              wbArray('Menu Events 1', wbStruct('Menu Event struct', [
+                wbLenString('Unknown', 2),
+                wbArray('Handles', wbInteger('Handle', itU64, wbVMObjectHandle), -1)
+              ]), -1),
+              wbArray('Handles 2', wbInteger('Handle', itU64, wbVMObjectHandle), -1), // Need version > 5
+              wbArray('Menu Event 3', wbStruct('Menu Event struct', [ // Need version greater than 9
+                wbLenString('Unknown', 2),
+                wbArray('Handles', wbInteger('Handle', itU64, wbVMObjectHandle), -1)
+              ]), -1)
+              // wbArray('Handles 4', wbInteger('Handle', itU64, wbVMObjectHandle), -1) // Need version = 8 or 9
+            ]),
+            wbArray('Wait Event Handler', wbInteger('Handle', itU64, wbVMHandle), -1),
+            wbArray('Teleport Event Handler', wbInteger('Handle', itU64, wbVMHandle), -1),
+            wbArray('Unknown0', wbStruct('Unknown0 struct', [
+              wbRefID('RefID'),
+              wbInteger('Unknown', itU8)
+            ]), -1),
+           wbArray('Animation Callback Manager', wbStruct('Animation Callback', [  // this is about animations
+              wbRefID('RefID'),
+              wbArray('Unknown10', wbStruct('Unknown10 struct', [
+                wbLenString('Unknown', 4),
+                wbArray('Unknown100', wbStruct('Unknwon100 struct', [
+                  wbInteger('Unknown', itU32),
+                  wbInteger('Unknown', itU32)
+                ]), -1),
+                wbArray('Unknown101', wbInteger('Handle', itU64, wbVMObjectHandle), -1)
+              ]), -1)
+            ]), -1),
+            wbArray('Pathing Callback manager', wbStruct('Pathing Callback', [  // Untested empty
+              wbInteger('Unknown', itU32),
+              wbInteger('Unknown', itU32)
+            ]), -1),
+            wbStruct('Quest Callback Manager', [
+              wbArray('Quest Callbacks 1', wbStruct('Quest Callback', [
+                wbRefID('RefID'),
+                wbArray('Unknown30', wbStruct('Unknown30 struct', [
+                  wbInteger('Unknown', itU8),
+                  wbInteger('Unknown', itU32),
+                  wbInteger('Unknown', itU32)
+                ]), -1)
+              ]), -1),
+              wbArray('Quest Callbacks 2', wbStruct('Quest Callback', [
+                wbRefID('RefID'),
+                wbArray('Unknown31', wbStruct('Unknown31 struct', [
+                  wbInteger('Unknown', itU32),
+                  wbArray('Unknown310', wbInteger('Unknown', itU32), -1),
+                  wbArray('Unknown311', wbStruct('Unknown311 struct', [
+                    wbInteger('Unknown', itU32),
+                    wbInteger('Unknown', itU8)
+                  ]), -1),
+                  wbInteger('Unknown', itU32)
+                ]), -1)
+              ]), -1),
+              wbArray('Quest Callbacks 3', wbStruct('Quest Callback', [
+                wbRefID('RefID'),
+                wbArray('Unknown30', wbStruct('Unknown30 struct', [
+                  wbInteger('Unknown', itU8),
+                  wbInteger('Unknown', itU32),
+                  wbInteger('Unknown', itU32)
+                ]), -1)
+              ]), -1)
+            ]),
+            wbArray('Sound Callback manager', wbStruct('Sound Callback', [
+                wbInteger('Unknown', itU32),
+                wbArray('Unknown10', wbInteger('Unknown', itU32), -1)
+              ]), -1)
           ])
         ])
       ]),
-      wbArray('Anim Objects', wbStruct('Anim Object', [
-        wbRefID('REFR'),
-        wbRefID('ANIO'),
-        wbInteger('Boolean', itU8, wbEnum(['False', 'True']))
-      ]), -1),
-      wbStruct('Timers', [
+      wbStruct('Anim Objects', [
+//        wbArray('Anim Objects', wbStruct('Anim Object', [
+//          wbRefID('REFR'),
+//          wbRefID('ANIO'),
+//          wbInteger('Boolean', itU8, wbEnum(['False', 'True'])),
+//          wbUnion('Unknown', wbGlobalData1002BooleanDecider, [wbNull,
+//            wbArray('Unknown', wbStruct('Unknown', [
+//              wbLenString('Unknown', 2),
+//              // Most likely variable
+//              wbArray('Unknown', wbStruct('Unknown', [
+//                wbLenString('Unknown', 2),
+//                wbInteger('Unknown', itU32),
+//                wbLenString('Unknown', 2),
+//                wbInteger('Unknown', itU64),
+//                wbInteger('Unknown', itU64),
+//                wbInteger('Unknown', itU16),
+//                wbInteger('Unknown', itU16),
+//                wbInteger('Unknown', itU16),
+//                wbInteger('Unknown', itU16)
+//              ]), -1),
+//              wbArray('Unknown', wbStruct('Unknown', [
+//                wbLenString('Unknown', 2),
+//                wbLenString('Unknown', 2),
+//                wbInteger('Unknown', itU32)
+//              ]), -1),
+//              wbInteger('Unknown', itU32),
+//              wbStruct(
+//              wbLenString('Unknown', 2),
+//
+//              wbLenString('Unknown', 2),
+//              wbInteger('Unknown', itU32),
+//              wbStruct(
+//              wbInteger('Unknown', itU32),
+//              wbLenString('Unknown', 2),
+//
+//            ]), -1)
+//          ])
+//        ]), -1)
+// Version for older Form Versions
+//       ,wbStruct('Unknown1', [
+//          wbInteger('Unknown', itU32),  // Version greater than 28 , need to be confirmed
+//          wbArray('Anim Objects', wbStruct('Anim Object', [
+//            wbRefID('REFR'),
+//            wbRefID('ANIO'),
+//            wbInteger('Boolean', itU8, wbEnum(['False', 'True']))
+//          ]), -1)
+//        ])
+      ]),
+      wbStruct('Timer', [
         wbInteger('Unknown', itU32),
         wbInteger('Unknown', itU32)
       ]),
@@ -3256,7 +4139,12 @@ begin
           wbLenString('String', 2)
         ]), -1)
       ]), -1),
-      wbStruct('Main', []) // Empty
+      wbStruct('Main', []), // Empty
+      wbArray('Topic Infos', wbStruct('Topic Info', [
+        wbRefID('Topic Info'),
+        wbInteger('Unknown', itU32)
+      ]), -254),
+      wbArray('Explosion Manager', wbRefID('Reference'), -254)
     ])
 //    ,wbByteArray('Remainder', DataRemainderCounter)  // Single line
     ,wbArray('Remainder', wbByteArray('Unknown', wbBytesToGroup), DataQuartetCounter) // per Quartet
@@ -3264,58 +4152,58 @@ begin
   ]);
 
   wbChangeTypes := wbKey2Data6Enum([
-    '00 (03D : REFR)',
-    '01 (03E : ACHR)',
-    '02 (03F : PMIS)',
-    '03 (041 : PGRE)',
-    '04 (042 : PBEA)',
-    '05 (043 : PFLA)',
-    '06 (03C : CELL)',
-    '07 (04C : INFO)',
-    '08 (04D : QUST)',
-    '09 (02B : NPC_)',
-    '10 (018 : ACTI)',
-    '11 (019 : TACT)',
-    '12 (01A : ARMO)',
-    '13 (01B : BOOK)',
-    '14 (01C : CONT)',
-    '15 (01D : DOOR)',
-    '16 (01E : INGR)',
-    '17 (01F : LIGH)',
-    '18 (020 : MISC)',
-    '19 (021 : APPA)',
-    '20 (022 : STAT)',
-    '21 (024 : MSTT)',
-    '22 (028 : FURN)',
-    '23 (029 : WEAP)',
-    '24 (02A : AMMO)',
-    '25 (02D : KEYM)',
-    '26 (02E : ALCH)',
-    '27 (02F : IDLM)',
-    '28 (030 : NOTE)',
-    '29 (067 : ECZN)',
-    '30 (00A : CLAS)',
-    '31 (00B : FACT)',
-    '32 (04F : PACK)',
-    '33 (049 : NAVM)',
-    '34 (076 : WOOP)',
-    '35 (012 : MGEF)',
-    '36 (071 : SMQN)',
-    '37 (07A : SCEN)',
-    '38 (068 : LCTN)',
-    '39 (079 : RELA)',
-    '40 (046 : PHZD)',
-    '41 (045 : PBAR)',
-    '42 (044 : PCON)',
-    '43 (05B : FLST)',
-    '44 (02C : LVLN)',
-    '45 (035 : LVLI)',
-    '46 (052 : LVSP)',
-    '47 (040 : PARW)',
-    '48 (015 : ENCH)'
+    '00 (040 : REFR)',
+    '01 (041 : ACHR)',
+    '02 (042 : PMIS)',
+    '03 (044 : PGRE)',
+    '04 (045 : PBEA)',
+    '05 (046 : PFLA)',
+    '06 (03F : CELL)',
+    '07 (04F : INFO)',
+    '08 (050 : QUST)',
+    '09 (02D : NPC_)',
+    '10 (01B : ACTI)',
+    '11 (01C : TACT)',
+    '12 (01D : ARMO)',
+    '13 (01E : BOOK)',
+    '14 (01F : CONT)',
+    '15 (020 : DOOR)',
+    '16 (021 : INGR)',
+    '17 (022 : LIGH)',
+    '18 (023 : MISC)',
+    '19 (024 : STAT)',
+    '20 (026 : MSTT)',
+    '21 (02A : FURN)',
+    '22 (02B : WEAP)',
+    '23 (02C : AMMO)',
+    '24 (02F : KEYM)',
+    '25 (030 : ALCH)',
+    '26 (031 : IDLM)',
+    '27 (032 : NOTE)',
+    '28 (06A : ECZN)',
+    '29 (00D : CLAS)',
+    '30 (00E : FACT)',
+    '31 (052 : PACK)',
+    '32 (04C : NAVM)',
+    '33 (07A : WOOP)',
+    '34 (015 : MGEF)',
+    '35 (075 : SMQN)',
+    '36 (07E : SCEN)',
+    '37 (06B : LCTN)',
+    '38 (07D : RELA)',
+    '39 (049 : PHZD)',
+    '40 (048 : PBAR)',
+    '41 (047 : PCON)',
+    '42 (05E : FLST)',
+    '43 (02E : LVLN)',
+    '44 (038 : LVLI)',
+    '45 (055 : LVSP)',
+    '46 (043 : PARW)',
+    '47 (018 : ENCH)',
+    '48 (037 : TERM)'
   ]);
 
-  // changeType: 000 = formType: 061 : REFR
+  // changeType: 000 = formType: 064 : REFR
   wbChangeFlags000 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_REFR_MOVE', // Moved
@@ -3325,12 +4213,12 @@ begin
     {05} 'CHANGE_REFR_INVENTORY', // Inventory
     {06} 'CHANGE_REFR_EXTRA_OWNERSHIP', // Ownership Extra
     {07} 'CHANGE_REFR_BASEOBJECT', // BaseObject
-    {08} 'UnnamedFlag08',
-    {09} 'UnnamedFlag09',
+    {08} 'CHANGE_REFR_EXTRA_LINK_REF', // Link Ref Extra
+    {09} 'CHANGE_OBJECT_EXTRA_WORKSHOP', // Workshop Extra
     {10} 'CHANGE_OBJECT_EXTRA_ITEM_DATA', // Item Data Extra
     {11} 'CHANGE_OBJECT_EXTRA_AMMO', // Ammo Extra
     {12} 'CHANGE_OBJECT_EXTRA_LOCK', // Lock Extra
-    {13} 'UnnamedFlag13',
+    {13} 'CHANGE_OBJECT_FORCE_MOVE', // Force Move
     {14} 'UnnamedFlag14',
     {15} 'UnnamedFlag15',
     {16} 'UnnamedFlag16',
@@ -3351,7 +4239,7 @@ begin
     {31} 'CHANGE_REFR_EXTRA_GAME_ONLY' // Game Only Extra
   ]));
 
-  // changeType: 001 = formType: 062 : ACHR
+  // changeType: 001 = formType: 065 : ACHR
   wbChangeFlags001 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_REFR_MOVE', // Moved
@@ -3361,8 +4249,8 @@ begin
     {05} 'CHANGE_REFR_INVENTORY', // Inventory
     {06} 'CHANGE_REFR_EXTRA_OWNERSHIP', // Ownership Extra
     {07} 'CHANGE_REFR_BASEOBJECT', // BaseObject
-    {08} 'UnnamedFlag08',
-    {09} 'UnnamedFlag09',
+    {08} 'CHANGE_REFR_EXTRA_LINK_REF', // Link Ref Extra
+    {09} 'CHANGE_OBJECT_EXTRA_WORKSHOP', // Workshop Extra
     {10} 'CHANGE_ACTOR_LIFESTATE', // Life State
     {11} 'CHANGE_ACTOR_EXTRA_PACKAGE_DATA', // Package Data Extra
     {12} 'CHANGE_ACTOR_EXTRA_MERCHANT_CONTAINER', // Merchant Container
@@ -3387,7 +4275,7 @@ begin
     {31} 'CHANGE_REFR_EXTRA_GAME_ONLY' // Game Only Extra
   ]));
 
-  // changeType: 002 = formType: 063 : PMIS
+  // changeType: 002 = formType: 066 : PMIS
   wbChangeFlags002 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_REFR_MOVE', // Moved
@@ -3397,12 +4285,12 @@ begin
     {05} 'CHANGE_REFR_INVENTORY', // Inventory
     {06} 'CHANGE_REFR_EXTRA_OWNERSHIP', // Ownership Extra
     {07} 'CHANGE_REFR_BASEOBJECT', // BaseObject
-    {08} 'UnnamedFlag08',
-    {09} 'UnnamedFlag09',
+    {08} 'CHANGE_REFR_EXTRA_LINK_REF', // Link Ref Extra
+    {09} 'CHANGE_OBJECT_EXTRA_WORKSHOP', // Workshop Extra
     {10} 'CHANGE_OBJECT_EXTRA_ITEM_DATA', // Item Data Extra
     {11} 'CHANGE_OBJECT_EXTRA_AMMO', // Ammo Extra
     {12} 'CHANGE_OBJECT_EXTRA_LOCK', // Lock Extra
-    {13} 'UnnamedFlag13',
+    {13} 'CHANGE_OBJECT_FORCE_MOVE', // Force Move
     {14} 'UnnamedFlag14',
     {15} 'UnnamedFlag15',
     {16} 'UnnamedFlag16',
@@ -3423,7 +4311,7 @@ begin
     {31} 'CHANGE_REFR_EXTRA_GAME_ONLY' // Game Only Extra
   ]));
 
-  // changeType: 003 = formType: 065 : PGRE
+  // changeType: 003 = formType: 068 : PGRE
   wbChangeFlags003 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_REFR_MOVE', // Moved
@@ -3433,12 +4321,12 @@ begin
     {05} 'CHANGE_REFR_INVENTORY', // Inventory
     {06} 'CHANGE_REFR_EXTRA_OWNERSHIP', // Ownership Extra
     {07} 'CHANGE_REFR_BASEOBJECT', // BaseObject
-    {08} 'UnnamedFlag08',
-    {09} 'UnnamedFlag09',
+    {08} 'CHANGE_REFR_EXTRA_LINK_REF', // Link Ref Extra
+    {09} 'CHANGE_OBJECT_EXTRA_WORKSHOP', // Workshop Extra
     {10} 'CHANGE_OBJECT_EXTRA_ITEM_DATA', // Item Data Extra
     {11} 'CHANGE_OBJECT_EXTRA_AMMO', // Ammo Extra
     {12} 'CHANGE_OBJECT_EXTRA_LOCK', // Lock Extra
-    {13} 'UnnamedFlag13',
+    {13} 'CHANGE_OBJECT_FORCE_MOVE', // Force Move
     {14} 'UnnamedFlag14',
     {15} 'UnnamedFlag15',
     {16} 'UnnamedFlag16',
@@ -3459,7 +4347,7 @@ begin
     {31} 'CHANGE_REFR_EXTRA_GAME_ONLY' // Game Only Extra
   ]));
 
-  // changeType: 004 = formType: 066 : PBEA
+  // changeType: 004 = formType: 069 : PBEA
   wbChangeFlags004 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_REFR_MOVE', // Moved
@@ -3469,12 +4357,12 @@ begin
     {05} 'CHANGE_REFR_INVENTORY', // Inventory
     {06} 'CHANGE_REFR_EXTRA_OWNERSHIP', // Ownership Extra
     {07} 'CHANGE_REFR_BASEOBJECT', // BaseObject
-    {08} 'UnnamedFlag08',
-    {09} 'UnnamedFlag09',
+    {08} 'CHANGE_REFR_EXTRA_LINK_REF', // Link Ref Extra
+    {09} 'CHANGE_OBJECT_EXTRA_WORKSHOP', // Workshop Extra
     {10} 'CHANGE_OBJECT_EXTRA_ITEM_DATA', // Item Data Extra
     {11} 'CHANGE_OBJECT_EXTRA_AMMO', // Ammo Extra
     {12} 'CHANGE_OBJECT_EXTRA_LOCK', // Lock Extra
-    {13} 'UnnamedFlag13',
+    {13} 'CHANGE_OBJECT_FORCE_MOVE', // Force Move
     {14} 'UnnamedFlag14',
     {15} 'UnnamedFlag15',
     {16} 'UnnamedFlag16',
@@ -3495,7 +4383,7 @@ begin
     {31} 'CHANGE_REFR_EXTRA_GAME_ONLY' // Game Only Extra
   ]));
 
-  // changeType: 005 = formType: 067 : PFLA
+  // changeType: 005 = formType: 070 : PFLA
   wbChangeFlags005 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_REFR_MOVE', // Moved
@@ -3505,12 +4393,12 @@ begin
     {05} 'CHANGE_REFR_INVENTORY', // Inventory
     {06} 'CHANGE_REFR_EXTRA_OWNERSHIP', // Ownership Extra
     {07} 'CHANGE_REFR_BASEOBJECT', // BaseObject
-    {08} 'UnnamedFlag08',
-    {09} 'UnnamedFlag09',
+    {08} 'CHANGE_REFR_EXTRA_LINK_REF', // Link Ref Extra
+    {09} 'CHANGE_OBJECT_EXTRA_WORKSHOP', // Workshop Extra
     {10} 'CHANGE_OBJECT_EXTRA_ITEM_DATA', // Item Data Extra
     {11} 'CHANGE_OBJECT_EXTRA_AMMO', // Ammo Extra
     {12} 'CHANGE_OBJECT_EXTRA_LOCK', // Lock Extra
-    {13} 'UnnamedFlag13',
+    {13} 'CHANGE_OBJECT_FORCE_MOVE', // Force Move
     {14} 'UnnamedFlag14',
     {15} 'UnnamedFlag15',
     {16} 'UnnamedFlag16',
@@ -3531,7 +4419,7 @@ begin
     {31} 'CHANGE_REFR_EXTRA_GAME_ONLY' // Game Only Extra
   ]));
 
-  // changeType: 006 = formType: 060 : CELL
+  // changeType: 006 = formType: 063 : CELL
   wbChangeFlags006 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_CELL_FLAGS', // Flags
@@ -3567,7 +4455,7 @@ begin
     {31} 'CHANGE_CELL_SEENDATA' // Seen Data
   ]));
 
-  // changeType: 007 = formType: 076 : INFO
+  // changeType: 007 = formType: 079 : INFO
   wbChangeFlags007 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'UnnamedFlag01',
@@ -3603,7 +4491,7 @@ begin
     {31} 'CHANGE_TOPIC_SAIDONCE' // Said Once
   ]));
 
-  // changeType: 008 = formType: 077 : QUST
+  // changeType: 008 = formType: 080 : QUST
   wbChangeFlags008 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_QUEST_FLAGS', // Quest Flags
@@ -3639,7 +4527,7 @@ begin
     {31} 'CHANGE_QUEST_STAGES' // Quest Stages
   ]));
 
-  // changeType: 009 = formType: 043 : NPC_
+  // changeType: 009 = formType: 045 : NPC_
   wbChangeFlags009 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_ACTOR_BASE_DATA', // Base Data
@@ -3655,7 +4543,7 @@ begin
     {11} 'CHANGE_NPC_FACE', // Face
     {12} 'CHANGE_NPC_DEFAULT_OUTFIT', // Default Outfit
     {13} 'CHANGE_NPC_SLEEP_OUTFIT', // Sleep Outfit
-    {14} 'UnnamedFlag14',
+    {14} 'CHANGE_NPC_BODY_SCALES', // Body Scales
     {15} 'UnnamedFlag15',
     {16} 'UnnamedFlag16',
     {17} 'UnnamedFlag17',
@@ -3675,7 +4563,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 010 = formType: 024 : ACTI
+  // changeType: 010 = formType: 027 : ACTI
   wbChangeFlags010 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -3711,7 +4599,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 011 = formType: 025 : TACT
+  // changeType: 011 = formType: 028 : TACT
   wbChangeFlags011 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -3747,7 +4635,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 012 = formType: 026 : ARMO
+  // changeType: 012 = formType: 029 : ARMO
   wbChangeFlags012 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -3783,7 +4671,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 013 = formType: 027 : BOOK
+  // changeType: 013 = formType: 030 : BOOK
   wbChangeFlags013 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -3819,7 +4707,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 014 = formType: 028 : CONT
+  // changeType: 014 = formType: 031 : CONT
   wbChangeFlags014 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -3855,7 +4743,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 015 = formType: 029 : DOOR
+  // changeType: 015 = formType: 032 : DOOR
   wbChangeFlags015 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -3891,7 +4779,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 016 = formType: 030 : INGR
+  // changeType: 016 = formType: 033 : INGR
   wbChangeFlags016 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'UnnamedFlag01',
@@ -3927,7 +4815,7 @@ begin
     {31} 'CHANGE_INGREDIENT_USE' // Ingredient Use
   ]));
 
-  // changeType: 017 = formType: 031 : LIGH
+  // changeType: 017 = formType: 034 : LIGH
   wbChangeFlags017 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -3963,7 +4851,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 018 = formType: 032 : MISC
+  // changeType: 018 = formType: 035 : MISC
   wbChangeFlags018 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -3999,7 +4887,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 019 = formType: 033 : APPA
+  // changeType: 019 = formType: 036 : STAT
   wbChangeFlags019 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -4035,7 +4923,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 020 = formType: 034 : STAT
+  // changeType: 020 = formType: 038 : MSTT
   wbChangeFlags020 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -4071,7 +4959,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 021 = formType: 036 : MSTT
+  // changeType: 021 = formType: 042 : FURN
   wbChangeFlags021 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -4107,7 +4995,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 022 = formType: 040 : FURN
+  // changeType: 022 = formType: 043 : WEAP
   wbChangeFlags022 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -4143,7 +5031,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 023 = formType: 041 : WEAP
+  // changeType: 023 = formType: 044 : AMMO
   wbChangeFlags023 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -4179,7 +5067,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 024 = formType: 042 : AMMO
+  // changeType: 024 = formType: 047 : KEYM
   wbChangeFlags024 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -4215,7 +5103,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 025 = formType: 045 : KEYM
+  // changeType: 025 = formType: 048 : ALCH
   wbChangeFlags025 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -4251,7 +5139,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 026 = formType: 046 : ALCH
+  // changeType: 026 = formType: 049 : IDLM
   wbChangeFlags026 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -4287,44 +5175,8 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 027 = formType: 047 : IDLM
+  // changeType: 027 = formType: 050 : NOTE
   wbChangeFlags027 := wbInteger('Change Flags', itU32 , wbFlags([
-    {00} 'CHANGE_FORM_FLAGS', // Flags
-    {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
-    {02} 'CHANGE_BASE_OBJECT_FULLNAME', // Object Full Name
-    {03} 'UnnamedFlag03',
-    {04} 'UnnamedFlag04',
-    {05} 'UnnamedFlag05',
-    {06} 'UnnamedFlag06',
-    {07} 'UnnamedFlag07',
-    {08} 'UnnamedFlag08',
-    {09} 'UnnamedFlag09',
-    {10} 'UnnamedFlag10',
-    {11} 'UnnamedFlag11',
-    {12} 'UnnamedFlag12',
-    {13} 'UnnamedFlag13',
-    {14} 'UnnamedFlag14',
-    {15} 'UnnamedFlag15',
-    {16} 'UnnamedFlag16',
-    {17} 'UnnamedFlag17',
-    {18} 'UnnamedFlag18',
-    {19} 'UnnamedFlag19',
-    {20} 'UnnamedFlag20',
-    {21} 'UnnamedFlag21',
-    {22} 'UnnamedFlag22',
-    {23} 'UnnamedFlag23',
-    {24} 'UnnamedFlag24',
-    {25} 'UnnamedFlag25',
-    {26} 'UnnamedFlag26',
-    {27} 'UnnamedFlag27',
-    {28} 'UnnamedFlag28',
-    {29} 'UnnamedFlag29',
-    {30} 'UnnamedFlag30',
-    {31} 'UnnamedFlag31'
-  ]));
-
-  // changeType: 028 = formType: 048 : NOTE
-  wbChangeFlags028 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'UnnamedFlag01',
     {02} 'UnnamedFlag02',
@@ -4359,8 +5211,8 @@ begin
     {31} 'CHANGE_NOTE_READ' // Note Read
   ]));
 
-  // changeType: 029 = formType: 103 : ECZN
-  wbChangeFlags029 := wbInteger('Change Flags', itU32 , wbFlags([
+  // changeType: 028 = formType: 106 : ECZN
+  wbChangeFlags028 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_ENCOUNTER_ZONE_FLAGS', // Zone Flags
     {02} 'UnnamedFlag02',
@@ -4395,8 +5247,8 @@ begin
     {31} 'CHANGE_ENCOUNTER_ZONE_GAME_DATA' // Game Data
   ]));
 
-  // changeType: 030 = formType: 010 : CLAS
-  wbChangeFlags030 := wbInteger('Change Flags', itU32 , wbFlags([
+  // changeType: 029 = formType: 013 : CLAS
+  wbChangeFlags029 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_CLASS_TAG_SKILLS', // Tag Skills
     {02} 'UnnamedFlag02',
@@ -4431,8 +5283,8 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 031 = formType: 011 : FACT
-  wbChangeFlags031 := wbInteger('Change Flags', itU32 , wbFlags([
+  // changeType: 030 = formType: 014 : FACT
+  wbChangeFlags030 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_FACTION_FLAGS', // Faction Flags
     {02} 'CHANGE_FACTION_REACTIONS', // Faction Reactions
@@ -4467,8 +5319,8 @@ begin
     {31} 'CHANGE_FACTION_CRIME_COUNTS' // Faction Crime Counts
   ]));
 
-  // changeType: 032 = formType: 079 : PACK
-  wbChangeFlags032 := wbInteger('Change Flags', itU32 , wbFlags([
+  // changeType: 031 = formType: 082 : PACK
+  wbChangeFlags031 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'UnnamedFlag01',
     {02} 'UnnamedFlag02',
@@ -4503,7 +5355,43 @@ begin
     {31} 'CHANGE_PACKAGE_NEVER_RUN' // Never Run Flag
   ]));
 
-  // changeType: 033 = formType: 073 : NAVM
+  // changeType: 032 = formType: 076 : NAVM
+  wbChangeFlags032 := wbInteger('Change Flags', itU32 , wbFlags([
+    {00} 'CHANGE_FORM_FLAGS', // Flags
+    {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
+    {02} 'CHANGE_BASE_OBJECT_FULLNAME', // Object Full Name
+    {03} 'UnnamedFlag03',
+    {04} 'UnnamedFlag04',
+    {05} 'UnnamedFlag05',
+    {06} 'UnnamedFlag06',
+    {07} 'UnnamedFlag07',
+    {08} 'UnnamedFlag08',
+    {09} 'UnnamedFlag09',
+    {10} 'UnnamedFlag10',
+    {11} 'UnnamedFlag11',
+    {12} 'UnnamedFlag12',
+    {13} 'UnnamedFlag13',
+    {14} 'UnnamedFlag14',
+    {15} 'UnnamedFlag15',
+    {16} 'UnnamedFlag16',
+    {17} 'UnnamedFlag17',
+    {18} 'UnnamedFlag18',
+    {19} 'UnnamedFlag19',
+    {20} 'UnnamedFlag20',
+    {21} 'UnnamedFlag21',
+    {22} 'UnnamedFlag22',
+    {23} 'UnnamedFlag23',
+    {24} 'UnnamedFlag24',
+    {25} 'UnnamedFlag25',
+    {26} 'UnnamedFlag26',
+    {27} 'UnnamedFlag27',
+    {28} 'UnnamedFlag28',
+    {29} 'UnnamedFlag29',
+    {30} 'UnnamedFlag30',
+    {31} 'UnnamedFlag31'
+  ]));
+
+  // changeType: 033 = formType: 122 : WOOP
   wbChangeFlags033 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -4539,7 +5427,7 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 034 = formType: 118 : WOOP
+  // changeType: 034 = formType: 021 : MGEF
   wbChangeFlags034 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -4575,44 +5463,8 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 035 = formType: 018 : MGEF
+  // changeType: 035 = formType: 117 : SMQN
   wbChangeFlags035 := wbInteger('Change Flags', itU32 , wbFlags([
-    {00} 'CHANGE_FORM_FLAGS', // Flags
-    {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
-    {02} 'CHANGE_BASE_OBJECT_FULLNAME', // Object Full Name
-    {03} 'UnnamedFlag03',
-    {04} 'UnnamedFlag04',
-    {05} 'UnnamedFlag05',
-    {06} 'UnnamedFlag06',
-    {07} 'UnnamedFlag07',
-    {08} 'UnnamedFlag08',
-    {09} 'UnnamedFlag09',
-    {10} 'UnnamedFlag10',
-    {11} 'UnnamedFlag11',
-    {12} 'UnnamedFlag12',
-    {13} 'UnnamedFlag13',
-    {14} 'UnnamedFlag14',
-    {15} 'UnnamedFlag15',
-    {16} 'UnnamedFlag16',
-    {17} 'UnnamedFlag17',
-    {18} 'UnnamedFlag18',
-    {19} 'UnnamedFlag19',
-    {20} 'UnnamedFlag20',
-    {21} 'UnnamedFlag21',
-    {22} 'UnnamedFlag22',
-    {23} 'UnnamedFlag23',
-    {24} 'UnnamedFlag24',
-    {25} 'UnnamedFlag25',
-    {26} 'UnnamedFlag26',
-    {27} 'UnnamedFlag27',
-    {28} 'UnnamedFlag28',
-    {29} 'UnnamedFlag29',
-    {30} 'UnnamedFlag30',
-    {31} 'UnnamedFlag31'
-  ]));
-
-  // changeType: 036 = formType: 113 : SMQN
-  wbChangeFlags036 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'UnnamedFlag01',
     {02} 'UnnamedFlag02',
@@ -4647,8 +5499,8 @@ begin
     {31} 'CHANGE_QUEST_NODE_TIME_RUN' // Time Last Run
   ]));
 
-  // changeType: 037 = formType: 122 : SCEN
-  wbChangeFlags037 := wbInteger('Change Flags', itU32 , wbFlags([
+  // changeType: 036 = formType: 126 : SCEN
+  wbChangeFlags036 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'UnnamedFlag01',
     {02} 'UnnamedFlag02',
@@ -4683,8 +5535,8 @@ begin
     {31} 'CHANGE_SCENE_ACTIVE' // Active
   ]));
 
-  // changeType: 038 = formType: 104 : LCTN
-  wbChangeFlags038 := wbInteger('Change Flags', itU32 , wbFlags([
+  // changeType: 037 = formType: 107 : LCTN
+  wbChangeFlags037 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'UnnamedFlag01',
     {02} 'UnnamedFlag02',
@@ -4719,8 +5571,8 @@ begin
     {31} 'CHANGE_LOCATION_CLEARED' // Cleared
   ]));
 
-  // changeType: 039 = formType: 121 : RELA
-  wbChangeFlags039 := wbInteger('Change Flags', itU32 , wbFlags([
+  // changeType: 038 = formType: 125 : RELA
+  wbChangeFlags038 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_RELATIONSHIP_DATA', // Relationship Data
     {02} 'UnnamedFlag02',
@@ -4755,7 +5607,43 @@ begin
     {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 040 = formType: 070 : PHZD
+  // changeType: 039 = formType: 073 : PHZD
+  wbChangeFlags039 := wbInteger('Change Flags', itU32 , wbFlags([
+    {00} 'CHANGE_FORM_FLAGS', // Flags
+    {01} 'CHANGE_REFR_MOVE', // Moved
+    {02} 'CHANGE_REFR_HAVOK_MOVE', // Havok Moved
+    {03} 'CHANGE_REFR_CELL_CHANGED', // Cell Changed
+    {04} 'CHANGE_REFR_SCALE', // Scale
+    {05} 'CHANGE_REFR_INVENTORY', // Inventory
+    {06} 'CHANGE_REFR_EXTRA_OWNERSHIP', // Ownership Extra
+    {07} 'CHANGE_REFR_BASEOBJECT', // BaseObject
+    {08} 'CHANGE_REFR_EXTRA_LINK_REF', // Link Ref Extra
+    {09} 'CHANGE_OBJECT_EXTRA_WORKSHOP', // Workshop Extra
+    {10} 'CHANGE_OBJECT_EXTRA_ITEM_DATA', // Item Data Extra
+    {11} 'CHANGE_OBJECT_EXTRA_AMMO', // Ammo Extra
+    {12} 'CHANGE_OBJECT_EXTRA_LOCK', // Lock Extra
+    {13} 'CHANGE_OBJECT_FORCE_MOVE', // Force Move
+    {14} 'UnnamedFlag14',
+    {15} 'UnnamedFlag15',
+    {16} 'UnnamedFlag16',
+    {17} 'UnnamedFlag17',
+    {18} 'UnnamedFlag18',
+    {19} 'UnnamedFlag19',
+    {20} 'UnnamedFlag20',
+    {21} 'CHANGE_OBJECT_EMPTY', // Empty
+    {22} 'CHANGE_OBJECT_OPEN_DEFAULT_STATE', // Open Default State
+    {23} 'CHANGE_OBJECT_OPEN_STATE', // Open State
+    {24} 'UnnamedFlag24',
+    {25} 'CHANGE_REFR_PROMOTED', // Promoted
+    {26} 'CHANGE_REFR_EXTRA_ACTIVATING_CHILDREN', // Activating Children
+    {27} 'CHANGE_REFR_LEVELED_INVENTORY', // Leveled Inventory
+    {28} 'CHANGE_REFR_ANIMATION', // Animation
+    {29} 'CHANGE_REFR_EXTRA_ENCOUNTER_ZONE', // Enc Zone Extra
+    {30} 'CHANGE_REFR_EXTRA_CREATED_ONLY', // Created Only Extra
+    {31} 'CHANGE_REFR_EXTRA_GAME_ONLY' // Game Only Extra
+  ]));
+
+  // changeType: 040 = formType: 072 : PBAR
   wbChangeFlags040 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_REFR_MOVE', // Moved
@@ -4765,12 +5653,12 @@ begin
     {05} 'CHANGE_REFR_INVENTORY', // Inventory
     {06} 'CHANGE_REFR_EXTRA_OWNERSHIP', // Ownership Extra
     {07} 'CHANGE_REFR_BASEOBJECT', // BaseObject
-    {08} 'UnnamedFlag08',
-    {09} 'UnnamedFlag09',
+    {08} 'CHANGE_REFR_EXTRA_LINK_REF', // Link Ref Extra
+    {09} 'CHANGE_OBJECT_EXTRA_WORKSHOP', // Workshop Extra
     {10} 'CHANGE_OBJECT_EXTRA_ITEM_DATA', // Item Data Extra
     {11} 'CHANGE_OBJECT_EXTRA_AMMO', // Ammo Extra
     {12} 'CHANGE_OBJECT_EXTRA_LOCK', // Lock Extra
-    {13} 'UnnamedFlag13',
+    {13} 'CHANGE_OBJECT_FORCE_MOVE', // Force Move
     {14} 'UnnamedFlag14',
     {15} 'UnnamedFlag15',
     {16} 'UnnamedFlag16',
@@ -4791,7 +5679,7 @@ begin
     {31} 'CHANGE_REFR_EXTRA_GAME_ONLY' // Game Only Extra
   ]));
 
-  // changeType: 041 = formType: 069 : PBAR
+  // changeType: 041 = formType: 071 : PCON
   wbChangeFlags041 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_REFR_MOVE', // Moved
@@ -4801,12 +5689,12 @@ begin
     {05} 'CHANGE_REFR_INVENTORY', // Inventory
     {06} 'CHANGE_REFR_EXTRA_OWNERSHIP', // Ownership Extra
     {07} 'CHANGE_REFR_BASEOBJECT', // BaseObject
-    {08} 'UnnamedFlag08',
-    {09} 'UnnamedFlag09',
+    {08} 'CHANGE_REFR_EXTRA_LINK_REF', // Link Ref Extra
+    {09} 'CHANGE_OBJECT_EXTRA_WORKSHOP', // Workshop Extra
     {10} 'CHANGE_OBJECT_EXTRA_ITEM_DATA', // Item Data Extra
     {11} 'CHANGE_OBJECT_EXTRA_AMMO', // Ammo Extra
     {12} 'CHANGE_OBJECT_EXTRA_LOCK', // Lock Extra
-    {13} 'UnnamedFlag13',
+    {13} 'CHANGE_OBJECT_FORCE_MOVE', // Force Move
     {14} 'UnnamedFlag14',
     {15} 'UnnamedFlag15',
     {16} 'UnnamedFlag16',
@@ -4827,44 +5715,8 @@ begin
     {31} 'CHANGE_REFR_EXTRA_GAME_ONLY' // Game Only Extra
   ]));
 
-  // changeType: 042 = formType: 068 : PCON
+  // changeType: 042 = formType: 094 : FLST
   wbChangeFlags042 := wbInteger('Change Flags', itU32 , wbFlags([
-    {00} 'CHANGE_FORM_FLAGS', // Flags
-    {01} 'CHANGE_REFR_MOVE', // Moved
-    {02} 'CHANGE_REFR_HAVOK_MOVE', // Havok Moved
-    {03} 'CHANGE_REFR_CELL_CHANGED', // Cell Changed
-    {04} 'CHANGE_REFR_SCALE', // Scale
-    {05} 'CHANGE_REFR_INVENTORY', // Inventory
-    {06} 'CHANGE_REFR_EXTRA_OWNERSHIP', // Ownership Extra
-    {07} 'CHANGE_REFR_BASEOBJECT', // BaseObject
-    {08} 'UnnamedFlag08',
-    {09} 'UnnamedFlag09',
-    {10} 'CHANGE_OBJECT_EXTRA_ITEM_DATA', // Item Data Extra
-    {11} 'CHANGE_OBJECT_EXTRA_AMMO', // Ammo Extra
-    {12} 'CHANGE_OBJECT_EXTRA_LOCK', // Lock Extra
-    {13} 'UnnamedFlag13',
-    {14} 'UnnamedFlag14',
-    {15} 'UnnamedFlag15',
-    {16} 'UnnamedFlag16',
-    {17} 'UnnamedFlag17',
-    {18} 'UnnamedFlag18',
-    {19} 'UnnamedFlag19',
-    {20} 'UnnamedFlag20',
-    {21} 'CHANGE_OBJECT_EMPTY', // Empty
-    {22} 'CHANGE_OBJECT_OPEN_DEFAULT_STATE', // Open Default State
-    {23} 'CHANGE_OBJECT_OPEN_STATE', // Open State
-    {24} 'UnnamedFlag24',
-    {25} 'CHANGE_REFR_PROMOTED', // Promoted
-    {26} 'CHANGE_REFR_EXTRA_ACTIVATING_CHILDREN', // Activating Children
-    {27} 'CHANGE_REFR_LEVELED_INVENTORY', // Leveled Inventory
-    {28} 'CHANGE_REFR_ANIMATION', // Animation
-    {29} 'CHANGE_REFR_EXTRA_ENCOUNTER_ZONE', // Enc Zone Extra
-    {30} 'CHANGE_REFR_EXTRA_CREATED_ONLY', // Created Only Extra
-    {31} 'CHANGE_REFR_EXTRA_GAME_ONLY' // Game Only Extra
-  ]));
-
-  // changeType: 043 = formType: 091 : FLST
-  wbChangeFlags043 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'UnnamedFlag01',
     {02} 'UnnamedFlag02',
@@ -4899,7 +5751,43 @@ begin
     {31} 'CHANGE_FORM_LIST_ADDED_FORM' // Added Form
   ]));
 
-  // changeType: 044 = formType: 044 : LVLN
+  // changeType: 043 = formType: 046 : LVLN
+  wbChangeFlags043 := wbInteger('Change Flags', itU32 , wbFlags([
+    {00} 'CHANGE_FORM_FLAGS', // Flags
+    {01} 'UnnamedFlag01',
+    {02} 'UnnamedFlag02',
+    {03} 'UnnamedFlag03',
+    {04} 'UnnamedFlag04',
+    {05} 'UnnamedFlag05',
+    {06} 'UnnamedFlag06',
+    {07} 'UnnamedFlag07',
+    {08} 'UnnamedFlag08',
+    {09} 'UnnamedFlag09',
+    {10} 'UnnamedFlag10',
+    {11} 'UnnamedFlag11',
+    {12} 'UnnamedFlag12',
+    {13} 'UnnamedFlag13',
+    {14} 'UnnamedFlag14',
+    {15} 'UnnamedFlag15',
+    {16} 'UnnamedFlag16',
+    {17} 'UnnamedFlag17',
+    {18} 'UnnamedFlag18',
+    {19} 'UnnamedFlag19',
+    {20} 'UnnamedFlag20',
+    {21} 'UnnamedFlag21',
+    {22} 'UnnamedFlag22',
+    {23} 'UnnamedFlag23',
+    {24} 'UnnamedFlag24',
+    {25} 'UnnamedFlag25',
+    {26} 'UnnamedFlag26',
+    {27} 'UnnamedFlag27',
+    {28} 'UnnamedFlag28',
+    {29} 'UnnamedFlag29',
+    {30} 'UnnamedFlag30',
+    {31} 'CHANGE_LEVELED_LIST_ADDED_OBJECT' // Added Object
+  ]));
+
+  // changeType: 044 = formType: 056 : LVLI
   wbChangeFlags044 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'UnnamedFlag01',
@@ -4935,7 +5823,7 @@ begin
     {31} 'CHANGE_LEVELED_LIST_ADDED_OBJECT' // Added Object
   ]));
 
-  // changeType: 045 = formType: 053 : LVLI
+  // changeType: 045 = formType: 085 : LVSP
   wbChangeFlags045 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'UnnamedFlag01',
@@ -4971,11 +5859,47 @@ begin
     {31} 'CHANGE_LEVELED_LIST_ADDED_OBJECT' // Added Object
   ]));
 
-  // changeType: 046 = formType: 082 : LVSP
+  // changeType: 046 = formType: 067 : PARW
   wbChangeFlags046 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
-    {01} 'UnnamedFlag01',
-    {02} 'UnnamedFlag02',
+    {01} 'CHANGE_REFR_MOVE', // Moved
+    {02} 'CHANGE_REFR_HAVOK_MOVE', // Havok Moved
+    {03} 'CHANGE_REFR_CELL_CHANGED', // Cell Changed
+    {04} 'CHANGE_REFR_SCALE', // Scale
+    {05} 'CHANGE_REFR_INVENTORY', // Inventory
+    {06} 'CHANGE_REFR_EXTRA_OWNERSHIP', // Ownership Extra
+    {07} 'CHANGE_REFR_BASEOBJECT', // BaseObject
+    {08} 'CHANGE_REFR_EXTRA_LINK_REF', // Link Ref Extra
+    {09} 'CHANGE_OBJECT_EXTRA_WORKSHOP', // Workshop Extra
+    {10} 'CHANGE_OBJECT_EXTRA_ITEM_DATA', // Item Data Extra
+    {11} 'CHANGE_OBJECT_EXTRA_AMMO', // Ammo Extra
+    {12} 'CHANGE_OBJECT_EXTRA_LOCK', // Lock Extra
+    {13} 'CHANGE_OBJECT_FORCE_MOVE', // Force Move
+    {14} 'UnnamedFlag14',
+    {15} 'UnnamedFlag15',
+    {16} 'UnnamedFlag16',
+    {17} 'UnnamedFlag17',
+    {18} 'UnnamedFlag18',
+    {19} 'UnnamedFlag19',
+    {20} 'UnnamedFlag20',
+    {21} 'CHANGE_OBJECT_EMPTY', // Empty
+    {22} 'CHANGE_OBJECT_OPEN_DEFAULT_STATE', // Open Default State
+    {23} 'CHANGE_OBJECT_OPEN_STATE', // Open State
+    {24} 'UnnamedFlag24',
+    {25} 'CHANGE_REFR_PROMOTED', // Promoted
+    {26} 'CHANGE_REFR_EXTRA_ACTIVATING_CHILDREN', // Activating Children
+    {27} 'CHANGE_REFR_LEVELED_INVENTORY', // Leveled Inventory
+    {28} 'CHANGE_REFR_ANIMATION', // Animation
+    {29} 'CHANGE_REFR_EXTRA_ENCOUNTER_ZONE', // Enc Zone Extra
+    {30} 'CHANGE_REFR_EXTRA_CREATED_ONLY', // Created Only Extra
+    {31} 'CHANGE_REFR_EXTRA_GAME_ONLY' // Game Only Extra
+  ]));
+
+  // changeType: 047 = formType: 024 : ENCH
+  wbChangeFlags047 := wbInteger('Change Flags', itU32 , wbFlags([
+    {00} 'CHANGE_FORM_FLAGS', // Flags
+    {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
+    {02} 'CHANGE_BASE_OBJECT_FULLNAME', // Object Full Name
     {03} 'UnnamedFlag03',
     {04} 'UnnamedFlag04',
     {05} 'UnnamedFlag05',
@@ -5004,46 +5928,10 @@ begin
     {28} 'UnnamedFlag28',
     {29} 'UnnamedFlag29',
     {30} 'UnnamedFlag30',
-    {31} 'CHANGE_LEVELED_LIST_ADDED_OBJECT' // Added Object
+    {31} 'UnnamedFlag31'
   ]));
 
-  // changeType: 047 = formType: 064 : PARW
-  wbChangeFlags047 := wbInteger('Change Flags', itU32 , wbFlags([
-    {00} 'CHANGE_FORM_FLAGS', // Flags
-    {01} 'CHANGE_REFR_MOVE', // Moved
-    {02} 'CHANGE_REFR_HAVOK_MOVE', // Havok Moved
-    {03} 'CHANGE_REFR_CELL_CHANGED', // Cell Changed
-    {04} 'CHANGE_REFR_SCALE', // Scale
-    {05} 'CHANGE_REFR_INVENTORY', // Inventory
-    {06} 'CHANGE_REFR_EXTRA_OWNERSHIP', // Ownership Extra
-    {07} 'CHANGE_REFR_BASEOBJECT', // BaseObject
-    {08} 'UnnamedFlag08',
-    {09} 'UnnamedFlag09',
-    {10} 'CHANGE_OBJECT_EXTRA_ITEM_DATA', // Item Data Extra
-    {11} 'CHANGE_OBJECT_EXTRA_AMMO', // Ammo Extra
-    {12} 'CHANGE_OBJECT_EXTRA_LOCK', // Lock Extra
-    {13} 'UnnamedFlag13',
-    {14} 'UnnamedFlag14',
-    {15} 'UnnamedFlag15',
-    {16} 'UnnamedFlag16',
-    {17} 'UnnamedFlag17',
-    {18} 'UnnamedFlag18',
-    {19} 'UnnamedFlag19',
-    {20} 'UnnamedFlag20',
-    {21} 'CHANGE_OBJECT_EMPTY', // Empty
-    {22} 'CHANGE_OBJECT_OPEN_DEFAULT_STATE', // Open Default State
-    {23} 'CHANGE_OBJECT_OPEN_STATE', // Open State
-    {24} 'UnnamedFlag24',
-    {25} 'CHANGE_REFR_PROMOTED', // Promoted
-    {26} 'CHANGE_REFR_EXTRA_ACTIVATING_CHILDREN', // Activating Children
-    {27} 'CHANGE_REFR_LEVELED_INVENTORY', // Leveled Inventory
-    {28} 'CHANGE_REFR_ANIMATION', // Animation
-    {29} 'CHANGE_REFR_EXTRA_ENCOUNTER_ZONE', // Enc Zone Extra
-    {30} 'CHANGE_REFR_EXTRA_CREATED_ONLY', // Created Only Extra
-    {31} 'CHANGE_REFR_EXTRA_GAME_ONLY' // Game Only Extra
-  ]));
-
-  // changeType: 048 = formType: 021 : ENCH
+  // changeType: 048 = formType: 055 : TERM
   wbChangeFlags048 := wbInteger('Change Flags', itU32 , wbFlags([
     {00} 'CHANGE_FORM_FLAGS', // Flags
     {01} 'CHANGE_BASE_OBJECT_VALUE', // Object Value
@@ -5709,222 +6597,569 @@ begin
     ])
   ]);
 
+  // (re) added until decoded
+
+  wbUnionCHANGE_ACTOR_BASE_AIDATA := wbUnion('AI Data', ChangedFlag03Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_BASE_ATTRIBUTES := wbUnion('Attributes', ChangedFlag02Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_BASE_DATA := wbUnion('Base Data', ChangedFlag01Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_BASE_FACTIONS := wbUnion('Factions', ChangedFlag06Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_BASE_FULLNAME := wbUnion('Full Name', ChangedFlag05Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_BASE_SPELLLIST := wbUnion('Spell List', ChangedFlag04Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_DAMAGE_MODIFIERS := wbUnion('Damage Modifiers', ChangedFlag21Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_DISPOSITION_MODIFIERS := wbUnion('Disp Modifiers', ChangedFlag19Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_EXTRA_DISMEMBERED_LIMBS := wbUnion('Dismembered Limbs', ChangedFlag17Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_EXTRA_MERCHANT_CONTAINER := wbUnion('Merchant Container', ChangedFlag12Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_EXTRA_PACKAGE_DATA := wbUnion('Package Data Extra', ChangedFlag11Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_LEVELED_ACTOR := wbUnion('Leveled Actor', ChangedFlag18Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_LIFESTATE := wbUnion('Life State', ChangedFlag10Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_OVERRIDE_MODIFIERS := wbUnion('Override Modifiers', ChangedFlag22Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_PERMANENT_MODIFIERS := wbUnion('Permanent Modifiers', ChangedFlag23Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ACTOR_TEMP_MODIFIERS := wbUnion('Temp Modifiers', ChangedFlag20Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_BASE_OBJECT_FULLNAME := wbUnion('Object Full Name', ChangedFlag02Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_BASE_OBJECT_VALUE := wbUnion('Object Value', ChangedFlag01Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_BOOK_READ := wbUnion('Read', ChangedFlag06Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_BOOK_TEACHES := wbUnion('Teaches Skill', ChangedFlag05Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_CELL_DETACHTIME := wbUnion('Detach Time', ChangedFlag30Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_CELL_EXTERIOR_CHAR := wbUnion('Exterior Char', ChangedFlag29Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_CELL_EXTERIOR_SHORT := wbUnion('Exterior Short', ChangedFlag28Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_CELL_FLAGS := wbUnion('Flags', ChangedFlag01Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_CELL_FULLNAME := wbUnion('Full name', ChangedFlag02Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_CELL_OWNERSHIP := wbUnion('Ownership', ChangedFlag03Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_CELL_SEENDATA := wbUnion('Seen Data', ChangedFlag31Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_CLASS_TAG_SKILLS := wbUnion('Tag Skills', ChangedFlag01Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ENCOUNTER_ZONE_FLAGS := wbUnion('Zone Flags', ChangedFlag01Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_ENCOUNTER_ZONE_GAME_DATA := wbUnion('Game Data', ChangedFlag31Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_FACTION_CRIME_COUNTS := wbUnion('Faction Crime Counts', ChangedFlag31Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_FACTION_FLAGS := wbUnion('Faction Flags', ChangedFlag01Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_FACTION_REACTIONS := wbUnion('Faction Reactions', ChangedFlag02Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_FORM_FLAGS := wbUnion('Flags', ChangedFlag00Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_FORM_LIST_ADDED_FORM := wbUnion('Added Form', ChangedFlag31Decider, [wbNull, wbArray('Forms', wbRefID('RefID'), -1)]);
+  wbUnionCHANGE_INGREDIENT_USE := wbUnion('Ingredient Use', ChangedFlag31Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_LEVELED_LIST_ADDED_OBJECT := wbUnion('Added Object', ChangedFlag31Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_LOCATION_CLEARED := wbUnion('Cleared', ChangedFlag31Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_LOCATION_KEYWORDDATA := wbUnion('KeywordData', ChangedFlag30Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_NOTE_READ := wbUnion('Note Read', ChangedFlag31Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_NPC_BODY_SCALES := wbUnion('Body Scales', ChangedFlag14Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_NPC_CLASS := wbUnion('Class', ChangedFlag10Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_NPC_DEFAULT_OUTFIT := wbUnion('Default Outfit', ChangedFlag12Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_NPC_FACE := wbUnion('Face', ChangedFlag11Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_NPC_GENDER := wbUnion('Gender', ChangedFlag24Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_NPC_RACE := wbUnion('Race', ChangedFlag25Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_NPC_SKILLS := wbUnion('NPC Skills', ChangedFlag09Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_NPC_SLEEP_OUTFIT := wbUnion('Sleep Outfit', ChangedFlag13Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_OBJECT_EMPTY := wbUnion('Empty', ChangedFlag21Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_OBJECT_EXTRA_AMMO := wbUnion('Ammo Extra', ChangedFlag11Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_OBJECT_EXTRA_ITEM_DATA := wbUnion('Item Data Extra', ChangedFlag10Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_OBJECT_EXTRA_LOCK := wbUnion('Lock Extra', ChangedFlag12Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_OBJECT_EXTRA_WORKSHOP := wbUnion('Workshop Extra', ChangedFlag09Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_OBJECT_FORCE_MOVE := wbUnion('Force Move', ChangedFlag13Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_OBJECT_OPEN_DEFAULT_STATE := wbUnion('Open Default State', ChangedFlag22Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_OBJECT_OPEN_STATE := wbUnion('Open State', ChangedFlag23Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_PACKAGE_NEVER_RUN := wbUnion('Never Run Flag', ChangedFlag31Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_PACKAGE_WAITING := wbUnion('Waiting Flag', ChangedFlag30Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_QUEST_ALREADY_RUN := wbUnion('Quest Already Run', ChangedFlag26Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_QUEST_FLAGS := wbUnion('Quest Flags', ChangedFlag01Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_QUEST_INSTANCES := wbUnion('Quest Instance Data', ChangedFlag27Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_QUEST_NODE_TIME_RUN := wbUnion('Time Last Run', ChangedFlag31Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_QUEST_OBJECTIVES := wbUnion('Quest Objectives', ChangedFlag29Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_QUEST_RUNDATA := wbUnion('Quest Runtime Data', ChangedFlag28Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_QUEST_SCRIPT := wbUnion('Quest Script', ChangedFlag30Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_QUEST_SCRIPT_DELAY := wbUnion('Quest Script Delay', ChangedFlag02Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_QUEST_STAGES := wbUnion('Quest Stages', ChangedFlag31Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_ANIMATION := wbUnion('Animation', ChangedFlag28Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_BASEOBJECT := wbUnion('BaseObject', ChangedFlag07Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_CELL_CHANGED := wbUnion('Cell Changed', ChangedFlag03Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN := wbUnion('Activating Children', ChangedFlag26Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_EXTRA_CREATED_ONLY := wbUnion('Created Only Extra', ChangedFlag30Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE := wbUnion('Enc Zone Extra', ChangedFlag29Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_EXTRA_GAME_ONLY := wbUnion('Game Only Extra', ChangedFlag31Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_EXTRA_LINK_REF := wbUnion('Link Ref Extra', ChangedFlag08Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_EXTRA_OWNERSHIP := wbUnion('Ownership Extra', ChangedFlag06Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_HAVOK_MOVE := wbUnion('Havok Moved', ChangedFlag02Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_INVENTORY := wbUnion('Inventory', ChangedFlag05Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_LEVELED_INVENTORY := wbUnion('Leveled Inventory', ChangedFlag27Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_MOVE := wbUnion('Moved', ChangedFlag01Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_PROMOTED := wbUnion('Promoted', ChangedFlag25Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_REFR_SCALE := wbUnion('Scale', ChangedFlag04Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_RELATIONSHIP_DATA := wbUnion('Relationship Data', ChangedFlag01Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_SCENE_ACTIVE := wbUnion('Active', ChangedFlag31Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_TALKING_ACTIVATOR_SPEAKER := wbUnion('Speaker', ChangedFlag23Decider, [wbNull, wbNull]);
+  wbUnionCHANGE_TOPIC_SAIDONCE := wbUnion('Said Once', ChangedFlag31Decider, [wbNull, wbNull]);
+
   wbChangedFormData := wbStruct('Changed Form Data', [
     wbInitialDataType,
     wbUnion('CForm Union', ChangedFormDataDecider, [
        wbNull
-      ,wbChangedREFR  {03D}
-      ,wbStruct('Change ACHR Data', [ {03E}
-         wbUnion('Player specific', IsActorPlayerDecider, [wbNull, wbStruct('Player data', [
-         ])])
-        ,wbChangedCharacter
-        ,wbUnion('Player specific 2', IsActorPlayerDecider, [wbNull, wbStruct('Player data 2', [
-         ])])
+      ,wbStruct('Change REFR Data', [ {040}
+         wbUnionCHANGE_FORM_FLAGS
+        ,wbUnionCHANGE_REFR_MOVE
+        ,wbUnionCHANGE_REFR_HAVOK_MOVE
+        ,wbUnionCHANGE_REFR_CELL_CHANGED
+        ,wbUnionCHANGE_REFR_SCALE
+        ,wbUnionCHANGE_REFR_INVENTORY
+        ,wbUnionCHANGE_REFR_EXTRA_OWNERSHIP
+        ,wbUnionCHANGE_REFR_BASEOBJECT
+        ,wbUnionCHANGE_REFR_EXTRA_LINK_REF
+        ,wbUnionCHANGE_OBJECT_EXTRA_WORKSHOP
+        ,wbUnionCHANGE_OBJECT_EXTRA_ITEM_DATA
+        ,wbUnionCHANGE_OBJECT_EXTRA_AMMO
+        ,wbUnionCHANGE_OBJECT_EXTRA_LOCK
+        ,wbUnionCHANGE_OBJECT_FORCE_MOVE
+        ,wbUnionCHANGE_OBJECT_EMPTY
+        ,wbUnionCHANGE_OBJECT_OPEN_DEFAULT_STATE
+        ,wbUnionCHANGE_OBJECT_OPEN_STATE
+        ,wbUnionCHANGE_REFR_PROMOTED
+        ,wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN
+        ,wbUnionCHANGE_REFR_LEVELED_INVENTORY
+        ,wbUnionCHANGE_REFR_ANIMATION
+        ,wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE
+        ,wbUnionCHANGE_REFR_EXTRA_CREATED_ONLY
+        ,wbUnionCHANGE_REFR_EXTRA_GAME_ONLY
        ])
-      ,wbStruct('Change PMIS Data', [ {03F}
+      ,wbStruct('Change ACHR Data', [ {041}
+         wbUnionCHANGE_FORM_FLAGS
+        ,wbUnionCHANGE_REFR_MOVE
+        ,wbUnionCHANGE_REFR_HAVOK_MOVE
+        ,wbUnionCHANGE_REFR_CELL_CHANGED
+        ,wbUnionCHANGE_REFR_SCALE
+        ,wbUnionCHANGE_REFR_INVENTORY
+        ,wbUnionCHANGE_REFR_EXTRA_OWNERSHIP
+        ,wbUnionCHANGE_REFR_BASEOBJECT
+        ,wbUnionCHANGE_REFR_EXTRA_LINK_REF
+        ,wbUnionCHANGE_OBJECT_EXTRA_WORKSHOP
+        ,wbUnionCHANGE_ACTOR_LIFESTATE
+        ,wbUnionCHANGE_ACTOR_EXTRA_PACKAGE_DATA
+        ,wbUnionCHANGE_ACTOR_EXTRA_MERCHANT_CONTAINER
+        ,wbUnionCHANGE_ACTOR_EXTRA_DISMEMBERED_LIMBS
+        ,wbUnionCHANGE_ACTOR_LEVELED_ACTOR
+        ,wbUnionCHANGE_ACTOR_DISPOSITION_MODIFIERS
+        ,wbUnionCHANGE_ACTOR_TEMP_MODIFIERS
+        ,wbUnionCHANGE_ACTOR_DAMAGE_MODIFIERS
+        ,wbUnionCHANGE_ACTOR_OVERRIDE_MODIFIERS
+        ,wbUnionCHANGE_ACTOR_PERMANENT_MODIFIERS
+        ,wbUnionCHANGE_REFR_PROMOTED
+        ,wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN
+        ,wbUnionCHANGE_REFR_LEVELED_INVENTORY
+        ,wbUnionCHANGE_REFR_ANIMATION
+        ,wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE
+        ,wbUnionCHANGE_REFR_EXTRA_CREATED_ONLY
+        ,wbUnionCHANGE_REFR_EXTRA_GAME_ONLY
        ])
-      ,wbStruct('Change PGRE Data', [ {041}
+      ,wbStruct('Change PMIS Data', [ {042}
+         wbUnionCHANGE_FORM_FLAGS
+        ,wbUnionCHANGE_REFR_MOVE
+        ,wbUnionCHANGE_REFR_HAVOK_MOVE
+        ,wbUnionCHANGE_REFR_CELL_CHANGED
+        ,wbUnionCHANGE_REFR_SCALE
+        ,wbUnionCHANGE_REFR_INVENTORY
+        ,wbUnionCHANGE_REFR_EXTRA_OWNERSHIP
+        ,wbUnionCHANGE_REFR_BASEOBJECT
+        ,wbUnionCHANGE_REFR_EXTRA_LINK_REF
+        ,wbUnionCHANGE_OBJECT_EXTRA_WORKSHOP
+        ,wbUnionCHANGE_OBJECT_EXTRA_ITEM_DATA
+        ,wbUnionCHANGE_OBJECT_EXTRA_AMMO
+        ,wbUnionCHANGE_OBJECT_EXTRA_LOCK
+        ,wbUnionCHANGE_OBJECT_FORCE_MOVE
+        ,wbUnionCHANGE_OBJECT_EMPTY
+        ,wbUnionCHANGE_OBJECT_OPEN_DEFAULT_STATE
+        ,wbUnionCHANGE_OBJECT_OPEN_STATE
+        ,wbUnionCHANGE_REFR_PROMOTED
+        ,wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN
+        ,wbUnionCHANGE_REFR_LEVELED_INVENTORY
+        ,wbUnionCHANGE_REFR_ANIMATION
+        ,wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE
+        ,wbUnionCHANGE_REFR_EXTRA_CREATED_ONLY
+        ,wbUnionCHANGE_REFR_EXTRA_GAME_ONLY
        ])
-      ,wbStruct('Change PBEA Data', [ {042}
+      ,wbStruct('Change PGRE Data', [ {044}
+         wbUnionCHANGE_FORM_FLAGS
+        ,wbUnionCHANGE_REFR_MOVE
+        ,wbUnionCHANGE_REFR_HAVOK_MOVE
+        ,wbUnionCHANGE_REFR_CELL_CHANGED
+        ,wbUnionCHANGE_REFR_SCALE
+        ,wbUnionCHANGE_REFR_INVENTORY
+        ,wbUnionCHANGE_REFR_EXTRA_OWNERSHIP
+        ,wbUnionCHANGE_REFR_BASEOBJECT
+        ,wbUnionCHANGE_REFR_EXTRA_LINK_REF
+        ,wbUnionCHANGE_OBJECT_EXTRA_WORKSHOP
+        ,wbUnionCHANGE_OBJECT_EXTRA_ITEM_DATA
+        ,wbUnionCHANGE_OBJECT_EXTRA_AMMO
+        ,wbUnionCHANGE_OBJECT_EXTRA_LOCK
+        ,wbUnionCHANGE_OBJECT_FORCE_MOVE
+        ,wbUnionCHANGE_OBJECT_EMPTY
+        ,wbUnionCHANGE_OBJECT_OPEN_DEFAULT_STATE
+        ,wbUnionCHANGE_OBJECT_OPEN_STATE
+        ,wbUnionCHANGE_REFR_PROMOTED
+        ,wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN
+        ,wbUnionCHANGE_REFR_LEVELED_INVENTORY
+        ,wbUnionCHANGE_REFR_ANIMATION
+        ,wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE
+        ,wbUnionCHANGE_REFR_EXTRA_CREATED_ONLY
+        ,wbUnionCHANGE_REFR_EXTRA_GAME_ONLY
        ])
-      ,wbStruct('Change PFLA Data', [ {043}
+      ,wbStruct('Change PBEA Data', [ {045}
+         wbUnionCHANGE_FORM_FLAGS
+        ,wbUnionCHANGE_REFR_MOVE
+        ,wbUnionCHANGE_REFR_HAVOK_MOVE
+        ,wbUnionCHANGE_REFR_CELL_CHANGED
+        ,wbUnionCHANGE_REFR_SCALE
+        ,wbUnionCHANGE_REFR_INVENTORY
+        ,wbUnionCHANGE_REFR_EXTRA_OWNERSHIP
+        ,wbUnionCHANGE_REFR_BASEOBJECT
+        ,wbUnionCHANGE_REFR_EXTRA_LINK_REF
+        ,wbUnionCHANGE_OBJECT_EXTRA_WORKSHOP
+        ,wbUnionCHANGE_OBJECT_EXTRA_ITEM_DATA
+        ,wbUnionCHANGE_OBJECT_EXTRA_AMMO
+        ,wbUnionCHANGE_OBJECT_EXTRA_LOCK
+        ,wbUnionCHANGE_OBJECT_FORCE_MOVE
+        ,wbUnionCHANGE_OBJECT_EMPTY
+        ,wbUnionCHANGE_OBJECT_OPEN_DEFAULT_STATE
+        ,wbUnionCHANGE_OBJECT_OPEN_STATE
+        ,wbUnionCHANGE_REFR_PROMOTED
+        ,wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN
+        ,wbUnionCHANGE_REFR_LEVELED_INVENTORY
+        ,wbUnionCHANGE_REFR_ANIMATION
+        ,wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE
+        ,wbUnionCHANGE_REFR_EXTRA_CREATED_ONLY
+        ,wbUnionCHANGE_REFR_EXTRA_GAME_ONLY
        ])
-      ,wbStruct('Change CELL Data', [ {03C}
+      ,wbStruct('Change PFLA Data', [ {046}
+         wbUnionCHANGE_FORM_FLAGS
+        ,wbUnionCHANGE_REFR_MOVE
+        ,wbUnionCHANGE_REFR_HAVOK_MOVE
+        ,wbUnionCHANGE_REFR_CELL_CHANGED
+        ,wbUnionCHANGE_REFR_SCALE
+        ,wbUnionCHANGE_REFR_INVENTORY
+        ,wbUnionCHANGE_REFR_EXTRA_OWNERSHIP
+        ,wbUnionCHANGE_REFR_BASEOBJECT
+        ,wbUnionCHANGE_REFR_EXTRA_LINK_REF
+        ,wbUnionCHANGE_OBJECT_EXTRA_WORKSHOP
+        ,wbUnionCHANGE_OBJECT_EXTRA_ITEM_DATA
+        ,wbUnionCHANGE_OBJECT_EXTRA_AMMO
+        ,wbUnionCHANGE_OBJECT_EXTRA_LOCK
+        ,wbUnionCHANGE_OBJECT_FORCE_MOVE
+        ,wbUnionCHANGE_OBJECT_EMPTY
+        ,wbUnionCHANGE_OBJECT_OPEN_DEFAULT_STATE
+        ,wbUnionCHANGE_OBJECT_OPEN_STATE
+        ,wbUnionCHANGE_REFR_PROMOTED
+        ,wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN
+        ,wbUnionCHANGE_REFR_LEVELED_INVENTORY
+        ,wbUnionCHANGE_REFR_ANIMATION
+        ,wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE
+        ,wbUnionCHANGE_REFR_EXTRA_CREATED_ONLY
+        ,wbUnionCHANGE_REFR_EXTRA_GAME_ONLY
+       ])
+      ,wbStruct('Change CELL Data', [ {03F}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_CELL_FLAGS
-        ,wbUnionCHANGE_CELL_SEENDATA
         ,wbUnionCHANGE_CELL_FULLNAME
         ,wbUnionCHANGE_CELL_OWNERSHIP
+        ,wbUnionCHANGE_CELL_EXTERIOR_SHORT
+        ,wbUnionCHANGE_CELL_EXTERIOR_CHAR
+        ,wbUnionCHANGE_CELL_DETACHTIME
+        ,wbUnionCHANGE_CELL_SEENDATA
        ])
-      ,wbStruct('Change INFO Data', [ {04C}
+      ,wbStruct('Change INFO Data', [ {04F}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_TOPIC_SAIDONCE
        ])
-      ,wbStruct('Change QUST Data', [ {04D}
+      ,wbStruct('Change QUST Data', [ {050}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_QUEST_FLAGS
         ,wbUnionCHANGE_QUEST_SCRIPT_DELAY
-        ,wbUnionCHANGE_QUEST_STAGES
-        ,wbUnionCHANGE_QUEST_OBJECTIVES
-        ,wbUnionCHANGE_QUEST_RUNDATA
-        ,wbUnionCHANGE_QUEST_INSTANCES
         ,wbUnionCHANGE_QUEST_ALREADY_RUN
+        ,wbUnionCHANGE_QUEST_INSTANCES
+        ,wbUnionCHANGE_QUEST_RUNDATA
+        ,wbUnionCHANGE_QUEST_OBJECTIVES
         ,wbUnionCHANGE_QUEST_SCRIPT
+        ,wbUnionCHANGE_QUEST_STAGES
        ])
-      ,wbChangedNPC {02B}
-      ,wbStruct('Change ACTI Data', [ {018}
+      ,wbStruct('Change NPC_ Data', [ {02D}
+         wbUnionCHANGE_FORM_FLAGS
+        ,wbUnionCHANGE_ACTOR_BASE_DATA
+        ,wbUnionCHANGE_ACTOR_BASE_ATTRIBUTES
+        ,wbUnionCHANGE_ACTOR_BASE_AIDATA
+        ,wbUnionCHANGE_ACTOR_BASE_SPELLLIST
+        ,wbUnionCHANGE_ACTOR_BASE_FULLNAME
+        ,wbUnionCHANGE_ACTOR_BASE_FACTIONS
+        ,wbUnionCHANGE_NPC_SKILLS
+        ,wbUnionCHANGE_NPC_CLASS
+        ,wbUnionCHANGE_NPC_FACE
+        ,wbUnionCHANGE_NPC_DEFAULT_OUTFIT
+        ,wbUnionCHANGE_NPC_SLEEP_OUTFIT
+        ,wbUnionCHANGE_NPC_BODY_SCALES
+        ,wbUnionCHANGE_NPC_GENDER
+        ,wbUnionCHANGE_NPC_RACE
+       ])
+      ,wbStruct('Change ACTI Data', [ {01B}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change TACT Data', [ {019}
+      ,wbStruct('Change TACT Data', [ {01C}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
         ,wbUnionCHANGE_TALKING_ACTIVATOR_SPEAKER
        ])
-      ,wbStruct('Change ARMO Data', [ {01A}
+      ,wbStruct('Change ARMO Data', [ {01D}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change BOOK Data', [ {01B}
+      ,wbStruct('Change BOOK Data', [ {01E}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
         ,wbUnionCHANGE_BOOK_TEACHES
         ,wbUnionCHANGE_BOOK_READ
        ])
-      ,wbStruct('Change CONT Data', [ {01C}
+      ,wbStruct('Change CONT Data', [ {01F}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change DOOR Data', [ {01D}
+      ,wbStruct('Change DOOR Data', [ {020}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change INGR Data', [ {01E}
+      ,wbStruct('Change INGR Data', [ {021}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_INGREDIENT_USE
        ])
-      ,wbStruct('Change LIGH Data', [ {01F}
+      ,wbStruct('Change LIGH Data', [ {022}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change MISC Data', [ {020}
+      ,wbStruct('Change MISC Data', [ {023}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change APPA Data', [ {021}
+      ,wbStruct('Change STAT Data', [ {024}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change STAT Data', [ {022}
+      ,wbStruct('Change MSTT Data', [ {026}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change MSTT Data', [ {024}
+      ,wbStruct('Change FURN Data', [ {02A}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change FURN Data', [ {028}
+      ,wbStruct('Change WEAP Data', [ {02B}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change WEAP Data', [ {029}
+      ,wbStruct('Change AMMO Data', [ {02C}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change AMMO Data', [ {02A}
+      ,wbStruct('Change KEYM Data', [ {02F}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change KEYM Data', [ {02D}
+      ,wbStruct('Change ALCH Data', [ {030}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change ALCH Data', [ {02E}
+      ,wbStruct('Change IDLM Data', [ {031}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change IDLM Data', [ {02F}
-         wbUnionCHANGE_FORM_FLAGS
-        ,wbUnionCHANGE_BASE_OBJECT_VALUE
-        ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
-       ])
-      ,wbStruct('Change NOTE Data', [ {030}
+      ,wbStruct('Change NOTE Data', [ {032}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_NOTE_READ
        ])
-      ,wbStruct('Change ECZN Data', [ {067}
+      ,wbStruct('Change ECZN Data', [ {06A}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_ENCOUNTER_ZONE_FLAGS
         ,wbUnionCHANGE_ENCOUNTER_ZONE_GAME_DATA
        ])
-      ,wbStruct('Change CLAS Data', [ {00A}
+      ,wbStruct('Change CLAS Data', [ {00D}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_CLASS_TAG_SKILLS
        ])
-      ,wbStruct('Change FACT Data', [ {00B}
+      ,wbStruct('Change FACT Data', [ {00E}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_FACTION_FLAGS
         ,wbUnionCHANGE_FACTION_REACTIONS
         ,wbUnionCHANGE_FACTION_CRIME_COUNTS
        ])
-      ,wbStruct('Change PACK Data', [ {04F}
+      ,wbStruct('Change PACK Data', [ {052}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_PACKAGE_WAITING
         ,wbUnionCHANGE_PACKAGE_NEVER_RUN
        ])
-      ,wbStruct('Change NAVM Data', [ {049}
+      ,wbStruct('Change NAVM Data', [ {04C}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change WOOP Data', [ {076}
+      ,wbStruct('Change WOOP Data', [ {07A}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change MGEF Data', [ {012}
+      ,wbStruct('Change MGEF Data', [ {015}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
        ])
-      ,wbStruct('Change SMQN Data', [ {071}
+      ,wbStruct('Change SMQN Data', [ {075}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_QUEST_NODE_TIME_RUN
        ])
-      ,wbStruct('Change SCEN Data', [ {07A}
+      ,wbStruct('Change SCEN Data', [ {07E}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_SCENE_ACTIVE
        ])
-      ,wbStruct('Change LCTN Data', [ {068}
+      ,wbStruct('Change LCTN Data', [ {06B}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_LOCATION_KEYWORDDATA
         ,wbUnionCHANGE_LOCATION_CLEARED
        ])
-      ,wbStruct('Change RELA Data', [ {079}
+      ,wbStruct('Change RELA Data', [ {07D}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_RELATIONSHIP_DATA
        ])
-      ,wbStruct('Change PHZD Data', [ {046}
+      ,wbStruct('Change PHZD Data', [ {049}
+         wbUnionCHANGE_FORM_FLAGS
+        ,wbUnionCHANGE_REFR_MOVE
+        ,wbUnionCHANGE_REFR_HAVOK_MOVE
+        ,wbUnionCHANGE_REFR_CELL_CHANGED
+        ,wbUnionCHANGE_REFR_SCALE
+        ,wbUnionCHANGE_REFR_INVENTORY
+        ,wbUnionCHANGE_REFR_EXTRA_OWNERSHIP
+        ,wbUnionCHANGE_REFR_BASEOBJECT
+        ,wbUnionCHANGE_REFR_EXTRA_LINK_REF
+        ,wbUnionCHANGE_OBJECT_EXTRA_WORKSHOP
+        ,wbUnionCHANGE_OBJECT_EXTRA_ITEM_DATA
+        ,wbUnionCHANGE_OBJECT_EXTRA_AMMO
+        ,wbUnionCHANGE_OBJECT_EXTRA_LOCK
+        ,wbUnionCHANGE_OBJECT_FORCE_MOVE
+        ,wbUnionCHANGE_OBJECT_EMPTY
+        ,wbUnionCHANGE_OBJECT_OPEN_DEFAULT_STATE
+        ,wbUnionCHANGE_OBJECT_OPEN_STATE
+        ,wbUnionCHANGE_REFR_PROMOTED
+        ,wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN
+        ,wbUnionCHANGE_REFR_LEVELED_INVENTORY
+        ,wbUnionCHANGE_REFR_ANIMATION
+        ,wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE
+        ,wbUnionCHANGE_REFR_EXTRA_CREATED_ONLY
+        ,wbUnionCHANGE_REFR_EXTRA_GAME_ONLY
        ])
-      ,wbStruct('Change PBAR Data', [ {045}
+      ,wbStruct('Change PBAR Data', [ {048}
+         wbUnionCHANGE_FORM_FLAGS
+        ,wbUnionCHANGE_REFR_MOVE
+        ,wbUnionCHANGE_REFR_HAVOK_MOVE
+        ,wbUnionCHANGE_REFR_CELL_CHANGED
+        ,wbUnionCHANGE_REFR_SCALE
+        ,wbUnionCHANGE_REFR_INVENTORY
+        ,wbUnionCHANGE_REFR_EXTRA_OWNERSHIP
+        ,wbUnionCHANGE_REFR_BASEOBJECT
+        ,wbUnionCHANGE_REFR_EXTRA_LINK_REF
+        ,wbUnionCHANGE_OBJECT_EXTRA_WORKSHOP
+        ,wbUnionCHANGE_OBJECT_EXTRA_ITEM_DATA
+        ,wbUnionCHANGE_OBJECT_EXTRA_AMMO
+        ,wbUnionCHANGE_OBJECT_EXTRA_LOCK
+        ,wbUnionCHANGE_OBJECT_FORCE_MOVE
+        ,wbUnionCHANGE_OBJECT_EMPTY
+        ,wbUnionCHANGE_OBJECT_OPEN_DEFAULT_STATE
+        ,wbUnionCHANGE_OBJECT_OPEN_STATE
+        ,wbUnionCHANGE_REFR_PROMOTED
+        ,wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN
+        ,wbUnionCHANGE_REFR_LEVELED_INVENTORY
+        ,wbUnionCHANGE_REFR_ANIMATION
+        ,wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE
+        ,wbUnionCHANGE_REFR_EXTRA_CREATED_ONLY
+        ,wbUnionCHANGE_REFR_EXTRA_GAME_ONLY
        ])
-      ,wbStruct('Change PCON Data', [ {044}
+      ,wbStruct('Change PCON Data', [ {047}
+         wbUnionCHANGE_FORM_FLAGS
+        ,wbUnionCHANGE_REFR_MOVE
+        ,wbUnionCHANGE_REFR_HAVOK_MOVE
+        ,wbUnionCHANGE_REFR_CELL_CHANGED
+        ,wbUnionCHANGE_REFR_SCALE
+        ,wbUnionCHANGE_REFR_INVENTORY
+        ,wbUnionCHANGE_REFR_EXTRA_OWNERSHIP
+        ,wbUnionCHANGE_REFR_BASEOBJECT
+        ,wbUnionCHANGE_REFR_EXTRA_LINK_REF
+        ,wbUnionCHANGE_OBJECT_EXTRA_WORKSHOP
+        ,wbUnionCHANGE_OBJECT_EXTRA_ITEM_DATA
+        ,wbUnionCHANGE_OBJECT_EXTRA_AMMO
+        ,wbUnionCHANGE_OBJECT_EXTRA_LOCK
+        ,wbUnionCHANGE_OBJECT_FORCE_MOVE
+        ,wbUnionCHANGE_OBJECT_EMPTY
+        ,wbUnionCHANGE_OBJECT_OPEN_DEFAULT_STATE
+        ,wbUnionCHANGE_OBJECT_OPEN_STATE
+        ,wbUnionCHANGE_REFR_PROMOTED
+        ,wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN
+        ,wbUnionCHANGE_REFR_LEVELED_INVENTORY
+        ,wbUnionCHANGE_REFR_ANIMATION
+        ,wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE
+        ,wbUnionCHANGE_REFR_EXTRA_CREATED_ONLY
+        ,wbUnionCHANGE_REFR_EXTRA_GAME_ONLY
        ])
-      ,wbStruct('Change FLST Data', [ {05B}
+      ,wbStruct('Change FLST Data', [ {05E}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_FORM_LIST_ADDED_FORM
        ])
-      ,wbStruct('Change LVLN Data', [ {02C}
+      ,wbStruct('Change LVLN Data', [ {02E}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_LEVELED_LIST_ADDED_OBJECT
        ])
-      ,wbStruct('Change LVLI Data', [ {035}
+      ,wbStruct('Change LVLI Data', [ {038}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_LEVELED_LIST_ADDED_OBJECT
        ])
-      ,wbStruct('Change LVSP Data', [ {052}
+      ,wbStruct('Change LVSP Data', [ {055}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_LEVELED_LIST_ADDED_OBJECT
        ])
-      ,wbStruct('Change PARW Data', [ {040}
+      ,wbStruct('Change PARW Data', [ {043}
+         wbUnionCHANGE_FORM_FLAGS
+        ,wbUnionCHANGE_REFR_MOVE
+        ,wbUnionCHANGE_REFR_HAVOK_MOVE
+        ,wbUnionCHANGE_REFR_CELL_CHANGED
+        ,wbUnionCHANGE_REFR_SCALE
+        ,wbUnionCHANGE_REFR_INVENTORY
+        ,wbUnionCHANGE_REFR_EXTRA_OWNERSHIP
+        ,wbUnionCHANGE_REFR_BASEOBJECT
+        ,wbUnionCHANGE_REFR_EXTRA_LINK_REF
+        ,wbUnionCHANGE_OBJECT_EXTRA_WORKSHOP
+        ,wbUnionCHANGE_OBJECT_EXTRA_ITEM_DATA
+        ,wbUnionCHANGE_OBJECT_EXTRA_AMMO
+        ,wbUnionCHANGE_OBJECT_EXTRA_LOCK
+        ,wbUnionCHANGE_OBJECT_FORCE_MOVE
+        ,wbUnionCHANGE_OBJECT_EMPTY
+        ,wbUnionCHANGE_OBJECT_OPEN_DEFAULT_STATE
+        ,wbUnionCHANGE_OBJECT_OPEN_STATE
+        ,wbUnionCHANGE_REFR_PROMOTED
+        ,wbUnionCHANGE_REFR_EXTRA_ACTIVATING_CHILDREN
+        ,wbUnionCHANGE_REFR_LEVELED_INVENTORY
+        ,wbUnionCHANGE_REFR_ANIMATION
+        ,wbUnionCHANGE_REFR_EXTRA_ENCOUNTER_ZONE
+        ,wbUnionCHANGE_REFR_EXTRA_CREATED_ONLY
+        ,wbUnionCHANGE_REFR_EXTRA_GAME_ONLY
        ])
-      ,wbStruct('Change ENCH Data', [ {015}
+      ,wbStruct('Change ENCH Data', [ {018}
+         wbUnionCHANGE_FORM_FLAGS
+        ,wbUnionCHANGE_BASE_OBJECT_VALUE
+        ,wbUnionCHANGE_BASE_OBJECT_FULLNAME
+       ])
+      ,wbStruct('Change TERM Data', [ {037}
          wbUnionCHANGE_FORM_FLAGS
         ,wbUnionCHANGE_BASE_OBJECT_VALUE
         ,wbUnionCHANGE_BASE_OBJECT_FULLNAME

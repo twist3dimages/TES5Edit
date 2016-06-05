@@ -304,6 +304,9 @@ type
     mniNavOtherCodeSiteLogging: TMenuItem;
     mniNavLOManagersDirtyInfo: TMenuItem;
     N19: TMenuItem;
+    mniViewStick: TMenuItem;
+    mniViewStickAuto: TMenuItem;
+    mniViewStickSelected: TMenuItem;
 
     {--- Form ---}
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -513,6 +516,8 @@ type
       Node: PVirtualNode; Column: TColumnIndex; out EditLink: IVTEditLink);
     procedure mniNavOtherCodeSiteLoggingClick(Sender: TObject);
     procedure mniNavLOManagersDirtyInfoClick(Sender: TObject);
+    procedure mniViewStickAutoClick(Sender: TObject);
+    procedure mniViewStickSelectedClick(Sender: TObject);
   protected
     BackHistory: IInterfaceList;
     ForwardHistory: IInterfaceList;
@@ -681,6 +686,9 @@ type
     FilterByHasVWDMesh: Boolean;
     FilterHasVWDMesh: Boolean;
 
+    FilterByHasPrecombinedMesh: Boolean;
+    FilterHasPrecombinedMesh: Boolean;
+
     FlattenBlocks: Boolean;
     FlattenCellChilds: Boolean;
     AssignPersWrldChild: Boolean;
@@ -718,6 +726,7 @@ type
     RowHeight   : Integer;
 
     PluginDirtyInfos: array of TPluginDirtyInfo;
+    StickViewNodeLabel: string;
 
     procedure DoInit;
     procedure SetDoubleBuffered(aWinControl: TWinControl);
@@ -725,6 +734,8 @@ type
     procedure SetActiveRecord(const aMainRecords: TDynMainRecords); overload;
     procedure SetActiveContainer(const aContainer: IwbDataContainer); overload;
     procedure ClearActiveContainer; overload;
+    function GetViewNodePositionLabel(aNode: PVirtualNode = nil): string;
+    procedure SetViewNodePositionLabel(aViewLabel: string);
 
     function ValidateCRC(const aFileName  : string;
                          const aValidCRCs : TDynCardinalArray;
@@ -2933,13 +2944,14 @@ end;
 
 function TfrmMain.ConflictLevelForChildNodeDatas(const aNodeDatas: TDynViewNodeDatas; aSiblingCompare, aInjected: Boolean): TConflictAll;
 var
-  ChildCount                  : Cardinal;
-  i, j                        : Integer;
-  NodeDatas                   : TDynViewNodeDatas;
-  InitialStates               : TVirtualNodeInitStates;
-  ConflictAll                 : TConflictAll;
-  ConflictThis                : TConflictThis;
-  Element                     : IwbElement;
+  ChildCount    : Cardinal;
+  i, j          : Integer;
+  NodeDatas     : TDynViewNodeDatas;
+  InitialStates : TVirtualNodeInitStates;
+  ConflictAll   : TConflictAll;
+  ConflictThis  : TConflictThis;
+  Element       : IwbElement;
+  ElementCount  : Integer;
 begin
   case Length(aNodeDatas) of
     0: Result := caUnknown;
@@ -2994,8 +3006,9 @@ begin
         end;
 
         if Assigned(Element) and (Element.ElementType in [etMainRecord, etSubRecordStruct]) then begin
+          ElementCount := (Element.Def as IwbRecordDef).MemberCount;
           j := (Element as IwbContainer).AdditionalElementCount;
-          if i >= j then
+          if (i >= j) and (i-j < ElementCount) then
             with (Element.Def as IwbRecordDef).Members[i - j] do
               if (wbTranslationMode and (ConflictPriority[nil] <> cpTranslate)) or
                 (wbTranslationMode and (ConflictPriority[nil] = cpIgnore)) then
@@ -3190,19 +3203,33 @@ end;
 
 procedure TfrmMain.DoInit;
 
-  // remove comments and empty lines from list
-  procedure RemoveCommentsAndEmpty(sl: TStrings);
+  // remove comments and empty lines from list. Also handles star activation
+  procedure RemoveCommentsAndEmptyAndMemorizeActivePlugins(sl: TStrings; al: TStrings);
   var
     i, j: integer;
     s: string;
   begin
     for i := Pred(sl.Count) downto 0 do begin
       s := Trim(sl.Strings[i]);
-      j := Pos('#', s);
+      j := Pos('#', s); // comments
       if j > 0 then
         System.Delete(s, j, High(Integer));
-      if Trim(s) = '' then
-        sl.Delete(i);
+      s := Trim(s);
+      if s = '' then
+        sl.Delete(i)
+      else begin
+        j := Pos('*', s); // active plugin
+        if j > 0 then begin
+          System.Delete(s, 1, j);
+          if Assigned(al) then
+            al.Add(s);
+        end;
+        s := Trim(s);
+        if s = '' then
+          sl.Delete(i)
+        else
+          sl[i] := s;
+      end;
     end;
   end;
 
@@ -3268,19 +3295,37 @@ procedure TfrmMain.DoInit;
     sl2         : TStringList;
     Age         : Integer;
     AgeDateTime : TDateTime;
+    useBOSS     : Boolean;
 
   begin
     with frmFileSelect do begin
       {
-         *** Load order handling for Skyrim and later games ***
+         *** Load order handling for Skyrim and originaly FO4 ***
          Plugins are sorted by the order in plugins.txt
+         1. Load plugins list from plugins file
+         2. Add missing files from BOSS list loadorder.txt
+      }
+      {
+         *** Load order handling for newer FO4 and later games ***
+         Plugins are sorted by the order in plugins.txt.
+          They are activated if they are preceded by a * in the file.
+          On the order of inactive plugins:
+            without a load manager inactive plugins shouldn't matter.
+            let's just list them in the order we find them to begin with
+            and assume the load manager will sort it out if needed.
+            false masters ??? To Be Tested
          1. Load plugins list from plugins file
          2. Add missing files from BOSS list loadorder.txt
       }
       if not (wbGameMode in [gmTES3, gmTES4, gmFO3, gmFNV]) then begin
         sl.LoadFromFile(wbPluginsFileName);
-        RemoveCommentsAndEmpty(sl); // remove comments
-        RemoveMissingFiles(sl); // remove nonexisting files
+        sl2 := TStringList.Create;
+        try
+          RemoveCommentsAndEmptyAndMemorizeActivePlugins(sl, sl2); // remove comments
+          useBOSS := sl2.Count = 0;
+        finally
+          sl2.Free;
+        end;
         // Skyrim always loads Skyrim.esm and Update.esm first and second no matter what
         // even if not present in plugins.txt
         j := FindMatchText(sl, wbGameName+'.esm');
@@ -3289,26 +3334,29 @@ procedure TfrmMain.DoInit;
           j := FindMatchText(sl, 'Update.esm');
           if j = -1 then sl.Insert(1, 'Update.esm');
         end;
+        RemoveMissingFiles(sl); // remove nonexisting files (including optional DLC)
 
-        s := ExtractFilePath(wbPluginsFileName) + 'loadorder.txt';
-        if FileExists(s) then begin
-          AddMessage('Found BOSS load order list: ' + s);
-          sl2 := TStringList.Create;
-          try
-            sl2.LoadFromFile(s);
-            RemoveMissingFiles(sl2); // remove nonexisting files from BOSS list
-            // skip first line "Skyrim.esm" in BOSS list
-            for i := 1 to Pred(sl2.Count) do begin
-              j := FindMatchText(sl, sl2[i]);
-              // if plugin exists in plugins file, skip
-              if j <> -1 then Continue;
-              // otherwise insert it after position of previous plugin
-              j := FindMatchText(sl, sl2[i-1]);
-              if j <> -1 then
-                sl.Insert(j+1, sl2[i]);
+        if useBOSS then begin
+          s := ExtractFilePath(wbPluginsFileName) + 'loadorder.txt';
+          if FileExists(s) then begin
+            AddMessage('Found BOSS load order list: ' + s);
+            sl2 := TStringList.Create;
+            try
+              sl2.LoadFromFile(s);
+              RemoveMissingFiles(sl2); // remove nonexisting files from BOSS list
+              // skip first line "Skyrim.esm" in BOSS list
+              for i := 1 to Pred(sl2.Count) do begin
+                j := FindMatchText(sl, sl2[i]);
+                // if plugin exists in plugins file, skip
+                if j <> -1 then Continue;
+                // otherwise insert it after position of previous plugin
+                j := FindMatchText(sl, sl2[i-1]);
+                if j <> -1 then
+                  sl.Insert(j+1, sl2[i]);
+              end;
+            finally
+              sl2.Free;
             end;
-          finally
-            sl2.Free;
           end;
         end;
       end;
@@ -3539,25 +3587,42 @@ begin
                   CheckListBox1.Checked[j] := True;
               end;
           end else if wbToolSource in [tsPlugins] then begin
-            // check active files using the game's plugins list
-            sl.LoadFromFile(wbPluginsFileName);
-            for i := Pred(sl.Count) downto 0 do begin
-              s := Trim(sl.Strings[i]);
-              j := Pos('#', s);
-              if j > 0 then
-                System.Delete(s, j, High(Integer));
-              s := Trim(s);
-              if s = '' then begin
-                sl.Delete(i);
-                Continue;
+            sl2 := TStringList.Create;
+            try
+              // check active files using the game's plugins list
+              sl.LoadFromFile(wbPluginsFileName);
+              RemoveCommentsAndEmptyAndMemorizeActivePlugins(sl, sl2);
+              if (wbGameMode >= gmFO4) and (sl2.Count>0) then begin // use starred files as active files...
+                sl.Clear;
+                for i := 0 to Pred(sl2.Count) do
+                  sl.Add(sl2[i]);
               end;
-
-              j := CheckListBox1.Items.IndexOf(s);
-              if j < 0 then
-                AddMessage('Note: Active plugin List contains nonexisting file "' + s + '"')
-              else
-                CheckListBox1.Checked[j] := True;
+              if wbGameMode = gmFO4 then // DLC are activated if they are present
+                for i := High(wbOfficialDLC) downto Low(wbOfficialDLC) do begin
+                  j := FindMatchText(sl, wbOfficialDLC[i]);
+                  k := CheckListBox1.Items.IndexOf(wbOfficialDLC[i]);
+                  if (j = -1) and (k>=0) then sl.Add(wbOfficialDLC[i]);
+                end;
+            finally
+              sl2.Free;
             end;
+            for i := Pred(sl.Count) downto 0 do begin
+              s := sl.Strings[i];
+//              j := Pos('#', s);
+//              if j > 0 then
+//                System.Delete(s, j, High(Integer));
+//              s := Trim(s);
+//              if s = '' then begin
+//                sl.Delete(i);
+//                Continue;
+//              end;
+
+                j := CheckListBox1.Items.IndexOf(s);
+                if j < 0 then
+                  AddMessage('Note: Active plugin List contains nonexisting file "' + s + '"')
+                else
+                  CheckListBox1.Checked[j] := True;
+              end;
           end;
 
         if not ((wbToolMode in wbAutoModes) or wbQuickShowConflicts) then begin
@@ -3595,6 +3660,7 @@ begin
                   frmMain.Close;
                   Exit;
                 end;
+              gmFO4:  if SameText(ExtractFileExt(sl[0]), coSaveExt) then SwitchToCoSave;
               gmTES4: if SameText(ExtractFileExt(sl[0]), coSaveExt) then SwitchToCoSave
                 else begin
                   MessageDlg('Save are not supported yet "'+s+'". Please check the selection.', mtError, [mbAbort], 0);
@@ -3969,6 +4035,8 @@ begin
 
   HideNoConflict := Settings.ReadBool('View', 'HodeNoConflict', False);
   mniViewHideNoConflict.Checked := HideNoConflict;
+
+  StickViewNodeLabel := Settings.ReadString('View', 'StickViewNodeLabel', '');
 
   case Settings.ReadInteger('View', 'ColumnWidth', 0) of
     1: mniViewColumnWidthFitAll.Checked := True;
@@ -4906,10 +4974,7 @@ begin
     if not wbContainerHandler.ResourceExists(s) then begin
       wbProgressCallback('<Note: ' + s + ' normal map not found, using flat replacement>');
       // default normals texture to use
-      if wbGameMode = gmTES5 then
-        s := 'textures\default_n.dds'
-      else if wbGameMode in [gmFO3, gmFNV] then
-        s := 'textures\shared\shadefade01_n.dds';
+      s := wbDefaultNormalTexture(wbGameMode);
     end;
     res := wbContainerHandler.OpenResource(s);
     if Length(res) <> 0 then
@@ -5005,9 +5070,16 @@ begin
         raise Exception.Create('Error loading tile ' + sl[0]);
 
       // load normal tile
-      res := wbContainerHandler.OpenResource(ChangeFileExt(sl[0], '') + '_n.dds');
-      if Length(res) = 0 then
-        raise Exception.Create('Source tile normal map not found for ' + sl[0]);
+      fname := ChangeFileExt(sl[0], '') + '_n.dds';
+      res := wbContainerHandler.OpenResource(fname);
+      if Length(res) = 0 then begin
+        wbProgressCallback('<Note: ' + fname + ' normal map not found, using flat replacement>');
+        // default normals texture to use
+        fname := wbDefaultNormalTexture(wbGameMode);
+        res := wbContainerHandler.OpenResource(fname);
+        if Length(res) = 0 then
+          raise Exception.Create('Source tile normal map not found for ' + sl[0]);
+      end;
 
       data := res[High(res)].GetData;
       if not LoadImageFromMemory(@data[0], Length(data), img_n) then
@@ -5040,7 +5112,7 @@ begin
     fmtNormal := TImageFormat(Settings.ReadInteger(wbAppName + ' LOD Options', 'AtlasNormalFormat', Integer(ifDXT1)));
 
     for i := 0 to Pred(slAtlas.Count) do begin
-      // change brightness or gamme
+      // change brightness or gamma
       imgcanv := TImagingCanvas.CreateForData(@Atlases[i]);
       try
         if aBrightness <> 0 then
@@ -5344,9 +5416,15 @@ begin
 
         TreeRec := REFRs[i].BaseRecord.MasterOrSelf;
 
-        // Skyrim: only for TREE
-        if (wbGameMode = gmTES5) and (TreeRec.Signature <> 'TREE') then
-          Continue;
+        // Skyrim: only for TREE and STAT
+        if wbGameMode = gmTES5 then begin
+          if (TreeRec.Signature <> 'TREE') and (TreeRec.Signature <> 'STAT') then
+            Continue;
+          // STAT with Has Tree LOD flag only
+          // for Dragonborn DLC: xx03383D and xx03383C
+          if (TreeRec.Signature = 'STAT') and (TreeRec.Flags._Flags and $00000040 = 0) then
+            Continue;
+        end;
 
         // Fallouts: only for already added trees
         if (wbGameMode in [gmFO3, gmFNV]) and not Assigned(Lst.TreeByFormID[TreeRec.LoadOrderFormID]) then
@@ -5538,8 +5616,8 @@ begin
         if (wbGameMode = gmTES5) and ((StatRec.Signature <> 'STAT') and (StatRec.Signature <> 'TREE')) then
           Continue;
 
-        // Fallouts: only STAT, SCOL and ACTI objects
-        if (wbGameMode in [gmFO3, gmFNV]) and ((StatRec.Signature <> 'STAT') and (StatRec.Signature <> 'SCOL') and (StatRec.Signature <> 'ACTI')) then
+        // Fallouts: only STAT, SCOL, ACTI and MSTT objects
+        if (wbGameMode in [gmFO3, gmFNV]) and ((StatRec.Signature <> 'STAT') and (StatRec.Signature <> 'SCOL') and (StatRec.Signature <> 'ACTI') and (StatRec.Signature <> 'MSTT')) then
           Continue;
 
         // skip invisible references
@@ -5549,6 +5627,7 @@ begin
           Continue;
 
         // skip parent enabled refs except FO3 Megaton town
+        // Fallout 3 is hardcoded to use 'apocalypse' LOD meshes when it is destroyed
         if REFRs[i].ElementExists['XESP'] and (Pos('MegatonToggle', REFRs[i].ElementEditValues['XESP\Reference']) = 0) then
           Continue;
 
@@ -6510,14 +6589,15 @@ procedure TfrmMain.InitConflictStatus(aNode: PVirtualNode; aInjected: Boolean; a
   end;
 
 var
-  ChildNode                   : PVirtualNode;
-  ChildNodeDatas              : PViewNodeDatas;
-  NodeDatas                   : PViewNodeDatas;
-  i                           : Integer;
-  ConflictAll                 : TConflictAll;
-  ConflictThis                : TConflictThis;
-  Element                     : IwbElement;
-  lDontShow                    : Boolean;
+  ChildNode      : PVirtualNode;
+  ChildNodeDatas : PViewNodeDatas;
+  NodeDatas      : PViewNodeDatas;
+  i,j,k          : Integer;
+  ConflictAll    : TConflictAll;
+  ConflictThis   : TConflictThis;
+  Element        : IwbElement;
+  ElementCount   : Integer;
+  lDontShow      : Boolean;
 begin
   lDontShow := False;
   if not Assigned(aNodeDatas) then begin
@@ -6580,20 +6660,22 @@ begin
           end;
 
           if Assigned(Element) and (Element.ElementType in [etMainRecord, etSubRecordStruct]) then begin
+            ElementCount := (Element.Def as IwbRecordDef).MemberCount;
             i := (Element as IwbContainer).AdditionalElementCount;
-            if Integer(aNode.Index) >= i then
-              with (Element.Def as IwbRecordDef).Members[Integer(aNode.Index) - i] do begin
+            j := Integer(aNode.Index);
+            if (j >= i) and ((j-i) < ElementCount) then
+              with (Element.Def as IwbRecordDef).Members[j - i] do begin
                 if (wbTranslationMode and (ConflictPriority[nil] <> cpTranslate)) or
                   (wbTranslationMode and (ConflictPriority[nil] = cpIgnore)) then begin
                   ConflictThis := ctIgnored;
-                  for i := Low(ActiveRecords) to High(ActiveRecords) do
-                    aNodeDatas[i].ConflictThis := ConflictThis;
+                  for k := Low(ActiveRecords) to High(ActiveRecords) do
+                    aNodeDatas[k].ConflictThis := ConflictThis;
                 end;
 
                 if (ConflictThis <> ctIgnored) and HasDontShow then begin
                   lDontShow := True;
-                  for i := Low(ActiveRecords) to High(ActiveRecords) do begin
-                    Element := ChildNodeDatas[i].Container;
+                  for k := Low(ActiveRecords) to High(ActiveRecords) do begin
+                    Element := ChildNodeDatas[k].Container;
                     if Assigned(Element) then begin
                       lDontShow := DontShow[Element];
                       if not lDontShow then
@@ -6614,8 +6696,10 @@ begin
                 Break;
             end;
             if Assigned(Element) and (Element.ElementType in [etMainRecord, etSubRecordStruct]) then begin
+              ElementCount := (Element.Def as IwbRecordDef).MemberCount;
               i := (Element as IwbContainer).AdditionalElementCount;
-              if Integer(aNode.Index) >= i then
+              j := Integer(aNode.Index);
+              if (j >= i) and ((j-i) < ElementCount) then
                 with (Element.Def as IwbRecordDef).Members[Integer(aNode.Index) - i] do
                   if ConflictPriority[nil] = cpIgnore then
                     ConflictThis := ctIgnored;
@@ -7188,6 +7272,28 @@ begin
   HideNoConflict := mniViewHideNoConflict.Checked;
   ResetActiveTree;
   Settings.WriteBool('View', 'HodeNoConflict', HideNoConflict);
+  Settings.UpdateFile;
+end;
+
+procedure TfrmMain.mniViewStickAutoClick(Sender: TObject);
+begin
+  if not mniViewStickAuto.Checked then
+    StickViewNodeLabel := '*'
+  else
+    StickViewNodeLabel := '';
+
+  Settings.WriteString('View', 'StickViewNodeLabel', StickViewNodeLabel);
+  Settings.UpdateFile;
+end;
+
+procedure TfrmMain.mniViewStickSelectedClick(Sender: TObject);
+begin
+  if not mniViewStickSelected.Checked then
+    StickViewNodeLabel := GetViewNodePositionLabel(vstView.FocusedNode)
+  else
+    StickViewNodeLabel := '';
+
+  Settings.WriteString('View', 'StickViewNodeLabel', StickViewNodeLabel);
   Settings.UpdateFile;
 end;
 
@@ -10547,6 +10653,9 @@ begin
       FilterByHasVWDMesh := cbByHasVWDMesh.Checked;
       FilterHasVWDMesh := cbHasVWDMesh.Checked;
 
+      FilterByHasPrecombinedMesh := cbByHasPrecombinedMesh.Checked;
+      FilterHasPrecombinedMesh := cbHasPrecombinedMesh.Checked;
+
       FilterBySignature := cbRecordSignature.Checked;
       FilterSignatures := RecordSignatures;
 
@@ -10910,7 +11019,7 @@ begin
               )
             ) or
             (
-              (FilterByPersistent or FilterByVWD or FilterByHasVWDMesh) and (
+              (FilterByPersistent or FilterByVWD or FilterByHasVWDMesh or FilterByHasPrecombinedMesh) and (
                 not Supports(NodeData.Element, IwbMainRecord, MainRecord) or
                 (
                   (MainRecord.Signature <> 'REFR') and
@@ -10963,6 +11072,12 @@ begin
                       Supports(Rec.LinksTo, IwbMainRecord, MainRecord) and
                       MainRecord.HasVisibleWhenDistantMesh
                     ) <> FilterHasVWDMesh
+                  )
+                ) or
+                (
+                  FilterByHasPrecombinedMesh and
+                  (
+                    MainRecord.HasPrecombinedMesh <> FilterHasPrecombinedMesh
                   )
                 )
               )
@@ -11060,6 +11175,9 @@ begin
   FilterByHasVWDMesh := False;
   FilterHasVWDMesh := False;
 
+  FilterByHasPrecombinedMesh := False;
+  FilterHasPrecombinedMesh := False;
+
   FilterBySignature := False;
   FilterSignatures := '';
 
@@ -11124,6 +11242,9 @@ begin
 
   FilterByHasVWDMesh := False;
   FilterHasVWDMesh := False;
+
+  FilterByHasPrecombinedMesh := False;
+  FilterHasPrecombinedMesh := False;
 
   FilterBySignature := False;
   FilterSignatures := '';
@@ -11847,8 +11968,10 @@ var
   TargetNode    : PVirtualNode;
   TargetIndex   : Integer;
   TargetElement : IwbElement;
+  NodeLabel     : String;
 begin
   mniViewHideNoConflict.Visible := not ComparingSiblings;
+  mniViewStick.Visible := False;
   mniViewEdit.Visible := False;
   mniViewAdd.Visible := False;
   mniViewNextMember.Visible := False;
@@ -11864,6 +11987,26 @@ begin
 
   if Length(ActiveRecords) < 1 then
     Exit;
+
+  mniViewStick.Visible := True;
+  NodeLabel := GetViewNodePositionLabel(vstView.FocusedNode);
+  if StickViewNodeLabel = '*' then begin
+    mniViewStickAuto.Checked := True;
+    mniViewStickSelected.Checked := False;
+    mniViewStickSelected.Visible := NodeLabel <> '';
+    mniViewStickSelected.Caption := NodeLabel;
+  end
+  else if StickViewNodeLabel <> '' then begin
+    mniViewStickAuto.Checked := False;
+    mniViewStickSelected.Checked := True;
+    mniViewStickSelected.Caption := StickViewNodeLabel;
+  end
+  else begin
+    mniViewStickAuto.Checked := False;
+    mniViewStickSelected.Checked := False;
+    mniViewStickSelected.Visible := NodeLabel <> '';
+    mniViewStickSelected.Caption := NodeLabel;
+  end;
 
   if vstView.FocusedColumn > 0 then begin
     NodeDatas := vstView.GetNodeData(vstView.FocusedNode);
@@ -12605,9 +12748,75 @@ begin
       Exit;
 end;
 
+function TfrmMain.GetViewNodePositionLabel(aNode: PVirtualNode = nil): string;
+var
+  Node: PVirtualNode;
+begin
+  if Assigned(aNode) then
+    Node := aNode
+  else
+    Node := vstView.TopNode;
+
+  while Assigned(Node) and (Node <> vstView.RootNode) do begin
+    Result := '\' + vstView.Text[Node, 0, False] + Result;
+    Node := Node.Parent;
+  end;
+
+  if Length(Result) <> 0 then
+    Delete(Result, 1, 1);
+end;
+
+procedure TfrmMain.SetViewNodePositionLabel(aViewLabel: string);
+var
+  Node, LabelNode: PVirtualNode;
+  s, DefName: string;
+  i: integer;
+  bFound: Boolean;
+begin
+  if aViewLabel = '' then
+    Exit;
+
+  Node := vstView.GetFirst;
+
+  if not Assigned(Node) then
+    Exit;
+
+  LabelNode := nil;
+
+  with TStringList.Create do try
+    Delimiter := '\';
+    StrictDelimiter := True;
+    DelimitedText := aViewLabel;
+
+    for i := 0 to Pred(Count) do begin
+      DefName := Strings[i];
+      bFound := False;
+      while Assigned(Node) do begin
+        s := vstView.Text[Node, 0, False];
+        if s = DefName then begin
+          LabelNode := Node;
+          Node := Node.FirstChild;
+          bFound := True;
+          Break;
+        end;
+        Node := vstView.GetNextSibling(Node);
+      end;
+
+      if not Assigned(Node) or not bFound then
+        Break;
+    end;
+  finally
+    Free;
+  end;
+
+  if Assigned(LabelNode) then
+    vstView.TopNode := LabelNode;
+end;
+
 procedure TfrmMain.SetActiveRecord(const aMainRecord: IwbMainRecord);
 var
   i                           : Integer;
+  ViewLabel: string;
 begin
   UserWasActive := True;
 
@@ -12621,6 +12830,16 @@ begin
   try
     vstView.BeginUpdate;
     try
+      // automatic sticking to the current top visible node
+      if StickViewNodeLabel = '*' then
+        ViewLabel := GetViewNodePositionLabel
+      // manual to the stored node label
+      else if StickViewNodeLabel <> '' then
+        ViewLabel := StickViewNodeLabel
+      // no sticking
+      else
+        ViewLabel := '';
+
       lvReferencedBy.Items.Clear;
       vstView.Clear;
       vstView.NodeDataSize := 0;
@@ -12683,6 +12902,7 @@ begin
         InitConflictStatus(vstView.RootNode, ActiveMaster.IsInjected and not (ActiveMaster.Signature = 'GMST'), @ActiveRecords[0]);
         vstView.FullExpand;
         UpdateColumnWidths;
+        SetViewNodePositionLabel(ViewLabel);
         if pgMain.ActivePage <> tbsReferencedBy then
           pgMain.ActivePage := tbsView;
       end
@@ -13111,10 +13331,15 @@ end;
 procedure TfrmMain.SetDefaultNodeHeight(aHeight: Integer);
 begin
   vstNav.DefaultNodeHeight := aHeight;
+  vstNav.Header.Height := aHeight + 3;
   vstView.DefaultNodeHeight := aHeight;
+  vstView.Header.Height := aHeight + 3;
   vstSpreadSheetWeapon.DefaultNodeHeight := aHeight;
+  vstSpreadSheetWeapon.Header.Height := aHeight + 3;
   vstSpreadSheetArmor.DefaultNodeHeight := aHeight;
+  vstSpreadSheetArmor.Header.Height := aHeight + 3;
   vstSpreadSheetAmmo.DefaultNodeHeight := aHeight;
+  vstSpreadSheetAmmo.Header.Height := aHeight + 3;
 end;
 
 function TfrmMain.ValidateCRC(const aFileName  : string;
@@ -13229,7 +13454,10 @@ begin
       tbsMessages.Highlighted := True;
   end;
 
-  if AutoDone then frmMain.Close;   // Wait until NewMessages are processed.
+  if AutoDone then begin
+    AutoDone := False;
+    frmMain.Close;   // Wait until NewMessages are processed.
+  end;
 
   if (wbToolMode in [tmMasterUpdate, tmMasterRestore, tmESMify, tmESPify, tmSortAndCleanMasters, tmCheckForITM,
         tmCheckForDR, tmCheckForErrors]) and wbLoaderDone and not wbMasterUpdateDone then begin
@@ -13863,9 +14091,10 @@ procedure TfrmMain.vstViewGetText(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType;
   var CellText: string);
 var
-  NodeDatas                   : PViewNodeDatas;
-  Element                     : IwbElement;
-  i                           : Integer;
+  NodeDatas    : PViewNodeDatas;
+  Element      : IwbElement;
+  ElementCount : Integer;
+  i,j          : Integer;
 begin
   CellText := '';
   NodeDatas := Sender.GetNodeData(Node);
@@ -13907,9 +14136,11 @@ begin
           Break;
       end;
       if Assigned(Element) and (Element.ElementType in [etMainRecord, etSubRecordStruct]) then begin
+        ElementCount := (Element.Def as IwbRecordDef).MemberCount;
         i := (Element as IwbContainer).AdditionalElementCount;
-        if Integer(Node.Index) >= i then
-          with (Element.Def as IwbRecordDef).Members[Integer(Node.Index) - i] do begin
+        j := Integer(Node.Index);
+        if (j >= i) and ((j-i) < ElementCount) then
+          with (Element.Def as IwbRecordDef).Members[j - i] do begin
             if DefType = dtSubRecord then
               CellText := Displayable(DefaultSignature) + ' - ' + GetName
             else
@@ -14540,9 +14771,12 @@ begin
       if (Column < 1) and (Element.ElementType = etMainRecord) then begin
         if Supports(Element.Container, IwbGroupRecord, GroupRecord) and (GroupRecord.GroupType in [1, 8..10]) then begin
           MainRecord := Element as IwbMainRecord;
-          if Assigned(MainRecord.Def) then
-            CellText := MainRecord.Def.GetName
-          else
+          if Assigned(MainRecord.Def) then begin
+            if MainRecord.HasPrecombinedMesh then
+              CellText := '[' + MainRecord.Def.GetName + ']'
+            else
+              CellText := MainRecord.Def.GetName;
+          end else
             CellText := MainRecord.Signature;
         end;
       end;
@@ -15799,6 +16033,14 @@ begin
     FilterHasVWDMesh := Value;
     Done := True;
   end else
+  if SameText(Identifier, 'FilterByHasPrecombinedMesh') then begin
+    FilterByHasPrecombinedMesh := Value;
+    Done := True;
+  end else
+  if SameText(Identifier, 'FilterHasPrecombinedMesh') then begin
+    FilterHasPrecombinedMesh := Value;
+    Done := True;
+  end else
   if SameText(Identifier, 'FlattenBlocks') then begin
     FlattenBlocks := Value;
     Done := True;
@@ -16105,10 +16347,10 @@ begin
             try
               m := TStringList.Create;
               try
-                // All games prior to Skyrim load BSA files with partial matching, Skyrim requires exact names match and
+                // All games except Skyrim load BSA files with partial matching, Skyrim requires exact names match and
                 //   can use a private ini to specify the bsa to use.
                 if HasBSAs(ChangeFileExt(ltLoadList[i], ''), ltDataPath,
-                    wbGameMode in [gmFO4, gmTES5], wbGameMode in [gmTES5], n, m)>0 then begin
+                    wbGameMode in [gmTES5], wbGameMode in [gmTES5], n, m)>0 then begin
                       for j := 0 to Pred(n.Count) do
                         if wbLoadBSAs then begin
                           LoaderProgress('[' + n[j] + '] Loading Resources.');

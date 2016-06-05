@@ -143,24 +143,29 @@ var
   Container   : IwbContainer;
   Target      : IwbElement;
 begin
-  if (wbCurrentTick>0) and (wbCurrentTick+500<GetTickCount) then begin
-    wbProgressCallback('');
-    wbCurrentTick := GetTickCount;
-  end;
-  Container := aSource.Container;
-  if Assigned(Container) then begin
-    if Supports(Container, IwbMainRecord, MainRecord) then
-      Container := MainRecord.HighestOverrideOrSelf[aFile.LoadOrder];
-    Target := wbCopyElementToFile(Container, aFile, False, False, aPrefixRemove, aPrefix, aSuffix)
-  end else begin
-    Result := aFile;
-    Exit;
-  end;
+  Inc(wbCopyIsRunning);
+  try
+    if (wbCurrentTick>0) and (wbCurrentTick+500<GetTickCount) then begin
+      wbProgressCallback('');
+      wbCurrentTick := GetTickCount;
+    end;
+    Container := aSource.Container;
+    if Assigned(Container) then begin
+      if Supports(Container, IwbMainRecord, MainRecord) then
+        Container := MainRecord.HighestOverrideOrSelf[aFile.LoadOrder];
+      Target := wbCopyElementToFile(Container, aFile, False, False, aPrefixRemove, aPrefix, aSuffix)
+    end else begin
+      Result := aFile;
+      Exit;
+    end;
 
-  if Assigned(Target) then
-    Result := Target.AddIfMissing(aSource, aAsNew, aDeepCopy, aPrefixRemove, aPrefix, aSuffix)
-  else
-    Result := nil;
+    if Assigned(Target) then
+      Result := Target.AddIfMissing(aSource, aAsNew, aDeepCopy, aPrefixRemove, aPrefix, aSuffix)
+    else
+      Result := nil;
+  finally
+    Dec(wbCopyIsRunning);
+  end;
 end;
 
 function wbCopyElementToRecord(const aSource: IwbElement; aMainRecord: IwbMainRecord; aAsNew, aDeepCopy: Boolean): IwbElement;
@@ -846,6 +851,8 @@ type
     mrsSearchedChildGroup,
     mrsHasVWDMeshChecked,
     mrsHasVWDMesh,
+    mrsHasPrecombinedMeshChecked,
+    mrsHasPrecombinedMesh,
     mrsBaseRecordChecked,
     mrsQuickInit,
     mrsQuickInitDone,
@@ -874,6 +881,8 @@ type
     mrFullName         : string;
     mrStates           : TwbMainRecordStates;
     mrBaseRecordID     : Cardinal;
+    mrPrecombinedCellID: Cardinal;
+    mrPrecombinedID    : Cardinal;
     mrConflictAll      : TConflictAll;
     mrConflictThis     : TConflictThis;
     mrDataStorage      : TBytes;
@@ -1013,6 +1022,8 @@ type
     procedure SetIsVisibleWhenDistant(aValue: Boolean);
     function GetHasVisibleWhenDistantMesh: Boolean;
     function GetHasMesh: Boolean;
+    function GetHasPrecombinedMesh: Boolean;
+    function GetPrecombinedMesh: string;
     function GetIsInitiallyDisabled: Boolean;
     procedure SetIsInitiallyDisabled(aValue: Boolean);
 
@@ -3042,8 +3053,8 @@ begin
       if Supports(FileHeader.ElementByName['Master Files'], IwbContainerElementRef, MasterFiles) then
         for i := 0 to Pred(MasterFiles.ElementCount) do begin
           if Supports(MasterFiles.Elements[i], IwbContainerElementRef, MasterFile) then begin
-
-            if FileHeader.IsESM then
+            // Fallout 4 CK creates ONAMs in ESP too
+            if FileHeader.IsESM or (wbGameMode = gmFO4) then
               while j <= High(flRecords) do begin
                 Current := flRecords[j];
                 FormID := Current.FixedFormID;
@@ -3067,10 +3078,21 @@ begin
                    (Signature = 'PFLA') or {>>> Skyrim <<<}
                    (Signature = 'PCON') or {>>> Skyrim <<<}
                    (Signature = 'PBAR') or {>>> Skyrim <<<}
-                   (Signature = 'PHZD')    {>>> Skyrim <<<}
+                   (Signature = 'PHZD') or {>>> Skyrim <<<}
+                   // Fallout 4 (and later games?)
+                   ((wbGameMode >= gmFO4) and (
+                     (Signature = 'SCEN') or
+                     (Signature = 'DLBR') or
+                     (Signature = 'DIAL') or
+                     (Signature = 'INFO')
+                   ))
                 then begin
 
                   if (not wbMasterUpdateFilterONAM) or Current.IsWinningOverride then begin
+                    // ONAMs are for overridden temporary refs only
+                    if Current.IsPersistent then
+                      Continue;
+
                     if not Assigned(ONAMs) then begin
                       if not Supports(FileHeader.Add('ONAM', True), IwbContainerElementRef, ONAMs) then
                         Assert(False);
@@ -3079,10 +3101,7 @@ begin
                     end else
                       NewONAM := ONAMs.Assign(High(Integer), nil, True);
 
-                    {if wbDisplayLoadOrderFormID then
-                      NewONAM.NativeValue := Current.LoadOrderFormID
-                    else}
-                      NewONAM.NativeValue := FormID;
+                    NewONAM.NativeValue := FormID;
 
                     if wbMasterUpdateFixPersistence and not Current.IsPersistent and not Current.IsMaster then begin
                       Master := Current.Master;
@@ -4640,7 +4659,7 @@ begin
     Exit;
   if Supports(aElement.Container, IwbContainer, Container) then begin
     for i := 0 to Pred(RecordDef.MemberCount) do
-      if RecordDef.Members[i].Name = aElement.Name then
+      if RecordDef.Members[i].Equals(aElement.Def) then
         break;
     if i < RecordDef.MemberCount then begin
       RemoveElement(aElement);
@@ -4720,7 +4739,7 @@ begin
     Exit;
   if Supports(aElement.Container, IwbContainer, Container) then begin
     for i := 0 to Pred(RecordDef.MemberCount) do
-      if RecordDef.Members[i].Name = aElement.Name then
+      if RecordDef.Members[i].Equals(aElement.Def) then
         break;
     if i < RecordDef.MemberCount then begin
       RemoveElement(aElement);
@@ -6848,6 +6867,110 @@ begin
     end;
   end;
   Result := mrsHasMesh in mrStates;
+end;
+
+function TwbMainRecord.GetHasPrecombinedMesh: Boolean;
+begin
+  if not (mrsHasPrecombinedMeshChecked in mrStates) then
+    Self.GetPrecombinedMesh;
+
+  Result := mrsHasPrecombinedMesh in mrStates;
+end;
+
+type
+  TwbPrecombinedInfo = record
+    Ref, ID: Cardinal;
+  end;
+
+var
+  PrecombinedCacheFileName: string;
+  PrecombinedCacheCellFormID: Cardinal;
+  PrecombinedCache: array of TwbPrecombinedInfo;
+
+function TwbMainRecord.GetPrecombinedMesh: string;
+var
+  Signature   : TwbSignature;
+  SelfRef     : IwbContainerElementRef;
+  Group       : IwbGroupRecord;
+  Cell        : IwbMainRecord;
+  CombinedRefs, CombinedRef: IwbContainerElementRef;
+  cnt, i      : Cardinal;
+  s: string;
+begin
+  Result := '';
+
+  if not (mrsHasPrecombinedMeshChecked in mrStates) then begin
+
+    // we need file for cache checking
+    if not Assigned(IwbElement(Self)._File) then
+      Exit;
+
+    Include(mrStates, mrsHasPrecombinedMeshChecked);
+    Self.mrPrecombinedCellID := 0;
+    Self.mrPrecombinedID := 0;
+
+    if wbGameMode <> gmFO4 then
+      Exit;
+
+    Signature := Self.GetSignature;
+
+    if (Signature <> 'REFR') and
+       (Signature <> 'PGRE') and
+       (Signature <> 'PMIS') and
+       (Signature <> 'PARW') and
+       (Signature <> 'PBEA') and
+       (Signature <> 'PFLA') and
+       (Signature <> 'PCON') and
+       (Signature <> 'PBAR') and
+       (Signature <> 'PHZD')
+    then
+      Exit;
+
+    SelfRef := Self as IwbContainerElementRef;
+
+    // markers can't be precombined
+    if Cardinal(SelfRef.ElementNativeValues['NAME']) < $800 then
+      Exit;
+
+    if Supports(SelfRef.Container, IwbGroupRecord, Group) then
+      Cell := Group.ChildrenOf;
+
+    if not Assigned(Cell) then
+      Exit;
+
+    s := IwbElement(Self)._File.Name;
+    i := Cell.FormID;
+
+    // store cell's precombined index in cache
+    if (i <> PrecombinedCacheCellFormID) or (s <> PrecombinedCacheFileName) then begin
+      PrecombinedCacheCellFormID := i;
+      PrecombinedCacheFileName := s;
+      SetLength(PrecombinedCache, 0);
+
+      if Supports(Cell.ElementByPath['XCRI\References'], IwbContainerElementRef, CombinedRefs) then begin
+        cnt := CombinedRefs.ElementCount;
+        SetLength(PrecombinedCache, cnt);
+        for i := 0 to Pred(cnt) do
+          if Supports(CombinedRefs[i], IwbContainerElementRef, CombinedRef) and (CombinedRef.ElementCount = 2) then begin
+            PrecombinedCache[i].Ref := CombinedRef.Elements[0].NativeValue;
+            PrecombinedCache[i].ID := CombinedRef.Elements[1].NativeValue;
+          end;
+      end;
+    end;
+
+    // search for ref in precombined index cache
+    if Length(PrecombinedCache) > 0 then
+      for i := Low(PrecombinedCache) to High(PrecombinedCache) do
+        if PrecombinedCache[i].Ref = Self.GetFormID then begin
+          Self.mrPrecombinedCellID := Cell.FormID and $00FFFFFF;
+          Self.mrPrecombinedID := PrecombinedCache[i].ID;
+          Include(mrStates, mrsHasPrecombinedMesh);
+          Break;
+        end;
+  end;
+
+  if mrsHasPrecombinedMesh in mrStates then
+    Result := 'Precombined\' + IntToHex(Self.mrPrecombinedCellID, 8) + '_' + IntToHex(Self.mrPrecombinedID, 8) + '_OC.nif';
 end;
 
 function TwbMainRecord.GetHasVisibleWhenDistantMesh: Boolean;
@@ -11912,7 +12035,8 @@ end;
 procedure TwbElement.BeforeDestruction;
 begin
   Assert(eExternalRefs = 0);
-  Assert(FRefCount = 0);
+  if (FRefCount and $7FFFFFFF) <> 0 then
+    Assert(FRefCount = 0);
   Include(eStates, esDestroying);
   inherited BeforeDestruction;
   //LockedInc(eExternalRefs);
@@ -12160,7 +12284,7 @@ end;
 
 procedure TwbElement.FreeInstance;
 begin
-  if FRefCount <> 1 then
+  if (FRefCount and $7FFFFFFF) <> 1 then
     Assert(FRefCount = 1);
   Assert(eExternalRefs = 1);
   inherited;
@@ -13326,6 +13450,9 @@ begin
         SubRecord.SetDef(ElementDef as IwbSubRecordDef);
         AddElement(SubRecord);
       end;
+      dtSubRecordArray: begin
+        Element := TwbSubRecordArray.Create(Self, aContainer, aPos, ElementDef as IwbSubRecordArrayDef);
+      end;
       dtSubRecordStruct:
         Element := TwbSubRecordStruct.Create(Self, aContainer, aPos, ElementDef as IwbSubRecordStructDef);
     else
@@ -14165,7 +14292,7 @@ end;
 
 function TwbArray.IsElementRemoveable(const aElement: IwbElement): Boolean;
 begin
-  Result := IsElementEditable(aElement) and ((vbValueDef as IwbArrayDef).ElementCount <= 0) and (Length(cntElements)>1);
+  Result := IsElementEditable(aElement) and ((vbValueDef as IwbArrayDef).ElementCount <= 0) { and (Length(cntElements)>1)};
 end;
 
 procedure TwbArray.PrepareSave;

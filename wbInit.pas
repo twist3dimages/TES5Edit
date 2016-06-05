@@ -72,6 +72,7 @@ uses
   wbDefinitionsFO3,
   wbDefinitionsFO3Saves,
   wbDefinitionsFO4,
+  wbDefinitionsFO4Saves,
   wbDefinitionsTES3,
   wbDefinitionsTES4,
   wbDefinitionsTES4Saves,
@@ -181,7 +182,7 @@ begin
     Result := wbFindNextValidCmdLineFileName(startingIndex, aValue, defaultPath);
   until not Result or wbCheckForPluginExtension(aValue);
   if Result  then
-    if (AnsiCompareText(ExpandFileName(ExtractFilePath(aValue)), ExpandFileName(defaultPath)) = 0) then begin
+    if (AnsiCompareText(ExtractFilePath(ExpandFileName(aValue)), ExpandFileName(defaultPath)) = 0) then begin
       aValue := ExtractFileName(aValue);
       if not Assigned(wbPluginsToUse) then wbPluginsToUse := TStringList.Create;
       wbPluginsToUse.Add(aValue);
@@ -465,7 +466,7 @@ begin
       end;
   // if still nothing, then default value
   if AppGameMode = '' then
-    AppGameMode := 'tes5';
+    AppGameMode := 'fo4';
 
   // the same for tool mode
   for s in ToolModes do
@@ -649,7 +650,7 @@ begin
       ShowMessage('Application '+wbGameName+' does not currently support '+wbToolName);
       Exit;
     end;
-    if not (wbToolSource in [tsPlugins]) then begin
+    if not (wbToolSource in [tsPlugins, tsSaves]) then begin
       ShowMessage('Application '+wbGameName+' does not currently support '+wbSourceName);
       Exit;
     end;
@@ -705,6 +706,7 @@ begin
       tsPlugins: DefineFO3;
     end;
     gmFO4:  case wbToolSource of
+      tsSaves:   DefineFO4Saves;
       tsPlugins: DefineFO4;
     end;
     gmTES3: case wbToolSource of

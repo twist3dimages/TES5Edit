@@ -672,6 +672,14 @@ begin
     Element.BuildRef;
 end;
 
+procedure IwbElement_MarkModifiedRecursive(var Value: Variant; Args: TJvInterpreterArgs);
+var
+  Element: IwbElement;
+begin
+  if Supports(IInterface(Args.Values[0]), IwbElement, Element) then
+    Element.MarkModifiedRecursive;
+end;
+
 procedure _wbCopyElementToFile(var Value: Variant; Args: TJvInterpreterArgs);
 var
   Element: IwbElement;
@@ -1214,6 +1222,24 @@ begin
     MainRecord.GetGridCell(Rec);
     Value := wbGridCell2Var(Rec);
   end;
+end;
+
+procedure IwbMainRecord_HasPrecombinedMesh(var Value: Variant; Args: TJvInterpreterArgs);
+var
+  MainRecord: IwbMainRecord;
+begin
+  Value := False;
+  if Supports(IInterface(Args.Values[0]), IwbMainRecord, MainRecord) then
+    Value := MainRecord.HasPrecombinedMesh;
+end;
+
+procedure IwbMainRecord_PrecombinedMesh(var Value: Variant; Args: TJvInterpreterArgs);
+var
+  MainRecord: IwbMainRecord;
+begin
+  Value := '';
+  if Supports(IInterface(Args.Values[0]), IwbMainRecord, MainRecord) then
+    Value := MainRecord.PrecombinedMesh;
 end;
 
 
@@ -1856,6 +1882,7 @@ begin
     AddFunction(cUnit, 'GetElementState', IwbElement_GetElementState, 2, [varEmpty, varEmpty], varBoolean);
     AddFunction(cUnit, 'ReportRequiredMasters', IwbElement_ReportRequiredMasters, 4, [varEmpty, varEmpty, varEmpty, varEmpty], varEmpty);
     AddFunction(cUnit, 'BuildRef', IwbElement_BuildRef, 1, [varEmpty], varEmpty);
+    AddFunction(cUnit, 'MarkModifiedRecursive', IwbElement_MarkModifiedRecursive, 1, [varEmpty], varEmpty);
 
     { IwbContainer }
     AddFunction(cUnit, 'GetElementEditValues', IwbContainer_GetElementEditValues, 2, [varEmpty, varString], varEmpty);
@@ -1917,6 +1944,8 @@ begin
     AddFunction(cUnit, 'GetPosition', IwbMainRecord_GetPosition, 1, [varEmpty], varEmpty);
     AddFunction(cUnit, 'GetRotation', IwbMainRecord_GetRotation, 1, [varEmpty], varEmpty);
     AddFunction(cUnit, 'GetGridCell', IwbMainRecord_GetGridCell, 1, [varEmpty], varEmpty);
+    AddFunction(cUnit, 'HasPrecombinedMesh', IwbMainRecord_HasPrecombinedMesh, 1, [varEmpty], varEmpty);
+    AddFunction(cUnit, 'PrecombinedMesh', IwbMainRecord_PrecombinedMesh, 1, [varEmpty], varEmpty);
 
     { IwbGroupRecord }
     AddFunction(cUnit, 'GroupType', IwbGroupRecord_GroupType, 1, [varEmpty], varEmpty);
