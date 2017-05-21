@@ -30,6 +30,13 @@ const
   wbHardcodedDat = '.Hardcoded.keep.this.with.the.exe.and.otherwise.ignore.it.I.really.mean.it.dat';
 
 type
+{$IFDEF Win64}
+  TwbPointerAsInt = UInt64;
+{$ELSE  Win64}
+  TwbPointerAsInt = Cardinal;
+{$ENDIF Win64}
+
+type
   TwbProgressCallback = procedure(const aStatus: string);
   TwbPointerArray = array [0..Pred(High(Integer) div SizeOf(Pointer))] of Pointer;
   PwbPointerArray = ^TwbPointerArray;       {General array of pointer}

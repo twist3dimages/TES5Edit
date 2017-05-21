@@ -1661,9 +1661,9 @@ begin
     Result := CmpW32(Ord(IwbElement(Item1).ElementType), Ord(IwbElement(Item2).ElementType));
     if Result = 0 then begin
       if IwbElement(Item1).ElementType = etSubRecord then
-        Result := CmpW32(
-          Cardinal((IwbElement(Item1) as IwbSubRecord).DataBasePtr),
-          Cardinal((IwbElement(Item2) as IwbSubRecord).DataBasePtr)
+        Result := CmpW32( // TBD: x64 version needed
+          TwbPointerAsInt((IwbElement(Item1) as IwbSubRecord).DataBasePtr),
+          TwbPointerAsInt((IwbElement(Item2) as IwbSubRecord).DataBasePtr)
         );
     end;
   end;
@@ -1697,14 +1697,14 @@ begin
       if Result = 0 then begin
         if IwbElement(Item1).ElementType = etSubRecord then
           Result := CmpW32(
-            Cardinal((IwbElement(Item1) as IwbSubRecord).DataBasePtr),
-            Cardinal((IwbElement(Item2) as IwbSubRecord).DataBasePtr)
+            TwbPointerAsInt((IwbElement(Item1) as IwbSubRecord).DataBasePtr),
+            TwbPointerAsInt((IwbElement(Item2) as IwbSubRecord).DataBasePtr)
           ){
         else try
           if Supports(IwbElement(Item1), IwbContainer, Container1) and Supports(IwbElement(Item2), IwbContainer, Container2) then
             Result := CmpW32(
-              Cardinal((Container1 as TwbContainer).cntElements),  // Arbitrary value that should not change during the sort
-              Cardinal((Container2 as TwbContainer).cntElements)
+              TwbPointerAsInt((Container1 as TwbContainer).cntElements),  // Arbitrary value that should not change during the sort
+              TwbPointerAsInt((Container2 as TwbContainer).cntElements)
             );
         except
           // If an Element supporting IwbContainer could NOT be a TwbContainer
@@ -1847,6 +1847,7 @@ procedure TwbFile.AddMainRecord(const aRecord: IwbMainRecord);
 const
   MGEF      : TwbSignature = 'MGEF';
   GMST      : TwbSignature = 'GMST';
+//  NAVM      : TwbSignature = 'NAVM';
 var
   FormID    : Cardinal;
   s         : string;
@@ -1906,6 +1907,8 @@ begin
 
   Signature := aRecord.Signature;
 
+//  if (Cardinal(Signature) = Cardinal(NAVM)) then
+//    Signature := NAVM;
   if (Cardinal(Signature) = Cardinal(MGEF)) or (Cardinal(Signature) = Cardinal(GMST)) or wbTrackAllEditorID then begin
     s := aRecord.EditorID;
     if s <> '' then begin
@@ -2504,7 +2507,7 @@ begin
   if not Assigned(flView) then
     RaiseLastOSError;
 
-  flEndPtr := Pointer( Cardinal(flView) + GetFileSize(flFileHandle, nil) );
+  flEndPtr := Pointer( TwbPointerAsInt(flView) + GetFileSize(flFileHandle, nil) );
 
   flProgress('File loaded');
 end;
@@ -3258,7 +3261,7 @@ begin
 
   flProgress('Header processed. Expecting ' + IntToStr(Length(flRecords)) + ' records');
 
-  while Cardinal(CurrentPtr) < Cardinal(flEndPtr) do begin
+  while TwbPointerAsInt(CurrentPtr) < TwbPointerAsInt(flEndPtr) do begin
     Rec := TwbRecord.CreateForPtr(CurrentPtr, flEndPtr, Self, nil);
     flProgress(Rec.Name + ' processed');
   end;
@@ -3820,7 +3823,7 @@ begin
                             SetLength(dcDataStorage, OurSize);
                             if OurSize > 0 then begin
                               dcDataBasePtr := @dcDataStorage[Low(dcDataStorage)];
-                              dcDataEndPtr := Pointer( Cardinal(dcDataBasePtr) + OurSize );
+                              dcDataEndPtr := Pointer( TwbPointerAsInt(dcDataBasePtr) + OurSize );
                             end else begin
                               dcDataBasePtr := @EmptyPtr;
                               dcDataEndPtr := @EmptyPtr;
@@ -5499,7 +5502,7 @@ begin
         GroupRecord := nil;
 
         BasePtr := dcBasePtr;
-        with TwbRecordHeaderStruct.Create(Self, BasePtr, Pointer( Cardinal(BasePtr) + wbSizeOfMainRecordStruct), mrDef.RecordHeaderStruct, '') do begin
+        with TwbRecordHeaderStruct.Create(Self, BasePtr, Pointer( TwbPointerAsInt(BasePtr) + wbSizeOfMainRecordStruct), mrDef.RecordHeaderStruct, '') do begin
           Include(dcFlags, dcfDontSave);
           SetSortOrder(-1);
           SetMemoryOrder(Low(Integer));
@@ -5873,7 +5876,7 @@ begin
 
       Move(Stream.Memory^, dcBasePtr^, Stream.Size);
 
-      dcEndPtr := Pointer( Cardinal(dcBasePtr) + Stream.Size);
+      dcEndPtr := Pointer( TwbPointerAsInt(dcBasePtr) + Stream.Size);
 
       Exclude(dcFlags, dcfStorageInvalid);
       mrDataStorage := nil;
@@ -6042,14 +6045,14 @@ begin
       SetLength(mrDataStorage, UncompressedLength );
 
       DecompressToUserBuf(
-        Pointer( Cardinal(dcDataBasePtr) + SizeOf(Cardinal) ),
+        Pointer( TwbPointerAsInt(dcDataBasePtr) + SizeOf(Cardinal) ),
         mrStruct.mrsDataSize - SizeOf(Cardinal),
         @mrDataStorage[0],
         UncompressedLength
       );
 
       dcDataBasePtr := @mrDataStorage[0];
-      dcDataEndPtr := Pointer( Cardinal(dcDataBasePtr) + UncompressedLength );
+      dcDataEndPtr := Pointer( TwbPointerAsInt(dcDataBasePtr) + UncompressedLength );
     end else begin
       mrDataStorage := nil;
       dcDataBasePtr := @EmptyPtr;
@@ -6085,7 +6088,7 @@ begin
   GroupRecord := nil;
 
   BasePtr := dcBasePtr;
-  with TwbRecordHeaderStruct.Create(Self, BasePtr, Pointer( Cardinal(BasePtr) + wbSizeOfMainRecordStruct), mrDef.RecordHeaderStruct, '') do begin
+  with TwbRecordHeaderStruct.Create(Self, BasePtr, Pointer( TwbPointerAsInt(BasePtr) + wbSizeOfMainRecordStruct), mrDef.RecordHeaderStruct, '') do begin
     Include(dcFlags, dcfDontSave);
     SetSortOrder(-1);
     SetMemoryOrder(Low(Integer));
@@ -6154,7 +6157,7 @@ begin
     GroupRecord := nil;
 
     CurrentPtr := dcBasePtr;
-    with TwbRecordHeaderStruct.Create(Self, CurrentPtr, Pointer( Cardinal(CurrentPtr) + wbSizeOfMainRecordStruct), mrDef.RecordHeaderStruct, '') do begin
+    with TwbRecordHeaderStruct.Create(Self, CurrentPtr, Pointer( TwbPointerAsInt(CurrentPtr) + wbSizeOfMainRecordStruct), mrDef.RecordHeaderStruct, '') do begin
       Include(dcFlags, dcfDontSave);
       SetSortOrder(-1);
       SetMemoryOrder(Low(Integer));
@@ -6166,7 +6169,7 @@ begin
   s := '';
 {$ENDIF}
   CurrentPtr := GetDataBasePtr;
-  while Cardinal(CurrentPtr) < Cardinal(dcDataEndPtr) do begin
+  while TwbPointerAsInt(CurrentPtr) < TwbPointerAsInt(dcDataEndPtr) do begin
     Element := TwbRecord.CreateForPtr(CurrentPtr, dcDataEndPtr, Self, nil);
 {$IFDEF DBGSUBREC}
     if Supports(Element, IwbSubRecord, CurrentRec) then
@@ -7643,8 +7646,8 @@ var
   RecordDef : PwbRecordDef;
 begin
   if Assigned(dcEndPtr) then begin
-    dcDataBasePtr := Pointer( Cardinal( dcBasePtr ) + wbSizeOfMainRecordStruct );
-    dcDataEndPtr := Pointer( Cardinal( dcDataBasePtr ) + mrStruct.mrsDataSize );
+    dcDataBasePtr := Pointer( TwbPointerAsInt( dcBasePtr ) + wbSizeOfMainRecordStruct );
+    dcDataEndPtr := Pointer( TwbPointerAsInt( dcDataBasePtr ) + mrStruct.mrsDataSize );
     dcEndPtr := dcDataEndPtr;
   end;
 
@@ -7799,7 +7802,7 @@ begin
     RecordHeader := GetElementBySortOrder( (-1) + GetAdditionalElementCount );
     if Assigned(RecordHeader) then begin
       BasePtr := p;
-      RecordHeader.InformStorage(BasePtr, Pointer( Cardinal(BasePtr) + wbSizeOfMainRecordStruct ) );
+      RecordHeader.InformStorage(BasePtr, Pointer( TwbPointerAsInt(BasePtr) + wbSizeOfMainRecordStruct ) );
     end;
   end;
 
@@ -8508,7 +8511,7 @@ begin
       GroupRecord := nil;
 
       BasePtr := dcBasePtr;
-      with TwbRecordHeaderStruct.Create(Self, BasePtr, Pointer( Cardinal(BasePtr) + wbSizeOfMainRecordStruct), mrDef.RecordHeaderStruct, '') do begin
+      with TwbRecordHeaderStruct.Create(Self, BasePtr, Pointer( TwbPointerAsInt(BasePtr) + wbSizeOfMainRecordStruct), mrDef.RecordHeaderStruct, '') do begin
         Include(dcFlags, dcfDontSave);
         SetSortOrder(-1);
         SetMemoryOrder(Low(Integer));
@@ -9194,7 +9197,7 @@ begin
 
   end else begin
     CurrentPosition := aStream.Position;
-    aStream.WriteBuffer(dcBasePtr^, Cardinal(dcEndPtr) - Cardinal(dcBasePtr) );
+    aStream.WriteBuffer(dcBasePtr^, TwbPointerAsInt(dcEndPtr) - TwbPointerAsInt(dcBasePtr) );
     if CurrentPosition + wbSizeOfMainRecordStruct + mrStruct.mrsDataSize <> aStream.Position then
       Assert(CurrentPosition + wbSizeOfMainRecordStruct + mrStruct.mrsDataSize <> aStream.Position);
   end;
@@ -9783,7 +9786,7 @@ begin
     HasUnusedData := not SameText(ValueDef.Name, 'Unused');
     if HasUnusedData and (ValueDef.DefType = dtString) then begin
       HasUnusedData := False;
-      while Cardinal(BasePtr) < Cardinal(dcDataEndPtr) do begin
+      while TwbPointerAsInt(BasePtr) < TwbPointerAsInt(dcDataEndPtr) do begin
         if PAnsiChar(BasePtr)^ <> #0 then begin
           HasUnusedData := True;
           Break;
@@ -10060,14 +10063,14 @@ begin
   Assert(Assigned(dcEndPtr));
 
   SizeNeeded := SizeOf(TwbSubRecordHeaderStruct);
-  SizeAvailable := Cardinal( aEndPtr ) - Cardinal( aBasePtr );
+  SizeAvailable := TwbPointerAsInt( aEndPtr ) - TwbPointerAsInt( aBasePtr );
   Assert( SizeAvailable >= SizeNeeded );
 
   BasePtr := aBasePtr;
   Inc(PByte(aBasePtr), SizeNeeded );
   inherited;
 
-  Assert(srStruct.srsDataSize = Cardinal( dcDataEndPtr ) - Cardinal( dcDataBasePtr ));
+  Assert(srStruct.srsDataSize = TwbPointerAsInt( dcDataEndPtr ) - TwbPointerAsInt( dcDataBasePtr ));
 
   dcBasePtr := BasePtr;
   dcEndPtr := dcDataEndPtr;
@@ -10080,7 +10083,7 @@ var
   Container  : IwbContainer;
 begin
   if Assigned(dcBasePtr) then begin
-    dcDataBasePtr := Pointer( Cardinal( dcBasePtr ) + SizeOf(TwbSubRecordHeaderStruct) );
+    dcDataBasePtr := Pointer( TwbPointerAsInt( dcBasePtr ) + SizeOf(TwbSubRecordHeaderStruct) );
 
     lDataSize := srStruct.srsDataSize;
 
@@ -10097,7 +10100,7 @@ begin
       end;
     end;
 
-    dcDataEndPtr := Pointer( Cardinal( dcDataBasePtr ) + lDataSize );
+    dcDataEndPtr := Pointer( TwbPointerAsInt( dcDataBasePtr ) + lDataSize );
     dcEndPtr := dcDataEndPtr;
   end else begin
     GetMem(dcBasePtr, SizeOf(TwbSubRecordHeaderStruct) );
@@ -10167,7 +10170,7 @@ var
 begin
   Assert(Assigned(dcBasePtr));
   SizeNeeded := SizeOf(TwbSubRecordHeaderStruct);
-  SizeAvailable := Cardinal( aEndPtr ) - Cardinal( aBasePtr );
+  SizeAvailable := TwbPointerAsInt( aEndPtr ) - TwbPointerAsInt( aBasePtr );
   Assert( SizeAvailable >= SizeNeeded );
 
   BasePtr := aBasePtr;
@@ -10180,7 +10183,7 @@ begin
 
   dcBasePtr := BasePtr;
   dcEndPtr := dcDataEndPtr;
-  srStruct.srsDataSize := Cardinal( dcDataEndPtr ) - Cardinal( dcDataBasePtr );
+  srStruct.srsDataSize := TwbPointerAsInt( dcDataEndPtr ) - TwbPointerAsInt( dcDataBasePtr );
 end;
 
 procedure TwbSubRecord.PrepareSave;
@@ -11311,8 +11314,8 @@ var
   Dummy: Integer;
 begin
   if Assigned(dcEndPtr) then begin
-    dcDataBasePtr := Pointer( Cardinal( dcBasePtr ) + wbSizeOfMainRecordStruct );
-    dcDataEndPtr := Pointer( Cardinal( dcBasePtr ) + grStruct.grsGroupSize );
+    dcDataBasePtr := Pointer( TwbPointerAsInt( dcBasePtr ) + wbSizeOfMainRecordStruct );
+    dcDataEndPtr := Pointer( TwbPointerAsInt( dcBasePtr ) + grStruct.grsGroupSize );
     dcEndPtr := dcDataEndPtr;
     if not recSkipped then
       if grStruct.grsGroupType = 0 then
@@ -11467,7 +11470,7 @@ begin
 
   CurrentPtr := GetDataBasePtr;
   PrevMainRecord := nil;
-  while Cardinal(CurrentPtr) < Cardinal(dcDataEndPtr) do begin
+  while TwbPointerAsInt(CurrentPtr) < TwbPointerAsInt(dcDataEndPtr) do begin
     Rec := TwbRecord.CreateForPtr(CurrentPtr, dcDataEndPtr, Self, PrevMainRecord);
     if Supports(Rec, IwbMainRecord, MainRecord) then
       PrevMainRecord := MainRecord;
@@ -12394,7 +12397,7 @@ begin
   Result := '';
 end;
 
-function TwbElement.GetElementID: Cardinal;
+function TwbElement.GetElementID: Cardinal; // TBD: Win64 !!
 begin
   Result := Cardinal(Self);
 end;
@@ -12778,8 +12781,8 @@ begin
       asm nop end;
     CodeSite.Send('Self.SortOrder', Self.eSortOrder);
     CodeSite.Send('Self.MemoryOrder', Self.eMemoryOrder);
-    CodeSite.Send('aBasePtr', Cardinal(aBasePtr), True);
-    CodeSite.Send('aEndPtr', Cardinal(aEndPtr), True);
+    CodeSite.Send('aBasePtr', TwbPointerAsInt(aBasePtr), True);
+    CodeSite.Send('aEndPtr', TwbPointerAsInt(aEndPtr), True);
   end;
   try
   {$ENDIF}
@@ -12788,8 +12791,8 @@ begin
   finally
     if Log then begin
       CodeSite.Send('Self.Value', Self.GetValue);
-      CodeSite.Send('aBasePtr', Cardinal(aBasePtr), True);
-      CodeSite.Send('aEndPtr', Cardinal(aEndPtr), True);
+      CodeSite.Send('aBasePtr', TwbPointerAsInt(aBasePtr), True);
+      CodeSite.Send('aEndPtr', TwbPointerAsInt(aEndPtr), True);
       CodeSite.ExitMethod(Self, 'MergeStorage');
     end;
   end;
@@ -13935,7 +13938,7 @@ begin
     Inc(PByte(aBasePtr), SizePrefix);
 
   if ArrSize > 0 then
-    while not VarSize or ((Cardinal(aBasePtr) < Cardinal(aEndPtr)) or (not Assigned(aBasePtr))) do begin
+    while not VarSize or ((TwbPointerAsInt(aBasePtr) < TwbPointerAsInt(aEndPtr)) or (not Assigned(aBasePtr))) do begin
       if Result then
         t := ''
       else begin
@@ -13970,7 +13973,7 @@ begin
       Dec(ArrSize);
       if ArrSize = 0 then
         Break
-      { else if not (not VarSize or ((Cardinal(aBasePtr) < Cardinal(aEndPtr)) or (not Assigned(aBasePtr)))) then
+      { else if not (not VarSize or ((TwbPointerAsInt(aBasePtr) < TwbPointerAsInt(aEndPtr)) or (not Assigned(aBasePtr)))) then
         wbProgressCallback('Error: not enough data for array. Elements remaining are '+IntToStr(ArrSize)) Silently fails = called at an invalid time };
     end;
 
@@ -14303,11 +14306,11 @@ begin
   for i := 0 to Pred(StructDef.MemberCount) do begin
     ValueDef := StructDef.Members[i];
     if Assigned(aBasePtr) and (i >= OptionalFromElement) then begin
-      over := (Cardinal(aBasePtr) >= Cardinal(aEndPtr));
+      over := (TwbPointerAsInt(aBasePtr) >= TwbPointerAsInt(aEndPtr));
       if not over then begin
         Size := ValueDef.Size[aBasePtr, aEndPtr, aContainer];
         over := (Size<High(Integer)) and  //Intercept multiple calls to Size[ during initialisation
-                ((Cardinal(aBasePtr) + Size) > Cardinal(aEndPtr));
+                ((TwbPointerAsInt(aBasePtr) + Size) > TwbPointerAsInt(aEndPtr));
       end;
       if over then begin
         aEndPtr := aBasePtr;
@@ -14382,18 +14385,18 @@ begin
       scNone: Assert(False);  // Getting there would be very funny :)
       scZComp:
         DecompressToUserBuf(
-          Pointer(Cardinal(dcDataBasePtr)),
+          Pointer(TwbPointerAsInt(dcDataBasePtr)),  // ?? Why convert a Pointer to an int just to convert it back to a pointer ??
           GetDataSize,
           @dcDataStorage[0],
           PCardinal(dcDataBasePtr)^
         );
       scLZComp:
-        LZ4_decompress_safe(Pointer(Cardinal(dcDataBasePtr)), @dcDataStorage[0], GetDataSize, szUncompressedSize);
+        LZ4_decompress_safe(Pointer(TwbPointerAsInt(dcDataBasePtr)), @dcDataStorage[0], GetDataSize, szUncompressedSize);
       else
         Assert(False);  // Something hasn't been updated yet.
     end;
 
-    dcDataEndPtr := Pointer( Cardinal(@dcDataStorage[0]) + szUncompressedSize );
+    dcDataEndPtr := Pointer( TwbPointerAsInt(@dcDataStorage[0]) + szUncompressedSize );
     dcDataBasePtr := @dcDataStorage[0];
   except
     dcDataBasePtr := nil;
@@ -14643,32 +14646,32 @@ begin
       t := aContainer.Def.Name;
     if SameText(t, 'Unknown') and (not Assigned(aBasePtr) or (aBasePtr <> aEndPtr)) then
       for i := 0 to 3 do begin
-        BasePtr := Pointer( Cardinal(aBasePtr) + i );
+        BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
         Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsU8', wbInteger('AsU8', itU8)), '', True);
-        BasePtr := Pointer( Cardinal(aBasePtr) + i );
+        BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
         Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsS8', wbInteger('AsS8', itS8)), '', True);
-        BasePtr := Pointer( Cardinal(aBasePtr) + i );
+        BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
         Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsU16', wbInteger('AsU16', itU16)), '', True);
-        BasePtr := Pointer( Cardinal(aBasePtr) + i );
+        BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
         Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsS16', wbInteger('AsS16', itS16)), '', True);
-        BasePtr := Pointer( Cardinal(aBasePtr) + i );
+        BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
         Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsU32', wbInteger('AsU32', itU32)), '', True);
-        BasePtr := Pointer( Cardinal(aBasePtr) + i );
+        BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
         Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsS32', wbInteger('AsS32', itS32)), '', True);
-        BasePtr := Pointer( Cardinal(aBasePtr) + i );
+        BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
         Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsS64', wbInteger('AsS64', itS64)), '', True);
-        BasePtr := Pointer( Cardinal(aBasePtr) + i );
+        BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
         Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsFormID', wbInteger('AsFormID', itU32, wbFormID)), '', True);
-        BasePtr := Pointer( Cardinal(aBasePtr) + i );
+        BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
         Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsChar4', wbInteger('AsChar4', itU32, wbChar4)), '', True);
-        BasePtr := Pointer( Cardinal(aBasePtr) + i );
+        BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
         Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsFloat', wbFloat('AsFloat')), '', True);
-        BasePtr := Pointer( Cardinal(aBasePtr) + i );
+        BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
         Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsString', wbString('AsString')), '', True);
         if wbToolSource in [tsSaves] then begin
-          BasePtr := Pointer( Cardinal(aBasePtr) + i );
+          BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
           Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsRefID', wbRefID('RefID')), '', True);
-          BasePtr := Pointer( Cardinal(aBasePtr) + i );
+          BasePtr := Pointer( TwbPointerAsInt(aBasePtr) + i );
           Element := TwbArray.Create(aContainer, BasePtr, aEndPtr, wbArray('Offset '+IntToStr(i)+' AsU6to30', wbInteger('AsU6to30', itU6to30)), '', True);
         end;
       end;
@@ -15173,8 +15176,8 @@ var
 begin
   fBasePtr := aBasePtr;
   Size := fIntegerDef.Size[aBasePtr, aEndPtr, GetContainer];
-  fEndPtr := Pointer( Cardinal(fBasePtr) + Size );
-  if Cardinal(fEndPtr) > Cardinal(aEndPtr) then
+  fEndPtr := Pointer( TwbPointerAsInt(fBasePtr) + Size );
+  if TwbPointerAsInt(fEndPtr) > TwbPointerAsInt(aEndPtr) then
     fEndPtr := aEndPtr;
 end;
 
@@ -15310,7 +15313,7 @@ begin
   if (dcfStorageInvalid in dcFlags) or not Assigned(dcDataBasePtr) or not Assigned(dcDataEndPtr) then
     Result := inherited GetDataSize + GetDataPrefixSize
   else
-    Result := Cardinal( dcDataEndPtr ) - Cardinal( dcDataBasePtr );
+    Result := TwbPointerAsInt( dcDataEndPtr ) - TwbPointerAsInt( dcDataBasePtr );
 end;
 
 function TwbDataContainer.GetDontCompare: Boolean;
@@ -15364,7 +15367,7 @@ begin
     Assert(Length(dcDataStorage) = 0);
   SizeNeeded := GetDataSize;
   if SizeNeeded > 0 then begin
-    SizeAvailable := Cardinal( aEndPtr ) - Cardinal( aBasePtr );
+    SizeAvailable := TwbPointerAsInt( aEndPtr ) - TwbPointerAsInt( aBasePtr );
     if (SizeAvailable < SizeNeeded) then
       Assert( SizeAvailable >= SizeNeeded );
 
@@ -15376,8 +15379,8 @@ begin
       if not (dcfDontMerge in dcFlags) then
         Inc(PByte(aBasePtr), SizeNeeded);
     end else
-      if Cardinal(aBasePtr) - Cardinal(BasePtr) > SizeNeeded then // we overwrote something
-        Assert( Cardinal(aBasePtr) - Cardinal(BasePtr) = SizeNeeded)
+      if TwbPointerAsInt(aBasePtr) - TwbPointerAsInt(BasePtr) > SizeNeeded then // we overwrote something
+        Assert( TwbPointerAsInt(aBasePtr) - TwbPointerAsInt(BasePtr) = SizeNeeded)
       else // Adjust size of data not initialized yet
         aBasePtr := PByte(BasePtr) + SizeNeeded;
 
@@ -15400,17 +15403,17 @@ end;
 function TwbDataContainer.IsValidOffset(aBasePtr, aEndPtr: Pointer; anOffset: Integer): Boolean;
 begin
   Result := False;
-  if Cardinal(aBasePtr) >= Cardinal(dcBasePtr) then
-    if Cardinal(aBasePtr) < Cardinal(dcEndPtr) then
-      if Cardinal(aEndPtr) > Cardinal(dcBasePtr) then
-        if Cardinal(aEndPtr) <= Cardinal(dcEndPtr) then
-          if Cardinal(aBasePtr)+anOffset < Cardinal(dcEndPtr) then
+  if TwbPointerAsInt(aBasePtr) >= TwbPointerAsInt(dcBasePtr) then
+    if TwbPointerAsInt(aBasePtr) < TwbPointerAsInt(dcEndPtr) then
+      if TwbPointerAsInt(aEndPtr) > TwbPointerAsInt(dcBasePtr) then
+        if TwbPointerAsInt(aEndPtr) <= TwbPointerAsInt(dcEndPtr) then
+          if TwbPointerAsInt(aBasePtr)+anOffset < TwbPointerAsInt(dcEndPtr) then
             Result := True;
 end;
 
 function TwbDataContainer.IsLocalOffset(anOffset: Integer): Boolean;
 begin
-  if Cardinal(dcDataBasePtr)+anOffset < Cardinal(dcDataEndPtr) then
+  if TwbPointerAsInt(dcDataBasePtr)+anOffset < TwbPointerAsInt(dcDataEndPtr) then
     Result := True
   else
     Result := False;
@@ -15437,9 +15440,9 @@ begin
     dcDataBasePtr := BasePtr;
     dcDataEndPtr := aBasePtr;
   end else begin
-    SizeNeeded := Cardinal( dcDataEndPtr ) - Cardinal( dcDataBasePtr );
+    SizeNeeded := TwbPointerAsInt( dcDataEndPtr ) - TwbPointerAsInt( dcDataBasePtr );
     if SizeNeeded > 0 then begin
-      SizeAvailable := Cardinal( aEndPtr ) - Cardinal( aBasePtr );
+      SizeAvailable := TwbPointerAsInt( aEndPtr ) - TwbPointerAsInt( aBasePtr );
       if SizeAvailable < SizeNeeded then
         Assert( SizeAvailable >= SizeNeeded );
 
@@ -15476,13 +15479,13 @@ begin
     dcDataBasePtr := @EmptyPtr;
     dcDataEndPtr := @EmptyPtr;
   end else if Cardinal(Length(dcDataStorage)) <> aNewSize then begin
-    OldSize := Cardinal( dcDataEndPtr ) - Cardinal( dcDataBasePtr );
+    OldSize := TwbPointerAsInt( dcDataEndPtr ) - TwbPointerAsInt( dcDataBasePtr );
     NeedsCopy := (Length(dcDataStorage) = 0) and (OldSize > 0);
     SetLength(dcDataStorage, aNewSize);
     if NeedsCopy then
       Move(dcDataBasePtr^, dcDataStorage[0], Min(OldSize, aNewSize));
     dcDataBasePtr := @dcDataStorage[0];
-    dcDataEndPtr := Pointer( Cardinal(dcDataBasePtr) + aNewSize );
+    dcDataEndPtr := Pointer( TwbPointerAsInt(dcDataBasePtr) + aNewSize );
 
     BasePtr := dcDataBasePtr;
     Inc(PByte(BasePtr), GetDataPrefixSize);
@@ -15573,7 +15576,7 @@ begin
   SetLength(NewStorage, inherited GetDataSize + GetDataPrefixSize);
   if Length(NewStorage) > 0 then begin
     BasePtr := @NewStorage[0];
-    EndPtr := Pointer( Cardinal(BasePtr) + Cardinal(Length(NewStorage)) );
+    EndPtr := Pointer( TwbPointerAsInt(BasePtr) + Cardinal(Length(NewStorage)) );
     PrefixSize := GetDataPrefixSize;
     if (PrefixSize > 0) then
       Move(dcDataBasePtr^, BasePtr^, PrefixSize);
@@ -15582,7 +15585,7 @@ begin
 
     dcDataStorage := NewStorage;
     dcDataBasePtr := @NewStorage[0];
-    dcDataEndPtr := Pointer( Cardinal(dcDataBasePtr) + Cardinal(Length(dcDataStorage)) );
+    dcDataEndPtr := Pointer( TwbPointerAsInt(dcDataBasePtr) + Cardinal(Length(dcDataStorage)) );
     Assert(dcDataEndPtr = EndPtr);
   end else begin
     dcDataStorage := nil;
@@ -15607,7 +15610,7 @@ begin
 
   if (esModified in eStates) or wbTestWrite then begin
     if not (dcfStorageInvalid in dcFlags) and Assigned(dcDataEndPtr) and Assigned(dcDataBasePtr) then
-      Size := Cardinal( dcDataEndPtr ) - Cardinal( dcDataBasePtr )
+      Size := TwbPointerAsInt( dcDataEndPtr ) - TwbPointerAsInt( dcDataBasePtr )
     else
       Size := 0;
     if Size > 0 then begin
@@ -15750,11 +15753,11 @@ begin
   if Assigned(Resolved) then
   begin
     if (Resolved.DefType in dtNonValues) and (wbDumpOffset=1) then // simply display starting offset.
-      Result := Result + ' {' + IntToHex64(Cardinal(GetDataBasePtr)-wbBaseOffset, 8) + '}';
+      Result := Result + ' {' + IntToHex64(TwbPointerAsInt(GetDataBasePtr)-wbBaseOffset, 8) + '}';
     // something for Dump: Displaying the size in {} and the array count in []
     //  Triggers a lot of pre calculations
     if (Resolved.DefType in dtNonValues) and (wbDumpOffset>2) then
-      Result := Result + ' {' + IntToHex64(Cardinal(GetDataEndPtr)-wbBaseOffset, 8) + '-' + IntToHex64(Cardinal(GetDataBasePtr)-wbBaseOffset, 8) +
+      Result := Result + ' {' + IntToHex64(TwbPointerAsInt(GetDataEndPtr)-wbBaseOffset, 8) + '-' + IntToHex64(TwbPointerAsInt(GetDataBasePtr)-wbBaseOffset, 8) +
         ' = ' +IntToStr(Resolved.Size[GetDataBasePtr, GetDataEndPtr, Self]) + '}';
     if (Resolved.DefType = dtArray) and (wbDumpOffset>1) and Supports(Self, IwbDataContainer, Container) then
       Result := Result + ' [' + IntToStr(Container.GetElementCount) + ']';
@@ -15880,11 +15883,11 @@ procedure TwbValueBase.InitDataPtr;
 var
   Size : Integer;
 begin
-  if (GetDataBasePtr <> nil) and (Cardinal(dcDataEndPtr)>=Cardinal(dcDataBasePtr)) then begin
+  if (GetDataBasePtr <> nil) and (TwbPointerAsInt(dcDataEndPtr)>=TwbPointerAsInt(dcDataBasePtr)) then begin
     Size := vbValueDef.Size[dcDataBasePtr, dcDataEndPtr, Self];
     if Size < High(Integer) then begin
-      dcDataEndPtr := Pointer( Cardinal(dcDataBasePtr) + Cardinal(Size) );
-      if Cardinal(dcDataEndPtr) > Cardinal(dcEndPtr) then
+      dcDataEndPtr := Pointer( TwbPointerAsInt(dcDataBasePtr) + Cardinal(Size) );
+      if TwbPointerAsInt(dcDataEndPtr) > TwbPointerAsInt(dcEndPtr) then
         dcDataEndPtr := dcEndPtr
       else
         dcEndPtr := dcDataEndPtr;
@@ -16038,7 +16041,7 @@ begin
       end;
     end;
     p := MainRecordInternal.mrStruct;
-    InformStorage(p, Pointer(Cardinal(p) + wbSizeOfMainRecordStruct ));
+    InformStorage(p, Pointer(TwbPointerAsInt(p) + wbSizeOfMainRecordStruct ));
 
     with MainRecordInternal do begin
       if ToggleDeleted then
@@ -16113,13 +16116,13 @@ end;
 
 procedure TwbStringListTerminator.InformStorage(var aBasePtr: Pointer; aEndPtr: Pointer);
 begin
-  Assert( Cardinal(aBasePtr) < Cardinal(aEndPtr));
+  Assert( TwbPointerAsInt(aBasePtr) < TwbPointerAsInt(aEndPtr));
   Inc(PByte(aBasePtr));
 end;
 
 procedure TwbStringListTerminator.MergeStorageInternal(var aBasePtr: Pointer; aEndPtr: Pointer);
 begin
-  Assert( Cardinal(aBasePtr) < Cardinal(aEndPtr));
+  Assert( TwbPointerAsInt(aBasePtr) < TwbPointerAsInt(aEndPtr));
   PAnsiChar(aBasePtr)^ := #0;
   Inc(PByte(aBasePtr));
 end;
@@ -16487,7 +16490,7 @@ begin
       [wbFileMagic, String(Header.FileMagic), flFileName]);
 
   if Pos('Absolute:', wbFilePlugins)=1 then begin
-    modOffset := Cardinal(flView)+StrToInt(Copy(wbFilePlugins, 10, Length(wbFilePlugins)));
+    modOffset := TwbPointerAsInt(flView)+StrToInt(Copy(wbFilePlugins, 10, Length(wbFilePlugins)));
     modPtr := Pointer(modOffset);
     mods := TwbArray.Create(nil, modPtr, flEndPtr, wbArray('Modules', wbLenString('PluginName', 2), -4), '', False);
     Supports(mods, IwbContainerElementRef, MasterFiles);
@@ -16565,7 +16568,7 @@ begin
   SelfRef := Self as IwbContainerElementRef;
   flProgress('Start processing');
 
-  wbBaseOffset := Cardinal(flView);
+  wbBaseOffset := TwbPointerAsInt(flView);
 
   CurrentPtr := flView;
   TwbFileHeader.Create(Self, CurrentPtr, flEndPtr, wbFileHeader, '', False);
@@ -16581,7 +16584,7 @@ begin
     Exit;
 
   if Pos('Absolute:', wbFilePlugins)=1 then begin
-    modOffset := Cardinal(flView)+StrToInt(Copy(wbFilePlugins, 10, Length(wbFilePlugins)));
+    modOffset := TwbPointerAsInt(flView)+StrToInt(Copy(wbFilePlugins, 10, Length(wbFilePlugins)));
     modPtr := Pointer(modOffset);
     mods := TwbArray.Create(nil, modPtr, flEndPtr, wbArray('Modules', wbLenString('PluginName', 2), -4), '', False);
     Supports(mods, IwbContainerElementRef, MasterFiles);

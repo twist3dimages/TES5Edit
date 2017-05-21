@@ -27,7 +27,7 @@ uses
   SysUtils,
   Windows,
   Registry,
-  Zlibex in 'Zlibex.pas',
+  Zlibex in 'Zlib\Zlibex.pas',
   wbBSA in 'wbBSA.pas',
   wbSort in 'wbSort.pas',
   wbInterface in 'wbInterface.pas',
@@ -656,7 +656,7 @@ begin
   if (DumpMax > 0) and (DumpCount > DumpMax) then
     Exit;
 
-  Name := aElement.Name;
+  Name := aElement.DisplayName;
   Value := aElement.Value;
 
   if (aElement.Name <> 'Unused') and (Name <> 'Unused') then begin
@@ -980,7 +980,7 @@ begin
         WriteLn(ErrOutput, 'Application '+wbGameName+' does not currently supports '+wbToolName);
         Exit;
       end;
-      if not (wbToolSource in [tsPlugins { Needs better decoding , tsSaves}]) then begin
+      if not (wbToolSource in [tsPlugins, tsSaves]) then begin
         WriteLn(ErrOutput, 'Application '+wbGameName+' does not currently supports '+wbSourceName);
         Exit;
       end;
